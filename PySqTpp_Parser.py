@@ -1,4 +1,4 @@
-# Code File: StaqTapp-1.01 [PySqTpp_Parser.py] main basic functions use
+# Code File: StaqTapp-1.01 [PySqTpp_Parser.py] main functions use
 
 
 
@@ -16,23 +16,23 @@ import PySqTpp_Interface
 
 from collections import deque
 from decimal import Decimal as dcml
+from random import randrange as rrng
+from datetime import date as dttm
 
 import mmap
 import glob
+import stps
 import sys
 import os
 import re
-
 #______________________________________________________________________________________
 
 class TqptParser(PySqTpp_Interface.PySqTppInterface):
     # - settled functions for .tqpt variables file -
-
 #______________________________________________________________________________________
 
     def make_variables_source(self, is_static: bool, make_dir: bool, overwrite_source: bool, dir_path: str, make_source_name: str) -> int:
         # @override PySqTppInterface.make_variables_source()
-        
         
         # FUNCTION RETURN-CODES
             
@@ -131,12 +131,10 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                         
         except Exception as e:
             print("staqtapp error: ",e)
-
 #______________________________________________________________________________________
         
     def add_variables_source(self, var_name: str, var_data: str, dir_path: str, source_name: str) -> int:
         # @override PySqTppInterface.add_variables_source()
-        
         
         # FUNCTION RETURN-CODES
             
@@ -197,12 +195,70 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
             
         except Exception as e:
             print("staqtapp error: ",e)
-     
+#______________________________________________________________________________________
+
+    def self_assign_variable_name(self, close_static: bool, prepin_cat_dsg: str, var_data: str, dir_path: str, source_name: str) -> int:
+        # @override PySqTppInterface.self_assign_variable_name()
+        
+        # FUNCTION RETURN-CODES
+            
+        # ------------------------------------------------------------------------
+        # return -1  : invalid folder path
+        # return -2  : invalid file name
+        # return -3  : found newline char in variable data
+        # return -4  : no proper @qp(...) tag formatting found
+        # return -5  : missing closing ): for variable data @qp(
+        # return -6  : invalid category pin chars
+        
+        otRslt = None
+        nrRslt = None
+        fndCms = None
+        vrNm = None
+        
+        try:
+            if os.path.isdir(dir_path):
+                if os.path.isfile(dir_path + '/' + source_name + '.tqpt'):
+                    newTqptParser = TqptParser()
+                    # parameter data, variable's data proper @qp(... tag format(s)?
+                    otRslt = newTqptParser.char_regularity(True, False, 'savn', var_data)
+                    if otRslt == 2:
+                        # checks out, no comma use found in variable data
+                        fndCms = False
+                    elif otRslt == 22:
+                        # found comma use in variable data
+                        fndCms = True
+                    elif otRslt == -1:
+                        return -3
+                    elif otRslt == -3:
+                        return -4
+                    elif otRslt == -4:
+                        return -5
+                    # check prepin_cat_dsg variable name id is of valid chars
+                    if newTqptParser.check_parameter_string(True, prepin_cat_dsg):
+                        # parameter checks all ok, build the random variable name, p_fnc_nnnnnnnnnn_b
+                        syncLst = [str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10))]
+                        vrNm = prepin_cat_dsg + '_sar_' + ''.join(newTqptParser.rand_shuffle(syncLst)) + '_'
+                        if fndCms == True:
+                            vrNm += '1'
+                        else:
+                            vrNm += '0'
+                        # add variable and variable's data to the chosen tqpt variable source file
+                        nrRslt = newTqptParser.tqpt_map(False, True, 'sar', False, vrNm, var_data, dir_path, source_name)
+                        # add collect new sar data
+                        stps.newsaradd('savn', vrNm, var_data, dir_path, source_name)
+                    else:
+                        return -6
+                else:
+                    return -2
+            else:
+                return -1
+       
+        except Exception as e:
+            print("staqtapp error: ",e)
 #______________________________________________________________________________________
    
     def load_variables_source_deque(self, is_numbers: bool, var_name: str, dir_path: str, source_name: str):
         # @override PySqTppInterface.load_variables_source_list()
-        
         
         # FUNCTION RETURN-CODES
             
@@ -216,106 +272,111 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
         # return -7 : missing closing qp ): ending
         
         rslt = None
-        
         fncRtrn = None
         
-        if os.path.isdir(dir_path):
-            # valid directory
-            if os.path.isfile(dir_path + '/' + source_name + '.tqpt'):
-                # valid .tqpt variables source file
-                newTqptParser = TqptParser()
-                rslt = newTqptParser.tqpt_map(True, False, 'lvsd', False, var_name, None, dir_path, source_name)
-                if rslt == '...':
-                    # variable name was not found in the tqpt source file
-                    return -3
-                else:
-                    slcObj = slice(len(var_name)+2, len(rslt)-1)
-                    datStr = rslt[slcObj]
-                    # check variable's data is proper format for a tqpt source file,
-                    # parse it and return the deque list as is is
-                    fncRtrn = newTqptParser.char_regularity(False, is_numbers, 'lvsd', datStr)
-                    if fncRtrn == -1:
-                        return -4
-                    elif fncRtrn == -2:
-                        return -5
-                    elif fncRtrn == -3:
-                        return -6
-                    elif fncRtrn == -4:
-                        return -7
+        try:
+        
+            if os.path.isdir(dir_path):
+                # valid directory
+                if os.path.isfile(dir_path + '/' + source_name + '.tqpt'):
+                    # valid .tqpt variables source file
+                    newTqptParser = TqptParser()
+                    rslt = newTqptParser.tqpt_map(True, False, 'lvsd', False, var_name, None, dir_path, source_name)
+                    if rslt == '...':
+                        # variable name was not found in the tqpt source file
+                        return -3
                     else:
-                        return fncRtrn
+                        slcObj = slice(len(var_name)+2, len(rslt)-1)
+                        datStr = rslt[slcObj]
+                        # check variable's data is proper format for a tqpt source file,
+                        # parse it and return the deque list as is is
+                        fncRtrn = newTqptParser.char_regularity(False, is_numbers, 'lvsd', datStr)
+                        if fncRtrn == -1:
+                            return -4
+                        elif fncRtrn == -2:
+                            return -5
+                        elif fncRtrn == -3:
+                            return -6
+                        elif fncRtrn == -4:
+                            return -7
+                        else:
+                            return fncRtrn
+                else:
+                    # invalid file name
+                    return -2
             else:
-                # invalid file name
-                return -2
-        else:
-            # invalid folder path
-            return -1  	
- 
+                # invalid folder path
+                return -1
+                
+        except Exception as e:
+            print("staqtapp error: ",e)
 #______________________________________________________________________________________
 
     def search_variable(self, all_tqpt_sources: bool, var_name: str, dir_path: str, source_name: str):
         # @override PySqTppInterface.search_variable()
         
-
         # FUNCTION RETURN-CODES
             
-        # ------------------------------------------------------------------------
+        # -------------------all_tqpt_sources=False-------------------------------
+        # return True  : found variable at given path & tqpt file name
+        # return False : no found variable at given path & tqpt file name
+        
+        # -------------------all_tqpt_sources=True--------------------------------
         # return -1 : invalid directory path
         # return -2 : variable source file not found
-        # return -3 : all_tqpt_sources=true, no found tqpt files for dir_path
+        # return -3 : no found tqpt files for dir_path
         
-        #vrFnd = False
+        ptrnStr = None
+        lnNmr = None
+        dqLst = []
         
-        #ptrnStr = None
+        try:
         
-        #lnNmr = None
-        #dqLst = deque()
-        
-        #if os.path.isdir(dir_path):
-            #if all_tqpt_sources == True:
-                # source_name is ignored as a specific parameter string for tqpt file
-                # get string list of all tqpt source files at the given directory
-                #flLst = glob.glob(dir_path + '/' + "*.tqpt")
-                #if len(flLst) > 0:
-                    #ptrnStr = str.encode('<'+var_name+'=')
-                    #for fl in range(len(flLst)):
-                        #lnNmr = 0
-                        #vrFnd = False
-                        #with open(dir_path + '/' + source_name + '.tqpt', mode='r+b') as mFlObj:
-                            #with mmap.mmap(mFlObj.fileno(), length=0, prot=mmap.PROT_READ) as mMpObj:
-                                #for fLn in iter(mMpObj.readline, b''):
-                                    #lnNmr+=1
-                                    #if fLn.find(ptrnStr) > -1:
-                                        #vrFnd = True
-                                        #dqLst.append(flLst[fl] + ':' + var_name + ':' + str(lnNmr))
-                                        #break
-                                #mMpObj.close()
-                            #mMpObj = None
-                        #if vrFnd:
-                            #dqLst.append(flLst[fl]+':'+var_name+':'+str(lnNmr))
-                    #return dqLst
-                #else:
-                    # no found tqpt source files........
-                    #return -3
-            #else:
-                # search on given file name only
-                #if os.path.isfile(dir_path + '/' + source_name + '.tqpt'):
-                    #pass
-                #else:
-                    # tqpt source file is not found
-                    #return -2
-        #else:
-            # invalid folder path
-            #return -1
+            if os.path.isdir(dir_path):
+                if all_tqpt_sources == True:
+                    # source_name is ignored as a specific parameter string for tqpt file
+                    # get string list of all tqpt source files at the given directory
+                    flLst = glob.glob(dir_path + '/' + "*.tqpt")
+                    if len(flLst) > 0:
+                        ptrnStr = str.encode('<'+var_name+'=')
+                        for fl in range(len(flLst)):
+                            lnNmr = 0
+                            with open(flLst[fl], mode='r+b') as mFlObj:
+                                with mmap.mmap(mFlObj.fileno(), length=0, prot=mmap.PROT_READ) as mMpObj:
+                                    for fLn in iter(mMpObj.readline, b''):
+                                        lnNmr+=1
+                                        # found; add dir, var name and line number :via
+                                        if fLn.find(ptrnStr) > -1:
+                                            dqLst.append(flLst[fl] + ':' + var_name + ':' + str(lnNmr))
+                                            break
+                                    mMpObj.close()
+                                mMpObj = None
+                        return dqLst
+                    else:
+                        # no found tqpt source files........
+                        return -3
+                else:
+                    # search on given file name only
+                    if os.path.isfile(dir_path + '/' + source_name + '.tqpt'):
+                        newTqptParser = TqptParser()
+                        rslt = newTqptParser.tqpt_map(True, False, 'sv', False, var_name, '', dir_path, source_name)
+                        if rslt == 1:
+                            return True
+                        else:
+                            return False
+                    else:
+                        # tqpt source file is not found
+                        return -2
+            else:
+                # invalid folder path
+                return -1
                 
-        
-        
-        
+        except Exception as e:
+            print("staqtapp error: ",e)
 #______________________________________________________________________________________
 
     def tqpt_map(self, is_read: bool, is_write: bool, dsg_fnc: str, is_overwrite: bool, glb_var: str, glb_var_data: str, folder_path: str, tqpt_name: str):
         # @override PySqTppInterface.tqpt_map()
-    
     
         # FUNCTION RETURN-CODES
             
@@ -328,11 +389,9 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
     
         tqptLn = ''
         ptrnStr = ''
-    
         lnsCnt = 0
         nrRslt = 0
         rslt = 0
-    
         # stays false if variable not found
         vrblFnd = False
         
@@ -355,7 +414,7 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                         return 2
                     else:
                         return 1
-            elif dsg_fnc == 'lvsd':
+            elif dsg_fnc == 'lvsd' or dsg_fnc == 'sv':
                 ptrnStr = str.encode('<'+glb_var+'=')
                 with open(folder_path + '/' + tqpt_name + '.tqpt', mode='r+b') as fileObjLvr:
                     with mmap.mmap(fileObjLvr.fileno(), length=0, prot=mmap.PROT_READ) as mmapObjLvr:
@@ -363,30 +422,39 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                             if cchLn.find(ptrnStr) > -1:
                                 vrblFnd = True
                                 break
-                        if vrblFnd == True:
+                        if vrblFnd == True and dsg_fnc == 'lvsd':
                             # convert valid variable's staq line to str and return it
                             tqptLn = (bytes.decode(cchLn, 'utf-8')).strip('\n')
                         mmapObjLvr.close()
                     mmapObjLvr = None
                     if vrblFnd == True:
-                        return tqptLn
+                        if dsg_fnc == 'lvsd':
+                            return tqptLn
+                        else:
+                            return 1
                     else:
-                        return '...'
+                        if dsg_fnc == 'lvsd':
+                            return '...'
+                        else:
+                            return -1
                                    
         # -------- WRITE TQPT VARIABLES SOURCE FILES -------------------------------      
         elif is_read == False and is_write == True:
             # is write to .tqpt source file, check first if the source file
             # can be written to, e.g. is not a static made .tqpt source file
             newTqptParser = TqptParser()
-            rslt = newTqptParser.check_tqpt_settings(True, folder_path + '/' + tqpt_name + '.tqpt')
+            if dsg_fnc != 'sar':
+                rslt = newTqptParser.check_tqpt_settings(True, folder_path + '/' + tqpt_name + ".tqpt")
+            else:
+                rslt = -1
             if rslt == -1:
                 # not a static locked variables source file, get/write variables & datas
-                if dsg_fnc == 'avs':
+                if dsg_fnc == 'avs' or dsg_fnc == 'sar':
                     with open(folder_path + '/' + tqpt_name + '.tqpt', 'r+b') as fileObjTm2:
                         with mmap.mmap(fileObjTm2.fileno(), length=0, prot=mmap.PROT_READ) as mmapObjTm2:
                             tqptLn = mmapObjTm2.read()
                             mmapObjTm2.close()
-                        mmapObjTm2 = [False]
+                        mmapObjTm2 = None
                     ptrnStr = [tqptLn.replace(b"\n!!!END_TQPT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!",b""), str.encode('\n<' + glb_var + '=' + glb_var_data + '>\n!!!END_TQPT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')]
                     with open(folder_path + '/' + tqpt_name + '.tqpt', 'wb') as fileObjTm2X:
                         fileObjTm2X.write(b''.join(ptrnStr))
@@ -399,12 +467,10 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
             elif rslt == -2:
                 # no readable settings to the .tqpt source file...
                 return -2
-
 #______________________________________________________________________________________
 
     def check_tqpt_settings(self, is_static: bool, full_path: str) -> int:
         # @override PySqTppInterface.check_tqpt_settings()
-        
         
         # FUNCTION RETURN-CODES
             
@@ -430,12 +496,10 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
             else:
                 # not a legit staqtapp .tqpt variables source file
                 return -2
-            
 #______________________________________________________________________________________
 
     def check_parameter_string(self, is_variable: bool, parameter: str) -> bool:
         # @override PySqTppInterface.check_parameter_string()
-        
         
         # check if a string parameter is of valid chars
         try:
@@ -453,43 +517,38 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                     return False
         except Exception as e:
             print("staqtapp error: ",e)
-            
 #______________________________________________________________________________________
 
     def char_regularity(self, is_read_only: bool, is_all_numbers: bool, calling_function: str, source: str):
         # @override PySqTppInterface.char_regularity()
         
-        
         # FUNCTION RETURN-CODES
             
         # ------------------------------------------------------------------------
-        # return  1 : yah is all numbers
-        # return -1 : new line in data is not allowed of staqtapp global variables
-        # return  2 : is proper @qp(...): char staqtapp tag(s) observe find(s)
-        # return -2 : false check for is_all_numbers however
-        # return -3 : no proper @qp(...): variables' data tags found
-        # return -4 : missing a closing ): for data declare @qp(
+        # return  1   : yah is all numbers
+        # return -1   : new line in data is not allowed of staqtapp global variables
+        # return  2   : is proper @qp(...): char staqtapp tag(s) observe find(s)
+        # return  22 : proper tag check return with found comma use in variable data
+        # return -2   : false check for is_all_numbers however
+        # return -3   : no proper @qp(...): variables' data tags found
+        # return -4   : missing a closing ): for data declare @qp(
         
         dqRtn = deque()
-        
         dqLst = None
         qdLst = None
-        
         cptDatStr = ''
         qpPrvChr = None
-        
         nmbrChrs = set('.-, 0123456789')
-        
         srcLen = len(source)
         srcIdx = 0
         ttlQp = 0
         qpCnt = None
-        
         qpPrgPrhL = False
         qpPrgPrhR = False
         qpPrgRstT = False
         qpOpnVdSw = False
         qpCmsVdSw = False
+        qpCmrFncr = False
         qpDcmVdSw = False
         qpNmrVdSw = False
         qpNmrDcSw = False
@@ -595,6 +654,8 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                                 if calling_function == 'lvsd':
                                     dqRtn.append(cptDatStr)
                     qpPrgRstT = True
+                    if qpCmsVdSw == True:
+                        qpCmrFncr = True
                     qpCmsVdSw = False
                     qpDcmVdSw = False
                     if is_read_only == False:
@@ -617,14 +678,55 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                     return 1
                 else:
                     if ttlQp > 0:
-                        return 2
+                        if calling_function != 'savn':
+                            return 2
+                        else:
+                            if qpCmrFncr == True:
+                                return 22
+                            else:
+                                return 2
                     else:
-                        return -3
-                                              
+                        return -3                                     
 #______________________________________________________________________________________
 
-
-
+    def rand_shuffle(self, particles: list) -> list:
+        # @override PySqTppInterface.rand_shuffle()
+        
+        rtn = None
+        amx = None
+        bmx = 2
+        lenP = len(particles)
+        lenM = lenP+1
+        mirror = [False for i in range(lenM)]
+        
+        for z in range(lenP):
+            mirror[z] = False
+            for y in range(lenP):
+                amx = rrng(0, lenP)
+                if not mirror[amx]:
+                    mirror[amx] = True
+                    rtn = particles[amx]
+                    particles[amx] = particles[y]
+                    particles[y] = rtn
+                else:
+                    mirror[lenM-1] = True
+                    while mirror[lenM-1]:
+                        if mirror[bmx]:
+                            mirror[lenM-1] = False
+                            if amx+bmx > lenP-1:
+                                bmx = amx+bmx-lenP
+                            else:
+                                bmx = amx+bmx
+                                rtn = particles[bmx]
+                                particles[bmx] = particles[y]
+                                particles[y] = rtn
+                        else:
+                            if bmx < lenP-1:
+                                bmx+=1
+                            else:
+                                bmx = rrng(0, lenP)
+        return particles
+#______________________________________________________________________________________
 
 
 

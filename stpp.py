@@ -205,39 +205,92 @@ def loadvar_deque(isNumbers, varName, folderPath, fileName):
     
 #______________________________________________________________________________________
 
-def findvar(allSources, search, folderPath, fileName):
+def findvar(allSources, varName, folderPath, fileName):
     
-    # allSources=bool, search=str, folderPath=str, fileName=str
+    # allSources=bool, varName=str, folderPath=str, fileName=str
+    
+    # parameter allSources of True, then finds all tqpt files of given folderPath
+    # and returns a list type in format 'fullpath:varname:linenumber' str @indices
+    # if variable find(s) else returns a empty list; allSources=False returns true
+    # or false for variable found or not found from given dir & file name combined
     
     rslt = None
     
     newTqptParser = TqptParser()
     if len(folderPath) > 0 and len(fileName) > 0:
         if newTqptParser.check_parameter_string(False, fileName):
-            rslt = newTqptParser.search_variable(allSources, search, folderPath, fileName)
-            if rslt == -2:
+            rslt = newTqptParser.search_variable(allSources, varName, folderPath, fileName)
+            if rslt == -3:
+                raise Exception("staqtapp<findvar> no found tqpt variable source files @" + folderPath)
+            elif rslt == -2:
                 raise Exception("staqtapp<findvar> variables source file '" + fileName + ".tqpt' was not found @" + folderPath)
             elif rslt == -1:
                 raise Exception("staqtapp<findvar> invalid folderpath @" + folderPath)
+            else:
+                return rslt
         else:
             raise Exception("staqtapp<findvar> invalid filename, allowed chars ._- aA-zZ 0-9")
     else:
         raise Exception("staqtapp<findvar> null folderpath and/or null filename")
+
+#______________________________________________________________________________________
+
+def addvar_sar(catPin, varData, folderPath, fileName):
     
+    # closeAsStatic=bool, catPin=str, varData=str, folderPath=str, fileName=str
+    
+    # works the same as a staqtapp addvar function however the variable name is assigned to
+    # a random ten digit number, also allows data collection of any words used in the data for
+    # the variable, created in a dat extension file of the tqpt variable source's directory;
+    # catPin str parameter is intened for tracking purposes of any grouped type data use and is
+    # a string included of the variable's random assigned number both; due to complexity
+    # of larger word files and needed parsing of not adding duplicates should be considered for
+    # multi processing, addvar_sar is of the PySqTppSarInterface's methods separated and
+    # does not add duplicate words to the created extension file of that tqpt source directory
+    
+    rslt = None
+    
+    newTqptParser = TqptParser()
+    if len(folderPath) > 0 and len(fileName) > 0:
+        if newTqptParser.check_parameter_string(False, fileName):
+            rslt = newTqptParser.self_assign_variable_name(closeAsStatic, catPin, varData, folderPath, fileName)
+            if rslt == -1:
+                raise Exception("staqtapp<addvar_sar> invalid folderpath @" + folderPath)
+            elif rslt == -2:
+                raise Exception("staqtapp<addvar_sar> variables source file '" + fileName + ".tqpt' was not found @" + folderPath)
+            elif rslt == -3:
+                raise Exception("staqtapp<addvar_sar> newline chars not allowed in variable sources")
+            elif rslt == -4:
+                raise Exception("staqtapp<addvar_sar> no proper data declare(s) '@qp(data):' found")
+            elif rslt == -5:
+                raise Exception("staqtapp<addvar_sar> missing data declare closing '):' ")
+            elif rslt == -6:
+                raise Exception("staqtapp<addvar_sar> invalid category pin, allowed chars _ aA-zZ 0-9")
+        else:
+            raise Exception("staqtapp<addvar_sar> invalid filename, allowed chars ._- aA-zZ 0-9")
+    else:
+        raise Exception("staqtapp<addvar_sar> null folderpath and/or null filename")
+    
+
+
 
 #______________________________________________________________________________________
 
 def test():
     
-    #makesource(False, True, False, "staqtapp-test", 'staqtapp-test')
+    #newTqptParser = TqptParser()
     
-    #addvar("variableDequeTest4001", "@qp(999999):@qp(3.14):@qp(V,!):@qp(99,9.9,199):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
+    #makesource(False, False, False, '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    
+    #addvar("variable99", "@qp(99999999999999999999999):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
     #dequeTest = loadvar_deque(False, "variableDequeTest4001", '/storage/emulated/0/qpython/scripts3/staqtapp-test', "staqtapp-test")
     
-    lst = findvar(True, 'variable99', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
+    #lst = findvar(True, 'variable1', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    print(lst)
+    addvar_sar(False, "sarTest2", "@qp(---Solely, passwords are unsecure):@qp(A great password begins with kat:):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    
+    #print(testLst)
     
 #______________________________________________________________________________________
     
