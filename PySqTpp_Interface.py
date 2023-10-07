@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.01.493
+# Staqtapp 1.01.722
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -23,7 +23,7 @@ class PySqTppInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         # subclasshook for the abstract methods defines
-        return (hasattr(subclass, 'make_variables_source') and callable(subclass.make_variables_source) and hasattr(subclass, 'add_variables_source') and callable(subclass.add_variables_source) and hasattr(subclass, 'self_assign_variable_name') and callable(subclass.self_assign_variable_name) and hasattr(subclass, 'load_variables_source_deque') and callable(subclass.load_variables_source_deque) and hasattr(subclass, 'search_variable') and callable(subclass.search_variable) and hasattr(subclass, 'tqpt_map') and callable(subclass.tqpt_map) and hasattr(subclass, 'check_tqpt_settings') and callable(subclass.check_tqpt_settings) and hasattr(subclass, 'check_parameter_string') and callable(subclass.check_parameter_string) and hasattr(subclass, 'char_regularity') and callable(subclass.char_regularity) and hasattr(subclass, 'rand_shuffle') and callable(subclass.rand_shuffle) or NotImplemented)
+        return (hasattr(subclass, 'make_variables_source') and callable(subclass.make_variables_source) and hasattr(subclass, 'add_variables_source') and callable(subclass.add_variables_source) and hasattr(subclass, 'update_variables_source') and callable(subclass.update_variables_source) and hasattr(subclass, 'self_assign_variable_name') and callable(subclass.self_assign_variable_name) and hasattr(subclass, 'load_variables_source_deque') and callable(subclass.load_variables_source_deque) and hasattr(subclass, 'search_variable') and callable(subclass.search_variable) and hasattr(subclass, 'tqpt_map') and callable(subclass.tqpt_map) and hasattr(subclass, 'check_tqpt_settings') and callable(subclass.check_tqpt_settings) and hasattr(subclass, 'check_parameter_string') and callable(subclass.check_parameter_string) and hasattr(subclass, 'char_regularity') and callable(subclass.char_regularity) and hasattr(subclass, 'rand_shuffle') and callable(subclass.rand_shuffle) or NotImplemented)
     
     
     @abc.abstractmethod
@@ -35,6 +35,12 @@ class PySqTppInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def add_variables_source(self, var_name: str, var_data: str, dir_path: str, source_name: str) -> int:
         # add variables to a variables source file
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def update_variables_source(self, var_name: str, var_data: str, dir_path: str, source_name: str) -> int:
+        # updates new variable data changes
         raise NotImplementedError
         
         

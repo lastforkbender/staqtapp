@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.01.493
+# Staqtapp 1.01.722
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -36,7 +36,7 @@ class SarAlpha(PySqTpp_SarInterface.PySqTppSarInterface):
 #______________________________________________________________________________________
 
     def write_extension_source(self, ext_pnt: str, source: str, dir_path: str, source_name: str) -> bool:
-        # @override PySqTppSarInterface.sar_write_extension_source()
+        # @override PySqTppSarInterface.write_extension_source()
         
         jnLst = None
         wrdx = None

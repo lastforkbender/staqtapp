@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.01.493
+# Staqtapp 1.01.722
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -282,15 +282,15 @@ def test():
     
     #makesource(False, False, False, '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    #addvar("variable99", "@qp(99999999999999999999999):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    #addvar("vrnm_0002", "@qp(somedata, open, close, 1.1111):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    #dequeTest = loadvar_deque(False, "variableDequeTest4001", '/storage/emulated/0/qpython/scripts3/staqtapp-test', "staqtapp-test")
+    dequeTest = loadvar_deque(False, "vrnm_0002", '/storage/emulated/0/qpython/scripts3/staqtapp-test', "staqtapp-test2")
     
     #lst = findvar(True, 'variable1', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    addvar_sar(False, "sarTest2", "@qp(---Solely, passwords are unsecure):@qp(A great password begins with kat:):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    #addvar_sar(False, "sarTest2", "@qp(---Solely, passwords are unsecure):@qp(A great password begins with kat:):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    #print(testLst)
+    print(dequeTest)
     
 #______________________________________________________________________________________
     
