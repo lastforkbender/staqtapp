@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.01.722
+# Staqtapp 1.01.834
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -212,6 +212,9 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
         
         rslt = None
         otRslt = None
+        nrRslt = None
+        ptrnStr = None
+        joinStr = None
         
         try:
             if os.path.isdir(dir_path):
@@ -220,12 +223,27 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                     # is the new variable data of proper formatting?
                     otRslt = newTqptParser.char_regularity(True, False, 'uvs', var_data)
                     if otRslt == 2:
-                        rslt = newTqptParser.tqpt_map(True, False, 'uvs', False, var_name, '', dir_path, source_name)
-                        # variable name found?
-                        if rslt == 1:
-                            pass
-                        else:
-                            return -6
+                        ptrnStr = re.compile(rb'<'+re.escape(str.encode(var_name))+rb'=')
+                        with open(dir_path + '/' + source_name + '.tqpt', mode='r') as fileObjUv:
+                            with mmap.mmap(fileObjUv.fileno(), length=0, access=mmap.ACCESS_READ) as mmapObjUv:
+                                try:
+                                    nrRslt = re.search(rb'<'+re.escape(str.encode(var_name))+rb'=', mmapObjUv.read()).span(0)
+                                except Exception:
+                                    # .span() tuple error throw, pattern was not found
+                                    return -6
+                                rslt = mmapObjUv.find(b'\n', nrRslt[1])
+                                if rslt != -1:
+                                    # for now, not of the technical naming... Staqtapp
+                                    ptrnStr = mmapObjUv[0:nrRslt[0]-1]
+                                    joinStr = mmapObjUv[rslt:len(mmapObjUv)]
+                                else:
+                                    return -6
+                                mmapObjUv.close()
+                            mmapObjUv = None
+                        with open(dir_path + '/' + source_name + '.tqpt', 'wb') as fObjWrtVn:
+                            fObjWrtVn.write(ptrnStr + b'\n<' + str.encode(var_name) + b'=' + str.encode(var_data) + b'>' + joinStr)
+                            fObjWrtVn.close()
+                        fObjWrtVn = None
                     elif otRslt == -1:
                         # newline char found
                         return -3
@@ -240,11 +258,11 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
             else:
                 return -1
             
-        except Exception:
+        except Exception as e:
             print("staqtapp error: ",e)
 #______________________________________________________________________________________
 
-    def self_assign_variable_name(self, close_static: bool, prepin_cat_dsg: str, var_data: str, dir_path: str, source_name: str) -> int:
+    def self_assign_variable_name(self, prepin_cat_dsg: str, var_data: str, dir_path: str, source_name: str) -> int:
         # @override PySqTppInterface.self_assign_variable_name()
         
         # FUNCTION RETURN-CODES
@@ -284,7 +302,7 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                     if newTqptParser.check_parameter_string(True, prepin_cat_dsg):
                         # parameter checks all ok, build the random variable name, p_fnc_nnnnnnnnnn_b
                         syncLst = [str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10))]
-                        vrNm = prepin_cat_dsg + '_sar_' + ''.join(newTqptParser.rand_shuffle(syncLst)) + '_'
+                        vrNm = prepin_cat_dsg + "_sar_" + ''.join(newTqptParser.rand_shuffle(syncLst)) + "_"
                         if fndCms == True:
                             vrNm += '1'
                         else:
@@ -509,8 +527,6 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                         fileObjTm2X.close()
                     fileObjTm2X = None
                     return 3
-                elif dsg_fnc == 'uvs':
-                    pass
             elif rslt == 1:
                 # no write, is a static locked .tqpt variables source!
                 return -1

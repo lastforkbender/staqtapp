@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.01.722
+# Staqtapp 1.01.834
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.

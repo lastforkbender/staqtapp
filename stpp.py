@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.01.722
+# Staqtapp 1.01.834
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -14,15 +14,16 @@
 
 from PySqTpp_Parser import TqptParser
 from collections import deque
-
-
 #______________________________________________________________________________________
 
+# Staqtapp's normal pilot stpp.<methods()>
 
-
-#______________________________________________________________________________________
-
-
+# makesource - creates a new empty staqtapp tqpt variables source file
+#  addvar - writes new variable and it's data to chosen staqtapp tqpt source file
+#   addvar_sar - adds variables to tqpt source files with collection extensions (@SolaceXn)
+#    changevar - writes new data to chosen variable/staqtapp tqpt source file
+#     findvar - returns true/false of chosen staqtapp source file or multi detailed list
+#      loadvar_deque - returns a deque type list of variable's current stored data 
 
 #______________________________________________________________________________________
 
@@ -205,6 +206,39 @@ def loadvar_deque(isNumbers, varName, folderPath, fileName):
     
 #______________________________________________________________________________________
 
+def changevar(varName, newVarData, folderPath, fileName):
+    
+    # varName=str, newVarData=str, folderPath=str, fileName=str
+    
+    # renews variable data to a existing variable listed of chosen tqpt source file, folder+file
+    
+    rslt = None
+    
+    newTqptParser = TqptParser()
+    if len(folderPath) > 0 and len(fileName) > 0:
+        if newTqptParser.check_parameter_string(False, fileName):
+            rslt = newTqptParser.update_variables_source(varName, newVarData, folderPath, fileName)
+            if rslt == -1:
+                raise Exception("staqtapp<changevar> invalid folderpath @" + folderPath)
+            elif rslt == -2:
+                raise Exception("staqtapp<changevar> variables source file '" + fileName + ".tqpt' was not found @" + folderPath)
+            elif rslt == -3:
+                raise Exception("staqtapp<changevar> newline chars not allowed in variable sources")
+            elif rslt == -4:
+                raise Exception("staqtapp<changevar> no proper data declare(s) '@qp(data):' found")
+            elif rslt == -5:
+                raise Exception("staqtapp<changevar> missing data declare closing '):' ")
+            elif rslt == -6:
+                raise Exception("staqtapp<changevar> variable name '" + varName + "' not found @" + folderPath + "/" + fileName + ".tqpt")
+        else:
+            raise Exception("staqtapp<changevar> invalid filename, allowed chars ._- aA-zZ 0-9")
+    else:
+        raise Exception("staqtapp<changevar> null folderpath and/or null filename")
+    
+
+
+#______________________________________________________________________________________
+
 def findvar(allSources, varName, folderPath, fileName):
     
     # allSources=bool, varName=str, folderPath=str, fileName=str
@@ -237,7 +271,7 @@ def findvar(allSources, varName, folderPath, fileName):
 
 def addvar_sar(catPin, varData, folderPath, fileName):
     
-    # closeAsStatic=bool, catPin=str, varData=str, folderPath=str, fileName=str
+    # catPin=str, varData=str, folderPath=str, fileName=str
     
     # works the same as a staqtapp addvar function however the variable name is assigned to
     # a random ten digit number, also allows data collection of any words used in the data for
@@ -253,7 +287,7 @@ def addvar_sar(catPin, varData, folderPath, fileName):
     newTqptParser = TqptParser()
     if len(folderPath) > 0 and len(fileName) > 0:
         if newTqptParser.check_parameter_string(False, fileName):
-            rslt = newTqptParser.self_assign_variable_name(closeAsStatic, catPin, varData, folderPath, fileName)
+            rslt = newTqptParser.self_assign_variable_name(catPin, varData, folderPath, fileName)
             if rslt == -1:
                 raise Exception("staqtapp<addvar_sar> invalid folderpath @" + folderPath)
             elif rslt == -2:
@@ -270,10 +304,6 @@ def addvar_sar(catPin, varData, folderPath, fileName):
             raise Exception("staqtapp<addvar_sar> invalid filename, allowed chars ._- aA-zZ 0-9")
     else:
         raise Exception("staqtapp<addvar_sar> null folderpath and/or null filename")
-    
-
-
-
 #______________________________________________________________________________________
 
 def test():
@@ -282,15 +312,17 @@ def test():
     
     #makesource(False, False, False, '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    #addvar("vrnm_0002", "@qp(somedata, open, close, 1.1111):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    #addvar("vrnm_1000", "@qp(7.8,9.8,10.000001,turtle7):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    dequeTest = loadvar_deque(False, "vrnm_0002", '/storage/emulated/0/qpython/scripts3/staqtapp-test', "staqtapp-test2")
+    #dequeTest = loadvar_deque(False, "vrnm_1000", '/storage/emulated/0/qpython/scripts3/staqtapp-test', "staqtapp-test2")
     
-    #lst = findvar(True, 'variable1', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    #lst = findvar(True, 'variable99', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    #addvar_sar(False, "sarTest2", "@qp(---Solely, passwords are unsecure):@qp(A great password begins with kat:):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    #addvar_sar("sarTest2", "@qp(corny jokes make some smile more, 3.14159265e):@qp(soup of the day request):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    print(dequeTest)
+    changevar('variableDequeTest4001', '@qp(y+z(i/r)c+1, 9.99999999,no errors please):', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
+    
+    #print(lst)
     
 #______________________________________________________________________________________
     
