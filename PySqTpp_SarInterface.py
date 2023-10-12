@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.01.834
+# Staqtapp 1.01.913
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -22,8 +22,21 @@ class PySqTppSarInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         # subclasshook for the abstract methods defines
-        return (hasattr(subclass, 'acquired_tqpt_source') and callable(subclass.acquired_tqpt_source) and hasattr(subclass, 'write_extension_source') and callable(subclass.write_extension_source) and hasattr(subclass, 'char_bridge') and callable(subclass.char_bridge) and hasattr(subclass, 'word_bridge') and callable(subclass.word_bridge) or NotImplemented)
+        return (hasattr(subclass, 'extr_load_sar_remap') and callable(subclass.extr_load_sar_remap) and hasattr(subclass, 'sar_map') and callable(subclass.sar_map) and hasattr(subclass, 'acquired_tqpt_source') and callable(subclass.acquired_tqpt_source) and hasattr(subclass, 'write_extension_source') and callable(subclass.write_extension_source) and hasattr(subclass, 'char_bridge') and callable(subclass.char_bridge) and hasattr(subclass, 'word_bridge') and callable(subclass.word_bridge) or NotImplemented)
     
+    
+    @abc.abstractmethod
+    def extr_load_sar_remap(self, is_prm_exchng: bool, cat_pin: str, dir_path: str) -> int:
+        # determines pattern cluster & assemble instructions rotations to grouped category pin variables
+        # returns a str list of the instructions in sequence order via set branching & r-temple %attrs/%xn's
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def sar_map(self, is_read: bool, dsg_fnc: str, full_path: str):
+        # read or write instructions with sar methods
+        raise NotImplementedError
+        
     
     @abc.abstractmethod
     def acquired_tqpt_source(self, dsg_fnc: str, item_name: str, item_data: str, dir_path: str, source_name: str):

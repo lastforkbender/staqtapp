@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.01.834
+# Staqtapp 1.01.913
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -17,8 +17,11 @@ from PySqTpp_Alpha import SarAlpha
 
 #______________________________________________________________________________________
 
-
-
+def extrloadsarremap(is_prm, cPn, fPth, sPth):
+    newSarAlpha = SarAlpha()
+    rslt = newSarAlpha.extr_load_sar_remap(is_prm, cPn, fPth, sPth)
+    if rslt == -1:
+        raise Exception("staqtapp<loadsar_remap> invalid file path @" + fPth + '/' + sPth + '.tqpt')
 #______________________________________________________________________________________
 
 def newsaradd(dsg, dt_nm, dt_dt, fPth, sPth):

@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.01.834
+# Staqtapp 1.01.913
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -14,16 +14,28 @@
 
 from PySqTpp_Parser import TqptParser
 from collections import deque
+from stps import extrloadsarremap
 #______________________________________________________________________________________
 
-# Staqtapp's normal pilot stpp.<methods()>
+# Staqtapp's pilot stpp.<methods()>
 
 # makesource - creates a new empty staqtapp tqpt variables source file
-#  addvar - writes new variable and it's data to chosen staqtapp tqpt source file
-#   addvar_sar - adds variables to tqpt source files with collection extensions (@SolaceXn)
-#    changevar - writes new data to chosen variable/staqtapp tqpt source file
-#     findvar - returns true/false of chosen staqtapp source file or multi detailed list
-#      loadvar_deque - returns a deque type list of variable's current stored data 
+
+# addvar - writes new variable and it's data to chosen staqtapp tqpt source file
+
+# addvar_sar - adds variables to tqpt source files with collection extensions (@SolaceXn)
+
+# changevar - writes new data to chosen variable/staqtapp tqpt source file
+
+# findvar - returns true/false of chosen staqtapp source file or multi detailed list
+
+# loadvar_deque - returns a deque type list of variable's current stored data
+
+# loadsar_temple - (TO-DO) returns most recent added temple variable added to the chosen tqpt source (@SolaceXn)
+
+# loadsar_remap - see PySqTppSarAlpha, adds temple variable/sar variables multi-pointer type to tqpt sources (@SolaceXn)
+
+# loadsar_demap - (TO-DO) removes temple variable types from tqpt variable sources, including any sar variables (@SolaceXn)
 
 #______________________________________________________________________________________
 
@@ -206,6 +218,13 @@ def loadvar_deque(isNumbers, varName, folderPath, fileName):
     
 #______________________________________________________________________________________
 
+def loadsar_remap(isPrmExc, catPin, folderPath, fileName):
+        
+    # isPrmExc=bool, catPin=str, folderPath=str, fileName=str
+        
+    extrloadsarremap(isPrmExc, catPin, folderPath, fileName)
+#______________________________________________________________________________________
+
 def changevar(varName, newVarData, folderPath, fileName):
     
     # varName=str, newVarData=str, folderPath=str, fileName=str
@@ -234,9 +253,6 @@ def changevar(varName, newVarData, folderPath, fileName):
             raise Exception("staqtapp<changevar> invalid filename, allowed chars ._- aA-zZ 0-9")
     else:
         raise Exception("staqtapp<changevar> null folderpath and/or null filename")
-    
-
-
 #______________________________________________________________________________________
 
 def findvar(allSources, varName, folderPath, fileName):
@@ -318,51 +334,14 @@ def test():
     
     #lst = findvar(True, 'variable99', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    #addvar_sar("sarTest2", "@qp(corny jokes make some smile more, 3.14159265e):@qp(soup of the day request):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    #addvar_sar("tiger", "@qp(9000):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    changevar('variableDequeTest4001', '@qp(y+z(i/r)c+1, 9.99999999,no errors please):', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
+    #changevar('variableDequeTest4001', '@qp(y+z(i/r)c+1, 9.99999999,no errors please):', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
+    
+    loadsar_remap(False, 'tiger', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
     #print(lst)
     
 #______________________________________________________________________________________
     
 test()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

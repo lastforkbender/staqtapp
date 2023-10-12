@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.01.834
+# Staqtapp 1.01.913
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -473,7 +473,6 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                         return 1
             elif dsg_fnc == 'lvsd' or dsg_fnc == 'sv':
                 # - OPTIMIZED -
-                ptrnStr = re.compile(rb'<'+re.escape(str.encode(glb_var))+rb'=')
                 with open(folder_path + '/' + tqpt_name + '.tqpt', mode='r') as fileObjPf:
                     with mmap.mmap(fileObjPf.fileno(), length=0, access=mmap.ACCESS_READ) as mmapObjPf:
                         try:
