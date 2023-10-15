@@ -307,9 +307,9 @@ class SarAlpha(PySqTpp_SarInterface.PySqTppSarInterface):
                     # outside sar specific functions of this global variables library uses
                     idx = 0
                     idxLen = len(vrNmrLst)
-                    rvmLst = []*idxLen
+                    rvmLst = [0]*idxLen
                     while idx < idxLen:
-                        rvmLst.append(rngLst[idx] + ':' + rngLst[idx+1] + '-' + str(tLenL) + ':' + str(tLenR) + '-' + '2:3')
+                        rvmLst[idx] = rngLst[idx] + ':' + rngLst[idx+1] + '-' + str(tLenL) + ':' + str(tLenR) + '-' + '2:3'
                         idx+=1
                     newSarAlpha = SarAlpha()
                     newSarAlpha.write_extension_source('wb_sar_remap', ",".join(rvmLst), dir_path, source_name)

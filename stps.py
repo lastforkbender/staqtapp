@@ -22,6 +22,8 @@ def extrloadsarremap(is_prm, cPn, fPth, sPth):
     rslt = newSarAlpha.extr_load_sar_remap(is_prm, cPn, fPth, sPth)
     if rslt == -1:
         raise Exception("staqtapp<loadsar_remap> invalid file path @" + fPth + '/' + sPth + '.tqpt')
+    elif rslt == -2:
+        raise Exception("staqtapp<loadsar_remap> no found category for sar variables @" + fPth + '/' + sPth + '.tqpt')
 #______________________________________________________________________________________
 
 def newsaradd(dsg, dt_nm, dt_dt, fPth, sPth):

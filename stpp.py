@@ -15,27 +15,34 @@
 from PySqTpp_Parser import TqptParser
 from collections import deque
 from stps import extrloadsarremap
+from stpu import ult_varname
 #______________________________________________________________________________________
 
 # Staqtapp's pilot stpp.<methods()>
+
 
 # makesource - creates a new empty staqtapp tqpt variables source file
 
 # addvar - writes new variable and it's data to chosen staqtapp tqpt source file
 
-# addvar_sar - adds variables to tqpt source files with collection extensions (@SolaceXn)
+# addsar - adds sar variables to tqpt source files with collection extensions, see sar_remap, sar_demap, loadsar_temple
 
 # changevar - writes new data to chosen variable/staqtapp tqpt source file
 
-# findvar - returns true/false of chosen staqtapp source file or multi detailed list
+# findvar - returns true/false of chosen staqtapp source file or a multi-detailed find list
 
 # loadvar_deque - returns a deque type list of variable's current stored data
 
-# loadsar_temple - (TO-DO) returns most recent added temple variable added to the chosen tqpt source (@SolaceXn)
+# loadsar_temple - [TO-DO] front end access @ de-entaglement of common global variable entaglements & security issues, hidden obscured access
 
-# loadsar_remap - see PySqTppSarAlpha, adds temple variable/sar variables multi-pointer type to tqpt sources (@SolaceXn)
+# sar_remap - see PySqTppSarAlpha, adds temple variable/sar variables multi-pointer type to tqpt sources
 
-# loadsar_demap - (TO-DO) removes temple variable types from tqpt variable sources, including any sar variables (@SolaceXn)
+# sar_demap - [TO-DO] assigns front keys(natural) & back keys(non-natural) to temple variables/pointers secure wrapped/obfuscated and/or locked
+
+
+# UTILITY:
+
+# scanvar - searches a py module for potential global variable conflicts with a provided global variable name, returns suggested smart str global variable name or None
 
 #______________________________________________________________________________________
 
@@ -218,9 +225,16 @@ def loadvar_deque(isNumbers, varName, folderPath, fileName):
     
 #______________________________________________________________________________________
 
-def loadsar_remap(isPrmExc, catPin, folderPath, fileName):
+def sar_remap(isPrmExc, catPin, folderPath, fileName):
         
     # isPrmExc=bool, catPin=str, folderPath=str, fileName=str
+    
+    # adds temple variable/sar variables multi-pointer type to tqpt
+    # variable source file that already has sar variables added to it,
+    # the category pin must be a parameter for what sar variables
+    # will the temple variable be connected to when added to file; can
+    # have multiple remaps applied of a single source file, however
+    # staqtapp only load temple variables of a most recent date/time
         
     extrloadsarremap(isPrmExc, catPin, folderPath, fileName)
 #______________________________________________________________________________________
@@ -229,7 +243,7 @@ def changevar(varName, newVarData, folderPath, fileName):
     
     # varName=str, newVarData=str, folderPath=str, fileName=str
     
-    # renews variable data to a existing variable listed of chosen tqpt source file, folder+file
+    # renews variable data @ existing variable listed from chosen tqpt source file, folder+file
     
     rslt = None
     
@@ -285,7 +299,7 @@ def findvar(allSources, varName, folderPath, fileName):
 
 #______________________________________________________________________________________
 
-def addvar_sar(catPin, varData, folderPath, fileName):
+def addsar(catPin, varData, folderPath, fileName):
     
     # catPin=str, varData=str, folderPath=str, fileName=str
     
@@ -305,23 +319,36 @@ def addvar_sar(catPin, varData, folderPath, fileName):
         if newTqptParser.check_parameter_string(False, fileName):
             rslt = newTqptParser.self_assign_variable_name(catPin, varData, folderPath, fileName)
             if rslt == -1:
-                raise Exception("staqtapp<addvar_sar> invalid folderpath @" + folderPath)
+                raise Exception("staqtapp<addsar> invalid folderpath @" + folderPath)
             elif rslt == -2:
-                raise Exception("staqtapp<addvar_sar> variables source file '" + fileName + ".tqpt' was not found @" + folderPath)
+                raise Exception("staqtapp<addsar> variables source file '" + fileName + ".tqpt' was not found @" + folderPath)
             elif rslt == -3:
-                raise Exception("staqtapp<addvar_sar> newline chars not allowed in variable sources")
+                raise Exception("staqtapp<addsar> newline chars not allowed in variable sources")
             elif rslt == -4:
-                raise Exception("staqtapp<addvar_sar> no proper data declare(s) '@qp(data):' found")
+                raise Exception("staqtapp<addsar> no proper data declare(s) '@qp(data):' found")
             elif rslt == -5:
-                raise Exception("staqtapp<addvar_sar> missing data declare closing '):' ")
+                raise Exception("staqtapp<addsar> missing data declare closing '):' ")
             elif rslt == -6:
-                raise Exception("staqtapp<addvar_sar> invalid category pin, allowed chars _ aA-zZ 0-9")
+                raise Exception("staqtapp<addsar> invalid category pin, allowed chars _ aA-zZ 0-9")
         else:
-            raise Exception("staqtapp<addvar_sar> invalid filename, allowed chars ._- aA-zZ 0-9")
+            raise Exception("staqtapp<addsar> invalid filename, allowed chars ._- aA-zZ 0-9")
     else:
-        raise Exception("staqtapp<addvar_sar> null folderpath and/or null filename")
+        raise Exception("staqtapp<addsar> null folderpath and/or null filename")
 #______________________________________________________________________________________
 
+def scanvar(varName, fullPath):
+    
+    # UTILITY FUNCTION:
+        
+    # varName=str, fullPath=str
+    
+    # scans/search of entire py module's text - function names, function parameters,
+    # class names and all variable declared names @fullPath given for a py module,
+    # returns suggested safe glb variable name by comparison checks of the py module
+    # and this function's parameter @varName, returns None if the @varName is safe
+    
+    return ult_varname(varName, fullPath)
+#______________________________________________________________________________________
 def test():
     
     #newTqptParser = TqptParser()
@@ -338,7 +365,9 @@ def test():
     
     #changevar('variableDequeTest4001', '@qp(y+z(i/r)c+1, 9.99999999,no errors please):', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
     
-    loadsar_remap(False, 'tiger', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    #loadsar_remap(False, "tiger", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    
+    scanvar("someVar", '/storage/emulated/0/qpython/scripts3/ynos.py')
     
     #print(lst)
     
