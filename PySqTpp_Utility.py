@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.01.913
+# Staqtapp 1.01.957
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -42,10 +42,11 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
         swStB = False
         swStC = False
         swStEE = False
+        swStRS = False
         swFc = False
         swCl = False
         
-        #aChrs = set("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+        aChrs = set("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
         
         try:
             if os.path.isfile(full_path):
@@ -65,86 +66,98 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                             cCnt = 2
                     else:
                     #-------------------------------------------------------------------------------------------------------------------------------
-                    # FUNCTION CHECK/RECORD
-                        if swFc:
+                    # FUNCTION CHECKs/RECORDs
+                        if swFc == True:
                             if swStA == False and cChr == 'f':
                                 # function define, begin record all the way thru to the
                                 # parameters closing ) on next switch flip using cStr
                                 swStA = True
+                                swStRS = True
                             else:
-                                if swStA == False:
-                                    swFc == False
-                                else:
-                                    if cChr == '(':
-                                        # is begin ( of parameters naming, store the function name in the
-                                        # set, or is end ) of parameters naming, ?<|split-|parse> ?store to the set
-                                        pySet.add(cStr.strip(' '))
-                                        cStr = ''
-                                    elif cChr == ")":
-                                        if len(cStr) > 0:
-                                            if swStB == True:
-                                                cLst = cStr.strip(' ').split(':')
-                                                swStEE = True
-                                            elif swStB == False and swStC == True:
-                                                cLst = cStr.strip(' ').split(',')
-                                                swStEE = True
-                                            elif swStB == False and swStC == False:
-                                                if cStr != ' ':
-                                                    pySet.add(cStr.strip(' '))
-                                            if swStEE == True:
-                                                cLen = len(cLst)
-                                                for idSX in range(cLen):
-                                                    if swStB == True:
-                                                        if cLst[idSX].find(',') != -1:
-                                                            swStA = True
-                                                            cStr = ''
-                                                            for chr in cLst[idSX]:
-                                                                if swStA == True and chr == ',':
-                                                                    swStA = False
-                                                                elif swStA == False:
-                                                                    cStr += chr
-                                                            pySet.add(cStr.strip(' '))
-                                                        else:
-                                                            pySet.add(cLst[idSX].strip(' '))
-                                                        if idSX == cLen-2:
-                                                            break
-                                                    else:
-                                                        # is swStC, no echo
-                                                        pySet.add(cLst[idSX].strip(' '))
-                                        swStA = False
-                                        swStB = False
-                                        swStC = False
-                                        swStEE = False
-                                        swFc = False
-                                        cStr = ''
-                                    elif cChr == '\n':
-                                        # altogether false method read of comments, some cat typing on a keyboard or etc.
-                                        swStA = False
-                                        swStB = False
-                                        swStC = False
-                                        swStEE = False
-                                        swFc = False
-                                        cStr = ''
+                                if swStRS == True:
+                                    # check if is proper space after the keyword def; of learned on this
+                                    # here, python interpreter is strange place @ space chr compares
+                                    if pChr == 'f' and cChr == " ":
+                                        swStRS = False
                                     else:
-                                        if cChr == ":":
-                                            # *echo ^lego*
-                                            if swStB == False:
-                                                swStB = True
-                                        elif cChr == ',':
-                                            if swStC == False:
-                                                swStC = True
-                                        cStr += cChr
+                                        swStRS = False
+                                        swStFc = False
+                                        swStA = False
+                                else:
+                                    if swStA == True:
+                                        if cChr == '(':
+                                            # is begin ( of parameters naming, store the function name in the
+                                            # set, or is end ) of parameters naming, ?<|split-|parse> ?store to the set
+                                            if len(cStr) > 4:
+                                                pySet.add(cStr.strip(' '))
+                                            cStr = ''
+                                        elif cChr == ")":
+                                            if len(cStr) > 0:
+                                                if swStB == True:
+                                                    cLst = cStr.strip(' ').split(':')
+                                                    swStEE = True
+                                                elif swStB == False and swStC == True:
+                                                    cLst = cStr.strip(' ').split(',')
+                                                    swStEE = True
+                                                elif swStB == False and swStC == False:
+                                                    if cStr != ' ' and len(cStr) > 4:
+                                                        pySet.add(cStr.strip(' '))
+                                                if swStEE == True:
+                                                    cLen = len(cLst)
+                                                    for idSX in range(cLen):
+                                                        if swStB == True:
+                                                            if cLst[idSX].find(',') != -1:
+                                                                swStA = True
+                                                                cStr = ''
+                                                                for chr in cLst[idSX]:
+                                                                    if swStA == True and chr == ',':
+                                                                        swStA = False
+                                                                    elif swStA == False:
+                                                                        cStr += chr
+                                                                if len(cStr) > 4:
+                                                                    pySet.add(cStr.strip(' '))
+                                                            else:
+                                                                if len(cLst[idSX]) > 4:
+                                                                    pySet.add(cLst[idSX].strip(' '))
+                                                            if idSX == cLen-2:
+                                                                break
+                                                        else:
+                                                            # is swStC, no echo
+                                                            if len(cLst[idSX]) > 4:
+                                                                pySet.add(cLst[idSX].strip(' '))
+                                            swStA = False
+                                            swStB = False
+                                            swStC = False
+                                            swStEE = False
+                                            swFc = False
+                                            cStr = ''
+                                        elif cChr == '\n':
+                                            # altogether false method read of comments, some cat typing on a keyboard or etc.
+                                            swStA = False
+                                            swStB = False
+                                            swStC = False
+                                            swStEE = False
+                                            swFc = False
+                                            cStr = ''
+                                        else:
+                                            if cChr == ":":
+                                                # *echo ^lego*
+                                                if swStB == False:
+                                                    swStB = True
+                                            elif cChr == ',':
+                                                if swStC == False:
+                                                    swStC = True
+                                            cStr += cChr
                 #-------------------------------------------------------------------------------------------------------------------------------
-                # CLASS CHECK/RECORD
+                # CLASS CHECKs/RECORDs
                         elif swCl:
                             if swStB == False:
                                 if cCnt == 2 and cChr == 'a':
                                     swStA = True
                                 elif cCnt == 3 and cChr == 's':
-                                    swStA = True
+                                    pass
                                 elif cCnt == 4 and cChr == 's':
-                                    swStA = True
-                                    # Matthew 21:2
+                                    pass
                                 else:
                                     swStA = False
                                     swCl = False
@@ -153,22 +166,68 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                                 else:
                                     swStA = False
                                     swCl = False
-                                if cCnt == 4 and swStA == True:
+                                if cCnt == 5 and swStA == True:
                                     # a class declaring...... throw B on and A off for the class name record
                                     swStB = True
                                     swStA = False
                             else:
-                                print('begin of class name record...')
-                                swStB = False
-                                swCl = False
-                                
-                #-------------------------------------------------------------------------------------------------------------------------------
-                        # k
-                #-------------------------------------------------------------------------------------------------------------------------------
+                                # skip the space between class keyword <to> class name, swStC
+                                if swStC == False:
+                                    swStC = True
+                                else:
+                                    if set(cChr).issubset(aChrs) == False:
+                                        if len(cStr) > 4:
+                                            pySet.add(cStr)
+                                        swStB = False
+                                        swStC = False
+                                        swCl = False
+                                        cStr = ''
+                                        cCnt = 0
+                                    else:
+                                        cStr += cChr
                     pChr = cChr
-                for i in pySet:
-                    print(i)
-                return None
+                #-------------------------------------------------------------------------------------------------------------------------------
+                # VARIABLE CHECKs/RECORDs
+                # reverse entire string for variable names gather/add to pySet
+                pyStrRv = pyStr[::-1]
+                # empty memory @ original str
+                pyStr = None
+                cStr = ''
+                swStA = False
+                swStRS = False
+                for cChr in pyStrRv:
+                    if swStRS == False:
+                        if cChr == '=':
+                            swStA = True
+                            swStRS = True
+                    else:
+                        if swStA == True:
+                            swStA = False
+                            if cChr == " ":
+                                pass
+                            else:
+                                if set(cChr).issubset(aChrs) == False:
+                                    swStRS = False
+                                else:
+                                    cStr += cChr
+                        else:
+                            if set(cChr).issubset(aChrs) == False:
+                                swStRS = False
+                                if len(cStr) > 4:
+                                    pySet.add(cStr[::-1])
+                                cStr = ''
+                            else:
+                                cStr += cChr
+                # empty memory @ pyStrRv
+                pyStrRv = None
+                # finally make check if wanted <var_name> is not already listed in the py module,
+                # if is then create a suggested smart global variable naming for use as returned
+                if set(var_name).issubset(pySet) == False:
+                    # return var_name given in parameter
+                    return var_name
+                else:
+                    #TO-DO
+                    pass
             else:
                 return '!'
         except Exception as e:

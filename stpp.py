@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.01.913
+# Staqtapp 1.01.957
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -17,33 +17,55 @@ from collections import deque
 from stps import extrloadsarremap
 from stpu import ult_varname
 #______________________________________________________________________________________
+#______________________________________________________________________________________
+#______________________________________________________________________________________
+#______________________________________________________________________________________
+#______________________________________________________________________________________
+#______________________________________________________________________________________
+#______________________________________________________________________________________
+#______________________________________________________________________________________
+#______________________________________________________________________________________
 
-# Staqtapp's pilot stpp.<methods()>
+# STAQTAPP'S  PILOT - stpp.methods()
 
 
-# makesource - creates a new empty staqtapp tqpt variables source file
+# [.makesource] - creates a new empty staqtapp tqpt variables source file
 
-# addvar - writes new variable and it's data to chosen staqtapp tqpt source file
+# [.addvar] - writes new variable and it's data to chosen staqtapp tqpt source file
 
-# addsar - adds sar variables to tqpt source files with collection extensions, see sar_remap, sar_demap, loadsar_temple
+# [.addsar] - adds sar variables to tqpt source files with collection extensions, see
+# sar_remap, sar_demap, loadsar_temple
 
-# changevar - writes new data to chosen variable/staqtapp tqpt source file
+# [.changevar] - writes new data to chosen variable/staqtapp tqpt source file
 
-# findvar - returns true/false of chosen staqtapp source file or a multi-detailed find list
+# [.findvar] - returns true/false of chosen staqtapp source file or a multi-detailed find list
 
-# loadvar_deque - returns a deque type list of variable's current stored data
+# [.loadvar_deque] - returns a deque type list of variable's current stored data
 
-# loadsar_temple - [TO-DO] front end access @ de-entaglement of common global variable entaglements & security issues, hidden obscured access
+# [.loadsar_temple] - [TO-DO] front end access @ de-entaglement of common global
+# variable entaglements & security issues, hidden obscured access
 
-# sar_remap - see PySqTppSarAlpha, adds temple variable/sar variables multi-pointer type to tqpt sources
+# [.sar_remap] - see PySqTppSarAlpha, adds temple variable/sar variables multi-pointer
+# type to tqpt sources
 
-# sar_demap - [TO-DO] assigns front keys(natural) & back keys(non-natural) to temple variables/pointers secure wrapped/obfuscated and/or locked
+# [.sar_demap] - [TO-DO] assigns front keys(natural) & back keys(non-natural) to temple
+# variables/pointers secure wrapped/obfuscated and/or locked
 
 
 # UTILITY:
 
-# scanvar - searches a py module for potential global variable conflicts with a provided global variable name, returns suggested smart str global variable name or None
 
+# [.scanvar] - searches a py module for potential global variable conflicts with a provided
+# global variable name, returns suggested smart str global variable name or wanted var
+# name as given; does not use regex and very accurate scan of all classes, functions and
+# variables names, including all variable naming inside any function's parameters
+
+#______________________________________________________________________________________
+#______________________________________________________________________________________
+#______________________________________________________________________________________
+#______________________________________________________________________________________
+#______________________________________________________________________________________
+#______________________________________________________________________________________
 #______________________________________________________________________________________
 
 def makesource(isStatic, isMakeFolder, isEraseSource, folderPath, fileName):
