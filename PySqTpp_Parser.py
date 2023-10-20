@@ -3,13 +3,15 @@
 
 
 
-# Staqtapp 1.01.957
+# Staqtapp 1.02.073
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
 
 
-# Email: 5deg.blk.blt.cecil(at)gmail
+# email: 5deg.blk.blt.cecil(@)gmail
+# github: https://github.com/lastforkbender/staqtapp
+# contact: https://pastebin.com/eumqiBAx
 
 
 import PySqTpp_Interface
@@ -233,7 +235,6 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                                     return -6
                                 rslt = mmapObjUv.find(b'\n', nrRslt[1])
                                 if rslt != -1:
-                                    # for now, not of the technical naming... Staqtapp
                                     ptrnStr = mmapObjUv[0:nrRslt[0]-1]
                                     joinStr = mmapObjUv[rslt:len(mmapObjUv)]
                                 else:
@@ -299,7 +300,7 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                     elif otRslt == -4:
                         return -5
                     # check prepin_cat_dsg variable name id is of valid chars
-                    if newTqptParser.check_parameter_string(True, prepin_cat_dsg):
+                    if newTqptParser.check_parameter_string(True, prepin_cat_dsg, False):
                         # parameter checks all ok, build the random variable name, p_fnc_nnnnnnnnnn_b
                         syncLst = [str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10))]
                         vrNm = prepin_cat_dsg + "_sar_" + ''.join(newTqptParser.rand_shuffle(syncLst)) + "_"
@@ -321,7 +322,84 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
         except Exception as e:
             print("staqtapp error: ",e)
 #______________________________________________________________________________________
-   
+
+    def load_variables_source_str(self, var_name, dir_path, source_name):
+        # @override PySqTppInterface.load_variables_source_str()
+        
+        # FUNCTION RETURN-CODES
+            
+        # ------------------------------------------------------------------------
+        # return -1   : invalid folder path
+        # return -2   : invalid filename path
+        # return -3   : variable name was not found @dir_path/source_name
+        # return -4   : newline chars found........
+        # return -5   : false all numbers...
+        # return -6   : missing @qp(...): taggings or invalid
+        # return -7   : missing closing ): of qp( data declare
+        # return -8   : non-supported variable type @var_name
+        # return -9   : no finds from a variable list get
+        # return -10 : no valid data return from result list finds
+        
+        rslt = None
+        fncRtrn = None
+        
+        try:
+            if os.path.isdir(dir_path):
+                if os.path.isfile(dir_path + '/' + source_name + '.tqpt'):
+                    newTqptParser = TqptParser()
+                    # check is a str type or a list type
+                    if isinstance(var_name, str) == True:
+                        rslt = newTqptParser.tqpt_map(True, False, 'lvss', False, var_name, None, dir_path, source_name)
+                        if rslt == '...':
+                            return -3
+                        else:
+                            fncRtrn = newTqptParser.char_regularity(False, False, 'lvss', rslt)
+                            if fncRtrn == -1:
+                                return -4
+                            elif fncRtrn == -2:
+                                return -5
+                            elif fncRtrn == -3:
+                                return -6
+                            elif fncRtrn == -4:
+                                return -7
+                            else:
+                                if len(fncRtrn) > 1:
+                                    return fncRtrn
+                                else:
+                                    return fncRtrn[0]
+                    elif isinstance(var_name, list) == True:
+                        # is a variables names list, get all variables' data lines in a list, lvss_lr call
+                        rslt = newTqptParser.tqpt_map(True, False, 'lvss_lr', False, var_name, None, dir_path, source_name)
+                        if rslt[0] == "_@qp!(!_!!_!)!":
+                            # no variables in the list we're found!
+                            return -9
+                        else:
+                            rtrnLst = []
+                            lenLst = len(rslt)
+                            for vrn in range(lenLst):
+                                fncRtrn = newTqptParser.char_regularity(False, False, 'lvss', rslt[vrn])
+                                if isinstance(fncRtrn, list) == True and len(fncRtrn) > 0:
+                                    rtrnLst.append(fncRtrn)
+                            lenLst = len(rtrnLst)
+                            if lenLst == 0:
+                                return -10
+                            else:
+                                if lenLst > 1:
+                                    return rtrnLst
+                                else:
+                                    return rtrnLst[0]
+                    else:
+                        return -8
+                else:
+                    # invalid filename
+                    return -2
+            else:
+                # no valid directory folder
+                return -1
+                
+        except Exception as e:
+            print("staqtapp error: ",e)
+#______________________________________________________________________________________
     def load_variables_source_deque(self, is_numbers: bool, var_name: str, dir_path: str, source_name: str):
         # @override PySqTppInterface.load_variables_source_list()
         
@@ -437,7 +515,7 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
             print("staqtapp error: ",e)
 #______________________________________________________________________________________
 
-    def tqpt_map(self, is_read: bool, is_write: bool, dsg_fnc: str, is_overwrite: bool, glb_var: str, glb_var_data: str, folder_path: str, tqpt_name: str):
+    def tqpt_map(self, is_read, is_write, dsg_fnc, is_overwrite, glb_var, glb_var_data, folder_path, tqpt_name):
         # @override PySqTppInterface.tqpt_map()
     
         # FUNCTION RETURN-CODES
@@ -451,14 +529,40 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
     
         tqptLn = ''
         ptrnStr = ''
-        lnsCnt = 0
+        lnsCnt = None
         nrRslt = None
         rslt = None
         vrblFnd = False
         
         # -------- READ TQPT VARIABLES SOURCE FILES -------------------------------
         if is_read == True and is_write == False:
-            if dsg_fnc == 'avs' or dsg_fnc == "uvs":
+            if dsg_fnc == 'lvss_lr':
+                # - OPTIMIZED -
+                dtLst = []
+                with open(folder_path + '/' + tqpt_name + '.tqpt', mode='r') as fObjLlr:
+                    with mmap.mmap(fObjLlr.fileno(), length=0, access=mmap.ACCESS_READ) as mObjLlr:
+                        lnsCnt = len(glb_var)
+                        nrlStr = mObjLlr.read()
+                        for lr in range(lnsCnt):
+                            try:
+                                nrRslt = re.search(rb'<'+re.escape(str.encode(glb_var[lr]))+rb'=', nrlStr).span(0)
+                            except Exception as e:
+                                nrRslt = None
+                            if nrRslt != None:
+                                vrblFnd = True
+                                rslt = mObjLlr.find(b'\n', nrRslt[1])
+                                if rslt != -1:
+                                    tqptLn = mObjLlr[nrRslt[1]:rslt-1]
+                                    dtLst.append(bytes.decode(tqptLn, 'utf-8'))
+                        mObjLlr.close()
+                    mObjLlr = None
+                if vrblFnd == True:
+                    return dtLst
+                else:
+                    dtLst.append('_@qp!(!_!!_!)!')
+                    return dtLst
+            #--------------------------------------------------------------------------------------------------------------------------------------------
+            elif dsg_fnc == 'avs' or dsg_fnc == "uvs":
                 # - OPTIMIZED -
                 ptrnStr = re.compile(rb'<'+re.escape(str.encode(glb_var))+rb'=')
                 with open(folder_path + '/' + tqpt_name + '.tqpt', mode='r') as fileObjTm1:
@@ -471,7 +575,8 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                         return 2
                     else:
                         return 1
-            elif dsg_fnc == 'lvsd' or dsg_fnc == 'sv':
+            #--------------------------------------------------------------------------------------------------------------------------------------------
+            elif dsg_fnc == 'lvsd' or dsg_fnc == 'lvss' or dsg_fnc == 'sv':
                 # - OPTIMIZED -
                 with open(folder_path + '/' + tqpt_name + '.tqpt', mode='r') as fileObjPf:
                     with mmap.mmap(fileObjPf.fileno(), length=0, access=mmap.ACCESS_READ) as mmapObjPf:
@@ -481,24 +586,24 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                             nrRslt = None
                         if nrRslt != None:
                             vrblFnd = True
-                            if dsg_fnc == 'lvsd':
+                            if dsg_fnc == 'lvss' or dsg_fnc == 'lvsd':
                                 rslt = mmapObjPf.find(b'\n', nrRslt[1])
                             else:
                                 rslt = 1
                             if rslt != -1:
-                                if dsg_fnc == 'lvsd':
+                                if dsg_fnc == 'lvss' or dsg_fnc == 'lvsd':
                                     tqptLn = mmapObjPf[nrRslt[1]:rslt-1]
                             else:
                                 vrblFnd = False
                         mmapObjPf.close()
                     mmapObjPf = None
                     if vrblFnd == True:
-                        if dsg_fnc == 'lvsd':
+                        if dsg_fnc == 'lvss' or dsg_fnc == 'lvsd':
                             return bytes.decode(tqptLn, 'utf-8')
                         else:
                             return 1
                     else:
-                        if dsg_fnc == 'lvsd':
+                        if dsg_fnc == 'lvss' or dsg_fnc == 'lvsd':
                             return '...'
                         else:
                             return -1
@@ -563,17 +668,24 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                 return -2
 #______________________________________________________________________________________
 
-    def check_parameter_string(self, is_variable: bool, parameter: str) -> bool:
+    def check_parameter_string(self, is_variable, parameter, is_list):
         # @override PySqTppInterface.check_parameter_string()
         
         # check if a string parameter is of valid chars
         try:
-            if is_variable:
+            if is_variable == True:
                 alwdChrsVars = set("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-                if set(parameter).issubset(alwdChrsVars):
-                    return True
+                if is_list == False:
+                    if set(parameter).issubset(alwdChrsVars) == True:
+                        return True
+                    else:
+                        return False
                 else:
-                    return False
+                    lenLst = len(parameter)
+                    for prm in range(lenLst):
+                        if set(parameter[prm]).issubset(alwdChrsVars) == False:
+                            return False
+                    return True
             else:
                 alwdChrsFlnm = set("._-abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
                 if set(parameter).issubset(alwdChrsFlnm):
@@ -599,6 +711,7 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
         # return -4   : missing a closing ): for data declare @qp(
         
         dqRtn = deque()
+        lstRtn = []
         dqLst = None
         qdLst = None
         cptDatStr = ''
@@ -662,17 +775,25 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                             if calling_function == 'lvsd':
                                 qdLst = [dcml(x.strip(' ')) for x in dqLst]
                                 dqRtn.append(qdLst)
+                            elif calling_function == 'lvss':
+                                lstRtn.append(dqLst)
                         elif qpCmsVdSw == False and qpDcmVdSw == True:
                             if calling_function == 'lvsd':
                                 dqRtn.append(dcml(cptDatStr.strip(' ')))
+                            elif calling_function == 'lvss':
+                                lstRtn.append(cptDatStr)
                         elif qpCmsVdSw == True and qpDcmVdSw == False:
                             dqLst = cptDatStr.split(',')
                             if calling_function == 'lvsd':
                                 qdLst = [int(x.strip(' ')) for x in dqLst]
                                 dqRtn.append(qdLst)
+                            elif calling_function == 'lvss':
+                                lstRtn.append(dqLst)
                         elif qpCmsVdSw == False and qpDcmVdSw == False:
                             if calling_function == 'lvsd':
                                 dqRtn.append(int(cptDatStr.strip(' ')))
+                            elif calling_function == 'lvss':
+                                lstRtn.append(cptDatStr)
                     elif is_read_only == False and is_all_numbers == False:
                         if qpCmsVdSw == True:
                             # has comma adding to data declare string
@@ -691,12 +812,18 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                                 if qpNmrVdSw == True and qpNmrDcSw == True:
                                     if calling_function == 'lvsd':
                                         dqRtn.append(dcml(dqLst[ds].strip(' ')))
+                                    elif calling_function == 'lvss':
+                                        lstRtn.append(dqLst[ds])
                                 elif qpNmrVdSw == True and qpNmrDcSw == False:
                                     if calling_function == 'lvsd':
                                         dqRtn.append(int(dqLst[ds].strip(' ')))
+                                    elif calling_function == 'lvss':
+                                        lstRtn.append(dqLst[ds])
                                 elif qpNmrVdSw == False:
                                     if calling_function == 'lvsd':
                                         dqRtn.append(dqLst[ds])
+                                    elif calling_function == 'lvss':
+                                        lstRtn.append(dqLst[ds])
                         else:
                             # has no comma addings to data declare string
                             qpNmrVdSw = False
@@ -712,12 +839,18 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                             if qpNmrVdSw == True and qpNmrDcSw == True:
                                 if calling_function == 'lvsd':
                                     dqRtn.append(dcml(cptDatStr.strip(' ')))
+                                elif calling_function == 'lvss':
+                                    lstRtn.append(cptDatStr)
                             elif qpNmrVdSw == True and qpNmrDcSw == False:
                                 if calling_function == 'lvsd':
                                     dqRtn.append(int(cptDatStr.strip(' ')))
+                                elif calling_function == 'lvss':
+                                    lstRtn.append(cptDatStr)
                             elif qpNmrVdSw == False:
                                 if calling_function == 'lvsd':
                                     dqRtn.append(cptDatStr)
+                                elif calling_function == 'lvss':
+                                    lstRtn.append(cptDatStr)
                     qpPrgRstT = True
                     if qpCmsVdSw == True:
                         qpCmrFncr = True
@@ -738,6 +871,8 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
             if is_read_only == False:
                 if calling_function == 'lvsd':
                     return dqRtn
+                elif calling_function == 'lvss':
+                    return lstRtn
             else:
                 if is_all_numbers == True:
                     return 1

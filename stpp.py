@@ -3,13 +3,15 @@
 
 
 
-# Staqtapp 1.01.957
+# Staqtapp 1.02.073
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
 
 
-# Email: 5deg.blk.blt.cecil(at)gmail
+# email: 5deg.blk.blt.cecil(@)gmail
+# github: https://github.com/lastforkbender/staqtapp
+# contact: https://pastebin.com/eumqiBAx
 
 
 from PySqTpp_Parser import TqptParser
@@ -39,6 +41,8 @@ from stpu import ult_varname
 # [.changevar] - writes new data to chosen variable/staqtapp tqpt source file
 
 # [.findvar] - returns true/false of chosen staqtapp source file or a multi-detailed find list
+
+# [.loadvar_str] - returns str or list(strings) type from staqtapp tqpt source files variable(s)
 
 # [.loadvar_deque] - returns a deque type list of variable's current stored data
 
@@ -79,7 +83,7 @@ def makesource(isStatic, isMakeFolder, isEraseSource, folderPath, fileName):
     	# is ||||:* at top of file or ||||:_ for non-static read/write tqpt files
     	
     	
-    	# Boolean arguments use for <makesource> :)
+    	# Boolean arguments use for <makesource>
     
     # ((isMakeSource==True and isEraseSource==True)) seeks overwrite of source file or
     # make new empty source file from path/name given, will overwrite a existing
@@ -108,7 +112,7 @@ def makesource(isStatic, isMakeFolder, isEraseSource, folderPath, fileName):
         # overwrite any .tqpt variables source file to empty is true
         
             if len(folderPath) > 0 and len(fileName) > 0:
-                if newTqptParser.check_parameter_string(False, fileName):
+                if newTqptParser.check_parameter_string(False, fileName, False):
                     # is a valid filename
                     rslt = newTqptParser.make_variables_source(isStatic, False, True, folderPath, fileName)
                     if rslt == -4:
@@ -126,7 +130,7 @@ def makesource(isStatic, isMakeFolder, isEraseSource, folderPath, fileName):
         # any overwrites is false, however can make new .tqpt source file
         
             if len(folderPath) > 0 and len(fileName) > 0:
-                if newTqptParser.check_parameter_string(False, fileName):
+                if newTqptParser.check_parameter_string(False, fileName, False):
                     rslt = newTqptParser.make_variables_source(isStatic, False, False, folderPath, fileName)
                     if rslt == -3:
                         # source file already exist, no overwrite
@@ -144,7 +148,7 @@ def makesource(isStatic, isMakeFolder, isEraseSource, folderPath, fileName):
         # make new folder & source file of a current module's directory
         
             if len(fileName) > 0:
-                if newTqptParser.check_parameter_string(False, fileName):
+                if newTqptParser.check_parameter_string(False, fileName, False):
                     rslt = newTqptParser.make_variables_source(isStatic, True, False, folderPath, fileName)
                     if rslt == -1:
                         raise Exception("staqtapp<makesource> folder & source file already exist")
@@ -177,7 +181,7 @@ def addvar(varName, varData, folderPath, fileName):
     
     newTqptParser = TqptParser()
     if len(folderPath) > 0 and len(fileName) > 0:
-        if newTqptParser.check_parameter_string(True, varName):
+        if newTqptParser.check_parameter_string(True, varName, False):
             rslt = newTqptParser.add_variables_source(varName, varData, folderPath, fileName)
             # check for any of the exception returns, otherwise silent finished
             if rslt == -1:
@@ -200,7 +204,55 @@ def addvar(varName, varData, folderPath, fileName):
             raise Exception("staqtapp<addvar> invalid variable name, allowed chars _ aA-zZ 0-9")
     else:
         raise Exception("staqtapp<addvar> null folderpath and/or null filename")
+#______________________________________________________________________________________
 
+def loadvar_str(varName, folderPath, fileName):
+    
+    # varName=str | list, folderPath=str, fileName=str
+    
+    # @varName can be str or list and as a same return as str or list, if list as a
+    # parameter then appends to the return list what it can, ignoring variable -----
+    # names not found in the selected tqpt source file folderPath/fileName; is to
+    # be noted list return from a list parameter given returns lists nested in a list
+    
+    rslt = None
+    
+    newTqptParser = TqptParser()
+    if len(folderPath) > 0 and len(fileName) > 0:
+        if newTqptParser.check_parameter_string(True, varName, True):
+            rslt = newTqptParser.load_variables_source_str(varName, folderPath, fileName)
+            if rslt == -3:
+                # variable was not found in tqpt source file
+                raise Exception("staqtapp<loadvar_str> variable name '" + varName + "' not found @" + folderPath + "/" + fileName + ".tqpt")
+            elif rslt == -2:
+                # invalid fileName given
+                raise Exception("staqtapp<loadvar_str> variables source file '" + fileName + ".tqpt' was not found @" + folderPath)
+            elif rslt == -1:
+                # invalid folderPath given
+                raise Exception("staqtapp<loadvar_str> invalid folderpath @" + folderPath)
+            elif rslt == -4:
+                # newline chars found
+                raise Exception("staqtapp<loadvar_str> newline char found in variable's data, no parse")
+            elif rslt == -5:
+                # false is_all_numbers, no parse; no load
+                raise Exception("staqtapp<loadvar_str> not all numbers, no parse")
+            elif rslt == -6:
+                # no @qp( data declaring tags found
+                raise Exception("staqtapp<loadvar_str> no found @qp(data): declarings")
+            elif rslt == -7:
+                raise Exception("staqtapp<loadvar_str> missing closing ): for variable data declare")
+            elif rslt == -8:
+                raise Exception("staqtapp<loadvar_str> invalid type @varName, must be str or list")
+            elif rslt == -9:
+                raise Exception("staqtapp<loadvar_str> no found variable names @varName as list")
+            elif rslt == -10:
+                raise Exception("staqtapp<loadvar_str> no valid data returns from @varName as list")
+            else:
+                return rslt
+        else:
+            raise Exception("staqtapp<loadvar_str> invalid variable name, allowed chars _ aA-zZ 0-9")
+    else:
+        raise Exception("staqtapp<loadvar_str> null folderpath and/or null filename")
 #______________________________________________________________________________________
 
 def loadvar_deque(isNumbers, varName, folderPath, fileName):
@@ -214,7 +266,7 @@ def loadvar_deque(isNumbers, varName, folderPath, fileName):
     
     newTqptParser = TqptParser()
     if len(folderPath) > 0 and len(fileName) > 0:
-        if newTqptParser.check_parameter_string(True, varName):
+        if newTqptParser.check_parameter_string(True, varName, False):
             rslt = newTqptParser.load_variables_source_deque(isNumbers, varName, folderPath, fileName)
             if rslt == -3:
                 # variable was not found in tqpt source file
@@ -271,7 +323,7 @@ def changevar(varName, newVarData, folderPath, fileName):
     
     newTqptParser = TqptParser()
     if len(folderPath) > 0 and len(fileName) > 0:
-        if newTqptParser.check_parameter_string(False, fileName):
+        if newTqptParser.check_parameter_string(False, fileName, False):
             rslt = newTqptParser.update_variables_source(varName, newVarData, folderPath, fileName)
             if rslt == -1:
                 raise Exception("staqtapp<changevar> invalid folderpath @" + folderPath)
@@ -304,7 +356,7 @@ def findvar(allSources, varName, folderPath, fileName):
     
     newTqptParser = TqptParser()
     if len(folderPath) > 0 and len(fileName) > 0:
-        if newTqptParser.check_parameter_string(False, fileName):
+        if newTqptParser.check_parameter_string(False, fileName, False):
             rslt = newTqptParser.search_variable(allSources, varName, folderPath, fileName)
             if rslt == -3:
                 raise Exception("staqtapp<findvar> no found tqpt variable source files @" + folderPath)
@@ -338,7 +390,7 @@ def addsar(catPin, varData, folderPath, fileName):
     
     newTqptParser = TqptParser()
     if len(folderPath) > 0 and len(fileName) > 0:
-        if newTqptParser.check_parameter_string(False, fileName):
+        if newTqptParser.check_parameter_string(False, fileName, False):
             rslt = newTqptParser.self_assign_variable_name(catPin, varData, folderPath, fileName)
             if rslt == -1:
                 raise Exception("staqtapp<addsar> invalid folderpath @" + folderPath)
@@ -367,10 +419,16 @@ def scanvar(varName, fullPath):
     # scans/search of entire py module's text - function names, function parameters,
     # class names and all variable declared names @fullPath given for a py module,
     # returns suggested safe glb variable name by comparison checks of the py module
-    # and this function's parameter @varName, returns None if the @varName is safe
+    # and this function's parameter @varName, returns wanted variable name or a
+    # suggested smart glb variable name as str
     
     return ult_varname(varName, fullPath)
 #______________________________________________________________________________________
+
+
+
+#______________________________________________________________________________________
+
 def test():
     
     #newTqptParser = TqptParser()
@@ -389,10 +447,17 @@ def test():
     
     #loadsar_remap(False, "tiger", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    scanvar("someVar", '/storage/emulated/0/qpython/scripts3/ynos.py')
+    #scanvar("someVar", '/storage/emulated/0/qpython/scripts3/ynos.py')
     
-    #print(lst)
+    #tmpLst = ['variableDequeTest1', 'variableDequeTest2', 'variableDequeTest3']
+    
+    #rtrnStr = loadvar_str(tmpLst, '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
+    
+    #print(rtrnStr)
     
 #______________________________________________________________________________________
     
-test()
+#test()
+
+
+

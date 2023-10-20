@@ -3,13 +3,15 @@
 
 
 
-# Staqtapp 1.01.957
+# Staqtapp 1.02.073
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
 
 
-# Email: 5deg.blk.blt.cecil(@)gmail
+# email: 5deg.blk.blt.cecil(@)gmail
+# github: https://github.com/lastforkbender/staqtapp
+# contact: https://pastebin.com/eumqiBAx
 
 
 import abc
@@ -23,7 +25,7 @@ class PySqTppInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         # subclasshook for the abstract methods defines
-        return (hasattr(subclass, 'make_variables_source') and callable(subclass.make_variables_source) and hasattr(subclass, 'add_variables_source') and callable(subclass.add_variables_source) and hasattr(subclass, 'update_variables_source') and callable(subclass.update_variables_source) and hasattr(subclass, 'self_assign_variable_name') and callable(subclass.self_assign_variable_name) and hasattr(subclass, 'load_variables_source_deque') and callable(subclass.load_variables_source_deque) and hasattr(subclass, 'search_variable') and callable(subclass.search_variable) and hasattr(subclass, 'tqpt_map') and callable(subclass.tqpt_map) and hasattr(subclass, 'check_tqpt_settings') and callable(subclass.check_tqpt_settings) and hasattr(subclass, 'check_parameter_string') and callable(subclass.check_parameter_string) and hasattr(subclass, 'char_regularity') and callable(subclass.char_regularity) and hasattr(subclass, 'rand_shuffle') and callable(subclass.rand_shuffle) or NotImplemented)
+        return (hasattr(subclass, 'make_variables_source') and callable(subclass.make_variables_source) and hasattr(subclass, 'add_variables_source') and callable(subclass.add_variables_source) and hasattr(subclass, 'update_variables_source') and callable(subclass.update_variables_source) and hasattr(subclass, 'self_assign_variable_name') and callable(subclass.self_assign_variable_name) and hasattr(subclass, 'load_variables_source_str') and callable(subclass.load_variables_source_str) and hasattr(subclass, 'load_variables_source_deque') and callable(subclass.load_variables_source_deque) and hasattr(subclass, 'search_variable') and callable(subclass.search_variable) and hasattr(subclass, 'tqpt_map') and callable(subclass.tqpt_map) and hasattr(subclass, 'check_tqpt_settings') and callable(subclass.check_tqpt_settings) and hasattr(subclass, 'check_parameter_string') and callable(subclass.check_parameter_string) and hasattr(subclass, 'char_regularity') and callable(subclass.char_regularity) and hasattr(subclass, 'rand_shuffle') and callable(subclass.rand_shuffle) or NotImplemented)
     
     
     @abc.abstractmethod
@@ -49,6 +51,12 @@ class PySqTppInterface(metaclass=abc.ABCMeta):
         # auto assigns random variable name connected to a given begin/prepin category id
         # writes the variable's data with option to flip static setting off->on for write->read i/o/t
         raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def load_variables_source_str(self, var_name, dir_path, source_name):
+        # extracts variable(s) data from variables source file as a str or a multi str list type return
+        raise NotImplementedError
     
     
     @abc.abstractmethod
@@ -64,7 +72,7 @@ class PySqTppInterface(metaclass=abc.ABCMeta):
         
         
     @abc.abstractmethod
-    def tqpt_map(self, is_read: bool, is_write: bool, dsg_fnc: str, is_overwrite: bool, glb_var: str, glb_var_data: str, folder_path: str, tqpt_name: str):
+    def tqpt_map(self, is_read, is_write, dsg_fnc, is_overwrite, glb_var, glb_var_data, folder_path, tqpt_name):
         # mmap operations on .tqpt global variables source file
         raise NotImplementedError
         
@@ -76,7 +84,7 @@ class PySqTppInterface(metaclass=abc.ABCMeta):
         
         
     @abc.abstractmethod
-    def check_parameter_string(self, is_variable: bool, parameter: str) -> bool:
+    def check_parameter_string(self, is_variable, parameter, is_list):
         # check parameter string is valid chars
         raise NotImplementedError
         

@@ -3,13 +3,15 @@
 
 
 
-# Staqtapp 1.01.957
+# Staqtapp 1.02.073
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
 
 
-# Email: 5deg.blk.blt.cecil(at)gmail
+# email: 5deg.blk.blt.cecil(@)gmail
+# github: https://github.com/lastforkbender/staqtapp
+# contact: https://pastebin.com/eumqiBAx
 
 
 import PySqTpp_UltInterface
