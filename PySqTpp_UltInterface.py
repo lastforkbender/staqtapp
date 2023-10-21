@@ -23,12 +23,18 @@ class PySqTppUltInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         # subclasshook for the abstract methods defines
-        return (hasattr(subclass, 'scan_py_module') and callable(subclass.scan_py_module) or NotImplemented)
+        return (hasattr(subclass, 'scan_py_module') and callable(subclass.scan_py_module) and hasattr(subclass, 'print_tqpt_file') and callable(subclass.print_tqpt_file) or NotImplemented)
     
     
     @abc.abstractmethod
     def scan_py_module(self, var_name: str, full_path: str) -> str:
         # complete search a py module for global variable name conflicts, return suggested smart variable name str or None
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def print_tqpt_file(self, full_path: str):
+        # prints to console the contents of a tqpt variables source file
         raise NotImplementedError
         
         

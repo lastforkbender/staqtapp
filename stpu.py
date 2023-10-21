@@ -28,5 +28,11 @@ def ult_varname(glbVarName, filePath):
         return rslt
 #______________________________________________________________________________________
 
+def ult_show_tqpt_contents(filePath):
+    newUltSttp = UltSttp()
+    rslt = newUltSttp.print_tqpt_file(filePath)
+    if rslt == -1:
+        raise Exception("staqtapp<viewsource> invalid tqpt source file path @" + filePath)
+#______________________________________________________________________________________
 
 

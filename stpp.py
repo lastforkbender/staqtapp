@@ -17,7 +17,7 @@
 from PySqTpp_Parser import TqptParser
 from collections import deque
 from stps import extrloadsarremap
-from stpu import ult_varname
+from stpu import ult_varname, ult_show_tqpt_contents
 #______________________________________________________________________________________
 #______________________________________________________________________________________
 #______________________________________________________________________________________
@@ -63,6 +63,8 @@ from stpu import ult_varname
 # global variable name, returns suggested smart str global variable name or wanted var
 # name as given; does not use regex and very accurate scan of all classes, functions and
 # variables names, including all variable naming inside any function's parameters
+
+# [.viewsource] - prints a tqpt variables source file's contents to console
 
 #______________________________________________________________________________________
 #______________________________________________________________________________________
@@ -425,8 +427,19 @@ def scanvar(varName, fullPath):
     return ult_varname(varName, fullPath)
 #______________________________________________________________________________________
 
-
-
+def viewsource(fullPath):
+    
+    # UTILITY FUNCTION:
+        
+    # fullPath=str
+    
+    # prints to console the selected tqpt source file in readable form:
+    
+    # ----- <variable name here>
+    # Data:
+    # <variables's data here>
+    
+    ult_show_tqpt_contents(fullPath)
 #______________________________________________________________________________________
 
 def test():
@@ -452,6 +465,8 @@ def test():
     #tmpLst = ['variableDequeTest1', 'variableDequeTest2', 'variableDequeTest3']
     
     #rtrnStr = loadvar_str(tmpLst, '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
+    
+    #viewsource("/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test2.tqpt")
     
     #print(rtrnStr)
     

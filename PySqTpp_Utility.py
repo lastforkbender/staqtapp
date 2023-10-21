@@ -18,10 +18,51 @@ import PySqTpp_UltInterface
 
 import mmap
 import os
+import re
 #______________________________________________________________________________________
 
 class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
     # - settled functions for utility methods -
+#______________________________________________________________________________________
+
+    def print_tqpt_file(self, full_path: str):
+        # @override PySqTppUltInterface.print_var_or_sar()
+        
+        # FUNCTION RETURN-CODES
+            
+        # ------------------------------------------------------------------------
+        # return -1  : file path is invalid
+        
+        try:
+            if os.path.isfile(full_path):
+                with open(full_path, mode='r') as fObjPtc:
+                    with mmap.mmap(fObjPtc.fileno(), length=0, access=mmap.ACCESS_READ) as mObjPtc:
+                        vrLns = bytes.decode(mObjPtc.read(), 'utf-8').split('\n')
+                        mObjPtc.close()
+                    mObjPtc = None
+                vrLst = None
+                idx = 0
+                idxLen = len(vrLns)-1
+                # *variable name*
+                vrnmRe = re.compile(r'^<\w*=')
+                # *quanity position*
+                vrdtRe = re.compile(r'@qp.*:')
+                while idx < idxLen:
+                    if idx > 0:
+                        vrLst = re.findall(vrnmRe, vrLns[idx])
+                        if len(vrLst) > 0:
+                            print('\n\n----- ' + vrLst[0].strip('<=') + '\nData: ')
+                            vrLst = re.findall(vrdtRe, vrLns[idx])
+                            if len(vrLst) > 0:
+                                print(vrLst)
+                            else:
+                                # funny how?
+                                print('...non-readable data declaring(s)')
+                    idx+=1
+            else:
+                return -1
+        except Exception as e:
+            print("staqtapp error: ",e)
 #______________________________________________________________________________________
 
     def scan_py_module(self, var_name: str, full_path: str) -> str:
