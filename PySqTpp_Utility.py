@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.073
+# Staqtapp 1.02.101
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -44,7 +44,7 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                 idx = 0
                 idxLen = len(vrLns)-1
                 # *variable name*
-                vrnmRe = re.compile(r'^<\w*=')
+                vrnmRe = re.compile(r'^<.*=')
                 # *quanity position*
                 vrdtRe = re.compile(r'@qp.*:')
                 while idx < idxLen:
@@ -266,11 +266,93 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                 # finally make check if wanted <var_name> is not already listed in the py module,
                 # if is then create a suggested smart global variable naming for use as returned
                 if set(var_name).issubset(pySet) == False:
-                    # return var_name given in parameter
+                    # return var_name given in parameter, no duplicate finding
                     return var_name
                 else:
-                    #TO-DO
-                    pass
+                    # return a smart variable name,  non-conflict type global variable naming
+                    # first check if any invalid chars in var_name parameter given........
+                    if set(var_name).issubset(aChrs) == True:
+                        swCl = True
+                    else:
+                        swCl = False
+                    rtrnVrnm = ''
+                    cStr = ''
+                    cCnt = 0
+                    cLst = []
+                    swStA = False
+                    swStB = False
+                    nChrs = set('0123456789')
+                    for vChr in var_name:
+                        if swCl == False:
+                            # @var_name has invalid chars, append to cStr any valid chars only
+                            if set(vChr).issubset(aChrs) == True:
+                                cStr += vChr
+                        if vChr == '_':
+                            swStA = True
+                            cLst.append(cCnt)
+                        elif set(vChr).issubset(nChrs) == True:
+                            swStB = True
+                        cCnt+=1
+                    cCnt = 0
+                    if swCl == True:
+                        # is all valid variable name chars, however is problems duplicate from scan results
+                        for fvChr in var_name:
+                            if swStA == False and cCnt == 0:
+                                rtrnVrnm = '_' + var_name
+                                break
+                            elif swStA == True and swStB == True:
+                                if cCnt == 0 and cLst[0] != 0:
+                                    rtrnVrnm = '__' + var_name
+                                    break
+                                else:
+                                    if set(fvChr).issubset(nChrs) == True:
+                                        rtrnVrnm += '_'
+                                rtrnVrnm += fvChr
+                            elif swStA == True and swStB == False:
+                                if cCnt == 0 and cLst[0] != 0:
+                                    rtrnVrnm = '__' + var_name
+                                    break
+                                else:
+                                    if fvChr == '_':
+                                        rtrnVrnm += '_v'
+                                rtrnVrnm += fvChr
+                            cCnt+=1
+                        return rtrnVrnm
+                    # is swCl=False, invalid variable name chars previously...or a versatile secret feature:
+                    # see if any string length is there first, from any parsing leftover previously @cStr
+                    if len(cStr) > 0:
+                        # can't return a random variable name here like a staqtapp sar variable
+                        return None
+                    else:
+                        # okay good, as of the same as above -- checking for underscores and/or numbers
+                        for fvChr in cStr:
+                            if swStA == False and cCnt == 0:
+                                rtrnVrnm = '__' + cStr
+                                break
+                            elif swSta == True and swStB == True:
+                                if fvChr == '_' and set(pChr).issubset(nChrs) == False:
+                                    rtrnVrnm += '_'
+                                else:
+                                    if set(fvChr).issubset(nChrs) == False:
+                                        pass
+                                    else:
+                                        if cCnt == 0:
+                                            rtrnVrnm += '__'
+                                        else:
+                                            rtrnVrnm += '_'
+                                pChr = fvChr
+                                rtrnVrnm += fvChr
+                            elif swStA == True and swStB == False:
+                                if fvChr == '_':
+                                    if cCnt == 0:
+                                        rtrnVrnm += '_'
+                                    else:
+                                        if pChr != '_':
+                                            rtrnVrnm += '_'
+                                pChr = fvChr 
+                                rtrnVrnm += fvChr
+                            cCnt+=1
+                        return rtrnVrnm
             else:
                 return '!'
         except Exception as e:

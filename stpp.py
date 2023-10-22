@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.073
+# Staqtapp 1.02.101
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -64,7 +64,7 @@ from stpu import ult_varname, ult_show_tqpt_contents
 # name as given; does not use regex and very accurate scan of all classes, functions and
 # variables names, including all variable naming inside any function's parameters
 
-# [.viewsource] - prints a tqpt variables source file's contents to console
+# [.viewsource] - prints a tqpt variables source file's contents to console in readable slots
 
 #______________________________________________________________________________________
 #______________________________________________________________________________________
@@ -433,7 +433,7 @@ def viewsource(fullPath):
         
     # fullPath=str
     
-    # prints to console the selected tqpt source file in readable form:
+    # prints to console the selected tqpt source file in a readable form:
     
     # ----- <variable name here>
     # Data:
@@ -466,7 +466,7 @@ def test():
     
     #rtrnStr = loadvar_str(tmpLst, '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
     
-    #viewsource("/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test2.tqpt")
+    #viewsource("/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
     
     #print(rtrnStr)
     
