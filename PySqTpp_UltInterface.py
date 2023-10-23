@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.101
+# Staqtapp 1.02.184
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -23,8 +23,13 @@ class PySqTppUltInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         # subclasshook for the abstract methods defines
-        return (hasattr(subclass, 'scan_py_module') and callable(subclass.scan_py_module) and hasattr(subclass, 'print_tqpt_file') and callable(subclass.print_tqpt_file) or NotImplemented)
+        return (hasattr(subclass, 'limit_outer_domain') and callable(subclass.limit_outer_domain) and hasattr(subclass, 'scan_py_module') and callable(subclass.scan_py_module) and hasattr(subclass, 'print_tqpt_file') and callable(subclass.print_tqpt_file) and hasattr(subclass, 'tpqt_map') and callable(subclass.tpqt_map) or NotImplemented)
     
+    
+    @abc.abstractmethod
+    def limit_outer_domain(self, var_name, func_name, full_path) -> int:
+        # adds a variable name & function name(s) to a .tpqt functions lock extension file
+        raise NotImplementedError
     
     @abc.abstractmethod
     def scan_py_module(self, var_name: str, full_path: str) -> str:
@@ -35,6 +40,12 @@ class PySqTppUltInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def print_tqpt_file(self, full_path: str):
         # prints to console the contents of a tqpt variables source file
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def tpqt_map(self, is_read, is_exist, dsg_fnc, var_name, func_name, full_path):
+        # performs read & write of tpqt files
         raise NotImplementedError
         
         

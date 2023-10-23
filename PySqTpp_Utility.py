@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.101
+# Staqtapp 1.02.184
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -25,8 +25,76 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
     # - settled functions for utility methods -
 #______________________________________________________________________________________
 
+    def limit_outer_domain(self, var_name: str, func_name: str, full_path: str) -> int:
+        # @override PySqTppUltInterface.limit_outer_domain()
+        
+        # FUNCTION RETURN-CODES
+            
+        # ------------------------------------------------------------------------
+        # return -1  : invalid tqpt source file path
+        # return -2  : invalid var_name, not found
+        # return -3  : invalid variable type @func_name
+        # return -4  : invalid function name(s)
+        # return -5  : var_name and/or func_name is null
+        
+        cLst = None
+        cLen = None
+        cStr = None
+        sStr = None
+        
+        vrblFnd = False
+        fExst = True
+        
+        try:
+            if os.path.isfile(full_path):
+                if len(var_name) < 1 or len(func_name) < 1:
+                    return -5
+                # first check if var_name exist in the given tqpt variables source file
+                newUltSttp = UltSttp()
+                rslt = newUltSttp.tpqt_map(True, True, 'lod_vc', var_name, None, full_path)
+                if rslt == False:
+                    return -2
+                else:
+                    # global variable is there, split the path string, retain source
+                    # name and get directory path for tpqt file path
+                    cLst = full_path.split('/')
+                    cLen = len(cLst)
+                    sStr = cLst[cLen-1]
+                    cLst.pop(cLen-1)
+                    sStr = sStr.replace('.tqpt', "")
+                    cStr = "/".join(cLst)
+                    full_path = cStr + '/' + sStr + "__.tpqt"
+                    # change extension to position-quanity, instead of a quanity-position find;
+                    # sar variable functions can overwrite static locked .tqpt files, however a
+                    # .tpqt cannot be overwritten by sar variable methods or any other methods
+                    if not os.path.isfile(full_path):
+                        fExst = False
+                    # next check if @func_name is str or list..
+                    if isinstance(func_name, str) == True:
+                        vrblFnd = True
+                    elif isinstance(func_name, list) == True:
+                        vrblFnd = False
+                    else:
+                        return -3
+                    # check if function name(s) are valid chars...
+                    aChrs = set("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
+                    if vrblFnd == True:
+                        if not set(func_name).issubset(aChrs):
+                            return -4
+                    else:
+                        cLen = len(func_name)
+                        for fn in range(cLen):
+                            if not set(func_name[fn]).issubset(aChrs):
+                                return -4
+                    newUltSttp.tpqt_map(False, fExst, 'lod_wl', var_name, func_name, full_path)
+            else:
+                return -1
+        except Exception as e:
+            print("staqtapp error: ",e)
+#______________________________________________________________________________________
+
     def print_tqpt_file(self, full_path: str):
-        # @override PySqTppUltInterface.print_var_or_sar()
+        # @override PySqTppUltInterface.print_tqpt_file()
         
         # FUNCTION RETURN-CODES
             
@@ -271,6 +339,7 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                 else:
                     # return a smart variable name,  non-conflict type global variable naming
                     # first check if any invalid chars in var_name parameter given........
+                    nChrs = set('0123456789')
                     if set(var_name).issubset(aChrs) == True:
                         swCl = True
                     else:
@@ -281,7 +350,6 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                     cLst = []
                     swStA = False
                     swStB = False
-                    nChrs = set('0123456789')
                     for vChr in var_name:
                         if swCl == False:
                             # @var_name has invalid chars, append to cStr any valid chars only
@@ -320,7 +388,7 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                         return rtrnVrnm
                     # is swCl=False, invalid variable name chars previously...or a versatile secret feature:
                     # see if any string length is there first, from any parsing leftover previously @cStr
-                    if len(cStr) > 0:
+                    if len(cStr) == 0:
                         # can't return a random variable name here like a staqtapp sar variable
                         return None
                     else:
@@ -358,6 +426,127 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
         except Exception as e:
             print("staqtapp error: ",e)
 #______________________________________________________________________________________
+
+    def tpqt_map(self, is_read, is_exist, dsg_fnc, var_name, func_name, full_path):
+        # @override PySqTppUltInterface.tpqt_map()
+        
+        fnd = None
+        isLst = None
+        vrLfLst = None
+        tStr = None
+        lStr = None
+        ptrnStr = None
+        cLen = None
+        cCnt = None
+        
+        if is_read == True:
+            # ---------- READ TQPT OR TPQT FILES ----------
+            if dsg_fnc == 'lod_vc':
+                fnd = False
+                ptrnStr = re.compile(rb'<'+re.escape(str.encode(var_name))+rb'=')
+                with open(full_path, mode='r') as fileObjLod_Vc:
+                    with mmap.mmap(fileObjLod_Vc.fileno(), length=0, access=mmap.ACCESS_READ) as mmapObjLod_Vc:
+                        if re.search(ptrnStr, mmapObjLod_Vc.read()):
+                            fnd = True
+                        mmapObjLod_Vc.close()
+                    mmapObjLod_Vc = None
+                return fnd
+        else:
+            # ---------- READ & WRITE TPQT FILES ----------
+            if dsg_fnc == 'lod_wl':
+                if isinstance(func_name, str) == True:
+                    isLst = False
+                elif isinstance(func_name, list) == True:
+                    isLst = True
+                if is_exist == True:
+                    fnd = False
+                    ptrnStr = re.compile(r'<:'+re.escape(var_name)+r'=(?s:.*?).*:>')
+                    with open(full_path, mode='r') as fileObjLodWl:
+                        with mmap.mmap(fileObjLodWl.fileno(), length=0, access=mmap.ACCESS_READ) as mmapObjLodWl:
+                            lStr = bytes.decode(mmapObjLodWl.read(), "utf-8")
+                            mmapObjLodWl.close()
+                        mmapObjLodWl = None
+                    for vrMtc in ptrnStr.findall(lStr):
+                        if len(vrMtc) > 0:
+                            print('vrMtc=found')
+                            fnd = True
+                            tStr = vrMtc
+                            print(tStr)
+                            break
+                    if fnd == True:
+                        lStr = lStr.replace('\n' + tStr, '')
+                        vrLfLst = tStr.split('\n')
+                        vrLfLst[len(vrLfLst)-1] = vrLfLst[len(vrLfLst)-1].strip(':>')
+                        vrLfLst.pop(0)
+                    fncSet = set()
+                    if isLst == True:
+                        for stA in range(len(func_name)):
+                            fncSet.add(func_name[stA])
+                    if fnd == True:
+                        for stB in range(len(vrLfLst)):
+                            fncSet.add(vrLfLst[stB])
+                    if isLst == False:
+                        fncSet.add(func_name)
+                    tStr = ''
+                    cCnt = 0
+                    cLen = len(fncSet)-1
+                    if cLen < 0:
+                        return False
+                    else:
+                        for f in fncSet:
+                            if cCnt == 0:
+                                tStr += '<:' + var_name + '=\n'
+                                if cLen > 0:
+                                    tStr += f + "\n"
+                                else:
+                                    tStr += f + ":>\n"
+                                    break
+                            elif cCnt == cLen:
+                                tStr += f + ':>\n'
+                                break
+                            else:
+                                tStr += f + "\n"
+                            cCnt+=1
+                    lStr = lStr.replace('!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!', '')
+                    with open(full_path, mode='w') as tpqtFl: tpqtFl.write(lStr + tStr + '!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
+                else:
+                    tStr = ''
+                    if isLst == True:
+                        cLen = len(func_name)
+                        cCnt = 0
+                        for f in range(cLen):
+                            if cCnt == 0:
+                                tStr += '<:' + var_name + '=\n'
+                                tStr += func_name[f] + '\n'
+                            elif cCnt == cLen-1:
+                                tStr += func_name[f] + ':>\n'
+                                break
+                            else:
+                                tStr += func_name[f] + '\n'
+                            cCnt+=1
+                    else:
+                        tStr = '<:' + var_name + '=\n' + func_name + ':>\n'
+                    with open(full_path, mode='w') as tpqtFl: tpqtFl.write('<STAQTAPP_DO_NOT_EDIT>\n' + tStr + '!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
+#______________________________________________________________________________________
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

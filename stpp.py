@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.101
+# Staqtapp 1.02.184
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -17,7 +17,7 @@
 from PySqTpp_Parser import TqptParser
 from collections import deque
 from stps import extrloadsarremap
-from stpu import ult_varname, ult_show_tqpt_contents
+from stpu import ult_varname, ult_show_tqpt_contents, ult_limit_outer_domain
 #______________________________________________________________________________________
 #______________________________________________________________________________________
 #______________________________________________________________________________________
@@ -58,6 +58,16 @@ from stpu import ult_varname, ult_show_tqpt_contents
 
 # UTILITY:
 
+
+# [.lockvar] - creates tpqt lock function call files for global variable(s) domain restrictions
+
+# [.keyvar] - (TO-DO) searches a tpqt function lock file, giving feedback conditional(s) on
+# the global variable allowed to be changed by listed functions in pairing of the tqpt file
+
+# [.unlockvar] - (TO-DO) inverts a tpqt function lock file for a given number of instructions,
+# useful on mathematical intense operations; is only a temporary cache of tpqt file inverted
+# @ which entry/exit of variables/functions locks listed that the programmer decides on;
+# is unsecure in that it allows parallel tqpt entanglement in parallel of open global variables
 
 # [.scanvar] - searches a py module for potential global variable conflicts with a provided
 # global variable name, returns suggested smart str global variable name or wanted var
@@ -412,6 +422,30 @@ def addsar(catPin, varData, folderPath, fileName):
         raise Exception("staqtapp<addsar> null folderpath and/or null filename")
 #______________________________________________________________________________________
 
+def lockvar(varName, fncName, fullPath):
+    
+    # UTILITY FUNCTION:
+        
+    # varName=str, fncName=str | list, fullPath=str
+    
+    # lockvar adds to or creates tpqt files, position-quanity rather than quanity-position;
+    # a tpqt file is made at same directory of a tqpt global variable data file, is a lock
+    # file for global variables usage in parallel of allowed functions of a variable, to be
+    # used with the pairing utility function keyvar; fncName can be a single allowed
+    # function name or a list of allowed function namings, restricts global variable edits
+    # via which function is allowed to edit it dependent upon programmer's usage
+    
+    # tpqt file structure:
+        
+    # <:varName=
+    # fncName
+    # fncName:>
+    # <:varName=
+    # fncName:>
+    
+    ult_limit_outer_domain(varName, fncName, fullPath)
+#______________________________________________________________________________________
+
 def scanvar(varName, fullPath):
     
     # UTILITY FUNCTION:
@@ -467,6 +501,10 @@ def test():
     #rtrnStr = loadvar_str(tmpLst, '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
     
     #viewsource("/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
+    
+    #fncLst = ['__function0017','__function0018','__function0019','__function0020']
+    
+    #lockvar('variableDequeTest2', fncLst, "/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
     
     #print(rtrnStr)
     
