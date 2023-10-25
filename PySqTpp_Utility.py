@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.184
+# Staqtapp 1.02.212
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -16,6 +16,7 @@
 
 import PySqTpp_UltInterface
 
+from datetime import datetime
 import mmap
 import os
 import re
@@ -37,48 +38,38 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
         # return -4  : invalid function name(s)
         # return -5  : var_name and/or func_name is null
         
-        cLst = None
         cLen = None
-        cStr = None
         sStr = None
         
-        vrblFnd = False
+        isLst = None
         fExst = True
         
         try:
             if os.path.isfile(full_path):
+                newUltSttp = UltSttp()
                 if len(var_name) < 1 or len(func_name) < 1:
                     return -5
-                # first check if var_name exist in the given tqpt variables source file
-                newUltSttp = UltSttp()
+                # first check if var_name exist in the given .tqpt global variables source file
                 rslt = newUltSttp.tpqt_map(True, True, 'lod_vc', var_name, None, full_path)
                 if rslt == False:
                     return -2
                 else:
-                    # global variable is there, split the path string, retain source
-                    # name and get directory path for tpqt file path
-                    cLst = full_path.split('/')
-                    cLen = len(cLst)
-                    sStr = cLst[cLen-1]
-                    cLst.pop(cLen-1)
-                    sStr = sStr.replace('.tqpt', "")
-                    cStr = "/".join(cLst)
-                    full_path = cStr + '/' + sStr + "__.tpqt"
                     # change extension to position-quanity, instead of a quanity-position find;
                     # sar variable functions can overwrite static locked .tqpt files, however a
                     # .tpqt cannot be overwritten by sar variable methods or any other methods
-                    if not os.path.isfile(full_path):
+                    sStr = full_path.replace('.tqpt', '.tpqt')
+                    if not os.path.isfile(sStr):
                         fExst = False
                     # next check if @func_name is str or list..
                     if isinstance(func_name, str) == True:
-                        vrblFnd = True
+                        isLst = False
                     elif isinstance(func_name, list) == True:
-                        vrblFnd = False
+                        isLst = True
                     else:
                         return -3
                     # check if function name(s) are valid chars...
                     aChrs = set("_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789")
-                    if vrblFnd == True:
+                    if isLst  == False:
                         if not set(func_name).issubset(aChrs):
                             return -4
                     else:
@@ -86,7 +77,80 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                         for fn in range(cLen):
                             if not set(func_name[fn]).issubset(aChrs):
                                 return -4
-                    newUltSttp.tpqt_map(False, fExst, 'lod_wl', var_name, func_name, full_path)
+                    # write the .tpqt functions lock file
+                    newUltSttp.tpqt_map(False, fExst, 'lod_wl', var_name, func_name, sStr)
+            else:
+                return -1
+        except Exception as e:
+            print("staqtapp error: ",e)
+#______________________________________________________________________________________
+
+    def asguard_variable_domain(self, inact_logf: bool, var_name: str, func_name: str, full_path: str):
+        # @override PySqTppUltInterface.asguard_variable_domain()
+        
+        # FUNCTION RETURN-CODES
+            
+        # ------------------------------------------------------------------------
+        # return -1  : invalid .tqpt source file path
+        # return -2  : var_name and/or func_name is null
+        # return -3  : var_name not found in .tqpt source file
+        # return -4  : no .tpqt function lock file to search
+        # return -5  : no search result return for .tpqt file
+        
+        # return 0  : function/@func_name was not found ...not allowed to change @var_name
+        # return 1  : function/@func_name was found ...is allowed to change @var_name
+        
+        cLst = None
+        cLen = None
+        sStr = None
+        
+        rslt = None
+        nrRslt = None
+        fFnd = False
+        
+        try:
+            if os.path.isfile(full_path):
+                newUltSttp = UltSttp()
+                if len(var_name) > 0 and len(func_name) > 0:
+                    # does var_name exist in .tqpt file??
+                    rslt = newUltSttp.tpqt_map(True, None, 'lod_vc', var_name, None, full_path)
+                    if rslt == False:
+                        return -3
+                    else:
+                        sStr = full_path.replace('.tqpt', '.tpqt')
+                        if os.path.isfile(sStr):
+                            nrRslt = newUltSttp.tpqt_map(True, None, 'lod_vd', var_name, None, sStr)
+                            if nrRslt != '<:!!':
+                                cLst = bytes.decode(nrRslt, 'utf-8').strip(' :>').split('\n')
+                                cLst.pop(0)
+                                cLen = len(cLst)
+                                # loop thru the extracted function name list to find match or not
+                                for idx in range(cLen):
+                                    if func_name == cLst[idx]:
+                                        fFnd = True
+                                        break
+                                if fFnd == True:
+                                    if inact_logf == True:
+                                        # change the full .tpqt file path to .logf extension
+                                        sStr = sStr.replace('.tpqt', '.logf')
+                                        if os.path.isfile(sStr) == True:
+                                            with open(sStr, mode='r') as fObjLogf:
+                                                with mmap.mmap(fObjLogf.fileno(), length=0, access=mmap.ACCESS_READ) as mObjLogf:
+                                                    cLen = mObjLogf.read()
+                                                    mObjLogf.close()
+                                                mObjLogf = None
+                                            with open(sStr, mode='wb') as logf: logf.write(cLen + str.encode('\n>> var: ' + var_name + ', fnc: ' + func_name + ', time: ' + str(datetime.now())))
+                                        else:
+                                            with open(sStr, mode='w') as logf: logf.write('>> var: ' + var_name + ', fnc: ' + func_name + ', time: ' + str(datetime.now()))
+                                    return True
+                                else:
+                                    return False
+                            else:
+                                return -5
+                        else:
+                            return -4
+                else:
+                    return -2
             else:
                 return -1
         except Exception as e:
@@ -451,6 +515,22 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                         mmapObjLod_Vc.close()
                     mmapObjLod_Vc = None
                 return fnd
+            elif dsg_fnc == 'lod_vd':
+                fnd = False
+                ptrnStr = re.compile(rb'<:'+re.escape(str.encode(var_name))+rb'=(?s:.*?).*:>')
+                with open(full_path, mode='r') as fileObjLodVd:
+                    with mmap.mmap(fileObjLodVd.fileno(), length=0, access=mmap.ACCESS_READ) as mmapObjLodVd:
+                        for vrMtc in ptrnStr.findall(mmapObjLodVd):
+                            if len(vrMtc) > 0:
+                                fnd = True
+                                tStr = vrMtc
+                                break
+                        mmapObjLodVd.close()
+                    mmapObjLodVd = None
+                if fnd == True:
+                    return tStr
+                else:
+                    return '<:!!'
         else:
             # ---------- READ & WRITE TPQT FILES ----------
             if dsg_fnc == 'lod_wl':
@@ -468,10 +548,8 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                         mmapObjLodWl = None
                     for vrMtc in ptrnStr.findall(lStr):
                         if len(vrMtc) > 0:
-                            print('vrMtc=found')
                             fnd = True
                             tStr = vrMtc
-                            print(tStr)
                             break
                     if fnd == True:
                         lStr = lStr.replace('\n' + tStr, '')
@@ -517,7 +595,11 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                         for f in range(cLen):
                             if cCnt == 0:
                                 tStr += '<:' + var_name + '=\n'
-                                tStr += func_name[f] + '\n'
+                                if cLen > 1:
+                                    tStr += func_name[f] + '\n'
+                                else:
+                                    tStr += func_name[f] + ':>\n'
+                                    break
                             elif cCnt == cLen-1:
                                 tStr += func_name[f] + ':>\n'
                                 break
@@ -528,25 +610,3 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                         tStr = '<:' + var_name + '=\n' + func_name + ':>\n'
                     with open(full_path, mode='w') as tpqtFl: tpqtFl.write('<STAQTAPP_DO_NOT_EDIT>\n' + tStr + '!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
 #______________________________________________________________________________________
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

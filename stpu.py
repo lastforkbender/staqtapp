@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.184
+# Staqtapp 1.02.212
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -17,6 +17,25 @@
 from PySqTpp_Utility import UltSttp
 
 
+#______________________________________________________________________________________
+
+def ult_fnc_var_request(logf_enable, vr_name, fnc_name, fpath):
+    newUltSttp = UltSttp()
+    rslt = newUltSttp.asguard_variable_domain(logf_enable, vr_name, fnc_name, fpath)
+    if rslt == True:
+        return True
+    elif rslt == False:
+        return False
+    elif rslt == -1:
+        raise Exception("staqtapp<keyvar> invalid tqpt source file path @" + fpath)
+    elif rslt == -2:
+        raise Exception("staqtapp<keyvar> varName and/or fncName cannot be nothing")
+    elif rslt == -3:
+        raise Exception("staqtapp<keyvar> invalid variable name, variable not found @" + fpath)
+    elif rslt == -4:
+        raise Exception("staqtapp<keyvar> no found .tpqt function lock file to search at in directory of .tqpt source file...")
+    elif rslt == -5:
+        raise Exception("staqtapp<keyvar> global variable: " + vr_name + ' is not listed in .tqpt function lock file...')
 #______________________________________________________________________________________
 
 def ult_limit_outer_domain(varName, fncName, filePath):

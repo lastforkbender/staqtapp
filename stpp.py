@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.184
+# Staqtapp 1.02.212
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -17,7 +17,7 @@
 from PySqTpp_Parser import TqptParser
 from collections import deque
 from stps import extrloadsarremap
-from stpu import ult_varname, ult_show_tqpt_contents, ult_limit_outer_domain
+from stpu import ult_varname, ult_show_tqpt_contents, ult_limit_outer_domain, ult_fnc_var_request
 #______________________________________________________________________________________
 #______________________________________________________________________________________
 #______________________________________________________________________________________
@@ -61,8 +61,8 @@ from stpu import ult_varname, ult_show_tqpt_contents, ult_limit_outer_domain
 
 # [.lockvar] - creates tpqt lock function call files for global variable(s) domain restrictions
 
-# [.keyvar] - (TO-DO) searches a tpqt function lock file, giving feedback conditional(s) on
-# the global variable allowed to be changed by listed functions in pairing of the tqpt file
+# [.keyvar] - searches a tpqt function lock file, giving feedback conditional on the global
+# variable allowed to be changed by listed functions in pairing of the tqpt source file
 
 # [.unlockvar] - (TO-DO) inverts a tpqt function lock file for a given number of instructions,
 # useful on mathematical intense operations; is only a temporary cache of tpqt file inverted
@@ -424,7 +424,7 @@ def addsar(catPin, varData, folderPath, fileName):
 
 def lockvar(varName, fncName, fullPath):
     
-    # UTILITY FUNCTION:
+    # UTILITY FUNCTION: [used with keyvar()]
         
     # varName=str, fncName=str | list, fullPath=str
     
@@ -444,6 +444,24 @@ def lockvar(varName, fncName, fullPath):
     # fncName:>
     
     ult_limit_outer_domain(varName, fncName, fullPath)
+#______________________________________________________________________________________
+
+def keyvar(isLogF, varName, fncName, fullPath):
+    
+    # UTILITY FUNCTION: [used with lockvar()]
+        
+    # isLogF=bool, varName=str, fncName=str, fullPath=str
+    
+    # ** @fullPath is full file path of the .tqpt variable source file, not .tpqt file path **
+    
+    # searches a .tpqt function lock file for listed @varName and sub-listed allowed
+    # function(s) name(s), if @fncName is found will return integer 1 or 0 not found;
+    # @isLogF=True then adds to a .logf file in directory of the .tqpt & .tpqt files if a
+    # one found return, in the log format as single line entries repeated:
+        
+    # >> var: <@varName>, fnc: <@fncName>, time: <date-time>
+    
+    return ult_fnc_var_request(isLogF, varName, fncName, fullPath)
 #______________________________________________________________________________________
 
 def scanvar(varName, fullPath):
@@ -504,9 +522,14 @@ def test():
     
     #fncLst = ['__function0017','__function0018','__function0019','__function0020']
     
-    #lockvar('variableDequeTest2', fncLst, "/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
+    #lockvar('variableDequeTest1', fncLst, "/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
     
-    #print(rtrnStr)
+    #rslt = keyvar(True, 'variableDequeTest1', '__function0019', "/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
+    #print(rslt)
+    #if rslt == True:
+        #print('call function')
+    #else:
+        #print('do not call function')
     
 #______________________________________________________________________________________
     
