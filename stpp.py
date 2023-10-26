@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.212
+# Staqtapp 1.02.237
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -17,7 +17,7 @@
 from PySqTpp_Parser import TqptParser
 from collections import deque
 from stps import extrloadsarremap
-from stpu import ult_varname, ult_show_tqpt_contents, ult_limit_outer_domain, ult_fnc_var_request
+from stpu import ult_varname, ult_show_tqpt_contents, ult_limit_outer_domain, ult_fnc_var_request, ult_edit_fnc_lock
 #______________________________________________________________________________________
 #______________________________________________________________________________________
 #______________________________________________________________________________________
@@ -64,6 +64,10 @@ from stpu import ult_varname, ult_show_tqpt_contents, ult_limit_outer_domain, ul
 # [.keyvar] - searches a tpqt function lock file, giving feedback conditional on the global
 # variable allowed to be changed by listed functions in pairing of the tqpt source file
 
+# [.lockvar_edit] - a parallel/helper function to lockvar; does not add new function name(s)
+# sublist to a new variable name to add, rather new function name(s) sublist to a already
+# existing .tpqt file with a already variable name listed, useful for multi-processing needs
+
 # [.unlockvar] - (TO-DO) inverts a tpqt function lock file for a given number of instructions,
 # useful on mathematical intense operations; is only a temporary cache of tpqt file inverted
 # @ which entry/exit of variables/functions locks listed that the programmer decides on;
@@ -75,6 +79,25 @@ from stpu import ult_varname, ult_show_tqpt_contents, ult_limit_outer_domain, ul
 # variables names, including all variable naming inside any function's parameters
 
 # [.viewsource] - prints a tqpt variables source file's contents to console in readable slots
+
+
+#______________________________________________________________________________________
+#______________________________________________________________________________________
+
+#     Total quanity position transfer(.tqpt) and total position quanity transfer(.tpqt) staq-
+# tapp files always mirror the other in a same directory, however no stpp.method() re-
+# quires you to give path to a .tpqt file directly. Could be a topic the .tpqt file is more
+# important than the .tqpt variables source file itself in using global variables safely;
+# however also ---- everything is already created/founded, especially mathematics. My
+# own objectives to building this library, or/and seeking glory/pride in it is irrelevant. Any
+# later more advanced functional uses of global variables, known or unknown, for the
+# benefit of a fellow programmer that would use it wisely as described. Not to use it
+# by some other invented way of what makes the world go around, whereof confusion
+# being sought in complexity more important than basic truth and enlightenment, or war.
+
+# War was and is never good.
+
+# yours truly
 
 #______________________________________________________________________________________
 #______________________________________________________________________________________
@@ -431,9 +454,10 @@ def lockvar(varName, fncName, fullPath):
     # lockvar adds to or creates tpqt files, position-quanity rather than quanity-position;
     # a tpqt file is made at same directory of a tqpt global variable data file, is a lock
     # file for global variables usage in parallel of allowed functions of a variable, to be
-    # used with the pairing utility function keyvar; fncName can be a single allowed
+    # used with the pairing utility function keyvar; @fncName can be a single allowed
     # function name or a list of allowed function namings, restricts global variable edits
-    # via which function is allowed to edit it dependent upon programmer's usage
+    # via which function is allowed to edit it dependent upon programmer's usage, @full-
+    # path is always the file path of the .tqpt variables source file, not a .tpqt lock file
     
     # tpqt file structure:
         
@@ -455,13 +479,27 @@ def keyvar(isLogF, varName, fncName, fullPath):
     # ** @fullPath is full file path of the .tqpt variable source file, not .tpqt file path **
     
     # searches a .tpqt function lock file for listed @varName and sub-listed allowed
-    # function(s) name(s), if @fncName is found will return integer 1 or 0 not found;
+    # function(s) name(s), if @fncName is found will return True or False not found;
     # @isLogF=True then adds to a .logf file in directory of the .tqpt & .tpqt files if a
-    # one found return, in the log format as single line entries repeated:
+    # True found return, in the log format as single line entries repeated:
         
     # >> var: <@varName>, fnc: <@fncName>, time: <date-time>
     
     return ult_fnc_var_request(isLogF, varName, fncName, fullPath)
+#______________________________________________________________________________________
+
+def lockvar_edit(varName, fncName, fullPath):
+    
+    # UTILITY FUNCTION:
+        
+    # varName=str, fncName, fullPath=str
+    
+    # parallel/helper function to lockvar; does not add new function name(s) sublist to a new
+    # variable name to add, rather new function name(s) sublist to a already existing .tpqt file
+    # with a already @varName listed ----useful for multi-processing needs or import needs in
+    # testing a global variable's stranger reactions recorded; @fncName can be str or a str list
+    
+    ult_edit_fnc_lock(varName, fncName, fullPath)
 #______________________________________________________________________________________
 
 def scanvar(varName, fullPath):
@@ -520,7 +558,7 @@ def test():
     
     #viewsource("/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
     
-    #fncLst = ['__function0017','__function0018','__function0019','__function0020']
+    #fncLst = ['_weird_function_001', '_weird_mathematics_002', '_weird_datascience_003', '_weird_multiworld_004', '_weird_flyingcreatures_005']
     
     #lockvar('variableDequeTest1', fncLst, "/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
     
@@ -530,6 +568,8 @@ def test():
         #print('call function')
     #else:
         #print('do not call function')
+        
+    #lockvar_edit('variableDequeTest1', fncLst, "/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
     
 #______________________________________________________________________________________
     

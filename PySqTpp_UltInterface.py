@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.212
+# Staqtapp 1.02.237
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -34,7 +34,13 @@ class PySqTppUltInterface(metaclass=abc.ABCMeta):
         
     @abc.abstractmethod
     def asguard_variable_domain(self, inact_logf: bool, var_name: str, func_name: str, full_path: str):
-        # allows control of which functions can alter a global variable via .tpqt extension file lookup
+        # allows control of what functions can change a global variable via .tpqt extension file lookups
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def overwrite_fnc_lock(self, var_name, func_name, full_path):
+        # overwrites a function lock list entry within a existing tpqt file of chosen variable listed
         raise NotImplementedError
     
     

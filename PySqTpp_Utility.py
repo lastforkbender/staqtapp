@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.212
+# Staqtapp 1.02.237
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -97,8 +97,8 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
         # return -4  : no .tpqt function lock file to search
         # return -5  : no search result return for .tpqt file
         
-        # return 0  : function/@func_name was not found ...not allowed to change @var_name
-        # return 1  : function/@func_name was found ...is allowed to change @var_name
+        # return False  : function/@func_name was not found ...not allowed to change @var_name
+        # return True  : function/@func_name was found ...is allowed to change @var_name
         
         cLst = None
         cLen = None
@@ -145,6 +145,69 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                                     return True
                                 else:
                                     return False
+                            else:
+                                return -5
+                        else:
+                            return -4
+                else:
+                    return -2
+            else:
+                return -1
+        except Exception as e:
+            print("staqtapp error: ",e)
+#______________________________________________________________________________________
+
+    def overwrite_fnc_lock(self, var_name, func_name, full_path):
+        # @override PySqTppUltInterface.overwrite_fnc_lock()
+        
+        # FUNCTION RETURN-CODES
+            
+        # ------------------------------------------------------------------------
+        # return -1  : invalid file path
+        # return -2  : var_name and/or func_name is null
+        # return -3  : @var_name was not found in .tqpt source file
+        # return -4  : no found .tpqt file @ .tqpt source directory
+        # return -5  : no search result return for .tpqt file
+        # return -6  : invalid variable type @func_name
+        
+        rslt = None
+        
+        sStr = None
+        fStr = None
+        cStr = None
+        cLst = None
+        
+        try:
+            if os.path.isfile(full_path):
+                newUltSttp = UltSttp()
+                if len(var_name) > 0 and len(func_name) > 0:
+                    rslt = newUltSttp.tpqt_map(True, None, 'lod_vc', var_name, None, full_path)
+                    if rslt == False:
+                        return -3
+                    else:
+                        sStr = full_path.replace('.tqpt', '.tpqt')
+                        if os.path.isfile(sStr):
+                            fStr = newUltSttp.tpqt_map(True, None, 'lod_vd', var_name, None, sStr)
+                            if fStr != '<:!!':
+                                cLst = bytes.decode(fStr, 'utf-8').split('\n')
+                                if isinstance(func_name, list):
+                                    cLen = len(func_name)
+                                    cStr = cLst[0] + '\n'
+                                    for fnc in range(cLen):
+                                        if fnc != cLen-1:
+                                            cStr += func_name[fnc] + '\n'
+                                        else:
+                                            cStr += func_name[fnc] + ':>\n'
+                                            break
+                                elif isinstance(func_name, str):
+                                    cStr = cLst[0] + '\n' + func_name + ':>\n'
+                                else:
+                                    return -6
+                                fStr = bytes.decode(fStr, 'utf-8')
+                                with open(sStr, mode='w+') as fObjWf:
+                                    sStr = fObjWf.read()
+                                    sStr = sStr.replace('\n' + fStr, '')
+                                    fObjWf.write(sStr + cStr + '!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
                             else:
                                 return -5
                         else:

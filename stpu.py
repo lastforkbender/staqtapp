@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.212
+# Staqtapp 1.02.237
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -35,7 +35,7 @@ def ult_fnc_var_request(logf_enable, vr_name, fnc_name, fpath):
     elif rslt == -4:
         raise Exception("staqtapp<keyvar> no found .tpqt function lock file to search at in directory of .tqpt source file...")
     elif rslt == -5:
-        raise Exception("staqtapp<keyvar> global variable: " + vr_name + ' is not listed in .tqpt function lock file...')
+        raise Exception("staqtapp<keyvar> global variable: " + vr_name + ' is not listed in .tpqt function lock file...')
 #______________________________________________________________________________________
 
 def ult_limit_outer_domain(varName, fncName, filePath):
@@ -51,6 +51,23 @@ def ult_limit_outer_domain(varName, fncName, filePath):
         raise Exception("staqtapp<lockvar> invalid function name(s) @fncName found")
     elif rslt == -5:
         raise Exception("staqtapp<lockvar> varName and/or fncName cannot be nothing")
+#______________________________________________________________________________________
+
+def ult_edit_fnc_lock(varName, fncName, filePath):
+    newUltSttp = UltSttp()
+    rslt = newUltSttp.overwrite_fnc_lock(varName, fncName, filePath)
+    if rslt == -1:
+        raise Exception("staqtapp<lockvar_edit> invalid tqpt source file path @" + filePath)
+    elif rslt == -2:
+        raise Exception("staqtapp<lockvar_edit> varName and/or fncName cannot be nothing")
+    elif rslt == -3:
+        raise Exception("staqtapp<lockvar_edit> invalid variable name, variable not found @" + filePath)
+    elif rslt == -4:
+        raise Exception("staqtapp<lockvar_edit> no pairing tpqt file found at tqpt file path [" + filePath + "]")
+    elif rslt == -5:
+        raise Exception("staqtapp<lockvar_edit> global variable: " + varName + ' is not listed in .tpqt function lock file...')
+    elif rslt == -6:
+        raise Exception("staqtapp<lockvar_edit> invalid type @fncName, must be str or list")
 #______________________________________________________________________________________
 
 def ult_varname(glbVarName, filePath):
