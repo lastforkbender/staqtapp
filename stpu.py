@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.237
+# Staqtapp 1.02.291
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -51,6 +51,21 @@ def ult_limit_outer_domain(varName, fncName, filePath):
         raise Exception("staqtapp<lockvar> invalid function name(s) @fncName found")
     elif rslt == -5:
         raise Exception("staqtapp<lockvar> varName and/or fncName cannot be nothing")
+#______________________________________________________________________________________
+
+def ult_return_function_keys(varName, filePath):
+    newUltSttp = UltSttp()
+    rslt = newUltSttp.search_key_lock(varName, filePath)
+    if rslt == -1:
+        raise Exception("staqtapp<searchkeys> invalid tqpt source file path @" + filePath)
+    elif rslt == -2:
+        raise Exception("staqtapp<searchkeys> @varName cannot be null")
+    elif rslt == -3:
+         raise Exception("staqtapp<searchkeys> @varName not found in tqpt file @" + filePath)
+    elif rslt == -4:
+         raise Exception("staqtapp<searchkeys> no pairing tpqt file found at tqpt file path [" + filePath + "]")
+    else:
+        return rslt
 #______________________________________________________________________________________
 
 def ult_edit_fnc_lock(varName, fncName, filePath):

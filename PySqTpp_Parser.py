@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.237
+# Staqtapp 1.02.291
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -647,7 +647,7 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
         # return -1 : false for the setting in question
         # return -2 : empty settings line from tqpt source file read
         
-        tqptLn = ''
+        tqptLn = None
                 
         with open(full_path, 'r') as fileObjCts:
             # get the first reserved .tqpt file settings line, line 1

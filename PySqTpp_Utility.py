@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.237
+# Staqtapp 1.02.291
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -134,20 +134,64 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                                         # change the full .tpqt file path to .logf extension
                                         sStr = sStr.replace('.tpqt', '.logf')
                                         if os.path.isfile(sStr) == True:
-                                            with open(sStr, mode='r') as fObjLogf:
-                                                with mmap.mmap(fObjLogf.fileno(), length=0, access=mmap.ACCESS_READ) as mObjLogf:
-                                                    cLen = mObjLogf.read()
-                                                    mObjLogf.close()
-                                                mObjLogf = None
-                                            with open(sStr, mode='wb') as logf: logf.write(cLen + str.encode('\n>> var: ' + var_name + ', fnc: ' + func_name + ', time: ' + str(datetime.now())))
-                                        else:
-                                            with open(sStr, mode='w') as logf: logf.write('>> var: ' + var_name + ', fnc: ' + func_name + ', time: ' + str(datetime.now()))
+                                            with open(sStr, mode='a') as logf: logf.write('>> var: ' + var_name + ', fnc: ' + func_name + ', time: ' + str(datetime.now()) + '\n')
                                     return True
                                 else:
                                     return False
                             else:
                                 return -5
                         else:
+                            return -4
+                else:
+                    return -2
+            else:
+                return -1
+        except Exception as e:
+            print("staqtapp error: ",e)
+#______________________________________________________________________________________
+
+    def search_key_lock(self, var_name: str, full_path: str):
+        # @override PySqTppUltInterface.search_key_lock()
+        
+        # FUNCTION RETURN-CODES
+            
+        # ------------------------------------------------------------------------
+        # return -1  : invalid file path
+        # return -2  : @var_name is null
+        # return -3  : @var_name not found in tqpt source file
+        # return -4  : no .tpqt functions lock file found
+        
+        rslt = None
+        nrRslt = None
+        sStr = None
+        
+        # ****a very simple and perhaps most important function of this all,
+        # returns a list of function names allowed to change @var_name or
+        # None type if no search results gathered at the tpqt file****
+        
+        try:
+            if os.path.isfile(full_path):
+                newUltSttp = UltSttp()
+                if len(var_name) > 0:
+                    # check if @var_name is even listed at the tqpt variable source file, no dank
+                    rslt = newUltSttp.tpqt_map(True, None, 'lod_vc', var_name, None, full_path)
+                    if rslt == False:
+                        return -3
+                    else:
+                        # switch to the .tpqt function lock file extension file path
+                        sStr = full_path.replace('.tqpt', '.tpqt')
+                        if os.path.isfile(sStr):
+                            fStr = newUltSttp.tpqt_map(True, None, 'lod_vd', var_name, None, sStr)
+                            if fStr != '<:!!':
+                                cLst = bytes.decode(fStr, 'utf-8').strip(' :>' ).split('\n')
+                                # first index is the variable name, remove it and return fnc name(s) list
+                                cLst.pop(0)
+                                return cLst
+                            else:
+                                #none found, both @var_name & any allowed function(s) name(s) sublisted
+                                return None
+                        else:
+                            # no .tpqt lock file to search...
                             return -4
                 else:
                     return -2

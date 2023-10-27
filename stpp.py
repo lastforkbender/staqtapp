@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.237
+# Staqtapp 1.02.291
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -17,7 +17,7 @@
 from PySqTpp_Parser import TqptParser
 from collections import deque
 from stps import extrloadsarremap
-from stpu import ult_varname, ult_show_tqpt_contents, ult_limit_outer_domain, ult_fnc_var_request, ult_edit_fnc_lock
+import stpu
 #______________________________________________________________________________________
 #______________________________________________________________________________________
 #______________________________________________________________________________________
@@ -56,13 +56,15 @@ from stpu import ult_varname, ult_show_tqpt_contents, ult_limit_outer_domain, ul
 # variables/pointers secure wrapped/obfuscated and/or locked
 
 
-# UTILITY:
+# UTILITY - stpp.methods()
 
 
 # [.lockvar] - creates tpqt lock function call files for global variable(s) domain restrictions
 
 # [.keyvar] - searches a tpqt function lock file, giving feedback conditional on the global
 # variable allowed to be changed by listed functions in pairing of the tqpt source file
+
+# [.searchkeys] - returns a list of function name(s) from a global variable search in a tpqt file
 
 # [.lockvar_edit] - a parallel/helper function to lockvar; does not add new function name(s)
 # sublist to a new variable name to add, rather new function name(s) sublist to a already
@@ -467,7 +469,7 @@ def lockvar(varName, fncName, fullPath):
     # <:varName=
     # fncName:>
     
-    ult_limit_outer_domain(varName, fncName, fullPath)
+    stpu.ult_limit_outer_domain(varName, fncName, fullPath)
 #______________________________________________________________________________________
 
 def keyvar(isLogF, varName, fncName, fullPath):
@@ -485,21 +487,34 @@ def keyvar(isLogF, varName, fncName, fullPath):
         
     # >> var: <@varName>, fnc: <@fncName>, time: <date-time>
     
-    return ult_fnc_var_request(isLogF, varName, fncName, fullPath)
+    return stpu.ult_fnc_var_request(isLogF, varName, fncName, fullPath)
+#______________________________________________________________________________________
+
+def searchkeys(varName, fullPath):
+    
+    # UTILITY FUNCTION:
+        
+    # varName=str, fullPath=str
+    
+    # important stpp.function that returns the sublist of functions allowed to change
+    # a global variable, listed in a tpqt lock file -- @fullPath is the tqpt source path; if
+    # no search results found then returns a None type rather than a list type
+    
+    return stpu.ult_return_function_keys(varName, fullPath)
 #______________________________________________________________________________________
 
 def lockvar_edit(varName, fncName, fullPath):
     
     # UTILITY FUNCTION:
         
-    # varName=str, fncName, fullPath=str
+    # varName=str, fncName= str | list, fullPath=str
     
     # parallel/helper function to lockvar; does not add new function name(s) sublist to a new
     # variable name to add, rather new function name(s) sublist to a already existing .tpqt file
     # with a already @varName listed ----useful for multi-processing needs or import needs in
     # testing a global variable's stranger reactions recorded; @fncName can be str or a str list
     
-    ult_edit_fnc_lock(varName, fncName, fullPath)
+    stpu.ult_edit_fnc_lock(varName, fncName, fullPath)
 #______________________________________________________________________________________
 
 def scanvar(varName, fullPath):
@@ -514,7 +529,7 @@ def scanvar(varName, fullPath):
     # and this function's parameter @varName, returns wanted variable name or a
     # suggested smart glb variable name as str
     
-    return ult_varname(varName, fullPath)
+    return stpu.ult_varname(varName, fullPath)
 #______________________________________________________________________________________
 
 def viewsource(fullPath):
@@ -529,7 +544,7 @@ def viewsource(fullPath):
     # Data:
     # <variables's data here>
     
-    ult_show_tqpt_contents(fullPath)
+    stpu.ult_show_tqpt_contents(fullPath)
 #______________________________________________________________________________________
 
 def test():
@@ -544,7 +559,7 @@ def test():
     
     #lst = findvar(True, 'variable99', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
-    #addvar_sar("tiger", "@qp(9000):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    #addsar("tiger", "@qp(9000):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
     
     #changevar('variableDequeTest4001', '@qp(y+z(i/r)c+1, 9.99999999,no errors please):', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
     
@@ -570,6 +585,10 @@ def test():
         #print('do not call function')
         
     #lockvar_edit('variableDequeTest1', fncLst, "/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
+    
+    #rslt = searchkeys("variableDequeTest2", "/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
+    
+    #print(rslt)
     
 #______________________________________________________________________________________
     

@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.237
+# Staqtapp 1.02.291
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -23,7 +23,7 @@ class PySqTppUltInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         # subclasshook for the abstract methods defines
-        return (hasattr(subclass, 'limit_outer_domain') and callable(subclass.limit_outer_domain) and hasattr(subclass, 'asguard_variable_domain') and callable(subclass.asguard_variable_domain) and hasattr(subclass, 'scan_py_module') and callable(subclass.scan_py_module) and hasattr(subclass, 'print_tqpt_file') and callable(subclass.print_tqpt_file) and hasattr(subclass, 'tpqt_map') and callable(subclass.tpqt_map) or NotImplemented)
+        return (hasattr(subclass, 'limit_outer_domain') and callable(subclass.limit_outer_domain) and hasattr(subclass, 'asguard_variable_domain') and callable(subclass.asguard_variable_domain) and hasattr(subclass, 'search_key_lock') and callable(subclass.search_key_lock) and hasattr(subclass, 'overwrite_fnc_lock') and callable(subclass.overwrite_fnc_lock) and hasattr(subclass, 'scan_py_module') and callable(subclass.scan_py_module) and hasattr(subclass, 'print_tqpt_file') and callable(subclass.print_tqpt_file) and hasattr(subclass, 'tpqt_map') and callable(subclass.tpqt_map) or NotImplemented)
     
     
     @abc.abstractmethod
@@ -35,6 +35,12 @@ class PySqTppUltInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def asguard_variable_domain(self, inact_logf: bool, var_name: str, func_name: str, full_path: str):
         # allows control of what functions can change a global variable via .tpqt extension file lookups
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def search_key_lock(self, var_name: str, full_path: str):
+        # finds a listed variable name in a tpqt function lock file and returns a list type of function names associated with the variable
         raise NotImplementedError
         
         
