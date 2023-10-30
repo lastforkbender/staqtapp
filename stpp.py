@@ -1,9 +1,9 @@
-# Code File: StaqTapp-1.01 [stpp.py] StaqTapp main functional calls module
+# Code File: StaqTapp-1.02 [stpp.py] StaqTapp main functional calls module
 
 
 
 
-# Staqtapp 1.02.291
+# Staqtapp 1.02.317
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -66,6 +66,8 @@ import stpu
 
 # [.searchkeys] - returns a list of function name(s) from a global variable search in a tpqt file
 
+# [.viewkeys] - prints a tpqt global variable keys/functions locks sublist file to console
+
 # [.lockvar_edit] - a parallel/helper function to lockvar; does not add new function name(s)
 # sublist to a new variable name to add, rather new function name(s) sublist to a already
 # existing .tpqt file with a already variable name listed, useful for multi-processing needs
@@ -83,8 +85,17 @@ import stpu
 # [.viewsource] - prints a tqpt variables source file's contents to console in readable slots
 
 
+# SELF-REPLICATION PY LIBRARY BUILDING - stpp.methods()
+
+
+# [.rev9build] - builds a custom global variables i/o library using an assortment of different options
+# including __slots__ and/or sars enabled variables programming to made py modules builds, 14
+# parameter settings are of this method call; see PySqTpp_Rev9Interface -> rev9_model_service()
+
+
 #______________________________________________________________________________________
 #______________________________________________________________________________________
+
 
 #     Total quanity position transfer(.tqpt) and total position quanity transfer(.tpqt) staq-
 # tapp files always mirror the other in a same directory, however no stpp.method() re-
@@ -547,6 +558,17 @@ def viewsource(fullPath):
     stpu.ult_show_tqpt_contents(fullPath)
 #______________________________________________________________________________________
 
+def viewkeys(fullPath):
+    
+    # UTILITY FUNCTION:
+        
+    # fullPath=str
+    
+    # prints to console a tpqt lock file contents from given tqpt source file path @fullPath
+    
+    stpu.ult_show_tpqt_contents(fullPath)
+
+#______________________________________________________________________________________
 def test():
     
     #newTqptParser = TqptParser()
@@ -590,9 +612,11 @@ def test():
     
     #print(rslt)
     
+    viewkeys("/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test2.tqpt")
+    
 #______________________________________________________________________________________
     
-#test()
+test()
 
 
 

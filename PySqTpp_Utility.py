@@ -1,9 +1,9 @@
-# Code File: StaqTapp-1.01 [PySqTpp_Utility.py] main utility functions use
+# Code File: StaqTapp-1.02 [PySqTpp_Utility.py] main utility functions use
 
 
 
 
-# Staqtapp 1.02.291
+# Staqtapp 1.02.317
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -298,6 +298,28 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                                 # funny how?
                                 print('...non-readable data declaring(s)')
                     idx+=1
+            else:
+                return -1
+        except Exception as e:
+            print("staqtapp error: ",e)
+#______________________________________________________________________________________
+
+    def print_tpqt_file(self, full_path):
+        # @override PySqTppUltInterface.print_tpqt_file()
+        
+        # FUNCTION RETURN-CODES
+            
+        # ------------------------------------------------------------------------
+        # return -1  : file path is invalid
+        
+        try:
+            if os.path.isfile(full_path):
+                tpPth = full_path.replace('.tqpt', '.tpqt')
+                with open(tpPth, mode='r') as fObjPtl:
+                    with mmap.mmap(fObjPtl.fileno(), length=0, access=mmap.ACCESS_READ) as mObjPtl:
+                        print(bytes.decode(mObjPtl.read(), 'utf-8'))
+                        mObjPtl.close()
+                    mObjPtl = None
             else:
                 return -1
         except Exception as e:

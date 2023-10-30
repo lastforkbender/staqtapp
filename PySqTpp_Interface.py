@@ -1,9 +1,9 @@
-# Code File: StaqTapp-1.01 [PySqTpp_Interface.py] StaqTapp main interface class
+# Code File: StaqTapp-1.02 [PySqTpp_Interface.py] StaqTapp main interface class
 
 
 
 
-# Staqtapp 1.02.291
+# Staqtapp 1.02.317
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.

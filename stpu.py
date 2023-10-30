@@ -1,9 +1,9 @@
-# Code File: StaqTapp-1.01 [stpu.py] StaqTapp utility functional calls module
+# Code File: StaqTapp-1.02 [stpu.py] StaqTapp utility functional calls module
 
 
 
 
-# Staqtapp 1.02.291
+# Staqtapp 1.02.317
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
@@ -97,6 +97,13 @@ def ult_varname(glbVarName, filePath):
 def ult_show_tqpt_contents(filePath):
     newUltSttp = UltSttp()
     rslt = newUltSttp.print_tqpt_file(filePath)
+    if rslt == -1:
+        raise Exception("staqtapp<viewsource> invalid tqpt source file path @" + filePath)
+#______________________________________________________________________________________
+
+def ult_show_tpqt_contents(filePath):
+    newUltSttp = UltSttp()
+    rslt = newUltSttp.print_tpqt_file(filePath)
     if rslt == -1:
         raise Exception("staqtapp<viewsource> invalid tqpt source file path @" + filePath)
 #______________________________________________________________________________________

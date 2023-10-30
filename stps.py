@@ -1,9 +1,9 @@
-# Code File: StaqTapp-1.01 [stps.py] StaqTapp main S.A.R. functional calls module
+# Code File: StaqTapp-1.02 [stps.py] StaqTapp main S.A.R. functional calls module
 
 
 
 
-# Staqtapp 1.02.291
+# Staqtapp 1.02.317
 
 # For global variables file use and other global variables magic;
 # these modules part of SolaceXn AI software packages as updated.
