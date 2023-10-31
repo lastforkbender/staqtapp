@@ -3,10 +3,12 @@
 
 
 
-# Staqtapp 1.02.317
+# Staqtapp 1.02.331
 
-# For global variables file use and other global variables magic;
-# these modules part of SolaceXn AI software packages as updated.
+# For global variables file use and other lords' global variables fork bending
+
+
+# ***These modules part of the SolaceXn AI software package as is for all lords***
 
 
 # email: 5deg.blk.blt.cecil(@)gmail
@@ -15,7 +17,7 @@
 
 
 from PySqTpp_Utility import UltSttp
-
+import stpr
 
 #______________________________________________________________________________________
 
@@ -107,5 +109,8 @@ def ult_show_tpqt_contents(filePath):
     if rslt == -1:
         raise Exception("staqtapp<viewsource> invalid tqpt source file path @" + filePath)
 #______________________________________________________________________________________
+
+def ult_call_rev9_service(slotsEncoding, sarsEncoding, multiStability, multiExtractable, obfuscated, contentDependent, staticShifting, sortingTolerate, counterIntuitiveVariables, superPalindromePointers, variablesLengthMuting, variablesTopographyLearning, globalVariablesFileExtension, globalVariablesLibraryName, buildFolderPath):
+    stpr.main([slotsEncoding, sarsEncoding, multiStability, multiExtractable, obfuscated, contentDependent, staticShifting, sortingTolerate, counterIntuitiveVariables, superPalindromePointers, variablesLengthMuting, variablesTopographyLearning, globalVariablesFileExtension, globalVariablesLibraryName, buildFolderPath])
 
 

@@ -3,10 +3,12 @@
 
 
 
-# Staqtapp 1.02.317
+# Staqtapp 1.02.331
 
-# For global variables file use and other global variables magic;
-# these modules part of SolaceXn AI software packages as updated.
+# For global variables file use and other lords' global variables fork bending
+
+
+# ***These modules part of the SolaceXn AI software package as is for all lords***
 
 
 # email: 5deg.blk.blt.cecil(@)gmail
@@ -85,12 +87,12 @@ import stpu
 # [.viewsource] - prints a tqpt variables source file's contents to console in readable slots
 
 
-# SELF-REPLICATION PY LIBRARY BUILDING - stpp.methods()
+# SELF-REPLICATION GLOBAL VARIABLES LIBRARY BUILD - stpp.methods()
 
 
 # [.rev9build] - builds a custom global variables i/o library using an assortment of different options
-# including __slots__ and/or sars enabled variables programming to made py modules builds, 14
-# parameter settings are of this method call; see PySqTpp_Rev9Interface -> rev9_model_service()
+# including __slots__ and/or sars enabled variables programming to made py modules builds, 15
+# parameter settings are of this method call to begin a rev9 global variables resource library build
 
 
 #______________________________________________________________________________________
@@ -569,6 +571,48 @@ def viewkeys(fullPath):
     stpu.ult_show_tpqt_contents(fullPath)
 
 #______________________________________________________________________________________
+
+def rev9build(slotsEncoding, sarsEncoding, multiStability, multiExtractable, applyObfuscation, contentDependent, staticShifting, sortingTolerate, counterIntuitiveVariables, superPalindromePointers, variablesLengthMuting, variablesTopographyLearning, globalVariablesFileExtension, globalVariablesLibraryName, buildFolderPath):
+    stpu.ult_call_rev9_service(slotsEncoding, sarsEncoding, multiStability, multiExtractable, applyObfuscation, contentDependent, staticShifting, sortingTolerate, counterIntuitiveVariables, superPalindromePointers, variablesLengthMuting, variablesTopographyLearning, globalVariablesFileExtension, globalVariablesLibraryName, buildFolderPath)
+    
+    
+    # REV9 BEGIN IN-BUILD ENTRY METHOD PARAMETERS:
+                
+        # (1)    <slotsEncoding=bool>,  applies abstract __slots__ py module class/function programming to the in-build global variables library rev9 decisions, this can effect performance and the overall built size of the library finalized
+                
+        # (2)    <sarsEncoding=bool>,  applies global sar variables type/global sar temple variables pointer type programming to finalized library build, see PySqTpp_Alpha or stpp module's sar functions descriptions usage
+                
+        # (3)    <multiStability=bool>,  applies complete finalized directional error checking within interface/class/functions to class/functions usage inner and/or outer; if False, does not apply it's code writting for more strict type error feedbacks
+                
+        # (4)    <multiExtractable=bool>,  applies approximate global variables data @is_variables_topography_learning, or if False makes choice of indicated performance clauses by any found constants in parameters changes
+               # *****can build bluetooth functional file extension matters//custom normals or customs invertable to sars enabled self-network expressions interconnected e.g. android os*****
+                
+        # (5)    <applyObfuscation=bool>,  applies obfuscated variables naming to the in-build coding of the custom global variables library, does not obfuscate the finalized callable function names or their parameters
+                
+        # (6)    <contentDependent=bool>,  applies formulation strict observes to global variables data type interactions chosen; a basic read/write functional argument, however does effect overall performance in a finalized library build
+               # *****can build bluetooth functional file extension matters//custom normals or customs invertable to sars enabled self-network expressions interconnected e.g. android os*****
+                
+        # (7)    <staticShifting=bool>,  applies any chosen shifting mechanics to the global variables file type format chosen via static bound declaring in coding builds; can take longer of it's decision build loops but more tighter coding finalized of library builds
+                
+        # (8)    <sortingTolerate=bool>,  applies & determines position inter-changes to global variables file formats, function direction flowings and read/write mapping of global variables scope communication to outer parameters options made
+                
+        # (9)    <counterIntuitiveVariables=bool>,  from above almost opposite but not, applies non-traditional means of callable function flows inner to global variables file format overall library builds; can make the function encoding difficult to read
+                
+        # (10)  <superPalindromePointers=bool>,  uses superbranching rotational variables mapping to the applied coding in-build resolves, in the global variables file read/write regions of library made; can effect reading performances if using __slots__
+               # *****can build bluetooth functional file extension matters//custom normals or customs invertable to sars enabled self-network expressions interconnected e.g. android os*****
+                
+        # (11)  <variablesLengthMuting=bool>,  uses strict lock-offs to finalized functions' parameters usages built; the rev9 model determines this scope and can also effect performance timing and can make very unreadable function encodings also
+                
+        # (12)  <variablesTopographyLearning=bool>,  rev9 model build decision based exclusive only, joins property scopes of any found constants to combine/compress for other file types associated & written for any outer data gathering usage
+               # *****can build bluetooth functional file extension matters//custom normals or customs invertable to sars enabled self-network expressions interconnected e.g. android os*****
+                
+        # (13)  <globalVariablesFileExtension: str>,  global variables source file extension to use for the finalized rev9 global variables library build
+                
+        # (14)  <globalVariablesLibraryName: str>,  overall library name of the global variables read/write library to be built by the rev9 model; rev9 build library model uses this to name on all other files, classes, functions, variables, slots and etc.
+        
+        # (15) <buildFolderPath: str>,  folder path where global variables rev9 type library will be built
+#______________________________________________________________________________________
+
 def test():
     
     #newTqptParser = TqptParser()
@@ -612,7 +656,9 @@ def test():
     
     #print(rslt)
     
-    viewkeys("/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test2.tqpt")
+    #viewkeys("/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test2.tqpt")
+    
+    rev9build(True, True, True, False, False, True, True, False, False, True, True, False, ".rttt", "rev9_test_library", "/storage/emulated/0/rev9")
     
 #______________________________________________________________________________________
     

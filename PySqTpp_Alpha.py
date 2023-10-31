@@ -3,10 +3,12 @@
 
 
 
-# Staqtapp 1.02.317
+# Staqtapp 1.02.331
 
-# For global variables file use and other global variables magic;
-# these modules part of SolaceXn AI software packages as updated.
+# For global variables file use and other lords' global variables fork bending
+
+
+# ***These modules part of the SolaceXn AI software package as is for all lords***
 
 
 # email: 5deg.blk.blt.cecil(@)gmail
