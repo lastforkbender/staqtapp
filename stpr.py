@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.331
+# Staqtapp 1.02.337
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -35,13 +35,29 @@ def _rev9_r9cp(r9cp_lst):
         pass
 #______________________________________________________________________________________
 
-def _rev9_proc(pr9c_lst):
+def _rev9_proc(pr9cn_lst):
     global __rev9__prc
     __rev9__prc = None
-    __rev9__prc = multiprocessing.Process(target = _rev9_r9cp, args = (pr9c_lst,), daemon = True)
-    
+    __rev9__prc = multiprocessing.Process(target = _rev9_r9cp, args = (pr9cn_lst,), daemon = True)
 #______________________________________________________________________________________
-# - - - - - - - - - - - - - - - - - - - - - - REV9 CUSTOM GLOBAL VARIABLES MODULE BUILDING .□ .■
+
+def _rev9_updt_cp(pr9cx_lst):
+    _rev9_proc(pr9cx_lst)
+    __rev9__prc.start()
+    __rev9__prc.join()
+    
+
+
+#______________________________________________________________________________________
+#______________________________________________________________________________________
+# - - - - - - - - - - - - - - - - - - - - - REV9 CUSTOM GLOBAL VARIABLES MODULES BUILDING .□ .■
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+# 
+#
+#
+# staqtapp-rev9 flow-chart drawing link: https://ibb.co/s3MS9Jd
+#______________________________________________________________________________________
+#______________________________________________________________________________________
 #______________________________________________________________________________________
 #______________________________________________________________________________________
 
@@ -56,21 +72,73 @@ def rev9_update_and_write_sorted_settings_file(is_slots_encoding, is_sars_encodi
     # what level of phase medium encoding are we looking at first?
     if is_slots_encoding == True and is_sars_encoding == True:
         tLst.append(".]:<[>>  p.u.m.a. build setting is __slots__ & sars variables programming composed")
-        mStr += '=hybrid:>\n'
+        mStr += 'hybrid:>\n'
     elif is_slots_encoding == True and is_sars_encoding == False:
         tLst.append(".]:<[>>  p.u.m.a. build setting is __slots__ variables programming composed")
-        mStr += '=slots:>\n'
+        mStr += 'slots:>\n'
     elif is_slots_encoding == False and is_sars_encoding == True:
         tLst.append(".]:<[>>  p.u.m.a. build setting is sars variables programming composed")
-        mStr += '=sars:>\n'
+        mStr += 'sars:>\n'
     elif is_slots_encoding == False and is_sars_encoding == False:
         tLst.append(".]:<[>>  p.u.m.a. build setting is general variables programming composed")
-        mStr += '=general:>\n'
+        mStr += 'general:>\n'
     # update the console feedback from multi-processing cores
-    _rev9_proc(tLst)
-    __rev9__prc.start()
-    __rev9__prc.join()
-        
+    _rev9_updt_cp(tLst)
+    tLst = []
+    tLst.append(".]:<[>>  sorting linked property scopes(i.p.c.d.) to secondary rev9 self-encoding settings")
+    mStr += '<:IsolatedPositionCodeDepths=\n'
+    if is_multi_stability == True and is_multi_extractable == True:
+        tLst.append(".]:<[>>  multi-stability & multi-extractable are present rev9 settings found")
+        tLst.append(".]:<[>>  ...most likely to spawn bluetooth optional modules encodings mapped")
+        if is_variables_length_muting == True and is_static_shifting == True:
+            tLst.append(".]:<[>>  strict parameter variables encoding will be used @static-shiftings")
+            mStr += 'mmvs-1\n'
+        # this can be override to use static shifting regardless of settings already passed in
+        elif is_variables_length_muting == True and is_sorting_tolerate == True:
+            tLst.append(".]:<[>>  strict parameter variables encoding will be used")
+            mStr += 'mmvs-2\n'
+        elif is_variables_length_muting == False and is_static_shifting == True:
+            tLst.append(".]:<[>>  strict parameter variables encoding will not be used @static-shiftings")
+            mStr += 'mmss\n'
+        # !!!cannot be a override to use static shifting encodings!!!
+        elif is_variables_length_muting == False and is_sorting_tolerate == True:
+            tLst.append(".]:<[>>  strict parameter variables encoding will not be used")
+            mStr += 'mmst\n'
+        else:
+            tLst.append(".]:<[>>  neither @static-shifting or a sortable encodings tolerate will be used")
+            tLst.append(".]:<[>>  if any topography encoded learning enabled will be less core present")
+            mStr += 'mm?\n'
+        if len(tLst) > 0:
+            _rev9_updt_cp(tLst)
+            tLst = []
+    elif is_multi_stability == True and is_multi_extractable == False:
+        tLst.append(".]:<[>>  multi-extractable is not a present rev9 build code-core setting")
+        tLst.append(".]:<[>>  can likely spawn bluetooth options if is a content dependent build...")
+        if is_counterintuitive_variables == True and is_content_dependent == True:
+            tLst.append(".]:<[>>  counterintuitive-vars & content dependent glb-vars type is a enabled settings")
+            tLst.append(".]:<[>>  rev9 encoding model will not use parallel probables to code finalized @static-shiftings")
+            mStr += 'msvd-1\n'
+        elif is_counterintuitive_variables == True and is_content_dependent == False:
+            tLst.append(".]:<[>>  glb-vars content dependent is not a enabled rev9 encode setting")
+            tLst.append(".]:<[>>  rev9 encoding model will use parallel probables to code finalized @static-shiftings")
+            mStr += 'msvd-2\n'
+        elif is_counterintuitive_variables == False and is_content_dependent == True:
+            tLst.append(".]:<[>>  content dependent interactions will be applied @multi-stability error checking")
+            mStr += 'mscd\n'
+        elif is_counterintuitive_variables == False and is_content_dependent == False:
+            mStr += 'ms_rsrv-0\n'
+        else:
+            mStr += 'ms_rsrv-?\n'
+    elif is_multi_stability == False and is_multi_extractable == True:
+        tLst.append(".]:<[>>  @multi-extractable setting on, found with @multi-stability off")
+        tLst.append(".]:<[>>  this can cause a override setting @sorting-tolerate option(s)")
+        mStr += '-mmse?\n'
+    elif is_multi_stability == False and is_multi_extractable == False:
+        raise Exception("staqtapp-rev9 build error: either multi-extractable and/or multi-stability initial setting(s) must be True")
+    if len(tLst) > 0:
+        _rev9_updt_cp(tLst)
+        tLst = []
+    
 #______________________________________________________________________________________
 
 def rev9_model_service(is_slots_encoding, is_sars_encoding, is_multi_stability, is_multi_extractable, is_obfuscated, is_content_dependent, is_static_shifting, is_sorting_tolerate, is_counterintuitive_variables, is_superpalindrome_pointers, is_variables_length_muting, is_variables_topography_learning, global_variables_file_extension, global_variables_library_name, build_folder_path):
