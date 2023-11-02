@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.337
+# Staqtapp 1.02.342
 
 # For global variables file use and other lords' global variables fork bending
 

@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.337
+# Staqtapp 1.02.342
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -25,21 +25,54 @@ import re
 
 class Rev9Setup(PySqTpp_Rev9Interface.PySqTppRev9Interface):
     # - settled functions for rev9 general build module methods -
-    pass
 #______________________________________________________________________________________
 
-    def rev9_utility_serviceA(self, paramA: str) -> int:
-        # @override PySqTppRev9Interface.rev9_utility_serviceA()
+    def rev9_map(self, is_read: bool, dsg: str, source:str, dir_path: str) -> int:
+        # @override PySqTppRev9Interface.rev9_map()
         
         # FUNCTION RETURN-CODES
             
         # ------------------------------------------------------------------------
+        # return -1  : folder path is empty
+        # return -2  : folder path is not there
+        # return -3  : is a empty source...
         
-        
-        pass
+        if len(dir_path) > 0:
+            if os.path.isdir(dir_path):
+                if is_read == True:
+                    # -------- READ REV9 SOURCE FILES --------------------------------------------
+                    if len(source) > 0:
+                        pass
+                    else:
+                        return -3
+                else:
+                    # -------- READ+WRITE REV9 SOURCE FILES -------------------------------
+                    if len(source) > 0:
+                        if dsg == 'wisf':
+                            with open(dir_path + '/__sqtpp_rev9.stgs', 'w')as fWisf: fWisf.write(source)
+                    else:
+                        return -3
+            else:
+                return -2
+        else:
+            return -1
 #______________________________________________________________________________________
 
-
+    def rev9_ocudlr(self, ltr: str) -> str:
+        # @override PySqTppRev9Interface.rev9_ocudlr()
+        if ltr == 'o':
+            return '○'
+        elif ltr == 'c':
+            return '●'
+        elif ltr == 'u':
+            return '◒'
+        elif ltr == 'd':
+            return '◓'
+        elif ltr == 'l':
+            return '◑'
+        elif ltr == 'r':
+            return '◐'
+#______________________________________________________________________________________
 
 
 

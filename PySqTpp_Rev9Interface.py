@@ -1,9 +1,9 @@
-# Code File: StaqTapp-1.02 PySqTpp_Rev9Interface.py] StaqTapp rev9 interface class
+# Code File: StaqTapp-1.02 PySqTpp_Rev9Interface.py] StaqTapp rev9 utility interface class
 
 
 
 
-# Staqtapp 1.02.337
+# Staqtapp 1.02.342
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -25,13 +25,22 @@ class PySqTppRev9Interface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         # subclasshook for the abstract methods defines
-        return (hasattr(subclass, 'rev9_utility_serviceA') and callable(subclass.rev9_utility_serviceA) or NotImplemented)
+        return (hasattr(subclass, 'rev9_map') and callable(subclass.rev9_map) and hasattr(subclass, 'rev9_ocudlr') and callable(subclass.rev9_ocudlr) or NotImplemented)
         
         
     @abc.abstractmethod
-    def rev9_utility_serviceA(self, paramA: str) -> int:
-        # description of method
+    def rev9_map(self, is_read: bool, dsg: str, source:str, dir_path: str) -> int:
+        # does all read and/or write of rev9 source files
         raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def rev9_ocudlr(self, ltr: str) -> str:
+        # returns path indicators for console prints
+        raise NotImplementedError
+        
+        
+
         
         
         
