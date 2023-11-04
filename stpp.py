@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.342
+# Staqtapp 1.02.353
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -573,7 +573,12 @@ def viewkeys(fullPath):
 #______________________________________________________________________________________
 
 def rev9build(slotsEncoding, sarsEncoding, multiStability, multiExtractable, applyObfuscation, contentDependent, staticShifting, sortingTolerate, counterIntuitiveVariables, superPalindromePointers, variablesLengthMuting, variablesTopographyLearning, globalVariablesFileExtension, globalVariablesLibraryName, buildFolderPath):
-    stpu.ult_call_rev9_service(slotsEncoding, sarsEncoding, multiStability, multiExtractable, applyObfuscation, contentDependent, staticShifting, sortingTolerate, counterIntuitiveVariables, superPalindromePointers, variablesLengthMuting, variablesTopographyLearning, globalVariablesFileExtension, globalVariablesLibraryName, buildFolderPath)
+    
+    # SPECIALIZED FUNCTION(r.e.v. re-inverted environment variables):
+        
+    # **all parameters of this function are in required; this specialized feature of staqtapp creates
+    # a custom, instant callable global variables by file py library work, that may include bluetooth
+    # protocol outer expressions for communication of other rev9 self-encoded modules builds**
     
     
     # REV9 BEGIN IN-BUILD ENTRY METHOD PARAMETERS:
@@ -611,6 +616,8 @@ def rev9build(slotsEncoding, sarsEncoding, multiStability, multiExtractable, app
         # (14)  <globalVariablesLibraryName: str>,  overall library name of the global variables read/write library to be built by the rev9 model; rev9 build library model uses this to name on all other files, classes, functions, variables, slots and etc.
         
         # (15) <buildFolderPath: str>,  folder path where global variables rev9 type library will be built
+        
+    stpu.ult_call_rev9_service(slotsEncoding, sarsEncoding, multiStability, multiExtractable, applyObfuscation, contentDependent, staticShifting, sortingTolerate, counterIntuitiveVariables, superPalindromePointers, variablesLengthMuting, variablesTopographyLearning, globalVariablesFileExtension, globalVariablesLibraryName, buildFolderPath)
 #______________________________________________________________________________________
 
 def test():

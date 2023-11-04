@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.342
+# Staqtapp 1.02.353
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -72,12 +72,6 @@ class PySqTppUltInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def tpqt_map(self, is_read, is_exist, dsg_fnc, var_name, func_name, full_path):
         # performs read & write of tpqt files
-        raise NotImplementedError
-        
-        
-    @abc.abstractmethod
-    def write_sr_settings(self, is_slots_encoding: bool, is_sars_encoding: bool, is_multi_stability: bool, is_multi_extractable: bool, is_obfuscated: bool, is_content_dependent: bool, is_static_shifting: bool, is_sorting_tolerate: bool, is_counterintuitive_variables: bool, is_superpalindrome_pointers: bool, is_variables_length_muting: bool, is_variables_topography_learning: bool, global_variables_file_extension: str, global_variables_library_name: str, folder_path: str):
-        # write of rev9 initial settings to temp file
         raise NotImplementedError
         
         

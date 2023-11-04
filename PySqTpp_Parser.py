@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.342
+# Staqtapp 1.02.353
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -927,25 +927,3 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                                 bmx = rrng(0, lenP)
         return particles
 #______________________________________________________________________________________
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

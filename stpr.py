@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.342
+# Staqtapp 1.02.353
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -88,9 +88,6 @@ def rev9_update_write_abstract_settings(is_slots_encoding, is_sars_encoding, is_
     elif is_slots_encoding == False and is_sars_encoding == False:
         tLst.append("]" + r9s.rev9_ocudlr('r') + "<[>>  p.u.m.a. setting build will be general variables programming composed")
         mStr += 'general:>\n'
-    # update the console feedback from multi-processing cores
-    _rev9_updt_cp(tLst)
-    tLst = []
     tLst.append("]" + r9s.rev9_ocudlr('o') + "<[>>  .....sorting linked property scopes(i.p.c.d.) to secondary rev9 self-encoding settings")
     mStr += '<:IsolatedPositionCodeDepths=\n'
     if is_multi_stability == True and is_multi_extractable == True:
@@ -201,11 +198,14 @@ def rev9_update_write_abstract_settings(is_slots_encoding, is_sars_encoding, is_
         elif msSw == False and meSw == True:
             mStr += 'me-?'
     mStr += ':>\n'
+    if len(tLst) > 0:
+        _rev9_updt_cp(tLst)
+        tLst = []
     if is_obfuscated == True:
         mStr += '<:ObfuscateEncodings=\ny:>'
     else:
         mStr += '<:ObfuscateEncodings=\nn:>'
-    rslt = r9s.rev9_map(False, 'wisf', mStr, folder_path)
+    rslt = r9s.rev9_map(False, False, 'wisf', mStr, folder_path)
     if rslt == -1:
         raise Exception("staqtapp rev9 build error: build folder path cannot be nothing")
     elif rslt == -2:
@@ -223,6 +223,8 @@ def rev9_model_service(is_slots_encoding, is_sars_encoding, is_multi_stability, 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+    
+    r9s = Rev9Setup()
     
     # REV9 IN-BUILD METHOD PARAMETERS:
                 
@@ -263,7 +265,11 @@ def rev9_model_service(is_slots_encoding, is_sars_encoding, is_multi_stability, 
     rsltStr = None
                
     try: 
+        # determine the general abstract encoding paths/options & write as the initial settings file
         rsltStr = rev9_update_write_abstract_settings(is_slots_encoding, is_sars_encoding, is_multi_stability, is_multi_extractable, is_obfuscated, is_content_dependent, is_static_shifting, is_sorting_tolerate, is_counterintuitive_variables, is_superpalindrome_pointers, is_variables_length_muting, is_variables_topography_learning, build_folder_path)
+        # write begin priority rev9 tree decision file; this connected to encoded zip file templates direct,
+        # created from source written above and saves a backup file of this in build directory a same
+        r9s.rev9_preform_priority_tree(False, build_folder_path)
         
     except Exception as e:
         raise Exception("staqtapp rev9 build error: ",e)

@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.342
+# Staqtapp 1.02.353
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -740,40 +740,6 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                     else:
                         tStr = '<:' + var_name + '=\n' + func_name + ':>\n'
                     with open(full_path, mode='w') as tpqtFl: tpqtFl.write('<STAQTAPP_DO_NOT_EDIT>\n' + tStr + '!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
-#______________________________________________________________________________________
-
-    def write_sr_settings(self, is_slots_encoding: bool, is_sars_encoding: bool, is_multi_stability: bool, is_multi_extractable: bool, is_obfuscated: bool, is_content_dependent: bool, is_static_shifting: bool, is_sorting_tolerate: bool, is_counterintuitive_variables: bool, is_superpalindrome_pointers: bool, is_variables_length_muting: bool, is_variables_topography_learning: bool, global_variables_file_extension: str, global_variables_library_name: str):
-        wLst = []
-        try:
-            if is_slots_encoding == True: wLst.append('1:')
-            else: wLst.append('0:')
-            if is_sars_encoding == True: wLst.append('1:')
-            else: wLst.append('0:')
-            if is_multi_stability == True: wLst.append('1:')
-            else: wLst.append('0:')
-            if is_multi_extractable == True: wLst.append('1:')
-            else: wLst.append('0:')
-            if is_obfuscated == True: wLst.append('1:')
-            else: wLst.append('0:')
-            if is_content_dependent == True: wLst.append('1:')
-            else: wLst.append('0:')
-            if is_static_shifting == True: wLst.append('1:')
-            else: wLst.append('0:')
-            if is_sorting_tolerate == True: wLst.append('1:')
-            else: wLst.append('0:')
-            if is_counterintuitive_variables == True: wLst.append('1:')
-            else: wLst.append('0:')
-            if is_superpalindrome_pointers == True: wLst.append('1:')
-            else: wLst.append('0:')
-            if is_variables_length_muting == True: wLst.append('1:')
-            else: wLst.append('0:')
-            if is_variables_topography_learning == True: wLst.append('1:')
-            else: wLst.append('0:')
-            wLst.append(global_variables_file_extension + ':')
-            wLst.append(global_variables_library_name)
-            with open('/storage/emulated/0/rev9/__sqtpp_rev9.stgs', 'w') as fsr: fsr.write(''.join(wLst))
-        except Exception as e:
-            print("staqtapp-rev9 library build error: ",e)
 #______________________________________________________________________________________
 
 
