@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.353
+# Staqtapp 1.02.368
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -19,10 +19,8 @@
 from PySqTpp_Rev9 import Rev9Setup
 
 import multiprocessing
+import collections
 import sys
-import re
-
-from collections import deque
 
 __rev9__prc = None
 
@@ -141,6 +139,7 @@ def rev9_update_write_abstract_settings(is_slots_encoding, is_sars_encoding, is_
         tLst.append("]" + r9s.rev9_ocudlr('c') + "<[>>  this can cause a override setting @sorting-tolerate option(s)")
         mStr += '-mmse?'
     elif is_multi_stability == False and is_multi_extractable == False:
+        r9s.rev9_cleanup_directory(folder_path)
         raise Exception("staqtapp-rev9 build error: either multi-extractable and/or multi-stability initial setting(s) must be True")
     mStr +=':>\n'
     if len(tLst) > 0:
@@ -207,10 +206,13 @@ def rev9_update_write_abstract_settings(is_slots_encoding, is_sars_encoding, is_
         mStr += '<:ObfuscateEncodings=\nn:>'
     rslt = r9s.rev9_map(False, False, 'wisf', mStr, folder_path)
     if rslt == -1:
+        r9s.rev9_cleanup_directory(folder_path)
         raise Exception("staqtapp rev9 build error: build folder path cannot be nothing")
     elif rslt == -2:
+        r9s.rev9_cleanup_directory(folder_path)
         raise Exception("staqtapp rev9 build error: build folder path was not found @" + folder_path)
     elif rslt == -3:
+        r9s.rev9_cleanup_directory(folder_path)
         raise Exception("staqtapp rev9 build error: unknown source error happened...")
 #______________________________________________________________________________________
 
@@ -223,8 +225,6 @@ def rev9_model_service(is_slots_encoding, is_sars_encoding, is_multi_stability, 
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-    
-    r9s = Rev9Setup()
     
     # REV9 IN-BUILD METHOD PARAMETERS:
                 
@@ -261,17 +261,52 @@ def rev9_model_service(is_slots_encoding, is_sars_encoding, is_multi_stability, 
     # (14)  <global_variables_library_name: str>,  overall library name of the global variables read/write library to be built by the rev9 model; rev9 build library model uses this to name on all other files, classes, functions, variables, slots and etc.
                 
     # (15)  <build_folder_path: str>, folder path chosen for rev9 global variables files modules built
-    
-    rsltStr = None
                
+    r9s = Rev9Setup()
+    
+    rslt = None
+    
+    tLst = []
+    nLst = None
+    
     try: 
         # determine the general abstract encoding paths/options & write as the initial settings file
-        rsltStr = rev9_update_write_abstract_settings(is_slots_encoding, is_sars_encoding, is_multi_stability, is_multi_extractable, is_obfuscated, is_content_dependent, is_static_shifting, is_sorting_tolerate, is_counterintuitive_variables, is_superpalindrome_pointers, is_variables_length_muting, is_variables_topography_learning, build_folder_path)
+        rev9_update_write_abstract_settings(is_slots_encoding, is_sars_encoding, is_multi_stability, is_multi_extractable, is_obfuscated, is_content_dependent, is_static_shifting, is_sorting_tolerate, is_counterintuitive_variables, is_superpalindrome_pointers, is_variables_length_muting, is_variables_topography_learning, build_folder_path)
         # write begin priority rev9 tree decision file; this connected to encoded zip file templates direct,
         # created from source written above and saves a backup file of this in build directory a same
+        tLst.append("]" + r9s.rev9_ocudlr('o') + "<[>>  assembling priority tree decision file @ build folder directory")
         r9s.rev9_preform_priority_tree(False, build_folder_path)
-        
+        tLst.append("]" + r9s.rev9_ocudlr('c') + "<[>>  finished assembling a beginning priority tree file")
+        tLst.append("]" + r9s.rev9_ocudlr('o') + "<[>>  applying concentrated naming pattern & basic format module saves")
+        rslt = r9s.rev9_concentrated_naming(global_variables_file_extension, global_variables_library_name, build_folder_path)
+        if rslt == -1:
+            r9s.rev9_cleanup_directory(build_folder_path)
+            raise Exception("staqtapp rev9 build error: @global_variables_file_extension parameter must be more than 3 chars")
+        elif rslt == -2:
+            r9s.rev9_cleanup_directory(build_folder_path)
+            raise Exception("staqtapp rev9 build error: @global_variables_library_name parameter must be more than 5 chars")
+        elif rslt == -3:
+            r9s.rev9_cleanup_directory(build_folder_path)
+            raise Exception("staqtapp rev9 build error: @global_variables_file_extension parameter cannot be more than 7 chars")
+        elif rslt == -4:
+            r9s.rev9_cleanup_directory(build_folder_path)
+            raise Exception("staqtapp rev9 build error: @global_variables_library_name parameter cannot be more than 14 chars")
+        elif rslt == -5:
+            r9s.rev9_cleanup_directory(build_folder_path)
+            raise Exception("staqtapp rev9 build error: @global_variables_library_name parameter has invalid chars, allowed chars: a-z A-Z")
+        elif rslt == -6:
+            r9s.rev9_cleanup_directory(build_folder_path)
+            raise Exception("staqtapp rev9 build error: @global_variables_file_extension parameter has invalid chars, allowed chars: a-z A-Z")
+        else:
+            nLst = rslt
+        tLst.append("]" + r9s.rev9_ocudlr('c') + "<[>>  concentrated naming patterns applied to modules")
+        if len(tLst) > 0:
+            _rev9_updt_cp(tLst)
+            tLst = []
+            # begin rev9 self-replicate encode engine setup tuples & the overall module scope checks for priority tree
+            
     except Exception as e:
+        r9s.rev9_cleanup_directory(build_folder_path)
         raise Exception("staqtapp rev9 build error: ",e)
 #______________________________________________________________________________________
 

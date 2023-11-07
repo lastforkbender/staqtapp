@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.353
+# Staqtapp 1.02.368
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -665,7 +665,7 @@ def test():
     
     #viewkeys("/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test2.tqpt")
     
-    rev9build(True, True, True, False, False, True, True, False, False, True, True, False, ".rttt", "rev9_test_library", "/storage/emulated/0/rev9")
+    rev9build(True, True, True, False, False, True, True, False, False, True, True, False, "rttl", "RevTestLib", "/storage/emulated/0/rev9")
     
 #______________________________________________________________________________________
     

@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.353
+# Staqtapp 1.02.368
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -25,7 +25,43 @@ class PySqTppRev9Interface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         # subclasshook for the abstract methods defines
-        return (hasattr(subclass, 'rev9_preform_priority_tree') and callable(subclass.rev9_preform_priority_tree) and hasattr(subclass, 'rev9_map') and callable(subclass.rev9_map) and hasattr(subclass, 'rev9_ocudlr') and callable(subclass.rev9_ocudlr) or NotImplemented)
+        return (hasattr(subclass, 'rev9_craft_interface') and callable(subclass.rev9_craft_interface) and hasattr(subclass, 'rev9_craft_main') and callable(subclass.rev9_craft_main) and hasattr(subclass, 'rev9_craft_parser') and callable(subclass.rev9_craft_parser) and hasattr(subclass, 'rev9_craft_utility') and callable(subclass.rev9_craft_utility) and hasattr(subclass, 'rev9_craft_net') and callable(subclass.rev9_craft_net) and hasattr(subclass, 'rev9_concentrated_naming') and callable(subclass.rev9_concentrated_naming) and hasattr(subclass, 'rev9_preform_priority_tree') and callable(subclass.rev9_preform_priority_tree) and hasattr(subclass, 'rev9_map') and callable(subclass.rev9_map) and hasattr(subclass, 'rev9_get_header') and callable(subclass.rev9_get_header) and hasattr(subclass, 'rev9_ocudlr') and callable(subclass.rev9_ocudlr) and hasattr(subclass, 'rev9_cleanup_directory') and callable(subclass.rev9_cleanup_directory) or NotImplemented)
+        
+        
+    @abc.abstractmethod
+    def rev9_craft_interface(self, is_exist: bool, py_name: str, build_folder: str):
+        # builds rev9 interfacing self-encoded modules
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def rev9_craft_main(self, is_exist: bool, py_name: str, py_names: list, build_folder: str):
+        # builds rev9 main self-encoded modules
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def rev9_craft_parser(self, is_exist: bool, py_name: str, py_intrfc_name: str, py_names: list, build_folder: str):
+        # builds rev9 parser self-encoded modules
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def rev9_craft_utility(self, is_exist: bool, py_name: str, py_intrfc_name: str, py_names: list, build_folder: str):
+        # builds rev9 utility self-encoded modules
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def rev9_craft_net(self, is_exist: bool, py_name: str, py_intrfc_name: str, py_names: list, build_folder: str):
+        # builds rev9 bluetooth/internet self-encoded modules
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def rev9_concentrated_naming(self, fle_ext: str, lib_nm: str, folder_path):
+        # applies naming aspects to modules, interfaces, classes, functions and variables
+        raise NotImplementedError
         
         
     @abc.abstractmethod
@@ -41,12 +77,17 @@ class PySqTppRev9Interface(metaclass=abc.ABCMeta):
         
         
     @abc.abstractmethod
+    def rev9_get_header(self, mdl_dsg: str, py_name:str, py_intrfc_name: str, py_imports: list) -> str:
+        # returns header text for a py module
+        raise NotImplementedError
+        
+    @abc.abstractmethod
     def rev9_ocudlr(self, ltr: str) -> str:
         # returns path indicators for console prints
         raise NotImplementedError
         
         
-
-        
-        
-        
+    @abc.abstractmethod
+    def rev9_cleanup_directory(self, folder_path):
+        # removes build structure files used for modules creations
+        raise NotImplementedError
