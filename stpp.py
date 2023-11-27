@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.368
+# Staqtapp 1.02.376
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -36,6 +36,9 @@ import stpu
 # [.makesource] - creates a new empty staqtapp tqpt variables source file
 
 # [.addvar] - writes new variable and it's data to chosen staqtapp tqpt source file
+
+# [.renamevar] - changes to new variable name @ .tqpt and .tpqt source files if any
+# use at your own risk, normally not recommended on glb vars safe or unsafe
 
 # [.addsar] - adds sar variables to tqpt source files with collection extensions, see
 # sar_remap, sar_demap, loadsar_temple
@@ -256,6 +259,32 @@ def addvar(varName, varData, folderPath, fileName):
         raise Exception("staqtapp<addvar> null folderpath and/or null filename")
 #______________________________________________________________________________________
 
+def renamevar(varName, newVarName, folderPath, fileName):
+    
+    # varName=str, newVarName=str, folderPath=str, fileName=str
+    
+    # renames an existing variable name in a .tqpt variables source to @newVarName;
+    # if suceeds then checks if any .tpqt files and makes variable name change also
+    
+    rslt = None
+    
+    if len(folderPath) > 0 and len(fileName) > 0:
+        newTqptParser = TqptParser()
+        rslt = newTqptParser.change_variable_name(varName, newVarName, folderPath, fileName)
+        if rslt == -1:
+            raise Exception("staqtapp<renamevar> invalid folderpath @" + folderPath)
+        elif rslt == -2:
+            raise Exception("staqtapp<renamevar> variables source file '" + fileName + ".tqpt' was not found @" + folderPath)
+        elif rslt == -3:
+            raise Exception("staqtapp<renamevar> variables source file '" + fileName + ".tqpt' is a static source")
+        elif rslt == -4:
+            raise Exception("staqtapp<renamevar> variable name '" + varName + "' not found @" + folderPath + "/" + fileName + ".tqpt")
+        elif rslt == -5:
+            raise Exception("staqtapp<renamevar> invalid variable name @newVarName, allowed chars _ aA-zZ 0-9")
+    else:
+        raise Exception("staqtapp<renamevar> null folderpath and/or null filename")
+#______________________________________________________________________________________
+
 def loadvar_str(varName, folderPath, fileName):
     
     # varName=str | list, folderPath=str, fileName=str
@@ -349,7 +378,7 @@ def loadvar_deque(isNumbers, varName, folderPath, fileName):
     
 #______________________________________________________________________________________
 
-def sar_remap(isPrmExc, catPin, folderPath, fileName):
+def loadsar_remap(isPrmExc, catPin, folderPath, fileName):
         
     # isPrmExc=bool, catPin=str, folderPath=str, fileName=str
     
@@ -620,56 +649,25 @@ def rev9build(slotsEncoding, sarsEncoding, multiStability, multiExtractable, app
     stpu.ult_call_rev9_service(slotsEncoding, sarsEncoding, multiStability, multiExtractable, applyObfuscation, contentDependent, staticShifting, sortingTolerate, counterIntuitiveVariables, superPalindromePointers, variablesLengthMuting, variablesTopographyLearning, globalVariablesFileExtension, globalVariablesLibraryName, buildFolderPath)
 #______________________________________________________________________________________
 
-def test():
+#def test():
     
-    #newTqptParser = TqptParser()
+    #tqpt = ['/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test', '/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt',]
     
-    #makesource(False, False, False, '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    #addvar("swTest1", "@qp(swTest1Data):", tqpt[0], tqpt[1])
     
-    #addvar("vrnm_1000", "@qp(7.8,9.8,10.000001,turtle7):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
-    
-    #dequeTest = loadvar_deque(False, "vrnm_1000", '/storage/emulated/0/qpython/scripts3/staqtapp-test', "staqtapp-test2")
-    
-    #lst = findvar(True, 'variable99', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
-    
-    #addsar("tiger", "@qp(9000):", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
-    
-    #changevar('variableDequeTest4001', '@qp(y+z(i/r)c+1, 9.99999999,no errors please):', '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
-    
-    #loadsar_remap(False, "tiger", '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
-    
-    #scanvar("someVar", '/storage/emulated/0/qpython/scripts3/ynos.py')
-    
-    #tmpLst = ['variableDequeTest1', 'variableDequeTest2', 'variableDequeTest3']
-    
-    #rtrnStr = loadvar_str(tmpLst, '/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
-    
-    #viewsource("/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
-    
-    #fncLst = ['_weird_function_001', '_weird_mathematics_002', '_weird_datascience_003', '_weird_multiworld_004', '_weird_flyingcreatures_005']
-    
-    #lockvar('variableDequeTest1', fncLst, "/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
-    
-    #rslt = keyvar(True, 'variableDequeTest1', '__function0019', "/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
-    #print(rslt)
-    #if rslt == True:
-        #print('call function')
-    #else:
-        #print('do not call function')
+    #lockvar('swTest1', 'someMethod1', tqpt[2])
         
-    #lockvar_edit('variableDequeTest1', fncLst, "/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
+    #viewkeys(tqpt[2])
     
-    #rslt = searchkeys("variableDequeTest2", "/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test.tqpt")
+    #renamevar("swTest1", "new_swTest1", tqpt[0], tqpt[1])
     
-    #print(rslt)
+    #viewkeys(tqpt[2])
     
-    #viewkeys("/storage/emulated/0/qpython/scripts3/staqtapp-test/staqtapp-test2.tqpt")
-    
-    rev9build(True, True, True, False, False, True, True, False, False, True, True, False, "rttl", "RevTestLib", "/storage/emulated/0/rev9")
+    #rev9build(True, True, True, False, False, True, True, False, False, True, True, False, "rttl", "RevTestLib", "/storage/emulated/0/rev9")
     
 #______________________________________________________________________________________
     
-test()
+#test()
 
 
 

@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.368
+# Staqtapp 1.02.376
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -201,6 +201,65 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
             print("staqtapp error: ",e)
 #______________________________________________________________________________________
 
+    def change_variable_name(self, var_name: str, new_var_name: str, dir_path: str, source_name: str) -> int:
+        # @override PySqTppInterface.change_variable_name()
+        
+        # FUNCTION RETURN-CODES
+            
+        # ------------------------------------------------------------------------
+        # return -1  : invalid tqpt folder path
+        # return -2  : invalid tqpt file name
+        # return -3  : tqpt source file is static locked
+        # return -4  : @var_name not found
+        # return -5  : @new_var_name is invalid chars
+        
+        src = None
+        
+        try:
+            if os.path.isdir(dir_path):
+                if os.path.isfile(dir_path + '/' + source_name + '.tqpt'):
+                    newTqptParser = TqptParser()
+                    if newTqptParser.check_tqpt_settings(True, dir_path + '/' + source_name + '.tqpt') == -1:
+                        with open(dir_path + '/' + source_name + '.tqpt', mode='r') as fileObjCvn:
+                            with mmap.mmap(fileObjCvn.fileno(), length=0, access=mmap.ACCESS_READ) as mmapObjCvn:
+                                src = mmapObjCvn.read()
+                                mmapObjCvn.close()
+                            mmapObjCvn = None
+                        if src.find(b'\n<' + str.encode(var_name) + b'=') > -1:
+                            if newTqptParser.check_parameter_string(True, new_var_name, False) == True:
+                                with open(dir_path + '/' + source_name + '.tqpt', 'wb') as fCvnWrt:
+                                    fCvnWrt.write(src.replace(b'\n<' + str.encode(var_name) + b'=', b'\n<' + str.encode(new_var_name) + b'='))
+                                    fCvnWrt.close()
+                                fCvnWrt = None
+                                # change tpqt lock file if attached to this now changed tqpt source
+                                try:
+                                    with open(dir_path + '/' + source_name + '.tpqt', 'r') as fCvnPq:
+                                        src = fCvnPq.read()
+                                        fCvnPq.close()
+                                    fCvnPq = None
+                                    if src.find('<:' + var_name + '=') > -1:
+                                        with open(dir_path + '/' + source_name + '.tpqt', 'w') as fCvnPqWrt:
+                                            fCvnPqWrt.write(src.replace('<:' + var_name + '=', '<:' + new_var_name + '='))
+                                            fCvnPqWrt.close()
+                                        fCvnPqWrt = None
+                                except Exception:
+                                    pass
+                            else:
+                                return -5
+                        else:
+                            # variable name not found
+                            return -4
+                    else:
+                        # tqpt source is static locked variables source
+                        return -3
+                else:
+                    return -2
+            else:
+                return -1
+        except Exception as e:
+            print("staqtapp error: ",e)
+#______________________________________________________________________________________
+
     def update_variables_source(self, var_name: str, var_data: str, dir_path: str, source_name: str) -> int:
         # @override PySqTppInterface.update_variables_source()
         
@@ -305,7 +364,7 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                     if newTqptParser.check_parameter_string(True, prepin_cat_dsg, False):
                         # parameter checks all ok, build the random variable name, p_fnc_nnnnnnnnnn_b
                         syncLst = [str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10)), str(rrng(0,10))]
-                        vrNm = prepin_cat_dsg + "_sar_" + ''.join(newTqptParser.rand_shuffle(syncLst)) + "_"
+                        vrNm = prepin_cat_dsg.replace("_", "") + "_sar_" + ''.join(newTqptParser.rand_shuffle(syncLst)) + "_"
                         if fndCms == True:
                             vrNm += '1'
                         else:
@@ -402,6 +461,7 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
         except Exception as e:
             print("staqtapp error: ",e)
 #______________________________________________________________________________________
+
     def load_variables_source_deque(self, is_numbers: bool, var_name: str, dir_path: str, source_name: str):
         # @override PySqTppInterface.load_variables_source_list()
         
@@ -432,7 +492,7 @@ class TqptParser(PySqTpp_Interface.PySqTppInterface):
                         return -3
                     else:
                         # check variable's data is proper format for a tqpt source file,
-                        # parse it and return the deque list as is is
+                        # parse it and return the deque list as is
                         fncRtrn = newTqptParser.char_regularity(False, is_numbers, 'lvsd', rslt)
                         if fncRtrn == -1:
                             return -4

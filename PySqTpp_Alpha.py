@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.368
+# Staqtapp 1.02.376
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -51,6 +51,7 @@ class SarAlpha(PySqTpp_SarInterface.PySqTppSarInterface):
         
         try:
             if os.path.isfile(dir_path + '/' + source_name + '.tqpt'):
+                cat_pin = cat_pin.replace('_', '')
                 ptrnStr = re.compile(rb'<'+re.escape(str.encode(cat_pin))+rb'_sar_[0-9]{10}_[0-9]{1}=')
                 with open(dir_path + '/' + source_name + '.tqpt', mode='r') as fObjLsr:
                     with mmap.mmap(fObjLsr.fileno(), length=0, access=mmap.ACCESS_READ) as mObjLsr:
@@ -489,32 +490,3 @@ class SarAlpha(PySqTpp_SarInterface.PySqTppSarInterface):
         except Exception:
             return False
 #______________________________________________________________________________________
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

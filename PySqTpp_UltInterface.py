@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.368
+# Staqtapp 1.02.376
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -72,8 +72,4 @@ class PySqTppUltInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def tpqt_map(self, is_read, is_exist, dsg_fnc, var_name, func_name, full_path):
         # performs read & write of tpqt files
-        raise NotImplementedError
-        
-        
-        
-        
+        raise NotImplementedError   

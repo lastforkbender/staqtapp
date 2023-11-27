@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.368
+# Staqtapp 1.02.376
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -137,6 +137,8 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                                         sStr = sStr.replace('.tpqt', '.logf')
                                         if os.path.isfile(sStr) == True:
                                             with open(sStr, mode='a') as logf: logf.write('>> var: ' + var_name + ', fnc: ' + func_name + ', time: ' + str(datetime.now()) + '\n')
+                                        else:
+                                            with open(sStr, mode='w') as logf: logf.write('>> var: ' + var_name + ', fnc: ' + func_name + ', time: ' + str(datetime.now()) + '\n')
                                     return True
                                 else:
                                     return False
@@ -741,9 +743,3 @@ class UltSttp(PySqTpp_UltInterface.PySqTppUltInterface):
                         tStr = '<:' + var_name + '=\n' + func_name + ':>\n'
                     with open(full_path, mode='w') as tpqtFl: tpqtFl.write('<STAQTAPP_DO_NOT_EDIT>\n' + tStr + '!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
 #______________________________________________________________________________________
-
-
-
-
-
-

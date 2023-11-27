@@ -3,7 +3,7 @@
 
 
 
-# Staqtapp 1.02.368
+# Staqtapp 1.02.376
 
 # For global variables file use and other lords' global variables fork bending
 
@@ -112,5 +112,4 @@ def ult_show_tpqt_contents(filePath):
 
 def ult_call_rev9_service(slotsEncoding, sarsEncoding, multiStability, multiExtractable, obfuscated, contentDependent, staticShifting, sortingTolerate, counterIntuitiveVariables, superPalindromePointers, variablesLengthMuting, variablesTopographyLearning, globalVariablesFileExtension, globalVariablesLibraryName, buildFolderPath):
     stpr.main([slotsEncoding, sarsEncoding, multiStability, multiExtractable, obfuscated, contentDependent, staticShifting, sortingTolerate, counterIntuitiveVariables, superPalindromePointers, variablesLengthMuting, variablesTopographyLearning, globalVariablesFileExtension, globalVariablesLibraryName, buildFolderPath])
-
-
+#______________________________________________________________________________________
