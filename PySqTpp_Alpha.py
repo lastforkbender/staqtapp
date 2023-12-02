@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Alpha.py] S.A.R. main functions use
 
 
-# Staqtapp 1.02.381
+# Staqtapp 1.02.385
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
