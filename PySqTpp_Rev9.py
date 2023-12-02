@@ -1,15 +1,7 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Rev9.py] main utility rev9 general functions use
 
 
-
-
-# Staqtapp 1.02.376
-
-# For global variables file use and other lords' global variables fork bending
-
-
-# ***These modules part of the SolaceXn AI software package as is for all lords***
-
+# Staqtapp 1.02.381
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp

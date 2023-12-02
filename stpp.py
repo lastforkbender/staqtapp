@@ -1,15 +1,7 @@
 # Code File: StaqTapp-1.02 [stpp.py] StaqTapp main functional calls module
 
 
-
-
-# Staqtapp 1.02.376
-
-# For global variables file use and other lords' global variables fork bending
-
-
-# ***These modules part of the SolaceXn AI software package as is for all lords***
-
+# Staqtapp 1.02.381
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
@@ -100,23 +92,6 @@ import stpu
 
 #______________________________________________________________________________________
 #______________________________________________________________________________________
-
-
-#     Total quanity position transfer(.tqpt) and total position quanity transfer(.tpqt) staq-
-# tapp files always mirror the other in a same directory, however no stpp.method() re-
-# quires you to give path to a .tpqt file directly. Could be a topic the .tpqt file is more
-# important than the .tqpt variables source file itself in using global variables safely;
-# however also ---- everything is already created/founded, especially mathematics. My
-# own objectives to building this library, or/and seeking glory/pride in it is irrelevant. Any
-# later more advanced functional uses of global variables, known or unknown, for the
-# benefit of a fellow programmer that would use it wisely as described. Not to use it
-# by some other invented way of what makes the world go around, whereof confusion
-# being sought in complexity more important than basic truth and enlightenment, or war.
-
-# War was and is never good.
-
-# yours truly
-
 #______________________________________________________________________________________
 #______________________________________________________________________________________
 #______________________________________________________________________________________
