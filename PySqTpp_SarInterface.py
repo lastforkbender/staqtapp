@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [PySqTpp_SarInterface.py] StaqTapp S.A.R. main interface class
 
 
-# Staqtapp 1.02.385
+# Staqtapp 1.02.387
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
