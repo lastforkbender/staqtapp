@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [stpx.py] StaqTapp gzip methods & module calls
 
 
-# Staqtapp 1.02.387
+# Staqtapp 1.02.390
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
@@ -65,89 +65,116 @@ def x_getpath(pth: str) -> list:
         print("staqtapp stpx error: ", e)
 #______________________________________________________________________________________
 
-def x_tweedvar(isGreater: bool, isSar: bool, varName: str):
-    # returns a palindrome set number from a number(s), @varName's data
-    # if @isGreater=True then arranges the number(s) greatest inward to outer
-    # this method will always return a twin 3-digit number regardless of original;
-    # no from zero escaping a [ONE] placehold or a "man-mon"-AC nonexist trust;
-    # no zero pairing is set most inward or most outward of branching [ONE]
-    # if any number(s) are of a decimal notation, returns None or None in a list;
-    # of @varName is sar variable name then returns that name dsg as a sweed
-    # does not return the sar variable's number data reconstructed if any digits
-    # calls pilot function stpp.loadvar_str() without the needed parameters
-    # of a folder & file --> .tqpt source path @x_setpath() as already set
-    nSt = set('-0123456789')
-    stLst = []
-    dtLst = []
-    lStCnt = 0
-    rStCnt = 0
-    cnt = 0
+def x_menorahvar(isGreater: bool, isSar: bool, varName: str):
+    
     if isSar == False:
         pth = x_getpath(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
         rslt = stpp.loadvar_str(varName, pth[0], pth[1])
         if isinstance(rslt, list) == True:
             
-        else:
+        elif isinstance(rslt, str) == True:
             if set(rslt).issubset(nSt) == True:
-                for x in rslt:
-                    if x != '-':
-                        # first of this menorah type counting, how many +1 or -1 loops?
-                        # ...and cache the retains of pairing slots encountered to digits
-                        # if more placeholds determined, not a simple fade count then
-                        # each multiple look(loop) ahead or behind is of < > equal outs
-                        # menorah always cHalf rotational +/-loop to a whool loop [ONE]
-                        # of counting multi-loop any digit, not single loop aka 'nero-zero'
-                        # by which thru fear of nonexist(nero-zero) has caused too many
-                        # lies, thefts, murders, wars, ongoing destroy of earth [manmon]
-                        if int(x) == int(prvX)-1: lStCnt+=1
-                        elif int(x) == int(prvX)+1: lStCnt-=1
-                        elif int(x)-1 == int(prvX): rStCnt+=1
-                        elif int(x)+1 == int(prvX): rStCnt-=1
-                        if lStCnt == rStCnt:
-                            lStCnt = 1
-                            rStCnt = 1
-                        if x == prvX:
-                            stLst.append(x)
-                        else:
-                            dtLst.append(x)
-                        prvX = x
-                        cnt+=1
-                # qx = central/rotational-apparent position alpha observed
-                qx = None
-                # Chai'ohm: one placehold from One, inescapable loop exist via
-                # resistance as utterly already all now established from All(El),
-                # or as time(new) as resistance you cannot change to finite loop
-                # as and/or a dead stop nothing/nero-zero of time(future=past)
-                # a absolute impossible conclusion of any quantum reality no
-                # matter the education level or any amount of manmon trusted
-                # .......or from destructive ignorant pride aka time = money
-                if lStCnt == rStCnt: qx = 1
-                elif cnt == 1: qx = 1
-                else:
-                    cLen = None
-                    dtLen = len(dtLst)
-                    stLen = len(stLst)
-                    dtGt = False
-                    if dtLen > stLen:
-                        dtGt = True
-                        cLen = dtLen
-                    else: cLen = stLen
-                    for y in range(cLen):
-                        # determine which numbers(loops) are of a greater farthest or least
-                        # farthest from the least or greater number pairing already observed;
-                        # this single pairing is always chai'ohm to a previous pair expanding
-                        # inescapable to one placeholding resolve, @cnt used as a delimiter
-                        # of any LtoR or RtoL nested accumlate further compressions, this
-                        # may be complicated to understand because of the teachings non-
-                        # exist actually exist, which was the next purposed lie in Eden after
-                        # the lie you are smarter.... to cause fear of nonexist; fear of non-
-                        # exist is also the most dangerous concept a AI can take on
+                return x_get_menorah_palindrome_encoding(isGreater, rslt)
             else:
-                # @varName's data, invalid chars for a tweedvar() palindrome number return
+                # @varName's data, invalid chars for palindrome number return
                 return None
+        else:
+            # @varName's data, invalid data type, neither a str array or str...
+            return None
     else:
-        # check if a proper staqtapp sar variable naming, of a unique ten digit dsg
+        # check if a proper staqtapp sar variable naming, has a unique ten digit dsg
     
+#______________________________________________________________________________________
+
+def x_get_menorah_palindrome_encoding(isGreater, src) -> int:
+    
+    nSt = set('-0123456789')
+    stLst = []
+    dtLst = []
+    prvX = '1'
+    lStCnt = 1
+    rStCnt = 1
+    ix = None
+    rx = None
+    cgPl = False
+    cgRl = False
+    cgHld = False
+    
+    src = src.replace('-', '')
+    for x in src:
+        ix = int(x)
+        rx = int(prvX)
+        # thee count all nearest multi-loops LtoR & RtoL; zero as the only loop is
+        # irrelevant here, zero cannot escape placeholding of one and never has
+        if ix == rx-1: lStCnt+=1
+        elif ix == rx+1: lStCnt-=1
+        elif ix-1 == rx: rStCnt+=1
+        elif ix+1 == rx: rStCnt-=1
+        elif ix == rx:
+            if lStCnt > rStCnt: lStCnt-=1
+            elif lStCnt < rStCnt: rStCnt-=1
+            else:
+                if lStCnt < 0:
+                    lStCnt+=1
+                    cgPl = True
+                if rStCnt < 0:
+                    rStCnt+=1
+                    cgPl = True
+                if lStCnt > 0:
+                    lStCnt-=1
+                    cgRl = True
+                if rStCnt > 0: 
+                    rStCnt-=1
+                    cgRl = True
+        if lStCnt == rStCnt:
+            # thee count a mirrored expansion equal?
+            cgHld = True
+        if x == prvX:
+            stLst.append(x)
+        else:
+            dtLst.append(x)
+        if cgPl == True and cgRl == True and cgHld == True:
+            # thee count is a mirrored expansion equal, make wave
+            lStCnt = 1
+            rStCnt = 1
+        cgPl = False
+        cgRl = False
+        cgHld = False
+        prvX = x
+    prvX = 'q'
+    # thee rod-to-ratio chai'ohm, one of One, or both pairing inanimate One
+    if lStCnt == rStCnt: cgPl = 1
+    elif len(rslt) == 1: cgPl = 1
+    else:
+        cgHld = True
+        # thee needed least and greatest digit of this number source... once
+        # again if least is zero, then is irrelevant to remove placehold of one;
+        # nothing is impossible, not nothing is possible of these type counts
+        lStCnt = 9
+        rStCnt = 0
+        for y in src:
+            ix = int(y)
+            if ix < lStCnt: lStCnt = ix
+            if ix > rStCnt: rStCnt = ix
+        if lStCnt == 0: lStCnt = 1
+        if rStCnt == 0: rStCnt = 1
+        # thee normal all quantum type summary rod projection again, one
+        if lStCnt == rStCnt: cgPl = 1
+        else:
+            # thee not so normal as to/from any void, which is greater or lesser?
+            # this can be hard to explain, has delayed-choice circumstances not
+            # only reversible @isGreater parameter, yet also below >< syntax use,
+            # what has happened already happened, likely @ a expansion equal
+            # where a similiar reset to changes of similiar count did merge
+            if isGreater == True:
+                if lStCnt > rStCnt: prvX = 'l'
+                elif lStCnt == rStCnt: prvX = 'q'
+                else: prvX = 'r'
+            else:
+                if lStCnt < rStCnt: prvX = 'l'
+                elif lStCnt == rStCnt: prvX = 'q'
+                else: prvX = 'r'
+        # finally the more easy part, assemble the palindrome compress return
 #______________________________________________________________________________________
 
 def x_makesource(isStatic: bool, isMakeFolder: bool, isEraseSource: bool):
