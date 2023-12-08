@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [stpp.py] StaqTapp main functional calls module
 
 
-# Staqtapp 1.02.390
+# Staqtapp 1.02.408
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
@@ -13,17 +13,8 @@ from collections import deque
 from stps import extrloadsarremap
 import stpu
 #______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
 
 # STAQTAPP'S  PILOT - stpp.methods()
-
 
 # [.makesource] - creates a new empty staqtapp tqpt variables source file
 
@@ -51,10 +42,9 @@ import stpu
 
 # [.sar_demap] - [TO-DO] assigns front keys(natural) & back keys(non-natural) to temple
 # variables/pointers secure wrapped/obfuscated and/or locked
-
+#______________________________________________________________________________________
 
 # UTILITY - stpp.methods()
-
 
 # [.lockvar] - creates tpqt lock function call files for global variable(s) domain restrictions
 
@@ -80,24 +70,13 @@ import stpu
 # variables names, including all variable naming inside any function's parameters
 
 # [.viewsource] - prints a tqpt variables source file's contents to console in readable slots
-
+#______________________________________________________________________________________
 
 # SELF-REPLICATION GLOBAL VARIABLES LIBRARY BUILD - stpp.methods()
-
 
 # [.rev9build] - builds a custom global variables i/o library using an assortment of different options
 # including __slots__ and/or sars enabled variables programming to made py modules builds, 15
 # parameter settings are of this method call to begin a rev9 global variables resource library build
-
-
-#______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
-#______________________________________________________________________________________
 #______________________________________________________________________________________
 
 def makesource(isStatic, isMakeFolder, isEraseSource, folderPath, fileName):

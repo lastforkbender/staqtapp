@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [stpu.py] StaqTapp utility functional calls module
 
 
-# Staqtapp 1.02.390
+# Staqtapp 1.02.408
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
