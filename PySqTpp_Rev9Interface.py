@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 PySqTpp_Rev9Interface.py] StaqTapp rev9 utility interface class
 
 
-# Staqtapp 1.02.408
+# Staqtapp 1.02.411
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp

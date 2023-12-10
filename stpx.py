@@ -1,13 +1,14 @@
 # Code File: StaqTapp-1.02 [stpx.py] StaqTapp gzip methods & module calls
 
 
-# Staqtapp 1.02.408
+# Staqtapp 1.02.411
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
 # contact: https://pastebin.com/eumqiBAx
 
 
+import random
 #import shutil
 import mmap
 import stpp
@@ -30,8 +31,8 @@ import io
 # or the main stpp module's parallel pilot function calls from this module's functions calls
 
 
-# [ x_set_path(fldrPth, fleNm) ] - sets folder path & file name to the x_stpx.gz file,
-# this function must be called to create the gzip file and have set folder/file path
+# [ x_setpath(fldrPth, fleNm) ] - sets folder path & file name to the x_stpx.gz file,
+# this function must be called to create the gzip file and have set folder/file path;
 # including a ending '/' @fldrPth or the extension '.tqpt' @fleNm is a no to-do
 
 # [ x_getpath(pth) ] - returns list-folder path & filename current set, @pth as normal
@@ -40,11 +41,10 @@ import io
     
 # [ x_addlist_vars() ] - no parameters, sets a glb var names list to gzip file from set
 # .tqpt file path, can/will list any/all variable names of any/all .tqpt glb source files
-# this includes viewable sars and sars pointers names listed of any .tqpt sources
+# this includes viewable sars and sars pointers names listed of any .tqpt sources;
 # doesn't add duplicates, replaces all .tqpt var names associated if already listed
 
-# (not yet a fully implemented stpx function)
-# [ x_getlist_vars(sort) ] - returns (str) list of all glb var names associated to .tqpt
+# [ x_getlist_vars(isSort) ] - returns (str) list of all glb var names associated to .tqpt
 # file currently set in gzip path to/from after a @x_addlist_vars() call, does not
 # get all glb var names directly from the .tqpt variable source file, this of use to
 # multi-processing encodings or other procedures involving backup tracing, very
@@ -88,7 +88,7 @@ import io
 
 def x_setpath(fldrPth: str, fleNm: str):
     # sets auto fill parameter for folder path & file name on any stpx.x_[parallel method] calls
-    # or other stpx related methods using gzip files, don't include a .tqpt extension or / chars;
+    # or other stpx related methods using gzip files, don't include a .tqpt extension or / end;
     # the then created stpx folder will be in path of this module's current running directory
     try:
         mdlPthX = os.path.dirname(os.path.abspath(__file__))
@@ -114,8 +114,14 @@ def x_setpath(fldrPth: str, fleNm: str):
         print("staqtapp stpx error: ", e)
 #______________________________________________________________________________________
 
-def x_setlist_vars() -> bool:
-    # see, call x_addlist_vars()
+def x_addlist_vars() -> int:
+    # sets all global variable names listed in a .tqpt file to a listed stack in the gzip
+    # [/x_stpx.gz] made from x_setpath() call---gzip to be present & valid .tqpt set path
+    # currently from set path .tqpt source file; method allows var name listing any tqpt:
+    # var names added to gzip stack are listed as ':var<@tqpt_file_name:@var_name>'
+    # returns replace count int if gzip of prior listed variable name(s) set of .tqpt name
+    # of has then fully replaced that prior set wether changes or not to the .tqpt file
+    # otherwise returns None ***all x viewable: var, sar and sar pointer type namings***
     try:
         pth = x_getpath(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
         gzSrc = None
@@ -131,33 +137,36 @@ def x_setlist_vars() -> bool:
                        varNmLst.append(b'\n:var<' + str.encode(pth[1]) + b':' + mtch.strip(b'<=') + b'>')
                 fMpObjSlvR.close()
             fMpObjSlvR = None
-        varNmLst.pop(0)
-        if gzSrc.find(b':var<' + str.encode(pth[1]) + b':') > -1:
-            cnt = 0
-            px = [0,0]
-            pStrt = True
-            ptrn = re.compile(rb':var<' + re.escape(str.encode(pth[1])) + rb':.*?>')
-            for fnd in ptrn.finditer(gzSrc):
-                if pStrt == True:
-                    pStrt = False
-                    px[0] = fnd.start()-1
-                px[1] = fnd.end()
-                cnt+=1
-            gzStrA = gzSrc[0:px[0]]
-            if px[1] == len(gzSrc):
-                with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'wb') as gzObjASlvW:
-                    gzObjASlvW.write(gzStrA + b''.join(varNmLst))
-                gzObjASlvW = None
+        if len(varNmLst) > 1:
+            varNmLst.pop(0)
+            if gzSrc.find(b':var<' + str.encode(pth[1]) + b':') > -1:
+                cnt = 0
+                px = [0,0]
+                pStrt = True
+                ptrn = re.compile(rb':var<' + re.escape(str.encode(pth[1])) + rb':.*?>')
+                for fnd in ptrn.finditer(gzSrc):
+                    if pStrt == True:
+                        pStrt = False
+                        px[0] = fnd.start()-1
+                    px[1] = fnd.end()
+                    cnt+=1
+                gzStrA = gzSrc[0:px[0]]
+                if px[1] == len(gzSrc):
+                    with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'wb') as gzObjASlvW:
+                        gzObjASlvW.write(gzStrA + b''.join(varNmLst))
+                    gzObjASlvW = None
+                else:
+                    gzStrB = gzSrc[px[1]:len(gzSrc)]
+                    with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'wb') as gzObjBSlvW:
+                        gzObjBSlvW.write(gzStrA + b''.join(varNmLst) + gzStrB)
+                    gzObjBSlvW = None
+                return cnt
             else:
-                gzStrB = gzSrc[px[1]:len(gzSrc)]
-                with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'wb') as gzObjBSlvW:
-                    gzObjBSlvW.write(gzStrA + b''.join(varNmLst) + gzStrB)
-                gzObjBSlvW = None
-            return cnt
+                with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'wb') as gzObjCSlvW:
+                    gzObjCSlvW.write(gzSrc + b''.join(varNmLst))
+                gzObjCSlvW = None
+                return None
         else:
-            with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'wb') as gzObjCSlvW:
-                gzObjCSlvW.write(gzSrc + b''.join(varNmLst))
-            gzObjCSlvW = None
             return None
     except Exception as e:
         print("staqtapp stpx error: ", e)
@@ -175,11 +184,6 @@ def x_getpath(pth: str) -> list:
         return pthLst
     except Exception as e:
         print("staqtapp stpx error: ", e)
-#______________________________________________________________________________________
-
-def x_getvarsnames(sort: bool):
-    # see, call x_getlist_vars()
-    pass
 #______________________________________________________________________________________
 
 def x_menorahvar(isGreater: bool, isSar: bool, varName: str):
@@ -207,6 +211,9 @@ def x_get_menorah_palindrome_encoding(isGreater, src):
     # THIS METHOD NOT FULLY IMPLEMENTED YET
     # @src is any str of seq numbers wether negative or not, this method is for and
     # will compress number to a menorah palindrome return equality responsible
+    
+    # https://ibb.co/C12Qbr4
+    # the kindness of a child no man made, no man can give and no man above
     
     nSt = set('-0123456789')
     stLst = []
@@ -382,26 +389,36 @@ def x_get_menorah_palindrome_encoding(isGreater, src):
     print('rStCnt: ' + str(rStCnt))
     print(prvX)
     print(kr_kn)
-            
 #______________________________________________________________________________________
 
-def x_addlist_vars() -> bool:
-    # sets all global variable names listed in a .tqpt file to a listed stack in the gzip
-    # [/x_stpx.gz] made from x_setpath() call---gzip to be present & valid .tqpt set path
-    # currently from set path .tqpt source file; method allows var name listing any tqpt:
-    # var names added to gzip stack are listed as ':var<@tqpt_file_name:@var_name>'
-    # returns replace count int if gzip of prior listed variable name(s) set of .tqpt name
-    # of has then fully replaced that prior set wether changes or not to the .tqpt file
-    # otherwise returns None ***all x viewable: var, sar and sar pointer type namings***
-    return x_setlist_vars()
-#______________________________________________________________________________________
-
-def x_getlist_vars(isSorted: bool):
+def x_getlist_vars(isSort: bool) -> list:
     # returns a (str) list of all glb variable names associated with set .tqpt file name
     # from x_stpx.gz after a @x_addlist_vars() call with gzip set path .tqpt file name
     # many options open to this type return including no glb var name repeated ever
     # of any .tqpt variable source file
-    pass
+    try:
+        pth = x_getpath(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
+        ptrn = re.compile(r':var<' + re.escape(pth[1]) + r':.*?>')
+        varNmLst = []
+        with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'rb') as gzObjGlvR:
+            gzSrc = bytes.decode(gzObjGlvR.read(), 'utf-8')
+            for mtch in ptrn.findall(gzSrc):
+                varNmLst.append(mtch.replace(':var<' + pth[1] + ':', "").strip('>'))
+            gzSrc = None
+        gzObjGlvR = None
+        if len(varNmLst) > 0:
+            if isSort == False:
+                return varNmLst
+            else:
+                if len(varNmLst) == 1:
+                    return varNmLst
+                else:
+                    varNmLst.sort()
+                    return varNmLst
+        else:
+            return None
+    except Exception as e:
+        print("staqtapp stpx error: ", e)
 #______________________________________________________________________________________
 
 def x_makesource(isStatic: bool, isMakeFolder: bool, isEraseSource: bool):
@@ -509,13 +526,7 @@ def x_viewkeys():
     stpp.viewkeys(pth[0] + '/' + pth[1] + '.tqpt')
 #______________________________________________________________________________________
 
-def test():
-    
-    #x_get_menorah_palindrome_encoding(False, '01128474523000233455677899')
-    x_setpath(os.path.dirname(os.path.abspath(__file__)) + '/staqtapp-test', 'staqtapp-test')
-    x_setlist_vars()
 
-test()
 
 
 
