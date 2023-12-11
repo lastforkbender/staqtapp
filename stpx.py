@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [stpx.py] StaqTapp gzip methods & module calls
 
 
-# Staqtapp 1.02.411
+# Staqtapp 1.02.424
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
@@ -44,11 +44,11 @@ import io
 # this includes viewable sars and sars pointers names listed of any .tqpt sources;
 # doesn't add duplicates, replaces all .tqpt var names associated if already listed
 
-# [ x_getlist_vars(isSort) ] - returns (str) list of all glb var names associated to .tqpt
+# [ x_getlist_vars(isSort) ] - returns (str) list of all glb var names associated to
 # file currently set in gzip path to/from after a @x_addlist_vars() call, does not
 # get all glb var names directly from the .tqpt variable source file, this of use to
-# multi-processing encodings or other procedures involving backup tracing, very
-# useful to ai-sys that would call ×_findvar() & ×_renamevar() in repeated cycles
+# multi-processing encodings or other procedures involving backup tracing, also very
+# useful to ai-sys that would call ×_findvar() & ×_renamevar() in secure cycles
 
 # (not yet a fully implemented stpx method)
 # [ x_menorahvar(isGreater, isSar, varName) ] - returns a specialized compressed
@@ -69,6 +69,13 @@ import io
 # [ x_changevar(varName, newVarData) ] - calls main stpp function
 
 # [ x_findvar(allSources, varName) ] - calls main stpp function
+
+# [ x_finddata(isRegx, varNames, search) ] -  if @varNames(str-list) is not given
+    # then will read the .tqpt variables source file line by line, this method returns list
+    # type result as ['var_name', 'found_data'] @isRegx=True expects compiled pattern
+    # expression @search, otherwise uses str.find() to locate any match, @search
+    # can be compiled regular expression, str or numbers as a fine parameter choice;
+    # if compiled regex pattern on line-by-line find, pattern compiled must be rb'' or b''
 
 # [ x_addsar(catPin, varData) ] - calls main stpp function
 
@@ -175,13 +182,13 @@ def x_addlist_vars() -> int:
 def x_getpath(pth: str) -> list:
     # returns @:pth<...> and @:fle<...> stpx gz listings as a (str)list
     try:
+        ptrn = re.compile(rb':pth<.*?\n:fle<.*?>')
         with gzip.open(pth, 'rb') as gzObjGp:
-            pthLst = re.findall(rb':pth<.*?>\n:fle<.*?>', gzObjGp.read())
-            pthLst = pthLst[0].split(b'\n')
-            pthLst[0] = bytes.decode(pthLst[0].replace(b':pth<', b"").strip(b'>'), 'utf-8')
-            pthLst[1] = bytes.decode(pthLst[1].replace(b':fle<', b"").strip(b'>'), 'utf-8')
-        gzObgGp = None
-        return pthLst
+            for mtch in ptrn.findall(gzObjGp.read()):
+                mtch = mtch.split(b'\n')
+                mtch[0] = bytes.decode(mtch[0].replace(b':pth<', b"").strip(b'>'), 'utf-8')
+                mtch[1] = bytes.decode(mtch[1].replace(b':fle<', b"").strip(b'>'), 'utf-8')
+                return mtch
     except Exception as e:
         print("staqtapp stpx error: ", e)
 #______________________________________________________________________________________
@@ -394,8 +401,6 @@ def x_get_menorah_palindrome_encoding(isGreater, src):
 def x_getlist_vars(isSort: bool) -> list:
     # returns a (str) list of all glb variable names associated with set .tqpt file name
     # from x_stpx.gz after a @x_addlist_vars() call with gzip set path .tqpt file name
-    # many options open to this type return including no glb var name repeated ever
-    # of any .tqpt variable source file
     try:
         pth = x_getpath(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
         ptrn = re.compile(r':var<' + re.escape(pth[1]) + r':.*?>')
@@ -477,6 +482,77 @@ def x_findvar(allSources: bool, varName: str):
     return stpp.findvar(allSources, varName, pth[0], pth[1])
 #______________________________________________________________________________________
 
+def x_finddata(isRegx: bool, varNames: list, search):
+    # see x_finddata() function uses explained @ top of this module
+    try:
+        pth = x_getpath(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
+        vnLen = None
+        varSrc = None
+        srchRslt = None
+        rtrnLst = []
+        if isinstance(varNames, list) == True and len(varNames) > 0:
+            vnLen = len(varNames)
+            if isRegx == False: search = str(search)
+            for x in range(vnLen):
+                if x_findvar(False, varNames[x]) == True: 
+                    varSrc = x_loadvar_str(varNames[x])
+                    if isinstance(varSrc, str):
+                        if isRegx == True:
+                            srchRslt = re.findall(search, varSrc)
+                            if len(srchRslt) > 0:
+                                rtrnLst.append(varNames[x])
+                                rtrnLst.append(srchRslt[0])
+                        else:
+                            if varSrc.find(search) > -1:
+                                rtrnLst.append(varNames[x])
+                                rtrnLst.append(search)
+                    else:
+                        vpLen = len(varSrc)
+                        for lx in range(vpLen):
+                            if isRegx == True:
+                                srchRslt = re.findall(search, varSrc[lx])
+                                if len(srchRslt) > 0:
+                                    rtrnLst.append(varNames[x] + '[' + str(lx) + ']')
+                                    rtrnLst.append(srchRslt[0])
+                            else:
+                                if varSrc[lx].find(search) > -1:
+                                    rtrnLst.append(varNames[x] + '[' + str(lx) + ']')
+                                    rtrnLst.append(search)
+            if len(rtrnLst) > 1:
+                return rtrnLst
+            else:
+                return None
+        else:
+            xCnt = 0
+            if isRegx == False: search = str(search)
+            with open(pth[0] + '/' + pth[1] + '.tqpt', 'r+b') as fObjFdt:
+                mObjFdt = mmap.mmap(fObjFdt.fileno(), 0, prot=mmap.PROT_READ)
+                for ln in iter(mObjFdt.readline, b''):
+                    if isRegx == True:
+                        srchRslt = re.findall(search, ln)
+                        if len(srchRslt) > 0:
+                            xCnt+=1
+                            rtrnLst.append(None)
+                            rtrnLst.append(bytes.decode(srchRslt[0]))
+                            srchRslt = re.findall(rb'^<.*?=', ln)
+                            rtrnLst[xCnt-1] = bytes.decode(srchRslt[0]).strip('<=')
+                            xCnt+=1
+                    else:
+                        if ln.find(str.encode(search)) > -1:
+                            xCnt+=1
+                            rtrnLst.append(None)
+                            rtrnLst.append(search)
+                            srchRslt = re.findall(rb'^<.*?=', ln)
+                            rtrnLst[xCnt-1] = bytes.decode(srchRslt[0]).strip('<=')
+                            xCnt+=1
+                if len(rtrnLst) > 1:
+                    return rtrnLst
+                else:
+                    return None
+    except Exception as e:
+        print("staqtapp stpx error: ", e)
+#______________________________________________________________________________________
+
 def x_addsar(catPin: str, varData: str):
     # calls pilot function stpp.addsar() without needed parameters
     # of a folder & file --> .tqpt source path @x_setpath() as already set
@@ -525,23 +601,3 @@ def x_viewkeys():
     pth = x_getpath(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
     stpp.viewkeys(pth[0] + '/' + pth[1] + '.tqpt')
 #______________________________________________________________________________________
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
