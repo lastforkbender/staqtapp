@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Parser.py] main functions use
 
 
-# Staqtapp 1.02.424
+# Staqtapp 1.02.431
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp

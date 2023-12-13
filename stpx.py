@@ -1,21 +1,19 @@
 # Code File: StaqTapp-1.02 [stpx.py] StaqTapp gzip methods & module calls
 
 
-# Staqtapp 1.02.424
+# Staqtapp 1.02.431
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
 # contact: https://pastebin.com/eumqiBAx
 
 
-import random
-#import shutil
-import mmap
+from PySqTpp_Stpx import StpxSrvc as __stsrC
 import stpp
-import gzip
+import stpu
 import os
 import re
-import io
+
 #______________________________________________________________________________________
 #______________________________________________________________________________________
 #______________________________________________________________________________________
@@ -71,11 +69,11 @@ import io
 # [ x_findvar(allSources, varName) ] - calls main stpp function
 
 # [ x_finddata(isRegx, varNames, search) ] -  if @varNames(str-list) is not given
-    # then will read the .tqpt variables source file line by line, this method returns list
-    # type result as ['var_name', 'found_data'] @isRegx=True expects compiled pattern
-    # expression @search, otherwise uses str.find() to locate any match, @search
-    # can be compiled regular expression, str or numbers as a fine parameter choice;
-    # if compiled regex pattern on line-by-line find, pattern compiled must be rb'' or b''
+# then will read the .tqpt variables source file line by line, this method returns list
+# type result as ['var_name', 'found_data'] @isRegx=True expects compiled pattern
+# expression @search, otherwise uses str.find() to locate any match, @search
+# can be compiled regular expression, str or numbers as a fine parameter choice;
+# if compiled regex pattern on line-by-line find, pattern compiled must be rb'' or b''
 
 # [ x_addsar(catPin, varData) ] - calls main stpp function
 
@@ -96,29 +94,13 @@ import io
 def x_setpath(fldrPth: str, fleNm: str):
     # sets auto fill parameter for folder path & file name on any stpx.x_[parallel method] calls
     # or other stpx related methods using gzip files, don't include a .tqpt extension or / end;
-    # the then created stpx folder will be in path of this module's current running directory
-    try:
-        mdlPthX = os.path.dirname(os.path.abspath(__file__))
-        stpxNw = False
-        if os.path.isdir(mdlPthX + '/stpx') == False:
-            os.makedirs(mdlPthX + '/stpx')
-            stpxNw = True
-        if os.path.isfile(mdlPthX + '/stpx/x_stpx.gz') == False or stpxNw == True:
-            with gzip.open(mdlPthX + '/stpx/x_stpx.gz', 'wb') as gzObjXtpW:
-                gzObjXtpW.write(b':pth<' + str.encode(fldrPth) + b'>\n:fle<' + str.encode(fleNm) + b'>')
-            gzObjXtpW = None
-        else:
-            gzSrc = None
-            pthLst = None
-            with gzip.open(mdlPthX + '/stpx/x_stpx.gz', 'rb') as gzObjXtpR:
-                gzSrc = gzObjXtpR.read()
-                pthLst = re.findall(rb':pth<.*?>\n:fle<.*?>', gzSrc)
-            gzObjXtpR = None
-            with gzip.open(mdlPthX + '/stpx/x_stpx.gz', 'wb') as gzObjXtpN:
-                gzObjXtpN.write(gzSrc.replace(pthLst[0], b':pth<' + str.encode(fldrPth) + b'>\n:fle<' + str.encode(fleNm) + b'>'))
-            gzObjXtpN = None
-    except Exception as e:
-        print("staqtapp stpx error: ", e)
+    # then created stpx folder/file will be in path of this module's current running directory
+    __stsrC.stpx_set_path(fldrPth, fleNm)
+#______________________________________________________________________________________
+
+def x_getpath(pth: str) -> list:
+    # returns @:pth<...> and @:fle<...> stpx gz listings as a (str)list
+    return __stsrC.stpx_get_path(pth)
 #______________________________________________________________________________________
 
 def x_addlist_vars() -> int:
@@ -129,92 +111,16 @@ def x_addlist_vars() -> int:
     # returns replace count int if gzip of prior listed variable name(s) set of .tqpt name
     # of has then fully replaced that prior set wether changes or not to the .tqpt file
     # otherwise returns None ***all x viewable: var, sar and sar pointer type namings***
-    try:
-        pth = x_getpath(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
-        gzSrc = None
-        with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'rb') as gzObjSlvR:
-            gzSrc = gzObjSlvR.read()
-        gzObjSlvR = None
-        ptrn = re.compile(rb'<.*?=')
-        varNmLst = []
-        with open(pth[0] + '/' + pth[1] + '.tqpt', mode='r', encoding='utf-8') as fObjSlvR:
-            with mmap.mmap(fObjSlvR.fileno(), length=0, access=mmap.ACCESS_READ) as fMpObjSlvR:
-                for mtch in ptrn.findall(fMpObjSlvR):
-                   if len(mtch) >= 3:
-                       varNmLst.append(b'\n:var<' + str.encode(pth[1]) + b':' + mtch.strip(b'<=') + b'>')
-                fMpObjSlvR.close()
-            fMpObjSlvR = None
-        if len(varNmLst) > 1:
-            varNmLst.pop(0)
-            if gzSrc.find(b':var<' + str.encode(pth[1]) + b':') > -1:
-                cnt = 0
-                px = [0,0]
-                pStrt = True
-                ptrn = re.compile(rb':var<' + re.escape(str.encode(pth[1])) + rb':.*?>')
-                for fnd in ptrn.finditer(gzSrc):
-                    if pStrt == True:
-                        pStrt = False
-                        px[0] = fnd.start()-1
-                    px[1] = fnd.end()
-                    cnt+=1
-                gzStrA = gzSrc[0:px[0]]
-                if px[1] == len(gzSrc):
-                    with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'wb') as gzObjASlvW:
-                        gzObjASlvW.write(gzStrA + b''.join(varNmLst))
-                    gzObjASlvW = None
-                else:
-                    gzStrB = gzSrc[px[1]:len(gzSrc)]
-                    with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'wb') as gzObjBSlvW:
-                        gzObjBSlvW.write(gzStrA + b''.join(varNmLst) + gzStrB)
-                    gzObjBSlvW = None
-                return cnt
-            else:
-                with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'wb') as gzObjCSlvW:
-                    gzObjCSlvW.write(gzSrc + b''.join(varNmLst))
-                gzObjCSlvW = None
-                return None
-        else:
-            return None
-    except Exception as e:
-        print("staqtapp stpx error: ", e)
+    return __stsrC.stpx_add_list_vars()
 #______________________________________________________________________________________
 
-def x_getpath(pth: str) -> list:
-    # returns @:pth<...> and @:fle<...> stpx gz listings as a (str)list
-    try:
-        ptrn = re.compile(rb':pth<.*?\n:fle<.*?>')
-        with gzip.open(pth, 'rb') as gzObjGp:
-            for mtch in ptrn.findall(gzObjGp.read()):
-                mtch = mtch.split(b'\n')
-                mtch[0] = bytes.decode(mtch[0].replace(b':pth<', b"").strip(b'>'), 'utf-8')
-                mtch[1] = bytes.decode(mtch[1].replace(b':fle<', b"").strip(b'>'), 'utf-8')
-                return mtch
-    except Exception as e:
-        print("staqtapp stpx error: ", e)
+def x_getlist_vars(isSort: bool) -> list:
+    # returns a (str) list of all glb variable names associated with set .tqpt file name
+    # from x_stpx.gz after a @x_addlist_vars() call with gzip set path .tqpt file name
+    return __stsrC.stpx_get_list_vars(isSort)
 #______________________________________________________________________________________
 
-def x_menorahvar(isGreater: bool, isSar: bool, varName: str):
-    # THIS FUNCTION NOT FULLY IMPLEMENTED YET
-    if isSar == False:
-        pth = x_getpath(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
-        rslt = stpp.loadvar_str(varName, pth[0], pth[1])
-        if isinstance(rslt, list) == True:
-            pass
-        elif isinstance(rslt, str) == True:
-            if set(rslt).issubset(nSt) == True:
-                pass
-            else:
-                # @varName's data, invalid chars for palindrome number return
-                return None
-        else:
-            # @varName's data, invalid data type, neither a str array or str...
-            return None
-    else:
-        # check if a proper staqtapp sar variable naming, has a unique ten digit dsg
-        pass
-#______________________________________________________________________________________
-
-def x_get_menorah_palindrome_encoding(isGreater, src):
+def x_menorahvar(isGreater, src):
     # THIS METHOD NOT FULLY IMPLEMENTED YET
     # @src is any str of seq numbers wether negative or not, this method is for and
     # will compress number to a menorah palindrome return equality responsible
@@ -222,208 +128,9 @@ def x_get_menorah_palindrome_encoding(isGreater, src):
     # https://ibb.co/C12Qbr4
     # the kindness of a child no man made, no man can give and no man above
     
-    nSt = set('-0123456789')
-    stLst = []
-    dtLst = []
-    rtrnStr = ''
-    prvX = '1'
-    lStCnt = 1
-    rStCnt = 1
-    ix = None
-    rx = None
-    cg = None
-    cgPl = None
-    cgRl = False
-    cgHld = False
-    
-    src = src.replace('-', '')
-    for x in src:
-        ix = int(x)
-        rx = int(prvX)
-        if ix == rx-1: lStCnt+=1
-        elif ix == rx+1: lStCnt-=1
-        elif ix-1 == rx: rStCnt+=1
-        elif ix+1 == rx: rStCnt-=1
-        elif ix == rx:
-            if lStCnt > rStCnt: lStCnt-=1
-            elif lStCnt < rStCnt: rStCnt-=1
-            else:
-                if lStCnt < 0:
-                    lStCnt+=1
-                    cgPl = True
-                if rStCnt < 0:
-                    rStCnt+=1
-                    cgPl = True
-                if lStCnt > 0:
-                    lStCnt-=1
-                    cgRl = True
-                if rStCnt > 0: 
-                    rStCnt-=1
-                    cgRl = True
-        if lStCnt == rStCnt: cgHld = True
-        if x == prvX: stLst.append(x)
-        else: dtLst.append(x)
-        if cgPl == True and cgRl == True and cgHld == True:
-            lStCnt = 1
-            rStCnt = 1
-        cgPl = False
-        cgRl = False
-        cgHld = False
-        prvX = x
-    prvX = 'q'
-    cgPl = 0
-    if lStCnt == rStCnt: cgPl = 1
-    elif len(src) == 1: cgPl = 1
-    else:
-        cgHld = True
-        cg = 1
-        for y in src:
-            ix = int(y)
-            if ix < lStCnt and cg >= rStCnt: lStCnt = ix
-            if ix > rStCnt and cg <= lStCnt: rStCnt = ix
-            cg+=1
-        if lStCnt == 0: lStCnt = 1
-        if rStCnt == 0: rStCnt = 1
-        if lStCnt == rStCnt: cgPl = 1
-        else:
-            if isGreater == True:
-                if lStCnt > rStCnt: prvX = 'l'
-                else: prvX = 'r'
-            else:
-                if lStCnt < rStCnt: prvX = 'l'
-                else: prvX = 'r'
-    lens = [len(stLst), len(dtLst)]
-    ix = []
-    rx = []
-    cgRl = None
-    cgNb = None
-    cgNx = False
-    kr_kn = 1
-    if lens[0] > 0:
-        for n in range(lens[0]):
-            if stLst[n] == cgRl:
-                ix.append(stLst[n])
-                for nas in range(len(ix)):
-                    if lens[0] == len(ix): break
-                    else:
-                        if ix[nas] == '1' or ix[nas] == '3' or ix[nas] == '5' or ix[nas] == '7' or ix[nas] == '9': kr_kn+=1
-            cgRl = stLst[n]
-    else:
-        if cgHld == True: cgNb = True
-        else: cgNb = False
-    if lens[1] > 2:
-        if cgPl != None:
-            if rStCnt > 1:
-                for a in range(len(dtLst)):
-                    if lStCnt >= 1:
-                        if prvX == 'q':
-                            if kr_kn > 1 and cgNb == False:
-                                if cgRl == dtLst[a]:
-                                    if len(dtLst) > 1: dtLst.pop(a)
-                                    else:
-                                        lens.append(len(dtLst))
-                                        cgNx = True
-                                        break
-                                kr_kn-=1
-                            else:
-                                if cgNb == True:
-                                    if cgRl == dtLst[a]:
-                                        if len(dtLst) > 1: dtLst.pop(a)
-                                        else:
-                                            lens.append(len(dtLst))
-                                            cgNx = True
-                                            break
-                                    kr_kn-=2
-                                else:
-                                    if cgRl == dtLst[a]:
-                                        if len(dtLst) > 1:
-                                            stLst.append(dtLst[a])
-                                            dtLst.pop(a)
-                                        else:
-                                            lens.append(len(dtLst))
-                                            cgNx = True
-                                            break
-                                        kr_kn+=2
-                        elif prvX == 'l':
-                            if cgNb == True and lStCnt > 3:
-                                if len(dtLst) > 1:
-                                    if cgRl == dtLst[a]:
-                                        dtLst.pop(a)
-                                        kr_kn-=1
-                                    else:
-                                        kr_kn+=1
-                                else:
-                                    lens.append(len(dtLst))
-                                    cgNx = True
-                                    break
-                            else:
-                                if cgRl == dtLst[a] and len(dtLst) > 1 and cgNb == False:
-                                    dtLst.pop(a)
-                                    kr_kn-=2
-                                else: pass
-                        elif prvX == 'r':
-                            if cgRl == dtLst[a] and len(dtLst) > 1:
-                                dtLst.pop(a)
-                                kr_kn+=1
-                            else:
-                                if len(dtLst) == 1:
-                                    cgNx = True
-                                    break
-                                if cgNb == True: kr_kn-=1
-                                else: kr_kn+=1
-                    else:
-                        # lStCnt is less than 1
-                        if prvX == 'q': pass
-                        elif prvX == 'l': pass
-                        elif prvX == 'r': pass
-                    cgRl = dtLst[a]
-            else:
-                # rStCnt is less than 1
-                #for b in range(lens[1]):
-                pass                        
-        else:
-            #cgPl=1
-            pass
-    else:
-        # lens[1]<3
-        pass
-        
-    print(dtLst)
-    print(stLst)
-    print(ix)
-    print(lens)
-    print('lStCnt: ' + str(lStCnt))
-    print('rStCnt: ' + str(rStCnt))
-    print(prvX)
-    print(kr_kn)
-#______________________________________________________________________________________
-
-def x_getlist_vars(isSort: bool) -> list:
-    # returns a (str) list of all glb variable names associated with set .tqpt file name
-    # from x_stpx.gz after a @x_addlist_vars() call with gzip set path .tqpt file name
-    try:
-        pth = x_getpath(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
-        ptrn = re.compile(r':var<' + re.escape(pth[1]) + r':.*?>')
-        varNmLst = []
-        with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'rb') as gzObjGlvR:
-            gzSrc = bytes.decode(gzObjGlvR.read(), 'utf-8')
-            for mtch in ptrn.findall(gzSrc):
-                varNmLst.append(mtch.replace(':var<' + pth[1] + ':', "").strip('>'))
-            gzSrc = None
-        gzObjGlvR = None
-        if len(varNmLst) > 0:
-            if isSort == False:
-                return varNmLst
-            else:
-                if len(varNmLst) == 1:
-                    return varNmLst
-                else:
-                    varNmLst.sort()
-                    return varNmLst
-        else:
-            return None
-    except Exception as e:
-        print("staqtapp stpx error: ", e)
+    #stpxXq = StpxSrvc()
+    #return stpxXq.stpx_get_menorah_palindrome_encoding(isGreater, src)
+    pass
 #______________________________________________________________________________________
 
 def x_makesource(isStatic: bool, isMakeFolder: bool, isEraseSource: bool):
@@ -484,73 +191,7 @@ def x_findvar(allSources: bool, varName: str):
 
 def x_finddata(isRegx: bool, varNames: list, search):
     # see x_finddata() function uses explained @ top of this module
-    try:
-        pth = x_getpath(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
-        vnLen = None
-        varSrc = None
-        srchRslt = None
-        rtrnLst = []
-        if isinstance(varNames, list) == True and len(varNames) > 0:
-            vnLen = len(varNames)
-            if isRegx == False: search = str(search)
-            for x in range(vnLen):
-                if x_findvar(False, varNames[x]) == True: 
-                    varSrc = x_loadvar_str(varNames[x])
-                    if isinstance(varSrc, str):
-                        if isRegx == True:
-                            srchRslt = re.findall(search, varSrc)
-                            if len(srchRslt) > 0:
-                                rtrnLst.append(varNames[x])
-                                rtrnLst.append(srchRslt[0])
-                        else:
-                            if varSrc.find(search) > -1:
-                                rtrnLst.append(varNames[x])
-                                rtrnLst.append(search)
-                    else:
-                        vpLen = len(varSrc)
-                        for lx in range(vpLen):
-                            if isRegx == True:
-                                srchRslt = re.findall(search, varSrc[lx])
-                                if len(srchRslt) > 0:
-                                    rtrnLst.append(varNames[x] + '[' + str(lx) + ']')
-                                    rtrnLst.append(srchRslt[0])
-                            else:
-                                if varSrc[lx].find(search) > -1:
-                                    rtrnLst.append(varNames[x] + '[' + str(lx) + ']')
-                                    rtrnLst.append(search)
-            if len(rtrnLst) > 1:
-                return rtrnLst
-            else:
-                return None
-        else:
-            xCnt = 0
-            if isRegx == False: search = str(search)
-            with open(pth[0] + '/' + pth[1] + '.tqpt', 'r+b') as fObjFdt:
-                mObjFdt = mmap.mmap(fObjFdt.fileno(), 0, prot=mmap.PROT_READ)
-                for ln in iter(mObjFdt.readline, b''):
-                    if isRegx == True:
-                        srchRslt = re.findall(search, ln)
-                        if len(srchRslt) > 0:
-                            xCnt+=1
-                            rtrnLst.append(None)
-                            rtrnLst.append(bytes.decode(srchRslt[0]))
-                            srchRslt = re.findall(rb'^<.*?=', ln)
-                            rtrnLst[xCnt-1] = bytes.decode(srchRslt[0]).strip('<=')
-                            xCnt+=1
-                    else:
-                        if ln.find(str.encode(search)) > -1:
-                            xCnt+=1
-                            rtrnLst.append(None)
-                            rtrnLst.append(search)
-                            srchRslt = re.findall(rb'^<.*?=', ln)
-                            rtrnLst[xCnt-1] = bytes.decode(srchRslt[0]).strip('<=')
-                            xCnt+=1
-                if len(rtrnLst) > 1:
-                    return rtrnLst
-                else:
-                    return None
-    except Exception as e:
-        print("staqtapp stpx error: ", e)
+    return __stsrC.stpx_find_data(isRegx, varNames, search)
 #______________________________________________________________________________________
 
 def x_addsar(catPin: str, varData: str):
@@ -601,3 +242,19 @@ def x_viewkeys():
     pth = x_getpath(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
     stpp.viewkeys(pth[0] + '/' + pth[1] + '.tqpt')
 #______________________________________________________________________________________
+
+#def test():
+    
+    #x_addvar('seq_212_M3nor', '@qp(0987654321,0123456789):')
+    
+    #x_setpath('/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+
+    #print(x_getlist_vars(True))
+    
+    #print(x_findvar(False, 'seq_111'))
+    
+    #print(x_finddata(True, None, re.compile(rb'5678')))
+
+#test()
+
+

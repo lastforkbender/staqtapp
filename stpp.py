@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [stpp.py] StaqTapp main functional calls module
 
 
-# Staqtapp 1.02.424
+# Staqtapp 1.02.431
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
@@ -44,7 +44,7 @@ import stpu
 # variables/pointers secure wrapped/obfuscated and/or locked
 #______________________________________________________________________________________
 
-# UTILITY - stpp.methods()
+# UTILITY - calling stpp.methods()
 
 # [.lockvar] - creates tpqt lock function call files for global variable(s) domain restrictions
 
@@ -72,7 +72,7 @@ import stpu
 # [.viewsource] - prints a tqpt variables source file's contents to console in readable slots
 #______________________________________________________________________________________
 
-# SELF-REPLICATION GLOBAL VARIABLES LIBRARY BUILD - stpp.methods()
+# SELF-REPLICATION GLOBAL VARIABLES LIBRARY BUILD - calling stpp.methods()
 
 # [.rev9build] - builds a custom global variables i/o library using an assortment of different options
 # including __slots__ and/or sars enabled variables programming to made py modules builds, 15
