@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [stps.py] StaqTapp main S.A.R. functional calls module
 
 
-# Staqtapp 1.02.431
+# Staqtapp 1.02.435
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp

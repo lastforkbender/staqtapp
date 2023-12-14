@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [stpx.py] StaqTapp gzip methods & module calls
 
 
-# Staqtapp 1.02.431
+# Staqtapp 1.02.435
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
@@ -56,6 +56,11 @@ import re
 
 # [ x_addvar(varName, varData) ] - calls main stpp function
 
+# [ x_removevar(isBackup, varNames) ] - deletes glb variable(s) from set path .tqpt source
+# if @isBackup=True then creates a .gz compressed backup file of the .tqpt source file in
+# the .../stpx folder directory; @varNames can be a single str or str-list of variable name(s)
+# this function returns True if performed any .tqpt glb variable(s) removal(s) or False if not
+
 # [ x_renamevar(varName, newVarName) ] - calls main stpp function
 
 # [ x_loadvar_str(varName) ] - calls main stpp function
@@ -98,12 +103,12 @@ def x_setpath(fldrPth: str, fleNm: str):
     __stsrC.stpx_set_path(fldrPth, fleNm)
 #______________________________________________________________________________________
 
-def x_getpath(pth: str) -> list:
+def x_getpath(pth: str):
     # returns @:pth<...> and @:fle<...> stpx gz listings as a (str)list
     return __stsrC.stpx_get_path(pth)
 #______________________________________________________________________________________
 
-def x_addlist_vars() -> int:
+def x_addlist_vars():
     # sets all global variable names listed in a .tqpt file to a listed stack in the gzip
     # [/x_stpx.gz] made from x_setpath() call---gzip to be present & valid .tqpt set path
     # currently from set path .tqpt source file; method allows var name listing any tqpt:
@@ -114,7 +119,7 @@ def x_addlist_vars() -> int:
     return __stsrC.stpx_add_list_vars()
 #______________________________________________________________________________________
 
-def x_getlist_vars(isSort: bool) -> list:
+def x_getlist_vars(isSort: bool):
     # returns a (str) list of all glb variable names associated with set .tqpt file name
     # from x_stpx.gz after a @x_addlist_vars() call with gzip set path .tqpt file name
     return __stsrC.stpx_get_list_vars(isSort)
@@ -145,6 +150,11 @@ def x_addvar(varName: str, varData: str):
     # of a folder & file --> .tqpt source path @x_setpath() as already set
     pth = x_getpath(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
     stpp.addvar(varName, varData, pth[0], pth[1])
+#______________________________________________________________________________________
+
+def x_removevar(isBackup: bool, varNames):
+    # see x_removevar() function uses explained @ top of this module
+    return __stsrC.stpx_remove_vars(isBackup, varNames)
 #______________________________________________________________________________________
 
 def x_renamevar(varName: str, newVarName: str):
@@ -247,7 +257,7 @@ def x_viewkeys():
     
     #x_addvar('seq_212_M3nor', '@qp(0987654321,0123456789):')
     
-    #x_setpath('/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test2')
+    #x_setpath('/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
 
     #print(x_getlist_vars(True))
     

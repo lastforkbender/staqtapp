@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Stpx.py] stpx functions abs/ext module
 
 
-# Staqtapp 1.02.431
+# Staqtapp 1.02.435
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
@@ -206,6 +206,75 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                         return None
         except Exception as e:
             print("staqtapp stpx error: ", e)
+#______________________________________________________________________________________
+
+    def stpx_remove_vars(is_backup: bool, var_names) -> bool:
+        try:
+            pth = StpxSrvc.stpx_get_path(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
+            src = None
+            if isinstance(var_names, str) == True:
+                if stpp.findvar(False, var_names, pth[0], pth[1]) == True:
+                    if is_backup == True:
+                        StpxSrvc.stpx_backups(True, 'tqpt', pth)
+                        with open(pth[0] + '/' + pth[1] + '.tqpt', mode='r') as fObjDvA:
+                            with mmap.mmap(fObjDvA.fileno(), length=0, access=mmap.ACCESS_READ) as mpObjDvA:
+                                src = mpObjDvA.read()
+                            mpObjDvA.close()
+                        mpObjDvA = None
+                        vrSrc = re.findall(rb'\n<' + re.escape(str.encode(var_names)) + rb'=.*?>', src)
+                        if len(vrSrc[0]) > len(var_names)+5:
+                            with open(pth[0] + '/' + pth[1] + '.tqpt', mode='wb') as fObjWrDvA:
+                                fObjWrDvA.write(src.replace(vrSrc[0], b''))
+                                fObjWrDvA.close()
+                            fObjWrDvA = None
+                            return True
+                        else:
+                            return False
+                else:
+                    return False
+            elif isinstance(var_names, list) == True:
+                if is_backup == True:
+                    StpxSrvc.stpx_backups(True, 'tqpt', pth)
+                with open(pth[0] + '/' + pth[1] + '.tqpt', mode='r') as fObjDvB:
+                    with mmap.mmap(fObjDvB.fileno(), length=0, access=mmap.ACCESS_READ) as mpObjDvB:
+                        src = mpObjDvB.read()
+                    mpObjDvB.close()
+                mpObjDvB = None
+                vrNmsLen = len(var_names)
+                rplc = False
+                for x in range(vrNmsLen):
+                    vrSrc = re.findall(rb'\n<' + re.escape(str.encode(var_names[x])) + rb'=.*?>', src)
+                    if len(vrSrc[0]) > len(var_names[x])+5:
+                        src = src.replace(vrSrc[0], b'')
+                        if rplc == False: rplc = True
+                if rplc == True:
+                    with open(pth[0] + '/' + pth[1] + '.tqpt', mode='wb') as fObjWrDvB:
+                        fObjWrDvB.write(src)
+                        fObjWrDvB.close()
+                    fObjWrB = None
+                    return True
+                else:
+                    return False
+            else:
+                return False
+        except Exception as e:
+            print("staqtapp stpx error: ", e)
+#______________________________________________________________________________________
+
+    def stpx_backups(is_write: bool, dsg: str, pthLst: list):
+        if is_write == True:
+            if dsg == 'tqpt':
+                src = None
+                with open(pthLst[0] + '/' + pthLst[1] + '.tqpt', mode='r') as fObjBu:
+                    with mmap.mmap(fObjBu.fileno(), length=0, access=mmap.ACCESS_READ) as mpObjBu:
+                        src = mpObjBu.read()
+                    mpObjBu.close()
+                mpObjBu = None
+                with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/tqpt_bck_' + pthLst[1] + '.gz', 'wb') as gzObjBu:
+                    gzObjBu.write(src)
+                src = None
+        else:
+            pass
 #______________________________________________________________________________________
 
     def stpx_get_menorah_palindrome_encoding(isGreater: bool, src: str) -> int:

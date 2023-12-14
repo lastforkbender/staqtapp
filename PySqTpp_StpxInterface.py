@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 PySqTpp_StpxInterface.py] StaqTapp stpx interface class
 
 
-# Staqtapp 1.02.431
+# Staqtapp 1.02.435
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
@@ -17,7 +17,7 @@ class PySqTppStpxInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         # subclasshook for the abstract methods defines
-        return (hasattr(subclass, 'stpx_set_path') and callable(subclass.stpx_set_path) and hasattr(subclass, 'stpx_get_path') and callable(subclass.stpx_get_path) and hasattr(subclass, 'stpx_add_list_vars') and callable(subclass.stpx_add_list_vars) and hasattr(subclass, 'stpx_get_list_vars') and callable(subclass.stpx_get_list_vars) and hasattr(subclass, 'stpx_find_data') and callable(subclass.stpx_find_data) and hasattr(subclass, 'stpx_get_menorah_palindrome_encoding') and callable(subclass.stpx_get_menorah_palindrome_encoding) or NotImplemented)
+        return (hasattr(subclass, 'stpx_set_path') and callable(subclass.stpx_set_path) and hasattr(subclass, 'stpx_get_path') and callable(subclass.stpx_get_path) and hasattr(subclass, 'stpx_add_list_vars') and callable(subclass.stpx_add_list_vars) and hasattr(subclass, 'stpx_get_list_vars') and callable(subclass.stpx_get_list_vars) and hasattr(subclass, 'stpx_find_data') and callable(subclass.stpx_find_data) and hasattr(subclass, 'stpx_remove_vars') and callable(subclass.stpx_remove_vars) and hasattr(subclass, 'stpx_backups') and callable(subclass.stpx_backups) and hasattr(subclass, 'stpx_get_menorah_palindrome_encoding') and callable(subclass.stpx_get_menorah_palindrome_encoding) or NotImplemented)
         
         
     @abc.abstractmethod
@@ -47,6 +47,20 @@ class PySqTppStpxInterface(metaclass=abc.ABCMeta):
     @abc.abstractmethod
     def stpx_find_data(isRegx: bool, varNames: list, search):
         # returns list of var_name + var_data sequences of searched .tqpt set path source
+        raise NotImplementedError
+        
+    
+    @abc.abstractmethod
+    def stpx_remove_vars(is_backup: bool, var_names) -> bool:
+        # deletes any valid glb .tqpt variable(s) found from @var_names, returns true if did remove(s)
+        # also removes any glb variables connected to a .tpqt lock source file if any during remove(s)
+        # performs a backup of the .tqpt source file to a gzip file in .../stpx folder if @is_backup=True
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def stpx_backups(is_write: bool, dsg: str, pthLst: list):
+        # performs staqtapp-stpx pro related backup procedures
         raise NotImplementedError
         
         
