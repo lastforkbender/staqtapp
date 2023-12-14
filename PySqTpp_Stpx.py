@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Stpx.py] stpx functions abs/ext module
 
 
-# Staqtapp 1.02.435
+# Staqtapp 1.02.437
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
@@ -31,19 +31,13 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                 os.makedirs(mdlPthX + '/stpx')
                 stpxNw = True
             if os.path.isfile(mdlPthX + '/stpx/x_stpx.gz') == False or stpxNw == True:
-                with gzip.open(mdlPthX + '/stpx/x_stpx.gz', 'wb') as gzObjXtpW:
-                    gzObjXtpW.write(b':pth<' + str.encode(dir_path) + b'>\n:fle<' + str.encode(source_name) + b'>')
-                gzObjXtpW = None
+                StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', b':pth<' + str.encode(dir_path) + b'>\n:fle<' + str.encode(source_name) + b'>')
             else:
+                gzSrc = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
+                pthLst = re.findall(rb':pth<.*?>\n:fle<.*?>', gzSrc)
+                gzSrc = gzSrc.replace(pthLst[0], b':pth<' + str.encode(dir_path) + b'>\n:fle<' + str.encode(source_name) + b'>')
+                StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', gzSrc)
                 gzSrc = None
-                pthLst = None
-                with gzip.open(mdlPthX + '/stpx/x_stpx.gz', 'rb') as gzObjXtpR:
-                    gzSrc = gzObjXtpR.read()
-                    pthLst = re.findall(rb':pth<.*?>\n:fle<.*?>', gzSrc)
-                gzObjXtpR = None
-                with gzip.open(mdlPthX + '/stpx/x_stpx.gz', 'wb') as gzObjXtpN:
-                    gzObjXtpN.write(gzSrc.replace(pthLst[0], b':pth<' + str.encode(dir_path) + b'>\n:fle<' + str.encode(source_name) + b'>'))
-                gzObjXtpN = None
         except Exception as e:
             print("staqtapp stpx error: ", e)
 #______________________________________________________________________________________
@@ -63,11 +57,9 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
 
     def stpx_add_list_vars() -> int:
         try:
-            pth = StpxSrvc.stpx_get_path(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
-            gzSrc = None
-            with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'rb') as gzObjSlvR:
-                gzSrc = gzObjSlvR.read()
-            gzObjSlvR = None
+            mdlPthX = os.path.dirname(os.path.abspath(__file__))
+            pth = StpxSrvc.stpx_get_path(mdlPthX + '/stpx/x_stpx.gz')
+            gzSrc = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
             ptrn = re.compile(rb'<.*?=')
             varNmLst = []
             with open(pth[0] + '/' + pth[1] + '.tqpt', mode='r', encoding='utf-8') as fObjSlvR:
@@ -92,19 +84,13 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                         cnt+=1
                     gzStrA = gzSrc[0:px[0]]
                     if px[1] == len(gzSrc):
-                        with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'wb') as gzObjASlvW:
-                            gzObjASlvW.write(gzStrA + b''.join(varNmLst))
-                        gzObjASlvW = None
+                        StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', gzStrA + b''.join(varNmLst))
                     else:
                         gzStrB = gzSrc[px[1]:len(gzSrc)]
-                        with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'wb') as gzObjBSlvW:
-                            gzObjBSlvW.write(gzStrA + b''.join(varNmLst) + gzStrB)
-                        gzObjBSlvW = None
+                        StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', gzStrA + b''.join(varNmLst) + gzStrB)
                     return cnt
                 else:
-                    with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'wb') as gzObjCSlvW:
-                        gzObjCSlvW.write(gzSrc + b''.join(varNmLst))
-                    gzObjCSlvW = None
+                    StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', gzSrc + b''.join(varNmLst))
                     return None
             else:
                 return None
@@ -114,15 +100,14 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
 
     def stpx_get_list_vars(is_sorted: bool) -> list:
         try:
-            pth = StpxSrvc.stpx_get_path(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
+            mdlPthX = os.path.dirname(os.path.abspath(__file__))
+            pth = StpxSrvc.stpx_get_path(mdlPthX + '/stpx/x_stpx.gz')
             ptrn = re.compile(r':var<' + re.escape(pth[1]) + r':.*?>')
             varNmLst = []
-            with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz', 'rb') as gzObjGlvR:
-                gzSrc = bytes.decode(gzObjGlvR.read(), 'utf-8')
-                for mtch in ptrn.findall(gzSrc):
-                    varNmLst.append(mtch.replace(':var<' + pth[1] + ':', "").strip('>'))
-                gzSrc = None
-            gzObjGlvR = None
+            gzSrc = bytes.decode(StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None), 'utf-8')
+            for mtch in ptrn.findall(gzSrc):
+                varNmLst.append(mtch.replace(':var<' + pth[1] + ':', "").strip('>'))
+            gzSrc = None
             if len(varNmLst) > 0:
                 if is_sorted == False:
                     return varNmLst
@@ -216,30 +201,20 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                 if stpp.findvar(False, var_names, pth[0], pth[1]) == True:
                     if is_backup == True:
                         StpxSrvc.stpx_backups(True, 'tqpt', pth)
-                        with open(pth[0] + '/' + pth[1] + '.tqpt', mode='r') as fObjDvA:
-                            with mmap.mmap(fObjDvA.fileno(), length=0, access=mmap.ACCESS_READ) as mpObjDvA:
-                                src = mpObjDvA.read()
-                            mpObjDvA.close()
-                        mpObjDvA = None
-                        vrSrc = re.findall(rb'\n<' + re.escape(str.encode(var_names)) + rb'=.*?>', src)
-                        if len(vrSrc[0]) > len(var_names)+5:
-                            with open(pth[0] + '/' + pth[1] + '.tqpt', mode='wb') as fObjWrDvA:
-                                fObjWrDvA.write(src.replace(vrSrc[0], b''))
-                                fObjWrDvA.close()
-                            fObjWrDvA = None
-                            return True
-                        else:
-                            return False
+                    src = StpxSrvc.stpx_map('tmr', pth, None)
+                    vrSrc = re.findall(rb'\n<' + re.escape(str.encode(var_names)) + rb'=.*?>', src)
+                    if len(vrSrc[0]) > len(var_names)+5:
+                        src = src.replace(vrSrc[0], b'')
+                        StpxSrvc.stpx_map('twb', pth, src)
+                        return True
+                    else:
+                        return False
                 else:
                     return False
             elif isinstance(var_names, list) == True:
                 if is_backup == True:
                     StpxSrvc.stpx_backups(True, 'tqpt', pth)
-                with open(pth[0] + '/' + pth[1] + '.tqpt', mode='r') as fObjDvB:
-                    with mmap.mmap(fObjDvB.fileno(), length=0, access=mmap.ACCESS_READ) as mpObjDvB:
-                        src = mpObjDvB.read()
-                    mpObjDvB.close()
-                mpObjDvB = None
+                src = StpxSrvc.stpx_map('tmr', pth, None)
                 vrNmsLen = len(var_names)
                 rplc = False
                 for x in range(vrNmsLen):
@@ -248,10 +223,7 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                         src = src.replace(vrSrc[0], b'')
                         if rplc == False: rplc = True
                 if rplc == True:
-                    with open(pth[0] + '/' + pth[1] + '.tqpt', mode='wb') as fObjWrDvB:
-                        fObjWrDvB.write(src)
-                        fObjWrDvB.close()
-                    fObjWrB = None
+                    StpxSrvc.stpx_map('twb', pth, src)
                     return True
                 else:
                     return False
@@ -261,17 +233,37 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
             print("staqtapp stpx error: ", e)
 #______________________________________________________________________________________
 
+    def stpx_map(dsg, pth, src):
+        if dsg == 'tmr':
+            rtrnSrc = None
+            with open(pth[0] + '/' + pth[1] + '.tqpt', mode='r') as fObjTmr:
+                with mmap.mmap(fObjTmr.fileno(), length=0, access=mmap.ACCESS_READ) as mpObjTmr:
+                    rtrnSrc = mpObjTmr.read()
+                    mpObjTmr.close()
+                mpObjTmr = None
+            return rtrnSrc
+        elif dsg == 'twb':
+            with open(pth[0] + '/' + pth[1] + '.tqpt', mode='wb') as fObjTwb:
+                fObjTwb.write(src)
+                fObjTwb.close()
+            fObjTwb = None
+        elif dsg == 'gzr':
+            rtrnGzSrc = None
+            with gzip.open(pth, 'rb') as gzObjR:
+                rtrnGzSrc = gzObjR.read()
+            gzObjR = None
+            return rtrnGzSrc
+        elif dsg == 'gzw':
+            with gzip.open(pth, 'wb') as gzObjW:
+                gzObjW.write(src)
+            gzObjW = None
+#______________________________________________________________________________________
+
     def stpx_backups(is_write: bool, dsg: str, pthLst: list):
         if is_write == True:
             if dsg == 'tqpt':
-                src = None
-                with open(pthLst[0] + '/' + pthLst[1] + '.tqpt', mode='r') as fObjBu:
-                    with mmap.mmap(fObjBu.fileno(), length=0, access=mmap.ACCESS_READ) as mpObjBu:
-                        src = mpObjBu.read()
-                    mpObjBu.close()
-                mpObjBu = None
-                with gzip.open(os.path.dirname(os.path.abspath(__file__)) + '/stpx/tqpt_bck_' + pthLst[1] + '.gz', 'wb') as gzObjBu:
-                    gzObjBu.write(src)
+                src = StpxSrvc.stpx_map('tmr', pthLst, None)
+                StpxSrvc.stpx_map('gzw', os.path.dirname(os.path.abspath(__file__)) + '/stpx/tqpt_bck_' + pthLst[1] + '.gz', src)
                 src = None
         else:
             pass

@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [stpx.py] StaqTapp gzip methods & module calls
 
 
-# Staqtapp 1.02.435
+# Staqtapp 1.02.437
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
@@ -255,9 +255,11 @@ def x_viewkeys():
 
 #def test():
     
-    #x_addvar('seq_212_M3nor', '@qp(0987654321,0123456789):')
+    #x_changevar('seq_212_M34nor', '@qp(0987654321,0123456789,2.7,8.1,9.3):')
     
     #x_setpath('/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
+    
+    #x_addlist_vars()
 
     #print(x_getlist_vars(True))
     
