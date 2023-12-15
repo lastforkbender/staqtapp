@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Stpx.py] stpx functions abs/ext module
 
 
-# Staqtapp 1.02.437
+# Staqtapp 1.02.439
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
@@ -194,56 +194,66 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
 #______________________________________________________________________________________
 
     def stpx_remove_vars(is_backup: bool, var_names) -> bool:
+        # optimized fri, dec 15-23 ---- now correctly removes any associated .tpqt entries also;
+        # of stranger things required here... seeks delete of any .tpqt entries regardless if there
+        # was no removes @ .tqpt source file pre, for file error precautions or any outside edits...
         try:
             pth = StpxSrvc.stpx_get_path(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
+            vrNmsLen = None
+            vrSrc = None
             src = None
+            rplc = False
             if isinstance(var_names, str) == True:
-                if stpp.findvar(False, var_names, pth[0], pth[1]) == True:
-                    if is_backup == True:
-                        StpxSrvc.stpx_backups(True, 'tqpt', pth)
-                    src = StpxSrvc.stpx_map('tmr', pth, None)
-                    vrSrc = re.findall(rb'\n<' + re.escape(str.encode(var_names)) + rb'=.*?>', src)
-                    if len(vrSrc[0]) > len(var_names)+5:
+                vrSrc = var_names
+                var_names = [vrSrc]
+            if is_backup == True:
+                StpxSrvc.stpx_backups(True, 'tqpt', pth)
+            src = StpxSrvc.stpx_map('tmr', pth, None)
+            vrNmsLen = len(var_names)
+            for x in range(vrNmsLen):
+                vrSrc = re.findall(rb'\n<' + re.escape(str.encode(var_names[x])) + rb'=.*?>', src)
+                if len(vrSrc[0]) > len(var_names[x])+5:
+                    src = src.replace(vrSrc[0], b'')
+                    if rplc == False: rplc = True
+            if rplc == True:
+                StpxSrvc.stpx_map('twb', pth, src)
+            if os.path.isfile(pth[0] + '/' + pth[1] + '.tpqt') == True:
+                src = StpxSrvc.stpx_map('lmr', pth, None)
+                rplcLck = False
+                for lx in range(vrNmsLen):
+                    vrSrc = re.findall(rb'\n<:' + re.escape(var_names[lx]) + rb'=(?s:.*?).*:>', src)
+                    if len(vrSrc[0]) > len(var_names[lx])+5:
                         src = src.replace(vrSrc[0], b'')
-                        StpxSrvc.stpx_map('twb', pth, src)
-                        return True
+                        if rplcLck == False: rplcLck = True
                     else:
-                        return False
-                else:
-                    return False
-            elif isinstance(var_names, list) == True:
-                if is_backup == True:
-                    StpxSrvc.stpx_backups(True, 'tqpt', pth)
-                src = StpxSrvc.stpx_map('tmr', pth, None)
-                vrNmsLen = len(var_names)
-                rplc = False
-                for x in range(vrNmsLen):
-                    vrSrc = re.findall(rb'\n<' + re.escape(str.encode(var_names[x])) + rb'=.*?>', src)
-                    if len(vrSrc[0]) > len(var_names[x])+5:
-                        src = src.replace(vrSrc[0], b'')
-                        if rplc == False: rplc = True
-                if rplc == True:
-                    StpxSrvc.stpx_map('twb', pth, src)
-                    return True
-                else:
-                    return False
-            else:
-                return False
+                        vrSrc = re.findall(rb'<:' + re.escape(var_names[lx]) + rb'=(?s:.*?).*:>', src)
+                        if len(vrSrc[0]) > len(var_names[lx])+5:
+                            # found @ top entry block of the .tpqt lock file
+                            src = src.replace(vrSrc[0], b'')
+                            if rplcLck == False: rplcLck = True
+                if rplcLck == True:
+                    StpxSrvc.stpx_map('lwb', pth, src)
+            return rplc
         except Exception as e:
             print("staqtapp stpx error: ", e)
 #______________________________________________________________________________________
 
     def stpx_map(dsg, pth, src):
-        if dsg == 'tmr':
+        fPth = None
+        if dsg == 'tmr' or dsg == 'lmr':
             rtrnSrc = None
-            with open(pth[0] + '/' + pth[1] + '.tqpt', mode='r') as fObjTmr:
+            if dsg == 'tmr': fPth = pth[0] + '/' + pth[1] + '.tqpt'
+            elif dsg == 'lmr': fPth = pth[0] + '/' + pth[1] + '.tpqt'
+            with open(fPth, mode='r') as fObjTmr:
                 with mmap.mmap(fObjTmr.fileno(), length=0, access=mmap.ACCESS_READ) as mpObjTmr:
                     rtrnSrc = mpObjTmr.read()
                     mpObjTmr.close()
                 mpObjTmr = None
             return rtrnSrc
-        elif dsg == 'twb':
-            with open(pth[0] + '/' + pth[1] + '.tqpt', mode='wb') as fObjTwb:
+        elif dsg == 'twb' or dsg == 'lwb':
+            if dsg == 'twb': fPth = pth[0] + '/' + pth[1] + '.tqpt'
+            elif dsg == 'lwb': fPth = pth[0] + '/' + pth[1] + '.tpqt'
+            with open(fPth, mode='wb') as fObjTwb:
                 fObjTwb.write(src)
                 fObjTwb.close()
             fObjTwb = None

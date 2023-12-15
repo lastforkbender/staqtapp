@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [stpx.py] StaqTapp gzip methods & module calls
 
 
-# Staqtapp 1.02.437
+# Staqtapp 1.02.439
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
