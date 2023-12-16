@@ -1,7 +1,19 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Stpx.py] stpx functions abs/ext module
 
 
-# Staqtapp 1.02.439
+# Staqtapp 1.02.441
+
+# Staqtapp is a full global variables stack feature rich library, covering all solid
+# i/o functions calls from the stpp.py module or stpx.py pro module. Features
+# included are precise parsings, interchangable & dynamic .tpqt lock files for
+# avoiding entanglements, mmap responsive reads-writes-edits across all it's
+# functional calls & much more like the scanning of any py module for potential
+# global variables conflicts. Staqtapp uses only in-built python libraries and has
+# no current package release, until it's scope exceeds any expected relations or
+# utterly bypass any formatted opinions of filed global variables uses. With q-bit
+# computing very near. A long-term goal of Staqtapp is to provide alt simulations
+# of such circumstances in the future, where global variables use by concentrated
+# files using hybrid computing desolves the long bad opinions of global variables.
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
@@ -241,6 +253,7 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
     def stpx_map(dsg, pth, src):
         fPth = None
         if dsg == 'tmr' or dsg == 'lmr':
+            # read/return .tqpt ot .tpqt sources using mmap------------------------------------------------------
             rtrnSrc = None
             if dsg == 'tmr': fPth = pth[0] + '/' + pth[1] + '.tqpt'
             elif dsg == 'lmr': fPth = pth[0] + '/' + pth[1] + '.tpqt'
@@ -251,6 +264,7 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                 mpObjTmr = None
             return rtrnSrc
         elif dsg == 'twb' or dsg == 'lwb':
+            # write .tqpt or .tpqt sources using mmap----------------------------------------------
             if dsg == 'twb': fPth = pth[0] + '/' + pth[1] + '.tqpt'
             elif dsg == 'lwb': fPth = pth[0] + '/' + pth[1] + '.tpqt'
             with open(fPth, mode='wb') as fObjTwb:
@@ -258,12 +272,14 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                 fObjTwb.close()
             fObjTwb = None
         elif dsg == 'gzr':
+            # read/return gzip sources------------------------------------------------------
             rtrnGzSrc = None
             with gzip.open(pth, 'rb') as gzObjR:
                 rtrnGzSrc = gzObjR.read()
             gzObjR = None
             return rtrnGzSrc
         elif dsg == 'gzw':
+            # write gzip sources-------------------------------------------------
             with gzip.open(pth, 'wb') as gzObjW:
                 gzObjW.write(src)
             gzObjW = None

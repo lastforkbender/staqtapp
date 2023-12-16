@@ -1,7 +1,19 @@
 # Code File: StaqTapp-1.02 [PySqTpp_SarInterface.py] StaqTapp S.A.R. main interface class
 
 
-# Staqtapp 1.02.439
+# Staqtapp 1.02.441
+
+# Staqtapp is a full global variables stack feature rich library, covering all solid
+# i/o functions calls from the stpp.py module or stpx.py pro module. Features
+# included are precise parsings, interchangable & dynamic .tpqt lock files for
+# avoiding entanglements, mmap responsive reads-writes-edits across all it's
+# functional calls & much more like the scanning of any py module for potential
+# global variables conflicts. Staqtapp uses only in-built python libraries and has
+# no current package release, until it's scope exceeds any expected relations or
+# utterly bypass any formatted opinions of filed global variables uses. With q-bit
+# computing very near. A long-term goal of Staqtapp is to provide alt simulations
+# of such circumstances in the future, where global variables use by concentrated
+# files using hybrid computing desolves the long bad opinions of global variables.
 
 # email: 5deg.blk.blt.cecil(@)gmail
 # github: https://github.com/lastforkbender/staqtapp
