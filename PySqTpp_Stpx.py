@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Stpx.py] stpx functions abs/ext module
 
 
-# Staqtapp 1.02.445
+# Staqtapp 1.02.447
 
 # Staqtapp is a full global variables stack feature rich library, covering all solid
 # i/o functions calls from the stpp.py module or stpx.py pro module. Features
@@ -79,7 +79,7 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
             src = StpxSrvc.stpx_map('gzr', pth, None)
             mtch = re.findall(rb':sts<.*?>', src)
             if len(mtch) > 0:
-                StpxSrvc.stpx_map('gzw', pth, src.replace(mtch, b':sts<ren>')
+                StpxSrvc.stpx_map('gzw', pth, src.replace(mtch, b':sts<ren>'))
             else:
                 StpxSrvc.stpx_map('gzw', pth, src + b':sts<ren>')
             # get the .tqpt glb variables source as b-string, split @ newlines(staqtapp
@@ -254,10 +254,9 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
 #______________________________________________________________________________________
 
     def stpx_remove_vars(is_backup: bool, var_names) -> bool:
-        # is the best staqtapp parsing complication so far; reworked a third time to do as it
-        # should do, without .tpqt mis-edit collisions --- also does :sts<ren> prep for splitter
         try:
-            pth = StpxSrvc.stpx_get_path(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
+            mdlPthX = os.path.dirname(os.path.abspath(__file__))
+            pth = StpxSrvc.stpx_get_path(mdlPthX + '/stpx/x_stpx.gz')
             vrNmsLen = None
             vrSrc = None
             src = None
@@ -279,7 +278,7 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
             if os.path.isfile(pth[0] + '/' + pth[1] + '.tpqt') == True:
                 trgSts = False
                 stsLst = []
-                src = StpxSrvc.stpx_map('gzr', pth, None)
+                src = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
                 if src.find(b':sts<ren>') > -1: trgSts = True
                 src = StpxSrvc.stpx_map('lmr', pth, None).split(b'>')
                 src.pop(len(src)-1)
@@ -288,7 +287,7 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                 for lx in range(vrNmsLen):
                     if rmvLck == False:
                         for lxl in range(len(src)):
-                            vrSrc = re.findall(rb'<:' + re.escape(var_names[lx]) + rb'=(?s:.*?).*:>', src[lxl])
+                            vrSrc = re.findall(rb'<:' + re.escape(str.encode(var_names[lx])) + rb'=(?s:.*?).*:', src[lxl])
                             if len(vrSrc[0]) > 0:
                                 if trgSts == True:
                                     stsLst.append(vrSrc[0])
@@ -310,7 +309,9 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                     src = b''.join(src)
                     StpxSrvc.stpx_map('lwb', pth, src + b'!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
                 elif rmvLck == True:
-                    # ..?...delete the .tpqt file...?
+                    dirF = pth[0] + "/" + pth[1] + ".tpqt"
+                    if os.path.isfile(dirF):
+                        os.remove(dirF)
                 if trgSts == True and len(stsLst) > 0:
                     vrNmsLen = len(stsLst)
                     for nx in range(vrNmsLen):
@@ -320,8 +321,8 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                         fObjStsW.write(stsLst + b'!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
                         fObjStsW.close()
                     fObjStsW = None
-                    src = StpxSrvc.stpx_map('gzr', pth, None)
-                    StpxSrvc.stpx_map('gzw', pth, src.replace(b':sts<ren>', b':sts<den>')
+                    src = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
+                    StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', src.replace(b':sts<ren>', b':sts<den>'))
             return rplc
         except Exception as e:
             print("staqtapp stpx error: ", e)
