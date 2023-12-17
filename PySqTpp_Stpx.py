@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Stpx.py] stpx functions abs/ext module
 
 
-# Staqtapp 1.02.441
+# Staqtapp 1.02.445
 
 # Staqtapp is a full global variables stack feature rich library, covering all solid
 # i/o functions calls from the stpp.py module or stpx.py pro module. Features
@@ -56,13 +56,61 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
 
     def stpx_get_path(full_curr_path: str) -> list:
         try:
-            ptrn = re.compile(rb':pth<.*?\n:fle<.*?>')
+            ptrn = re.compile(rb':pth<.*?>\n:fle<.*?>')
             with gzip.open(full_curr_path, 'rb') as gzObjGp:
                 for mtch in ptrn.findall(gzObjGp.read()):
                     mtch = mtch.split(b'\n')
                     mtch[0] = bytes.decode(mtch[0].replace(b':pth<', b"").strip(b'>'), 'utf-8')
                     mtch[1] = bytes.decode(mtch[1].replace(b':fle<', b"").strip(b'>'), 'utf-8')
                     return mtch
+        except Exception as e:
+            print("staqtapp stpx error: ", e)
+#______________________________________________________________________________________
+
+    def stpx_split_source(new_source_name: str) -> bool:
+        # [Staqtapp v1.02: PySqTpp_Stpx.py] - .tqpt glb-var source - smart file splitter
+        try:
+            mdlPthX = os.path.dirname(os.path.abspath(__file__))
+            # all stpx.py function calls rely on set path folder/file in x_stpx.gz listings
+            # only time a parameter of folder dir and file name is @stpx_set_path()
+            pth = StpxSrvc.stpx_get_path(mdlPthX + '/stpx/x_stpx.gz')
+            # first, create or edit gzip setting entry :sts<...> to inform @stpx_remove-
+            # vars() is being called from this split-tqpt-source method focused
+            src = StpxSrvc.stpx_map('gzr', pth, None)
+            mtch = re.findall(rb':sts<.*?>', src)
+            if len(mtch) > 0:
+                StpxSrvc.stpx_map('gzw', pth, src.replace(mtch, b':sts<ren>')
+            else:
+                StpxSrvc.stpx_map('gzw', pth, src + b':sts<ren>')
+            # get the .tqpt glb variables source as b-string, split @ newlines(staqtapp
+            # doesn't allow newline chars in it's data declare tags @qp(...): read/write)
+            src = StpxSrvc.stpx_map('tmr', pth, None).split(b'\n')
+            # remove last & first elements of now list, is .tqpt file header/ending data
+            src.pop(len(src)-1)
+            src.pop(0)
+            if len(src) >= 42:
+                srcLen = len(src)
+                vrnLst = []
+                x = srcLen/2
+                ptrn = re.compile(rb'^<.*?=')
+                # get variables' names list for stpx_removevars() call, will also
+                # remove .tpqt lock/key function blocks if present associated!
+                while x < srcLen:
+                    mtch = ptrn.findall(src[x])
+                    vrnLst.append(mtch.replace('<', '').strip('='))
+                    src.pop(x)
+                    x+=1
+                # the delete vars call on the current gzip set path of .tqpt file;
+                # stpx_removevars() knows call is coming from here at check
+                # of the gzip entry that was just changed, if this .tqpt file has a
+                # associated lock function .tpqt file, then is already transferred
+                # to a temp named .tpqt file of the lock/key blocks removed if
+                # any, otherwise stpx_removevars() rechanged gzip entry null
+                StpxSrvc.stpx_removevars(False, vrnLst)
+                vrnLst = None
+                #TODO
+            else:
+                return False
         except Exception as e:
             print("staqtapp stpx error: ", e)
 #______________________________________________________________________________________
@@ -206,9 +254,8 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
 #______________________________________________________________________________________
 
     def stpx_remove_vars(is_backup: bool, var_names) -> bool:
-        # optimized fri, dec 15-23 ---- now correctly removes any associated .tpqt entries also;
-        # of stranger things required here... seeks delete of any .tpqt entries regardless if there
-        # was no removes @ .tqpt source file pre, for file error precautions or any outside edits...
+        # is the best staqtapp parsing complication so far; reworked a third time to do as it
+        # should do, without .tpqt mis-edit collisions --- also does :sts<ren> prep for splitter
         try:
             pth = StpxSrvc.stpx_get_path(os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz')
             vrNmsLen = None
@@ -230,21 +277,51 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
             if rplc == True:
                 StpxSrvc.stpx_map('twb', pth, src)
             if os.path.isfile(pth[0] + '/' + pth[1] + '.tpqt') == True:
-                src = StpxSrvc.stpx_map('lmr', pth, None)
+                trgSts = False
+                stsLst = []
+                src = StpxSrvc.stpx_map('gzr', pth, None)
+                if src.find(b':sts<ren>') > -1: trgSts = True
+                src = StpxSrvc.stpx_map('lmr', pth, None).split(b'>')
+                src.pop(len(src)-1)
                 rplcLck = False
+                rmvLck = False
                 for lx in range(vrNmsLen):
-                    vrSrc = re.findall(rb'\n<:' + re.escape(var_names[lx]) + rb'=(?s:.*?).*:>', src)
-                    if len(vrSrc[0]) > len(var_names[lx])+5:
-                        src = src.replace(vrSrc[0], b'')
-                        if rplcLck == False: rplcLck = True
+                    if rmvLck == False:
+                        for lxl in range(len(src)):
+                            vrSrc = re.findall(rb'<:' + re.escape(var_names[lx]) + rb'=(?s:.*?).*:>', src[lxl])
+                            if len(vrSrc[0]) > 0:
+                                if trgSts == True:
+                                    stsLst.append(vrSrc[0])
+                                if len(src) > 1:
+                                    src.pop(lxl)
+                                    if rplcLck == False: rplcLck = True
+                                else:
+                                    rmvLck = True
+                                    break
                     else:
-                        vrSrc = re.findall(rb'<:' + re.escape(var_names[lx]) + rb'=(?s:.*?).*:>', src)
-                        if len(vrSrc[0]) > len(var_names[lx])+5:
-                            # found @ top entry block of the .tpqt lock file
-                            src = src.replace(vrSrc[0], b'')
-                            if rplcLck == False: rplcLck = True
-                if rplcLck == True:
-                    StpxSrvc.stpx_map('lwb', pth, src)
+                        break
+                if rplcLck == True and rmvLck == False:
+                    vrNmsLen = len(src)
+                    for xr in range(vrNmsLen):
+                        if src[xr].find(b'\n<') > -1:
+                            src[xr] = src[xr].replace(b'\n<', b'')
+                            src[xr] = b'<' + src[xr]
+                        src[xr] = src[xr] + b'>\n'
+                    src = b''.join(src)
+                    StpxSrvc.stpx_map('lwb', pth, src + b'!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
+                elif rmvLck == True:
+                    # ..?...delete the .tpqt file...?
+                if trgSts == True and len(stsLst) > 0:
+                    vrNmsLen = len(stsLst)
+                    for nx in range(vrNmsLen):
+                        stsLst[nx] = stsLst[nx] + b'\n'
+                    stsLst = b''.join(stsLst)
+                    with open(pth[0] + '/_tpqt_.ren', mode='wb') as fObjStsW:
+                        fObjStsW.write(stsLst + b'!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
+                        fObjStsW.close()
+                    fObjStsW = None
+                    src = StpxSrvc.stpx_map('gzr', pth, None)
+                    StpxSrvc.stpx_map('gzw', pth, src.replace(b':sts<ren>', b':sts<den>')
             return rplc
         except Exception as e:
             print("staqtapp stpx error: ", e)

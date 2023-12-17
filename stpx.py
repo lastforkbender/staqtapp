@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [stpx.py] StaqTapp gzip methods & module calls
 
 
-# Staqtapp 1.02.441
+# Staqtapp 1.02.445
 
 # Staqtapp is a full global variables stack feature rich library, covering all solid
 # i/o functions calls from the stpp.py module or stpx.py pro module. Features
