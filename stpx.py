@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [stpx.py] StaqTapp gzip methods & module calls
 
 
-# Staqtapp 1.02.450
+# Staqtapp 1.02.458
 
 # Staqtapp is a full global variables stack feature rich library, covering all solid
 # i/o functions calls from the stpp.py module or stpx.py pro module. Features
@@ -91,6 +91,10 @@ import re
 # expression @search, otherwise uses str.find() to locate any match, @search
 # can be compiled regular expression, str or numbers as a fine parameter choice;
 # if compiled regex pattern on line-by-line find, pattern compiled must be rb'' or b''
+
+# [ x_splitsource(newFileName) ] - splits a .tqpt and/or connected .tpqt lock source 
+# in half for new staqtapp source file(s) -- min. var stack length must be 42 or more;
+# returns True if done, False if not, or None if detected a .tqpt source corruption
 
 # [ x_addsar(catPin, varData) ] - calls main stpp function
 
@@ -214,6 +218,11 @@ def x_findvar(allSources: bool, varName: str):
 def x_finddata(isRegx: bool, varNames: list, search):
     # see x_finddata() function uses explained @ top of this module
     return __stsrC.stpx_find_data(isRegx, varNames, search)
+#______________________________________________________________________________________
+
+def x_splitsource(newFileName: str):
+    # see x_splitsource() function uses explained @ top of this module
+    return __stsrC.stpx_split_source(newFileName)
 #______________________________________________________________________________________
 
 def x_addsar(catPin: str, varData: str):

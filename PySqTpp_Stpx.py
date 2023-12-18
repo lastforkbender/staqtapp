@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Stpx.py] stpx functions abs/ext module
 
 
-# Staqtapp 1.02.450
+# Staqtapp 1.02.458
 
 # Staqtapp is a full global variables stack feature rich library, covering all solid
 # i/o functions calls from the stpp.py module or stpx.py pro module. Features
@@ -68,47 +68,46 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
 #______________________________________________________________________________________
 
     def stpx_split_source(new_source_name: str) -> bool:
-        # [Staqtapp v1.02: PySqTpp_Stpx.py] - .tqpt glb-var source - smart file splitter
         try:
             mdlPthX = os.path.dirname(os.path.abspath(__file__))
-            # all stpx.py function calls rely on set path folder/file in x_stpx.gz listings
-            # only time a parameter of folder dir and file name is @stpx_set_path()
             pth = StpxSrvc.stpx_get_path(mdlPthX + '/stpx/x_stpx.gz')
-            # first, create or edit gzip setting entry :sts<...> to inform @stpx_remove-
-            # vars() is being called from this split-tqpt-source method focused
             src = StpxSrvc.stpx_map('gzr', pth, None)
             mtch = re.findall(rb':sts<.*?>', src)
             if len(mtch) > 0:
                 StpxSrvc.stpx_map('gzw', pth, src.replace(mtch, b':sts<ren>'))
             else:
                 StpxSrvc.stpx_map('gzw', pth, src + b':sts<ren>')
-            # get the .tqpt glb variables source as b-string, split @ newlines(staqtapp
-            # doesn't allow newline chars in it's data declare tags @qp(...): read/write)
             src = StpxSrvc.stpx_map('tmr', pth, None).split(b'\n')
-            # remove last & first elements of now list, is .tqpt file header/ending data
             src.pop(len(src)-1)
+            qpHdr = src[0]
             src.pop(0)
             if len(src) >= 42:
                 srcLen = len(src)
                 vrnLst = []
-                x = srcLen/2
+                hPnt = srcLen/2
                 ptrn = re.compile(rb'^<.*?=')
-                # get variables' names list for stpx_removevars() call, will also
-                # remove .tpqt lock/key function blocks if present associated!
+                x = hPnt
                 while x < srcLen:
                     mtch = ptrn.findall(src[x])
-                    vrnLst.append(mtch.replace('<', '').strip('='))
-                    src.pop(x)
-                    x+=1
-                # the delete vars call on the current gzip set path of .tqpt file;
-                # stpx_removevars() knows call is coming from here at check
-                # of the gzip entry that was just changed, if this .tqpt file has a
-                # associated lock function .tpqt file, then is already transferred
-                # to a temp named .tpqt file of the lock/key blocks removed if
-                # any, otherwise stpx_removevars() rechanged gzip entry null
-                StpxSrvc.stpx_removevars(False, vrnLst)
-                vrnLst = None
-                #TODO
+                    if len(mtch) > 0:
+                        vrnLst.append(mtch[0].replace('<', '').strip('='))
+                        x+=1
+                    else:
+                        return None
+                StpxSrvc.stpx_remove_vars(False, vrnLst)
+                qtlLst = [qpHdr]
+                for hPnt in range(srcLen):
+                    qtlLst.append(src[x])
+                qtlLst.append('!!!END_TQPT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
+                pth[1] = new_source_name
+                StpxSrvc.stpx_map('twb', pth, b'\n'.join(qtlLst))
+                qtlLst = None
+                src = StpxSrvc.stpx_map('gzr', pth, None)
+                if src.find(':sts<den>') > -1:
+                    tmpNm = os.path.join(pth[0], '_tpqt_.ren')
+                    newNm = os.path.join(pth[0], pth[1] + '.tpqt')
+                    os.rename(tmpNm, newNm)
+                return True
             else:
                 return False
         except Exception as e:
@@ -347,7 +346,7 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                 mpObjTmr = None
             return rtrnSrc
         elif dsg == 'twb' or dsg == 'lwb':
-            # write .tqpt or .tpqt sources using mmap----------------------------------------------
+            # write .tqpt or .tpqt sources-----------------------------------------------------------
             if dsg == 'twb': fPth = pth[0] + '/' + pth[1] + '.tqpt'
             elif dsg == 'lwb': fPth = pth[0] + '/' + pth[1] + '.tpqt'
             with open(fPth, mode='wb') as fObjTwb:
