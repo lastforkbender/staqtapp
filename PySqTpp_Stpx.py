@@ -97,7 +97,7 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                 StpxSrvc.stpx_remove_vars(False, vrnLst)
                 qtlLst = [qpHdr]
                 for hPnt in range(srcLen):
-                    qtlLst.append(src[x])
+                    qtlLst.append(src[hPnt])
                 qtlLst.append('!!!END_TQPT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
                 pth[1] = new_source_name
                 StpxSrvc.stpx_map('twb', pth, b'\n'.join(qtlLst))
