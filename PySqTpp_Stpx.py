@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Stpx.py] stpx functions abs/ext module
 
 
-# Staqtapp 1.02.447
+# Staqtapp 1.02.450
 
 # Staqtapp is a full global variables stack feature rich library, covering all solid
 # i/o functions calls from the stpp.py module or stpx.py pro module. Features
@@ -254,6 +254,7 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
 #______________________________________________________________________________________
 
     def stpx_remove_vars(is_backup: bool, var_names) -> bool:
+        # ...a very sensitive straight-shot .tqpt/.tpqt complex parsing, do not edit!
         try:
             mdlPthX = os.path.dirname(os.path.abspath(__file__))
             pth = StpxSrvc.stpx_get_path(mdlPthX + '/stpx/x_stpx.gz')
@@ -288,7 +289,7 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                     if rmvLck == False:
                         for lxl in range(len(src)):
                             vrSrc = re.findall(rb'<:' + re.escape(str.encode(var_names[lx])) + rb'=(?s:.*?).*:', src[lxl])
-                            if len(vrSrc[0]) > 0:
+                            if len(vrSrc) > 0:
                                 if trgSts == True:
                                     stsLst.append(vrSrc[0])
                                 if len(src) > 1:
@@ -312,17 +313,21 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                     dirF = pth[0] + "/" + pth[1] + ".tpqt"
                     if os.path.isfile(dirF):
                         os.remove(dirF)
-                if trgSts == True and len(stsLst) > 0:
-                    vrNmsLen = len(stsLst)
-                    for nx in range(vrNmsLen):
-                        stsLst[nx] = stsLst[nx] + b'\n'
-                    stsLst = b''.join(stsLst)
-                    with open(pth[0] + '/_tpqt_.ren', mode='wb') as fObjStsW:
-                        fObjStsW.write(stsLst + b'!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
-                        fObjStsW.close()
-                    fObjStsW = None
-                    src = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
-                    StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', src.replace(b':sts<ren>', b':sts<den>'))
+                if trgSts == True:
+                    if len(stsLst) > 0:
+                        vrNmsLen = len(stsLst)
+                        for nx in range(vrNmsLen):
+                            stsLst[nx] = stsLst[nx] + b'>\n'
+                        stsLst = b''.join(stsLst)
+                        with open(pth[0] + '/_tpqt_.ren', mode='wb') as fObjStsW:
+                            fObjStsW.write(stsLst + b'!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
+                            fObjStsW.close()
+                        fObjStsW = None
+                        src = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
+                        StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', src.replace(b':sts<ren>', b':sts<den>'))
+                    else:
+                        src = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
+                        StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', src.replace(b':sts<ren>', b':sts<null>'))
             return rplc
         except Exception as e:
             print("staqtapp stpx error: ", e)

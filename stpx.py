@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [stpx.py] StaqTapp gzip methods & module calls
 
 
-# Staqtapp 1.02.447
+# Staqtapp 1.02.450
 
 # Staqtapp is a full global variables stack feature rich library, covering all solid
 # i/o functions calls from the stpp.py module or stpx.py pro module. Features
@@ -269,9 +269,9 @@ def test():
     
     #x_changevar('seq_212_M34nor', '@qp(0987654321,0123456789,2.7,8.1,9.3):')
     
-    x_setpath('/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
+    #x_setpath('/storage/emulated/0/qpython/scripts3/staqtapp-test', 'staqtapp-test')
     
-    x_removevar(False, 'variableDequeTest4')
+    x_removevar(False, 'variableDequeTest6')
     
     #x_addlist_vars()
 

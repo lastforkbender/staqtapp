@@ -1,6 +1,6 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Interface.py] StaqTapp main interface class
 
-# Staqtapp 1.02.447
+# Staqtapp 1.02.450
 
 # Staqtapp is a full global variables stack feature rich library, covering all solid
 # i/o functions calls from the stpp.py module or stpx.py pro module. Features
