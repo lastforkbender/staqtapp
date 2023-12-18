@@ -71,12 +71,12 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
         try:
             mdlPthX = os.path.dirname(os.path.abspath(__file__))
             pth = StpxSrvc.stpx_get_path(mdlPthX + '/stpx/x_stpx.gz')
-            src = StpxSrvc.stpx_map('gzr', pth, None)
+            src = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
             mtch = re.findall(rb':sts<.*?>', src)
             if len(mtch) > 0:
-                StpxSrvc.stpx_map('gzw', pth, src.replace(mtch, b':sts<ren>'))
+                StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', src.replace(mtch, b':sts<ren>'))
             else:
-                StpxSrvc.stpx_map('gzw', pth, src + b':sts<ren>')
+                StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', src + b':sts<ren>')
             src = StpxSrvc.stpx_map('tmr', pth, None).split(b'\n')
             src.pop(len(src)-1)
             qpHdr = src[0]
@@ -102,7 +102,7 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                 pth[1] = new_source_name
                 StpxSrvc.stpx_map('twb', pth, b'\n'.join(qtlLst))
                 qtlLst = None
-                src = StpxSrvc.stpx_map('gzr', pth, None)
+                src = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
                 if src.find(':sts<den>') > -1:
                     tmpNm = os.path.join(pth[0], '_tpqt_.ren')
                     newNm = os.path.join(pth[0], pth[1] + '.tpqt')
