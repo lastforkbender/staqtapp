@@ -1,7 +1,7 @@
 # Code File: StaqTapp-1.02 [PySqTpp_Stpx.py] stpx functions abs/ext module
 
 
-# Staqtapp 1.02.458
+# Staqtapp 1.02.459
 
 # Staqtapp is a full global variables stack feature rich library, covering all solid
 # i/o functions calls from the stpp.py module or stpx.py pro module. Features
@@ -74,7 +74,7 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
             src = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
             mtch = re.findall(rb':sts<.*?>', src)
             if len(mtch) > 0:
-                StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', src.replace(mtch, b':sts<ren>'))
+                StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', src.replace(mtch[0], b':sts<ren>'))
             else:
                 StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', src + b':sts<ren>')
             src = StpxSrvc.stpx_map('tmr', pth, None).split(b'\n')
