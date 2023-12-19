@@ -272,9 +272,10 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
             vrNmsLen = len(var_names)
             for x in range(vrNmsLen):
                 vrSrc = re.findall(rb'\n<' + re.escape(str.encode(var_names[x])) + rb'=.*?>', src)
-                if len(vrSrc[0]) > len(var_names[x])+5:
-                    src = src.replace(vrSrc[0], b'')
-                    if rplc == False: rplc = True
+                if len(vrSrc) > 0:
+                    if len(vrSrc[0]) > len(var_names[x])+5:
+                        src = src.replace(vrSrc[0], b'')
+                        if rplc == False: rplc = True
             if rplc == True:
                 StpxSrvc.stpx_map('twb', pth, src)
             if os.path.isfile(pth[0] + '/' + pth[1] + '.tpqt') == True:
