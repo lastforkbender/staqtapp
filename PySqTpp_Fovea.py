@@ -47,10 +47,10 @@
 # [get path] --> gph (has no parameters);
 #
 # AVL:
-# [add var list] --> alv (has no parameters);
+# [add var list] --> avl (has no parameters);
 #
 # GVL: !has boolean parameters!
-# [get var list] --> glv, isSorted;
+# [get var list] --> gvl, isSorted;
 
 
 # ---------- PREFIX-INTERPRETER-T | T-TYPE KEYWORDS(only stpx methods related):
