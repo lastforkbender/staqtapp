@@ -29,69 +29,37 @@ class PySqTppFoveaInterface(metaclass=abc.ABCMeta):
     @classmethod
     def __subclasshook__(cls, subclass):
         # subclasshook for the abstract methods defines
-        return (hasattr(subclass, 'fovea_mantis_absorb') and callable(subclass.fovea_mantis_absorb) and hasattr(subclass, 'fovea_mantis_echo') and callable(subclass.fovea_mantis_echo) or NotImplemented)
+        return (hasattr(subclass, 'fovea_mantis_absorb') and callable(subclass.fovea_mantis_absorb) and hasattr(subclass, 'fovea_mantis_echo') and callable(subclass.fovea_mantis_echo) and hasattr(subclass, 'fovea_mantis_algo') and callable(subclass.fovea_mantis_algo) and hasattr(subclass, 'fovea_mantis_list_edits') and callable(subclass.fovea_mantis_list_edits) and hasattr(subclass, 'fovea_mantis_map') and callable(subclass.fovea_mantis_map) or NotImplemented)
         
         
     @abc.abstractmethod
-    def fovea_mantis_absorb(x_src):
+    def fovea_mantis_absorb(x_src, fPth: str) -> bool:
         # determines view/direction of the instruction set; and create of a .qpsx script file of
         # the file's header data & XKTG magic string -- if source is not a .qpsx script file path
         raise NotImplementedError
         
         
     @abc.abstractmethod
-    def fovea_mantis_echo(x_src):
+    def fovea_mantis_echo(x_src: list):
         # determines any nest type scripting use of g-prefix-keywords(sph, gph or avl, gvl)
         # params & routines of calling the correct functions in sequence to [XKTG | XKGT]
         raise NotImplementedError
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        
+    
+    @abc.abstractmethod
+    def fovea_mantis_algo(isLoop: bool, dsg: int, prefix: list, currDrvr: list) -> list:
+        # determines the magic string XKTG | XKGT depends, order and/or change
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def fovea_mantis_list_edits(dsg: str, lstSrc: list) -> list:
+        # specific edits of list for source instruction sets and other needed list structuring
+        raise NotImplementedError
+        
+        
+    @abc.abstractmethod
+    def fovea_mantis_map(dsg: str, pth: str):
+        # # handles all read, search, write or replace methods for this module's parsings
+        raise NotImplementedError
+        
