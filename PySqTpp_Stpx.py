@@ -68,16 +68,15 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
 #______________________________________________________________________________________
 
     def stpx_split_source(new_source_name: str) -> bool:
-        # what a gem; rounds off staqtapp well just in time for a new year
         try:
-            mdlPthX = os.path.dirname(os.path.abspath(__file__))
-            pth = StpxSrvc.stpx_get_path(mdlPthX + '/stpx/x_stpx.gz')
-            src = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
+            pthGz = os.path.dirname(os.path.abspath(__file__)) + '/stpx/x_stpx.gz'
+            pth = StpxSrvc.stpx_get_path(pthGz)
+            src = StpxSrvc.stpx_map('gzr', pthGz, None)
             mtch = re.findall(rb':sts<.*?>', src)
             if len(mtch) > 0:
-                StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', src.replace(mtch[0], b':sts<ren>'))
+                StpxSrvc.stpx_map('gzw', pthGz, src.replace(mtch[0], b':sts<ren>'))
             else:
-                StpxSrvc.stpx_map('gzw', mdlPthX + '/stpx/x_stpx.gz', src + b':sts<ren>')
+                StpxSrvc.stpx_map('gzw', pthGz, src + b':sts<ren>')
             src = StpxSrvc.stpx_map('tmr', pth, None)
             src = src.split(b'\n')
             src.pop(len(src)-1)
@@ -97,14 +96,13 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                     else:
                         return None
                 StpxSrvc.stpx_remove_vars(False, vrnLst)
-                qtlLst = [qpHdr]
+                vrnLst = [qpHdr]
                 for hPnt in range(srcLen):
-                    qtlLst.append(src[hPnt])
-                qtlLst.append(b'!!!END_TQPT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
+                    vrnLst.append(src[hPnt])
+                vrnLst.append(b'!!!END_TQPT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
                 pth[1] = new_source_name
-                StpxSrvc.stpx_map('twb', pth, b'\n'.join(qtlLst))
-                qtlLst = None
-                src = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
+                StpxSrvc.stpx_map('twb', pth, b'\n'.join(vrnLst))
+                src = StpxSrvc.stpx_map('gzr', pthGz, None)
                 if src.find(b':sts<den>') > -1:
                     tmpNm = os.path.join(pth[0], '_tpqt_.ren')
                     newNm = os.path.join(pth[0], pth[1] + '.tpqt')
@@ -282,8 +280,10 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                 trgSts = False
                 stsLst = []
                 src = StpxSrvc.stpx_map('gzr', mdlPthX + '/stpx/x_stpx.gz', None)
-                if src.find(b':sts<ren>') > -1: trgSts = True
-                src = StpxSrvc.stpx_map('lmr', pth, None).split(b'>')
+                if src.find(b':sts<ren>') > -1:
+                    trgSts = True
+                src = StpxSrvc.stpx_map('lmr', pth, None)
+                src = src.split(b'>')
                 src.pop(len(src)-1)
                 rplcLck = False
                 rmvLck = False
@@ -306,10 +306,9 @@ class StpxSrvc(PySqTpp_StpxInterface.PySqTppStpxInterface):
                     vrNmsLen = len(src)
                     for xr in range(vrNmsLen):
                         if src[xr].find(b'\n<') > -1:
-                            src[xr] = src[xr].replace(b'\n<', b'')
-                            src[xr] = b'<' + src[xr]
-                        src[xr] = src[xr] + b'>\n'
-                    src = b''.join(src)
+                            src[xr] = src[xr].replace(b'\n<', b'<')
+                        src[xr] = src[xr] + b'>'
+                    src = b'\n'.join(src)
                     StpxSrvc.stpx_map('lwb', pth, src + b'!!!END_TPQT_FILE(-DO-NOT-EDIT-OR-REMOVE-)!!!')
                 elif rmvLck == True:
                     dirF = pth[0] + "/" + pth[1] + ".tpqt"
