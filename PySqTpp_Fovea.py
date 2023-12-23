@@ -82,12 +82,13 @@
 # RVR: !has boolean parameters!
 # [remove var] --> rvr, isBackup, variableNames;
 #
+# ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
 # ASR: !can manifest boolean parameter options!
 # [add sar] --> asr, categoryPin, variableData;
-#
+# ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
 # LSR: !can manifest boolean parameter options!
 # [load sar remap] --> lsr, categoryPin;
-
+# ☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆☆
 
 # ---------- PREFIX-INTERPRETER-K | K-TYPE KEYWORDS:
 #
@@ -145,7 +146,6 @@ class FoveaStpx(PySqTpp_FoveaInterface.PySqTppFoveaInterface):
         
         if len(x_src) > 0:
             fstx = FoveaStpx()
-            mtch = None
             # 1=field, 2=file, 3=fuzz
             dsg = None
             hdr = None
@@ -155,13 +155,10 @@ class FoveaStpx(PySqTpp_FoveaInterface.PySqTppFoveaInterface):
                 if x_src.find('dsg=field') > -1:
                     dsg = 1
                     # is a direct combined string joined by new line chars, doesn't need endings--> ';'
-                    # split it stripping the header info and if any comments in the new ins list also
+                    # split it stripping the header info and if any comments in the new list also
                     x_src = x_src.split('\n')
-                    if len(x_src) > 1:
-                        hdr = ins[0]
-                        x_src = fstx.fovea_mantis_list_edits('fma', x_src)
-                    else:
-                        return False
+                    hdr = x_src[0]
+                    x_src = fstx.fovea_mantis_list_edits('fma', x_src)
                 elif x_src.find('dsg=file') > -1:
                     dsg = 2
                     # is '\n's after each char end ';' instructions, a staqtapp fovea .qpsx script file..?
@@ -185,29 +182,21 @@ class FoveaStpx(PySqTpp_FoveaInterface.PySqTppFoveaInterface):
                 # or purposes escaping the magic string XKGT's pointings of other descriptors
                 # this type script run produce very expected results or very unexpected results
                 # [ [normally, magic string is set to XKTG with no unknown descriptor(s) calls] ]
-                if len(x_src) > 1:
-                    hdr = x_src[0]
-                    x_src = fstx.fovea_mantis_list_edits('fma', x_src)
-                else:
-                    return False
+                hdr = x_src[0]
+                x_src = fstx.fovea_mantis_list_edits('fma', x_src)
             else:
                 return False
             # remove @x_src elements of ';'/space and count how many X, K, T and G -----------
-            # prefix-interpreter instructions there are in this script run; also remove any blanks
+            # prefix-interpreter instructions there are in this script run also removing any blanks
             xktgLst = [0,0,0,0]
             for x in range(len(x_src)):
                 try:
                     x_src[x] = x_src[x].replace(' ;', '')
-                    if x_src[x].find('avr') > -1 or x_src[x].find('ldv') > -1 or x_src[x].find('chv') > -1 or x_src[x].find('rnv') > -1:
-                        xktgLst[0]+=1
-                    elif x_src[x].find('fnd') > -1 or x_src[x].find('rvr') > -1 or x_src[x].find('asr') > -1 or x_src[x].find('lsr') > -1:
-                        xktgLst[0]+=1
-                    elif x_src[x].find('lkv') > -1 or x_src[x].find('kyv') > -1 or x_src[x].find('srk') > -1:
-                        xktgLst[1]+=1
-                    elif x_src[x].find('fdd') > -1 or x_src[x].find('ssc') > -1:
-                        xktgLst[2]+=1
-                    elif x_src[x].find('sph') > -1 or x_src[x].find('gph') > -1 or x_src[x].find('avl') > -1 or x_src[x].find('gvl') > -1:
-                        xktgLst[3]+=1
+                    if x_src[x].find('avr') > -1 or x_src[x].find('ldv') > -1 or x_src[x].find('chv') > -1 or x_src[x].find('rnv') > -1: xktgLst[0]+=1
+                    elif x_src[x].find('fnd') > -1 or x_src[x].find('rvr') > -1 or x_src[x].find('asr') > -1 or x_src[x].find('lsr') > -1: xktgLst[0]+=1
+                    elif x_src[x].find('lkv') > -1 or x_src[x].find('kyv') > -1 or x_src[x].find('srk') > -1: xktgLst[1]+=1
+                    elif x_src[x].find('fdd') > -1 or x_src[x].find('ssc') > -1: xktgLst[2]+=1
+                    elif x_src[x].find('sph') > -1 or x_src[x].find('gph') > -1 or x_src[x].find('avl') > -1 or x_src[x].find('gvl') > -1: xktgLst[3]+=1
                     else:
                         if len(x_src) > 1:
                             x_src.pop(x)
@@ -218,7 +207,12 @@ class FoveaStpx(PySqTpp_FoveaInterface.PySqTppFoveaInterface):
                         x_src.pop(x)
                     else:
                         return False
-            # call upon @fovea_mantis_algo() to set magic string XKTG as initial startings
+            if dsg == 1:
+                fstx.fovea_mantis_algo(False, dsg, xktgLst, [hdr, fPth])
+            elif dsg == 2:
+                pass
+            elif dsg == 3:
+                pass
             return True
         else:
             return False
@@ -230,30 +224,121 @@ class FoveaStpx(PySqTpp_FoveaInterface.PySqTppFoveaInterface):
 #______________________________________________________________________________________
 
     def fovea_mantis_algo(isLoop: bool, dsg: int, prefix: list, currDrvr: list) -> list:
-        # TODO - determines the magic string XKTG | XKGT depends, order and/or change
-        pass
+        # determines the magic string XKTG | XKGT depends, order and/or change
+        fstx = FoveaStpx()
+        if dsg == 1:
+            # ----------------------------------------------FIELD------------------------------------------------------
+            if isLoop == False and len(currDrvr) == 2:
+                hdr = fstx.fovea_mantis_list_edits('hdrFld', currDrvr[0].replace(' ', '').split(','))
+                # TODO - formulate the best probable of any compression @prefix list
+            else:
+                pass
+        elif dsg == 2:
+            # -----------------------------------------------FILE-------------------------------------------------------
+            pass
+        elif dsg == 3:
+            # ----------------------------------------------FUZZ------------------------------------------------------
+            pass
+        #elif dsg == 4 and __gjrNt == fstx.fovea_mantis_solacexn(True, False, True, nasPlrv, nasFlrv)
+            # Reserved dsg: GJR-model attributes & Variable Separation Mirror Analysis(VSMA)
+            #                 *******This area reserved for the SolaceXn ai system*******
 #______________________________________________________________________________________
 
     def fovea_mantis_list_edits(dsg: str, lstSrc: list) -> list:
         # specific edits of list for source instruction sets and other needed list structuring
         lstLen = len(lstSrc)
         xf = 0
+        xg = None
+        # -----------------------‐------------------------------------------------------------------------------------------------
         if dsg == 'fma':
+        # -----------------------‐------------------------------------------------------------------------------------------------
             lstSrc.pop(0)
             while xf < lstLen:
                 if lstSrc[xf].find('☆') > -1:
                     lstSrc.pop(xf)
                 xf+=1
             return lstSrc
+        # -----------------------‐------------------------------------------------------------------------------------------------
+        elif dsg == 'hdrFld' or dsg == 'hdrFzz':
+        # -----------------------‐------------------------------------------------------------------------------------------------
+            fld = False
+            prt = False
+            if dsg == 'hdrFld': fld = True
+            rtrnLst []
+            cLst = None
+            cInt = None
+            while xf < lstLen:
+                xg = 0
+                while xg < lstLen:
+                    if lstSrc[xg].find('ki=') == True:
+                        # controls length of the instructions ran by a start and end given(line number(s))
+                        cInt = 1
+                        prt = True
+                    elif lstSrc[xg].find('fu=') == True:
+                        # controls if script is ran from top to bottom or from bottom to top
+                        cInt = 2
+                        prt = True
+                    elif lstSrc[xg].find('bo=') == True:
+                        # controls a target variable specified as a static one of any loop matched
+                        cInt = 3
+                        prt = True
+                    elif lstSrc[xg].find('ye=') == True:
+                        # controls blocks of instructions to be passed, not ran
+                        cInt = 4
+                        prt = True
+                    elif lstSrc[xg].find('xa=') == True:
+                        # controls a target variable as a goto line if script is expanded by yn or ny
+                        # boolean parameter, does no effect if script is already compressed(XKGT)
+                        cInt = 5
+                        prt = True
+                    if fld == True:
+                        if lstSrc[xg].find('sep=') == True:
+                            # number 6 is a separation from trianglar nature in time(past-now-future) match
+                            # [ separates the instructions as a re-occuring inner loop of yn or ny if found ]
+                            cInt = 6
+                            prt = True
+                        elif lstSrc[xg].find('hld=') == True:
+                            # number 7 the maxium perfect of infinite projection in a dual-pi point finite
+                            # [ holds each detected pairing instructions, dual prefix-X or K as new ]
+                            cInt = 7
+                            prt = True
+                        elif lstSrc[xg].find('lmt=') == True:
+                            # number 8 is a limit of four dimensional infinite clause mirrored, alls' new
+                            # [ limits a instruction to natural pairing of a dual prefix-X or K as new ]
+                            cInt = 8
+                            prt = True
+                        elif lstSrc[xg].find('frc=') == True:
+                            # number 9 is a forced shift begin-static context before pairing loops
+                            # [ forces all instructions to a stricter path if after magic string is then XKGT ]
+                            cInt = 9
+                            prt = True
+                        elif lstSrc[xg].find('rmv=') == True:
+                            # number 10 a invented formed non-direct palindrome loop, no matter zero
+                            # or nothing because zero cannot escape a placehold of one and never has
+                            # [ removes any line of instruction where a error happened, regardless of
+                            # defined loop currently, ignored if hld or lmt header option is set true ]
+                            cInt = 10
+                            prt = True
+                    if fld == False:
+                        # is fuzz
+                        pass
+                    if prt == True:
+                        prt = False
+                        cLst = lstSrc[xg].split('=')
+                        rtrnLst.append(cInt, cLst[1])
+                    xg+=1
+                xf+=1
+            return rtrnLst
 #______________________________________________________________________________________
 
     def fovea_mantis_map(dsg: str, pth: str):
         # handles all read, search, write or replace methods for this module's parsings
+        rtrn = None
         if dsg == 'rfm':
-            with open(pth, mode='r') as fObjRfma:
-                with mmap.mmap(fObjRfma.fileno(), length=0, access=mmap.ACCESS_READ) as mpObjRfma:
-                    rtrn = mpObjRfma.read()
-                    mpObjRfma.close()
-                mpObjRfma = None
+            with open(pth, mode='r') as fObjRfm:
+                with mmap.mmap(fObjRfm.fileno(), length=0, access=mmap.ACCESS_READ) as mpObjRfm:
+                    rtrn = mpObjRfm.read()
+                    mpObjRfm.close()
+                mpObjRfm = None
             return rtrn
         
