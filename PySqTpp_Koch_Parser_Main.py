@@ -2,19 +2,36 @@
 
 # Staqtapp-Koch: Hybrid Env-Vars Lib (https://github.com/lastforkbender/staqtapp)
 
-# Version: 2.01.018
+# Version: 2.01.024
 # __________________________________________________________________________________
 
 
 # ●■ Staqtapp-Koch Module Name: PySqTpp_Koch_Parser_Main.py
 
 
-# ● ■ Description of this module's features:
+# ● ■  Description of this module's purpose:
     
 #       This module is the main parsing unit for all .stkv env-var files.
 #       Integrated for __slots__ performances and handling of specialized
 #       features that are included of this version of Staqtapp throughout.
 #       Discrete before-error validations implemented as original version.
+
+
+# ● ■  Staqtapp-Koch Env-Vars Library Overview:
+
+#       The scope of this env-vars system is routine focused upon env-var
+#       security via obfuscated addresses inter-connected to env-vars own
+#       obfuscation of it's data, using tor like circumstances, procedural
+#       generation of env-var keys/spacing and one-way shared descriptors.
+
+#       Having limited made keys outside this env-var system for access of
+#       advanced security issue... if chosen of a needed env-vars solution.
+#       Of then a email response will be given for a phone number to call,
+#       involving a signature and purchase after agreed terms are met, then
+#       custom built Staqtapp-Koch full package library for your key sent.
+#       Pricing terms for single package is $318 U.S. dollars, however ---
+#       is variable to the conditions of use.(This public version does not
+#       include those strong fractal-palindrome based security modules.)
 
     
 # Contact: rcttcr5@gmail.com
@@ -59,21 +76,21 @@ class PySqTpKhMnPr_Accs:
         self.filepath = filepath
         self.source = source
         self.envvars = deque()
-        sqtpp_koch_set_stkv_file(filepath, source)
+        self.sqtpp_koch_set_stkv_file(filepath, source)
 # __________________________________________________________________________________
 
     def sqtpp_koch_set_stkv_file(self, pth: str, src: list):
         
-        # **This method must be called first before any env-var interactions.**
+        #**To be called first before any env-var interactions**
         
         # Makes proper checks & creates new file if any, then
-        # calls @sqtpp_koch_read_file() for appending envvars.
+        # calls @sqtpp_koch_parse_stkv_content() for appending.
         # This is main difference from original staqtapp; this
         # version loads all variables @ file on first read ---
         # making it true __slots__ environment variable system.
         try:
             if isinstance(pth, str):
-                # Check if given filepath already exist.
+                # Check if given filepath already exist...
                 if os.path.isfile(pth):
                     # Is valid, initialize the envvars/access manage complete.
                     self.sqtpp_koch_parse_stkv_content()
@@ -82,10 +99,11 @@ class PySqTpKhMnPr_Accs:
                     # path is valid by split and a rejoin find.
                     if pth.find('/') > -1:
                         pth = pth.split('/')
+                        fLn = len(pth)
                         fNm = None
-                        if len(pth) > 1:
-                            fNm = pth[len(pth)-1]
-                            pth.pop(len(pth)-1)
+                        if fLn > 1:
+                            fNm = pth[fLn-1]
+                            pth.pop(fLn-1)
                             pth = '/'.join(pth)
                             if os.path.isdir(pth):
                                 # Check if @fNm is of valid chars for a filename.
@@ -166,22 +184,22 @@ class PySqTpKhMnPr_Accs:
             
 # __________________________________________________________________________________
 
-    #def sqtpp_koch_stkv_add_var(self, var):
-        #self.envvars.append(var)
+    def sqtpp_koch_stkv_add_var(self, var):
+        self.envvars.append(var)
 # __________________________________________________________________________________
 
-    #def sqtpp_koch_stkv_remove_var(self, var):
-        #self.envvars.remove(var)
+    def sqtpp_koch_stkv_remove_var(self, var):
+        self.envvars.remove(var)
 # __________________________________________________________________________________
 
-    #def sqtpp_koch_save_stkv_file(self):
+    def sqtpp_koch_save_stkv_file(self):
         
         # Saves the entire set of env-vars to file
-        #with open(self.file_path, mode='w', encoding='utf-8') as flObjSf:
-            #for envvar in self.envvars:
-                #flObjSf.write(f'{envvar.varname}={envvar.vardata}\n')
-            #flObjSf.close()
-        #flObjSf = None
+        with open(self.file_path, mode='w', encoding='utf-8') as flObjSf:
+            for envvar in self.envvars:
+                flObjSf.write(f'{envvar.varname}={envvar.vardata}\n')
+            flObjSf.close()
+        flObjSf = None
 # __________________________________________________________________________________
 
     def sqtpp_koch_validate_str(self, src):
