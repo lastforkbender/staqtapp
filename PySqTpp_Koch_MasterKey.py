@@ -6,13 +6,14 @@
 # __________________________________________________________________________________
 
 
-# ●■ Staqtapp-Koch Module Name: PySqTpp_Koch_Tenet.py
+# ●■ Staqtapp-Koch Module Name: PySqTpp_Koch_MasterKey.py
 
 
 # ● ■  Description of this module's purpose:
     
-#       This module returns qubit like palindrome return of probability
-#       for any pairing list of numbers. Returns 3 if of equal distance.
+#       Returns a reverse diffusion set string for a master key use upon
+#       double obfuscation of env-vars data or other addr specific paths
+#       (These encodings are considered of security value & non-commented)
 
 
 # ● ■  Staqtapp-Koch Env-Vars Library Overview:
@@ -40,42 +41,47 @@
 
 
 # Imported core python module(s) for this module's objectives.
-from collections import deque
+from typing import List
+import random
 # __________________________________________________________________________________
 # __________________________________________________________________________________
 
-class Pole:
-
-    def __init__(self, event):
-
-        self.event = event
-        self.jump = self.__attract()
-
-    def __attract(self):
-
-        event = self.event
-        telering = deque(sorted(event))
-        telering.rotate(-len(telering)//2)
-        return sum(quantum for quantum in telering)
-
-    def _gravity(self, well):
-
-        return abs(self.jump - well.jump)
+def kch_mk_constant() -> int:
+    
+    # :PUBLIC DOMAIN VERSION:
+    return random.randint(1, 10**6)
+    # :::::::::::::::::::::::::::::
         
 # __________________________________________________________________________________
-        
-def sqtpp_koch_pole_tenet(lobeA, lobeB) -> list:
-        
-    pl1 = Pole(lobeA)
-    pl2 = Pole(lobeB)
-    rslt = pl1._gravity(pl2)
-        
-    if rslt < 1e-9:
-        # both equal palindrome probabilities
-        return [3, None]
-    elif pl1.jump < pl2.jump:
-        # pl1 is lesser palindrome probability
-        return [1, pl1.jump]
-    else:
-        # pl2 is lesser palindrome probability
-        return [2, pl2.jump]
+
+def kch_mk_reverse_diffusion(k: int, chnl_scale: List[int], chnl_constant: int) -> List[int]:
+
+    rtrnAddr = [ndvl+chnl_constant for ndvl in chnl_scale]
+    while k < len(rtrnAddr):
+        rtrnAddr[k] = rtrnAddr[k+random.randint(0, 2) % (len(rtrnAddr)-k-1)+1]
+        k+=2
+    pdVl = kch_mk_constant()
+    # :PUBLIC DOMAIN VERSION:
+    pdVm = k-len(rtrnAddr)
+    rtrnAddr.extend([pdVl]*pdVm)
+    # ::::::::::::::::::::::::::
+    return rtrnAddr
+    
+# __________________________________________________________________________________
+
+def sqtpp_koch_get_rd_masterkey(k: int, chnlNd: int) -> str:
+    # ***normal parameters use for public domain a 1:5 strength return***
+    
+    nd_rsrv = [random.randint(1, 10**6) for _ in range(chnlNd)]
+    dcv = kch_mk_constant()
+    # :PUBLIC DOMAIN VERSION:
+    rvVls = [0]*chnlNd
+    for f in range(chnlNd):
+        rvVls[f] = nd_rsrv[chnlNd-f-1]
+    ndvVls = kch_mk_reverse_diffusion(k, rvVls, dcv)
+    # ::::::::::::::::::::::::::::::::::::::::::::::
+    stNnv = set(ndvVls)
+    ndvVls = list(stNnv)
+    ndvVls = [str(ndvVls[l]) for l in range(len(ndvVls))]
+    ndvVls = ''.join(ndvVls)
+    return ndvVls
