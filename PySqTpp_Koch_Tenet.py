@@ -2,7 +2,7 @@
 
 # Staqtapp-Koch: Hybrid Env-Vars Lib (https://github.com/lastforkbender/staqtapp)
 
-# Version: 2.01.027
+# Version: 2.01.028
 # __________________________________________________________________________________
 
 
