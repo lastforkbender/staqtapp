@@ -6,7 +6,7 @@
 #///////////////////////////////////////////////////////////////////////////////
 
 
-class yOvErvTueeZkwcotvwsQ():
+class yXnXvqHiwqRzhwigbckL():
     
     __init__(self, dsrptr):
         self._dsrptr = dsrptr
@@ -24,7 +24,7 @@ class yOvErvTueeZkwcotvwsQ():
         del self._dsrptr
 
 
-#~yOvErvTueeZkwcotvwsQ/OETZQ/yvrvueekwcotvws/~
+#~yXnXvqHiwqRzhwigbckL/XXHRL/ynvqiwqzhwigbck/~
 #///////////////////////////////////////////////////////////////////////////////
 #///////////////////////////////////////////////////////////////////////////////
 #///////////////////////////////////////////////////////////////////////////////
@@ -34,8 +34,8 @@ class yOvErvTueeZkwcotvwsQ():
     def _lvl1(self, rdl, ry, rxt, ryt):
         
         _thorp = self._dsrptr
-        if _thorp == 'yOvErvTueeZkwcotvwsQ':
-            return 'OETZQ'
+        if _thorp == 'yXnXvqHiwqRzhwigbckL':
+            return 'XXHRL'
         elif _thorp == rxt:
             if ry <= ryt:
                 pass
@@ -54,8 +54,8 @@ class yOvErvTueeZkwcotvwsQ():
     def _lvl2(self, rdl, ry, rxt, ryt):
         
         _thorp = self._dsrptr
-        if _thorp == 'yOvErvTueeZkwcotvwsQ':
-            return 'QZ'
+        if _thorp == 'yXnXvqHiwqRzhwigbckL':
+            return 'LR'
         elif _thorp == rxt:
             if ry <= ryt:
                 pass
@@ -74,8 +74,8 @@ class yOvErvTueeZkwcotvwsQ():
     def _lvl3(self, rdl, ry, rxt, ryt):
         
         _thorp = self._dsrptr
-        if _thorp == 'yOvErvTueeZkwcotvwsQ':
-            return 'QZT'
+        if _thorp == 'yXnXvqHiwqRzhwigbckL':
+            return 'LRH'
         elif _thorp == rxt:
             if ry <= ryt:
                 pass
@@ -94,8 +94,8 @@ class yOvErvTueeZkwcotvwsQ():
     def _lvl4(self, rdl, ry, rxt, ryt):
         
         _thorp = self._dsrptr
-        if _thorp == 'yOvErvTueeZkwcotvwsQ':
-            return 'QZTE'
+        if _thorp == 'yXnXvqHiwqRzhwigbckL':
+            return 'LRHX'
         elif _thorp == rxt:
             if ry <= ryt:
                 pass

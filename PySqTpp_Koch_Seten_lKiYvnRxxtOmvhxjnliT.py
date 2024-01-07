@@ -34,7 +34,7 @@ class lKiYvnRxxtOmvhxjnliT():
     def _lvl1(self, rdl, ry, rxt, ryt):
         
         _thorp = self._dsrptr
-        if _thorp == 'lKiYvnRxxtOmvhxjnliT'
+        if _thorp == 'lKiYvnRxxtOmvhxjnliT':
             return 'KYROT'
         elif _thorp == rxt:
             if ry <= ryt:

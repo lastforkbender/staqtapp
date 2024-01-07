@@ -34,7 +34,7 @@ class cTnVliZgivSxhqutmjlZ():
     def _lvl1(self, rdl, ry, rxt, ryt):
         
         _thorp = self._dsrptr
-        if _thorp == 'cTnVliZgivSxhqutmjlZ'
+        if _thorp == 'cTnVliZgivSxhqutmjlZ':
             return 'TVZSZ'
         elif _thorp == rxt:
             if ry <= ryt:
