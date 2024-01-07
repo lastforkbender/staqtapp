@@ -45,69 +45,62 @@ import math
 
 # Imported PySqTpp_Koch module(s) for this module's objectives.
 import PySqTpp_Koch_Tenet
+# __________________________________________________________________________________
 
-#=================================================================================
-#=================================================================================
 class RSA_CLS:
-    
-    def is_prime(self, n):
-        
-        x = 2
-        while x <= math.sqrt(n):
-            if n%x < 1:
+    def ______(self,_):
+        __=2
+        while __<=math.sqrt(_):
+            if _%__<1:
                 return False
-            x+=1
+            __+=1
         return True 
-#=================================================================================
-#=================================================================================
-    def generate_prime(self, s, e):
-        
+    def ___(self,_,__):
         while True:
-            n = random.randint(s, e)
-            if self.is_prime(n):
+            ___=random.randint(_,__)
+            if self.______(___):
                 break
-        return n
-#=================================================================================
-#=================================================================================
-    def nearest_prime(self, n):
-        
-        nLen = n*2
-        n+=1
-        while n < nLen:
-            if self.is_prime(n):
-                break
-            n+=1
-        return n
-#=================================================================================
-#=================================================================================
-    def find_e(self, phi_n):
-        
-        e = 2
-        while e < phi_n:
-            if math.gcd(e, phi_n) == 1:
-                return e
-            e+=1
-#=================================================================================
-#=================================================================================
-    def find_d(self, p, n, e, phi):
-        
-        for i in range(p, n):
-            if (((i*e)%phi) == 1):
-                return i         
-#=================================================================================
-def sqtpp_koch_rsa_encode_addr_sec(b: int, f: int, oc: int) -> list:
+        return ___
+    def __________(self,_,__):
+        ___=__*2
+        __+=1
+        ____=0
+        while __<___:
+            if self.______(__):
+                ____+=1
+                if ____==_:
+                    break
+            __+=1
+        return __
+    def ________(self,_):
+        __=2
+        while __<_:
+            if math.gcd(__,_) == 1:
+                return __
+            __+=1
+    def __(self,_,__,___,_____):
+        for ____ in range(_,__):
+            if (((____*___)%_____)==1):
+                return ____       
+# __________________________________________________________________________________
+
+def sqtpp_koch_rsa_encode_addr_sec(___________,_,__,______________) -> list:
     
-    nwCls = RSA_CLS()
-    mnPrm = nwCls.generate_prime(b, f)
-    nrPrm = nwCls.nearest_prime(mnPrm)
-    pl = PySqTpp_Koch_Tenet.sqtpp_koch_pole_tenet([b+nrPrm,f-mnPrm,oc+f],[mnPrm-b,nrPrm,oc+b])
-    if pl[0] == 2:
-        sqtpp_koch_cats_in_the_cradle(False, 'CTC:' str((oc+(mnPrm-b))*2) + ',' + str(pl[1]) + '\n')
-    n = mnPrm*nrPrm
-    phi = (mnPrm-1)*(nrPrm-1)
-    e = nwCls.find_e(phi)
-    return [nwCls.find_d(mnPrm, n, e, phi), oc ** e%n]
-#=================================================================================
+    ________=RSA_CLS()
+    ___=________.___(_,__)
+    ____=________.__________(___________,___)
+    pl=PySqTpp_Koch_Tenet.sqtpp_koch_pole_tenet([_+____,__-___,______________+__],[___-_,____,______________+_])
+    if pl[0]==2:
+        sqtpp_koch_cats_in_the_cradle(False, 'CTC:' + str((______________+(___-_))*2) + ',' + str(pl[1]) + '\n')
+    else:
+        # Breach, reject any writes/reads of any env-vars. Lock-out env-var files for non-public ver, build key.
+        pass
+    ______=___*____
+    _____=(___-1)*(____-1)
+    ____________=________.________(_____)
+    return [______,________.__(___,______,____________,_____),______________**____________%______,____________]
+# __________________________________________________________________________________
+
 def sqtpp_koch_cats_in_the_cradle(isRead: bool, src: str) -> int:
     
     if isRead:
@@ -115,17 +108,19 @@ def sqtpp_koch_cats_in_the_cradle(isRead: bool, src: str) -> int:
     else:
         # check prv pointer addr cache != tnt[1], write ctc entry to gzip_adr
         pass
-#=================================================================================
+# __________________________________________________________________________________
+
 def sqtpp_koch_silver_spoon():
     
     pass
-#=================================================================================
+# __________________________________________________________________________________
+
 def sqtpp_koch_little_boy_blue():
     
     pass
-#=================================================================================
+# __________________________________________________________________________________
+
 def sqtpp_koch_man_on_the_moon() -> str:
     
     pass
-
 
