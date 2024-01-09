@@ -49,11 +49,12 @@
 
 
 # Imported core python module(s) for this module's objectives.
+import os
+import gzip
+import random
 import threading
-
-# Imported PySqTpp_Koch module(s) for this module's objectives.
-import SqTpp_Koch_MasterKey as stkm
-
+from typing import List
+# __________________________________________________________________________________
 
 class Seten(type):
     
@@ -71,19 +72,72 @@ class Staq(object):
     __metaclass__ = Seten
     
     def __init__(self):
-        Seten._master_key = self.kch_set_master_key()
+        # Boat-key in a tree; no direct access outside this class.
+        Seten._master_key = self.kch_set_mk(1,5)
         
     @classmethod
-    def kch_get_lock(Seten):
-        return Seten._lock
-        
-    @classmethod
-    def kch_set_master_key(self):
-        # get initial master key for load start of initial env-vars file
-        # apply, return in split reads to first random seten sub-module
-        # run (the first key must resolve a %prd limit of a next mk key)
-        return 'pass'
-   
+    def kch_get_lock(self, Seten):
+        return Seten._lock   
 # __________________________________________________________________________________
         
+    @classmethod
+    def kch_reverse_diffusion(self, k: int, chnl_scale: List[int], chnl_constant: int) -> List[int]:
+        #---------------------------------------------------------------------
+        rtrnAddr = [ndvl+chnl_constant for ndvl in chnl_scale]
+        while k < len(rtrnAddr):
+            rtrnAddr[k] = rtrnAddr[k+random.randint(0, 2) % (len(rtrnAddr)-k-1)+1]
+            k+=2
+        pdVl = random.randint(1, 10**6)
+        # :PUBLIC DOMAIN VERSION:
+        pdVm = k-len(rtrnAddr)
+        rtrnAddr.extend([pdVl]*pdVm)
+        # ::::::::::::::::::::::::::
+        return rtrnAddr
+# __________________________________________________________________________________
         
+    @classmethod
+    def kch_set_mk(self, k: int, chnlNd: int) -> str:
+        # ***normal parameters use for public domain a 1:5 strength return***
+        nd_rsrv = [random.randint(1, 10**6) for _ in range(chnlNd)]
+        dcv = random.randint(1, 10**6)
+        # :PUBLIC DOMAIN VERSION:
+        rvVls = [0]*chnlNd
+        for f in range(chnlNd):
+            rvVls[f] = nd_rsrv[chnlNd-f-1]
+        ndvVls = self.kch_reverse_diffusion(k, rvVls, dcv)
+        # ::::::::::::::::::::::::::::::::::::::::::::::
+        stNnv = set(ndvVls)
+        ndvVls = list(stNnv)
+        ndvVls = [str(ndvVls[l]) for l in range(len(ndvVls))]
+        ndvVls = ''.join(ndvVls)
+        return ndvVls
+# __________________________________________________________________________________
+        
+def sqtpp_koch_propagate_mks(ky: str, k: int, l: int):
+    # Propagates a custom master-keys set, obfuscating each one.
+    cls = Staq()
+    mks = []
+    while k < l:
+        # MK digits min/max len=15-28 for public ver.《rd:{n,1,-1,12,n*lr,...}》
+        # [@ky(key-chars) must be at least 28 chars in length]
+        mks.append(b'SAR-IMK:' + str.encode(str(random.randint(1111111,9999999)), 'utf-8') + b':' + str.encode("".join(chr(ord(c)^ord(k)) for c, k in zip(str(cls.kch_set_mk(1,5)), ky)),'utf-8'))
+        k+=1
+    # Write obfuscated mk-list to the staqtapp-koch accord gzip file.
+    sqtpp_koch_stn_gzip('skpm', b'\n'.join(mks))
+# __________________________________________________________________________________
+
+def sqtpp_koch_stn_gzip(dsg: str, src: str):
+    # Handles gzip read/writes specific to this module's actions only.
+    mdl_pth = os.path.dirname(os.path.abspath(__file__))
+    if dsg == 'skpm':
+        nw_fldr = False
+        if not os.path.isdir(mdl_pth + '/sqtpp-koch'):
+            nw_fldr = True
+            os.makedirs(mdl_pth + '/sqtpp-koch')
+        if not os.path.isfile(mdl_pth + '/sqtpp-koch/kch-acrd.gz') or nw_fldr == True:
+            with gzip.open(mdl_pth + '/sqtpp-koch/kch-acrd.gz', 'wb') as gzObjSkpm:
+                gzObjSkpm.write(src)
+        else:
+            pass
+# __________________________________________________________________________________
+    
