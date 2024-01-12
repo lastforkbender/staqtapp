@@ -79,6 +79,36 @@ class Staq(object):
     def kch_get_lock(self, Seten):
         return Seten._lock   
 # __________________________________________________________________________________
+
+    @classmethod
+    def kch_jex256e(self,_,__,___,____,_______________):
+        ______=[]
+        __________=[]
+        for _____,____________ in enumerate(_):
+            if ____________.isalpha():
+                _________=(ord(__[_____%len(__)])-ord(_______________))%26
+                ________=chr((ord(____________.lower())-ord(_______________)+_________)%26+ord(_______________))
+                ______.append(________.upper() if ____________.isupper() else ________)
+                __________.append(chr((ord(____[_____ % len(____)])-ord(_______________)+1)%256))
+            else:
+                ______.append(char)
+                __________.append(chr((ord(____[_____ % len(____)])-ord(_______________)+1)%256))
+        return ''.join(______+__________)
+# __________________________________________________________________________________
+
+    @classmethod
+    def kch_jex256d(self,_,__,___,____,_______________):
+        _____=[]
+        _______=0
+        for ________,__________ in enumerate(_):
+            if _______>0: _______-=1
+            elif __________.isalpha():
+                _________=(ord(__[________%len(__)])-ord(_______________))%26
+                ______=chr((ord(__________.lower())-ord(_______________)-_________)%26+ord(_______________))
+                _____.append(______.upper() if __________.isupper() else ______)
+            else: _______=ord(__________)-ord(____[________%len(____)])+1
+        return ''.join(_____)
+# __________________________________________________________________________________
         
     @classmethod
     def kch_reverse_diffusion(self, k: int, chnl_scale: List[int], chnl_constant: int) -> List[int]:
@@ -108,36 +138,9 @@ class Staq(object):
         # ::::::::::::::::::::::::::::::::::::::::::::::
         stNnv = set(ndvVls)
         ndvVls = list(stNnv)
-        ndvVls = [str(ndvVls[l]) for l in range(len(ndvVls))]
-        ndvVls = ''.join(ndvVls)
-        return ndvVls
+        ndvVlsLen = len(ndvVls)
+        ndvVls = [str(ndvVls[l]) for l in range(ndvVlsLen)]        
+        return ''.join(ndvVls)
 # __________________________________________________________________________________
         
-def sqtpp_koch_propagate_mks(ky: str, k: int, l: int):
-    # Propagates a custom master-keys set, obfuscating each one.
-    cls = Staq()
-    mks = []
-    while k < l:
-        # MK digits min/max len=15-28 for public ver.《rd:{n,1,-1,12,n*lr,...}》
-        # [@ky(key-chars) must be at least 28 chars in length]
-        mks.append(b'SAR-IMK:' + str.encode(str(random.randint(1111111,9999999)), 'utf-8') + b':' + str.encode("".join(chr(ord(c)^ord(k)) for c, k in zip(str(cls.kch_set_mk(1,5)), ky)),'utf-8'))
-        k+=1
-    # Write obfuscated mk-list to the staqtapp-koch accord gzip file.
-    sqtpp_koch_stn_gzip('skpm', b'\n'.join(mks))
-# __________________________________________________________________________________
 
-def sqtpp_koch_stn_gzip(dsg: str, src: str):
-    # Handles gzip read/writes specific to this module's actions only.
-    mdl_pth = os.path.dirname(os.path.abspath(__file__))
-    if dsg == 'skpm':
-        nw_fldr = False
-        if not os.path.isdir(mdl_pth + '/sqtpp-koch'):
-            nw_fldr = True
-            os.makedirs(mdl_pth + '/sqtpp-koch')
-        if not os.path.isfile(mdl_pth + '/sqtpp-koch/kch-acrd.gz') or nw_fldr == True:
-            with gzip.open(mdl_pth + '/sqtpp-koch/kch-acrd.gz', 'wb') as gzObjSkpm:
-                gzObjSkpm.write(src)
-        else:
-            pass
-# __________________________________________________________________________________
-    
