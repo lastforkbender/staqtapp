@@ -50,7 +50,7 @@
 
 # Imported core python module(s) for this module's objectives.
 import os
-import gzip
+import math
 import random
 import threading
 from typing import List
@@ -71,13 +71,40 @@ class Staq(object):
 
     __metaclass__ = Seten
     
-    def __init__(self):
-        # Boat-key in a tree; no direct access outside this class.
-        Seten._master_key = self.kch_set_mk(1,5)
+    def __init__(self, shlKy, shlLk, shlTm):
+        Seten._master_key = self.kch_set_mk(False,False,1,5)
+        Seten._drv_shlKy = self.kch_dsn_lk(shlLk, shlTm)
+        Seten._drv_shlLk = self.kch_dsn_ky(shlKy)
+        
+    shlKy = property(lambda self: getattr(self, '_time_'), lambda self, value: setattr(self, '_time_', value))
+    shlLk = property(lambda self: getattr(self, '_emit_'), lambda self, value: setattr(self, '_emit_', value))
         
     @classmethod
     def kch_get_lock(self, Seten):
-        return Seten._lock   
+        return Seten._lock
+
+    @classmethod
+    def kch_dsn_lk(self, n: int, t: int):
+        # :PUBLIC DOMAIN VERSION:
+        rs = str((math.floor(n*(math.cos(n+(math.tan(n+n)))*math.ceil(n/2))))-t).strip('-')
+        # :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        eplLk = lambda rsnLk: [int(dgtLk) for dgtLk in str(rsnLk)]
+        return eplLk(int(rs))
+    
+    @classmethod
+    def kch_dsn_ky(self, n: int):
+        # :PUBLIC DOMAIN VERSION:
+        pt = math.ceil((n*n)-(math.tan(n+1)))
+        # :::::::::::::::::::::::::::::::::::
+        eplKy = lambda rsnKy: [int(dgtKy) for dgtKy in str(rsnKy)]
+        pt = eplKy(pt)
+        pt = pt[random.randint(0,len(pt)-1)]
+        if pt == self.kch_lct_bin(self, Seten._drv_shlKy, pt, 2):
+            return pt
+        else:
+            # _emit_⎇lock/_time_, encrypt all env-vars files, deny any access
+            # scramble any Seten modules' mk/ml addr files, build glb_lock key
+            return '!:!'
 # __________________________________________________________________________________
 
     @classmethod
@@ -126,7 +153,7 @@ class Staq(object):
 # __________________________________________________________________________________
         
     @classmethod
-    def kch_set_mk(self, k: int, chnlNd: int) -> str:
+    def kch_set_mk(self, raw: bool, srt: bool, k: int, chnlNd: int) -> str:
         # ***normal parameters use for public domain a 1:5 strength return***
         nd_rsrv = [random.randint(1, 10**6) for _ in range(chnlNd)]
         dcv = random.randint(1, 10**6)
@@ -138,9 +165,18 @@ class Staq(object):
         # ::::::::::::::::::::::::::::::::::::::::::::::
         stNnv = set(ndvVls)
         ndvVls = list(stNnv)
+        if srt:
+            ndvQs = lambda ndv: ndvQs([k for k in ndv[1:] if k<=ndv[0]])+[ndv[0]]+ndvQs([k for k in ndv if k>ndv[0]]) if ndv else[]
+            ndvVls = ndvQs(ndvVls)
+        if raw:
+            return ndvVls
         ndvVlsLen = len(ndvVls)
-        ndvVls = [str(ndvVls[l]) for l in range(ndvVlsLen)]        
-        return ''.join(ndvVls)
+        ndvVls = [str(ndvVls[l]) for l in range(ndvVlsLen)]
+        return ''.join(ndvVls)    
+# __________________________________________________________________________________
+
+    def kch_lct_bin(self, nRy: list, nDg: int, sDg: int):
+        nf = lambda nRy,nDg,l,h:-1 if l>h else (l+h)//sDg if nRy[(l+h)//sDg]==nDg else nf(nRy,nDg,l,(l+h)//sDg-1) if nRy[(l+h)//sDg]>nDg else nf(nRy,nDg,(l+h)//sDg+1,h)
+        return nf(nRy,nDg,0,len(nRy)-1)
 # __________________________________________________________________________________
         
-
