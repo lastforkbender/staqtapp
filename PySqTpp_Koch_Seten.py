@@ -86,7 +86,7 @@ class Staq(object):
     @classmethod
     def kch_dsn_lk(self, n: int, t: int):
         # :PUBLIC DOMAIN VERSION:
-        rs = str((math.floor(n*(math.cos(n+(math.tan(n+n)))*math.ceil(n/2))))-t).strip('-')
+        rs = str((math.floor(n*(math.cos(n+(math.tan(n+n)))*math.ceil(n*t))))-(n+n)*n).strip('-')
         # :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         eplLk = lambda rsnLk: [int(dgtLk) for dgtLk in str(rsnLk)]
         return eplLk(int(rs))
@@ -94,17 +94,15 @@ class Staq(object):
     @classmethod
     def kch_dsn_ky(self, n: int):
         # :PUBLIC DOMAIN VERSION:
-        pt = math.ceil((n*n)-(math.tan(n+1)))
+        pt = math.ceil((n+n)+n-(math.tan(n)+n))
         # :::::::::::::::::::::::::::::::::::
         eplKy = lambda rsnKy: [int(dgtKy) for dgtKy in str(rsnKy)]
         pt = eplKy(pt)
         pt = pt[random.randint(0,len(pt)-1)]
-        if pt == self.kch_lct_bin(self, Seten._drv_shlKy, pt, 2):
+        if pt == self.kch_lct_bin(Seten._drv_shlKy, pt, 2):
             return pt
         else:
-            # _emit_⎇lock/_time_, encrypt all env-vars files, deny any access
-            # scramble any Seten modules' mk/ml addr files, build glb_lock key
-            return '!:!'
+            return -1
 # __________________________________________________________________________________
 
     @classmethod
@@ -175,8 +173,39 @@ class Staq(object):
         return ''.join(ndvVls)    
 # __________________________________________________________________________________
 
+    @classmethod
     def kch_lct_bin(self, nRy: list, nDg: int, sDg: int):
         nf = lambda nRy,nDg,l,h:-1 if l>h else (l+h)//sDg if nRy[(l+h)//sDg]==nDg else nf(nRy,nDg,l,(l+h)//sDg-1) if nRy[(l+h)//sDg]>nDg else nf(nRy,nDg,(l+h)//sDg+1,h)
         return nf(nRy,nDg,0,len(nRy)-1)
 # __________________________________________________________________________________
+
+def sqtpp_koch_get_dsn_lobe_list():
+    # ))begin magic numbers((
+    clsDkl = Staq(14,2244,14)
+    chcStg = []
+    lpCnmCnt = 0
+    lpCnmStp = 0
+    while lpCnmStp < 2244:
+        # Both must start with one, no operator-layer priority.
+        # Any Kyber shell addressing assigned < 2244 or = [)*n]
+        rndA = random.randint(1000,9999)
+        rndB = random.randint(1000,9999)
+        clsDkl.kch_dsn_lk(rndA, rndB)
+        # Can start with zero, has operator-layer priority.
+        rndC = random.randint(1000,9999)
+        rslt = clsDkl.kch_dsn_ky(rndC)
+        if rslt != -1:
+            lpCnmCnt+=1
+            if lpCnmCnt < 43:
+                chcStg.append(str(rndA) + ':' + str(rndB) + ':' + str(rndC))
+            else:
+                lpCnm = False
+                break
+        lpCnmStp+=1
+    return chcStg
+    
+    
+    
+    
+test()
         
