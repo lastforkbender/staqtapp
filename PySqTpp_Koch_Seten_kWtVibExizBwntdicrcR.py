@@ -4,7 +4,7 @@
 #///////////////////////////////////////////////////////////////////////////////
 #///////////////////////////////////////////////////////////////////////////////
 #///////////////////////////////////////////////////////////////////////////////
-
+import random
 
 class kWtVibExizBwntdicrcR():
     
@@ -22,7 +22,40 @@ class kWtVibExizBwntdicrcR():
     @dsrptr.deleter
     def dsrptr(self):
         del self._dsrptr
+        
+class ___KTA___:
+    def __init__(self,_,__,___,____,_____,______,_______,________):
+        self.__KTA_A = _
+        self.__KTA_B = __
+        self.__KTA_C = ___
+        self.__KTA_D = ____
+        self.__KTA_E = _____
+        self.__KTA_F = ______
+        self.__KTA_G = _______
+        self.__KTA_I = ________
+        self.__KTA_K = 3846468718798494183234222385532386316332923995538121349879925764
+        self.__KTA_J = None
+        self.__KTA_L = None
+        self.__KTA_M = None
+        self.__KTA_N = None
+        
+    def _genVPi(self):
+        return [1]+[0]*(self.__KTA_A-self.__KTA_D-1)+[k for k in range(1,self.__KTA_D+1)]
 
+    def _genVPk(self):
+        self.__KTA_J = sum([random.randint(-self.__KTA_C//2,self.__KTA_C//2)*x**i for i,x in enumerate(self._genVPi())])%self.__KTA_C
+        self.__KTA_H = pow(self.__KTA_J,self.__KTA_C - 2,self.__KTA_K)
+        self.__KTA_L = (self.__KTA_B*self.__KTA_H)%self.__KTA_C
+        self.__KTA_M = (self.__KTA_J,self.__KTA_H)
+        self.__KTA_N = self.__KTA_L
+        
+    def _genVPv(self, y, x):
+        return sum(q*x**i for i,q in enumerate(y))
+
+    def _genVPr(self):
+        __KTA_X = lambda string: self._genVPv([int(num) for num in string.split()], 1)
+        __KTA_R = __KTA_X(self.__KTA_I)
+        return (self.__KTA_B*self.__KTA_J+__KTA_R*self.__KTA_N)%self.__KTA_C
 
 #~kWtVibExizBwntdicrcR/WVEBR/ktibxizwntdicrc/~
 #///////////////////////////////////////////////////////////////////////////////
