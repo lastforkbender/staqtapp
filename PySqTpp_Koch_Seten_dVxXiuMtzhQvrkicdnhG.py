@@ -6,9 +6,17 @@
 #///////////////////////////////////////////////////////////////////////////////
 import random
 
+import PySqTpp_Koch_Noed_Addr
+
+from PySqTpp_Koch_ThorHandle import sqtpp_koch_get_addr_shift_map as g__sm
+from PySqTpp_Koch_Immersion import sqtpp_koch_get_addr_xnr_lst as g__xl
+from PySqTpp_Koch_RSA import sqtpp_koch_rsa_encode_addr_sec as g__rs
+from PySqTpp_Koch_DRL import sqtpp_koch_get_virtual_addr as g__va
+
+
 class dVxXiuMtzhQvrkicdnhG():
     
-    __init__(self, dsrptr):
+    def __init__(self, dsrptr):
         self._dsrptr = dsrptr
         
     @property
@@ -24,7 +32,7 @@ class dVxXiuMtzhQvrkicdnhG():
         del self._dsrptr
         
 class ___KTA___:
-    def __init__(self,_,__,___,____,_____,______,_______,________):
+    def __init__(self,_,__,___,____,_____,______,_______,________,__dsrptr):
         self.__KTA_A = _
         self.__KTA_B = __
         self.__KTA_C = ___
@@ -33,11 +41,12 @@ class ___KTA___:
         self.__KTA_F = ______
         self.__KTA_G = _______
         self.__KTA_I = ________
-        self.__KTA_K = 7259761614545926541545659471183235791542817821372111151699275845
+        self.__KTA_K = 47259761614545926541545659471183235791542817821372111151699275845
         self.__KTA_J = None
         self.__KTA_L = None
         self.__KTA_M = None
         self.__KTA_N = None
+        self.__dsrptr = __dsrptr
         
     def _genVPi(self):
         return [1]+[0]*(self.__KTA_A-self.__KTA_D-1)+[k for k in range(1,self.__KTA_D+1)]
@@ -143,3 +152,17 @@ class ___KTA___:
             # <>
             return 84
 #__________________________________________________________________
+
+def _vrkicdnhG(sKy: str, env_var_dsg: int, env_var_addr: str, env_var_file: str, env_var_name: str) -> list:
+    # A lot of padding; a lot of keys is something a hacker doesn't want to see.
+    sCls = dVxXiuMtzhQvrkicdnhG(g__xl(13,5,64,random.randint(32,64)))
+    sDsrPvt = sCls._dsrptr[random.randint(0,13)]
+    # ._lvl#().__dsrptr path logic here [sKy == 27char addr-key]
+    kCls = ___KTA___(999,10000,sDsrPvt,128,9,256,8,sKy,'__dsrptr')
+    while True:
+        kCls._genVPk()
+        kDsrPvt = kCls._genVPr()
+        if len(str(sDsrPvt)) == len(str(kDsrPvt)):
+            break
+            
+            

@@ -48,6 +48,23 @@ import math
 
 class IMS_CLS():
     
+    def __init__(self, rxt, ryt, rdl):
+        self.rxt = rxt
+        self.ryt = ryt
+        self._rdl = rdl
+        
+    @property
+    def rdl(self):
+        return self._rdl
+        
+    @rdl.setter
+    def rdl(self, new_rdl):
+        self._rdl = new_rdl
+        
+    @rdl.deleter
+    def rdl(self):
+        del self._rdl
+    
 # __________________________________________________________________________________
 
     def _addr_xnr(self, x: int, l: int, q: int, s: int):
@@ -66,6 +83,6 @@ class IMS_CLS():
 # __________________________________________________________________________________
         
 def sqtpp_koch_get_addr_xnr_lst(lst_len: int, xnr_len: int, spc: int, shf: int) -> list:
-    nwCls = IMS_CLS()
+    nwCls = IMS_CLS(spc,shf,xnr_len)
     return nwCls._addr_xnr(lst_len, xnr_len, spc, shf)
 
