@@ -116,8 +116,14 @@ class NoedAddr():
 
 class SetenNoedAddr(NoedAddr):
     
-    def sqtpp_kch_get_noedaddr(self, bytRy):
+    def get_noedaddr(self, bytRy):
         addr = ''.join(map(str, NoedAddr._nd_adr(self, bytRy, 1)))
         return addr
+# __________________________________________________________________________________
+        
+def sqtpp_koch_get_noedaddr(b):
+    
+    ndCls = SetenNoedAddr()
+    return ndCls.get_noedaddr(b)
         
         

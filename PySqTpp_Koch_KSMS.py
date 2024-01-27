@@ -40,29 +40,60 @@
 # __________________________________________________________________________________
 # __________________________________________________________________________________
 # __________________________________________________________________________________
+
+
+# Imported core python module(s) for this module's objectives.
+import os
 import abc
 import random
 import math as m_
+
+# Imported PySqTpp_Koch module(s) for this module's objectives.
+from PySqTpp_Koch_Noed_Addr import sqtpp_koch_get_noedaddr
 #______________________________________________________________________________
+
 class _KSMS_(abc.ABC):
     def __new__(cls,*args,**kwargs):
         if cls is _KSMS_:
             pass
         return super().__new__(cls) 
 #______________________________________________________________________________
-    @abc.abstractmethod
-    def r_(self, s, e):
-        return float(random.randint(s,e))
-#______________________________________________________________________________
+
     @abc.abstractmethod
     def set_mk_container_(self, mk):
-        pass
+        # User's 8 digits master-key is visible to _KSMS_ and "_Noed_Addr.
+        frclMap = sqtpp_koch_get_noedaddr(bytearray(mk))
+        mk = None
+        crr_pth = f'{os.path.dirname(os.path.abspath(__file__))}/sqtpp-koch'
+        mskf = False
+        gnes = False
+        if not os.path.isdir(crr_pth):
+            os.makedirs(crr_pth)
+            gnes = True
+        else:
+            lmb_dir = lambda dirPth: [(fNm, eNm, len(fNm) if fNm.isdigit() else 0) for file in os.listdir(dirPth) for fNm, eNm in [os.path.splitext(file)]]
+            fNms = lmb_dir(crr_pth)
+            if len(fNms):
+                # fNms = tuple[('filename','extension',numbered_filename_length),...
+                # Get both atomic sequences, write all the immersion nodes to new.
+                print(self.get_atomic_sequence_(30))
+                print(self.get_atomic_sequence_(30))
+                pass
+            else:
+                # files not there...
+                mskf = True
+        # Write the current random fractal mapping for seten modules' routings.
+        with open(f'{crr_pth}/_skfm.b', mode='w') as fSmc: fSmc.write(frclMap)
 #______________________________________________________________________________
+
     @abc.abstractmethod
-    def get_atomic_sequence_(self, l):
-        # Dependent @ DRL module's routed address-var sequences lengths keys.
-        # Due to no duplicate binary length mirroring and the seten modules'
-        # address shifting, 218B years to crack by a 1000 qubit computer.
+    def r_(self, s, e) -> float:
+        return float(random.randint(s,e))
+#______________________________________________________________________________
+
+    @abc.abstractmethod
+    def get_atomic_sequence_(self, l) -> list:
+        
         p = None
         P = None
         Pz = None
@@ -91,24 +122,33 @@ class _KSMS_(abc.ABC):
             t = self.r_(5,64)
             T = self.r_(5,128)
             
-            # Right here.
             R1 = 1-(Pz*(m_.sin(O*2)))/(m_.sqrt(AT)*u*p)*(m_.sqrt(I*P*(O*o*t))/m_.sqrt(d*T*p))
             
             x+=1
             if R1 < 1: R2.append(0)
             else: R2.append(1)
         return R2
-#______________________________________________________________________________
+# __________________________________________________________________________________
+# __________________________________________________________________________________
+# __________________________________________________________________________________
+# __________________________________________________________________________________
+
 class Kms_Stack_(_KSMS_):
     
-    def r_(self, s, e):
-        return _KSMS_.r_(self, s, e)
-    
     def set_mk_container_(self, mk):
-        print(_KSMS_.set_mk_container_(self, mk))
+        return _KSMS_.set_mk_container_(self, mk)
         
-    def get_atomic_sequence_(self, l):
+    def r_(self, s, e) -> float:
+        return _KSMS_.r_(self, s, e)
+        
+    def get_atomic_sequence_(self, l) -> list:
         return _KSMS_.get_atomic_sequence_(self, l)
 #______________________________________________________________________________
 
 
+def test():
+
+    nwCls = Kms_Stack_()
+    tpl = nwCls.set_mk_container_(50328200)
+
+test()
