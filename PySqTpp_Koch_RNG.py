@@ -6,13 +6,14 @@
 # __________________________________________________________________________________
 
 
-# ●■ Staqtapp-Koch Module Name: PySqTpp_Koch_Tenet.py
+# ●■ Staqtapp-Koch Module Name: PySqTpp_Koch_RNG.py
 
 
 # ● ■  Description of this module's purpose:
     
-#       This module returns qubit like palindrome return of probability
-#       for any pairing list of numbers. Returns 3 if of equal distance.
+#       This module returns ring id sequences from a user's 8 digit mk or
+#       does so by other means----current to routes of a set of env-vars.
+#       Ring id sequences are repeat of change to any seten module route.
 
 
 # ● ■  Staqtapp-Koch Env-Vars Library Overview:
@@ -37,42 +38,35 @@
 
 
 # Imported core python module(s) for this module's objectives.
-from collections import deque
-# __________________________________________________________________________________
-# __________________________________________________________________________________
+import math as m
 
-class Pole:
-
-    def __init__(self, event):
-
-        self.event = event
-        self.jump = self.__attract()
-
-    def __attract(self):
-
-        event = self.event
-        telering = deque(sorted(event))
-        telering.rotate(-len(telering)//2)
-        return sum(quantum for quantum in telering)
-
-    def _gravity(self, well):
-
-        return abs(self.jump - well.jump)
-        
+class RNG():
+    
+    def __init__(self,_____):
+        self.____=_____
 # __________________________________________________________________________________
         
-def sqtpp_koch_pole_tenet(lobeA, lobeB) -> list:
-        
-    pl1 = Pole(lobeA)
-    pl2 = Pole(lobeB)
-    rslt = pl1._gravity(pl2)
-        
-    if rslt < 1e-9:
-        # both equal palindrome probabilities
-        return [3, None]
-    elif pl1.jump < pl2.jump:
-        # pl1 is lesser palindrome probability
-        return [1, pl1.jump]
-    else:
-        # pl2 is lesser palindrome probability
-        return [2, pl2.jump]
+    def _____(self,_,__________,________):
+        _____=lambda _,__,___: (_[0].replace('-','').count(__)+_[1].replace('-','').count(__))/(len(_[0].replace('-',''))+len(_[1].replace('-',''))) if ___ else (_[0].count(__)+_[1].count(__))/(len(_[0])+len(_[1]))
+        ______=self.____+self.____
+        _______=0
+        for k in range(_):
+            _______=m.sqrt((_______+(_____((str(self.____),str(______)),str(k),________))))
+        _______=str(_______).replace('.','')
+        _________=len(_______)
+        if _________<__________ or _________>__________:
+            while True:
+                _________=len(_______)
+                if _________<__________:_______=_______+'1'
+                elif _________>__________:_______=_______[0:_________-1]
+                else:
+                    break
+        del self.____
+        return _______
+# __________________________________________________________________________________
+
+def sqtpp_koch_get_rng_id(mk, ln, dgt, rld):
+    nwCls = RNG(mk)
+    return nwCls._____(ln,dgt,rld)
+  
+   

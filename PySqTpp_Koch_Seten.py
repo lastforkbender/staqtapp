@@ -2,7 +2,7 @@
 
 # Staqtapp-Koch: Hybrid Env-Vars Lib (https://github.com/lastforkbender/staqtapp)
 
-# Version: 2.01.028
+# Version: 2.01.079
 # __________________________________________________________________________________
 
 
@@ -26,19 +26,16 @@
 
 # ● ■  Staqtapp-Koch Env-Vars Library Overview:
 
-#       The scope of this env-vars system is routine focused upon env-var
-#       security via obfuscated addresses inter-connected to env-vars own
-#       obfuscation of it's data, using tor like circumstances, procedural
-#       generation of env-var keys/spacing and one-way shared descriptors.
-
-#       Having limited made keys outside this env-var system for access of
-#       advanced security issue... if chosen of a needed env-vars solution.
-#       Of then a email response will be given for a phone number to call,
-#       involving a signature and purchase after agreed terms are met, then
-#       custom built Staqtapp-Koch full package library for your key sent.
-#       Pricing terms for single package is $318 U.S. dollars, however ---
-#       is variable to the conditions of use.(This public version does not
-#       include those strong fractal-palindrome based security modules.)
+#       The current project status is critical to implementing security
+#       values of env-var use not seen before or done before. In focus
+#       of forthcoming advances, this env-var library is being built of
+#       a proposed system that forms a basis of complex abstractions to
+#       isolate those security values. Whereof any considerations into
+#       env-var security that would involve other discrete methods inact
+#       to placements of env-var use, those outer models of access or no.
+#       This library using fractal based rotational palindrome settings
+#       of env-var use and of extreme cut-off for modern ai comprehension
+#       if applied correctly as a modular sub-system approach.
 
     
 # Contact: rcttcr5@gmail.com
@@ -87,7 +84,7 @@ class Staq(object):
     def kch_dsn_lk(self, n: int, t: int):
         # :PUBLIC DOMAIN VERSION:
         rs = str((math.floor(n*(math.cos(n+(math.tan(n+n)))*math.ceil(n*t))))-(n+n)*n).strip('-')
-        # :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        # :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
         eplLk = lambda rsnLk: [int(dgtLk) for dgtLk in str(rsnLk)]
         return eplLk(int(rs))
     
@@ -95,7 +92,7 @@ class Staq(object):
     def kch_dsn_ky(self, n: int):
         # :PUBLIC DOMAIN VERSION:
         pt = math.ceil((n+n)+n-(math.tan(n)+n))
-        # :::::::::::::::::::::::::::::::::::
+        # :::::::::::::::::::::::::::::::::::::
         eplKy = lambda rsnKy: [int(dgtKy) for dgtKy in str(rsnKy)]
         pt = eplKy(pt)
         pt = pt[random.randint(0,len(pt)-1)]
@@ -137,7 +134,7 @@ class Staq(object):
         
     @classmethod
     def kch_reverse_diffusion(self, k: int, chnl_scale: List[int], chnl_constant: int) -> List[int]:
-        #---------------------------------------------------------------------
+        #-----------------------------------------------------------------------
         rtrnAddr = [ndvl+chnl_constant for ndvl in chnl_scale]
         while k < len(rtrnAddr):
             rtrnAddr[k] = rtrnAddr[k+random.randint(0, 2) % (len(rtrnAddr)-k-1)+1]
@@ -160,7 +157,7 @@ class Staq(object):
         for f in range(chnlNd):
             rvVls[f] = nd_rsrv[chnlNd-f-1]
         ndvVls = self.kch_reverse_diffusion(k, rvVls, dcv)
-        # ::::::::::::::::::::::::::::::::::::::::::::::
+        # ::::::::::::::::::::::::::::::::::::::::::::::::
         stNnv = set(ndvVls)
         ndvVls = list(stNnv)
         if srt:
@@ -197,15 +194,9 @@ def sqtpp_koch_get_dsn_lobe_list():
         if rslt != -1:
             lpCnmCnt+=1
             if lpCnmCnt < 43:
-                chcStg.append(str(rndA) + ':' + str(rndB) + ':' + str(rndC))
+                chcStg.append(f'{rndA}:{rndB}:{rndC}')
             else:
-                lpCnm = False
                 break
         lpCnmStp+=1
     return chcStg
-    
-    
-    
-    
-test()
-        
+

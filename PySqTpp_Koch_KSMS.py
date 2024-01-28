@@ -2,7 +2,7 @@
 
 # Staqtapp-Koch: Hybrid Env-Vars Lib (https://github.com/lastforkbender/staqtapp)
 
-# Version: 2.01.028
+# Version: 2.01.079
 # __________________________________________________________________________________
 
 
@@ -20,19 +20,16 @@
 
 # ● ■  Staqtapp-Koch Env-Vars Library Overview:
 
-#       The scope of this env-vars system is routine focused upon env-var
-#       security via obfuscated addresses inter-connected to env-vars own
-#       obfuscation of it's data, using tor like circumstances, procedural
-#       generation of env-var keys/spacing and one-way shared descriptors.
-
-#       Having limited made keys outside this env-var system for access of
-#       advanced security issue... if chosen of a needed env-vars solution.
-#       Of then a email response will be given for a phone number to call,
-#       involving a signature and purchase after agreed terms are met, then
-#       custom built Staqtapp-Koch full package library for your key sent.
-#       Pricing terms for single package is $318 U.S. dollars, however ---
-#       is variable to the conditions of use.(This public version does not
-#       include those strong fractal-palindrome based security modules.)
+#       The current project status is critical to implementing security
+#       values of env-var use not seen before or done before. In focus
+#       of forthcoming advances, this env-var library is being built of
+#       a proposed system that forms a basis of complex abstractions to
+#       isolate those security values. Whereof any considerations into
+#       env-var security that would involve other discrete methods inact
+#       to placements of env-var use, those outer models of access or no.
+#       This library using fractal based rotational palindrome settings
+#       of env-var use and of extreme cut-off for modern ai comprehension
+#       if applied correctly as a modular sub-system approach.
 
     
 # Contact: rcttcr5@gmail.com
@@ -50,6 +47,7 @@ import math as m_
 
 # Imported PySqTpp_Koch module(s) for this module's objectives.
 from PySqTpp_Koch_Noed_Addr import sqtpp_koch_get_noedaddr
+from PySqTpp_Koch_RNG import sqtpp_koch_get_rng_id
 #______________________________________________________________________________
 
 class _KSMS_(abc.ABC):
@@ -61,8 +59,8 @@ class _KSMS_(abc.ABC):
 
     @abc.abstractmethod
     def set_mk_container_(self, mk):
-        # User's 8 digits master-key is visible to _KSMS_ and "_Noed_Addr.
         frclMap = sqtpp_koch_get_noedaddr(bytearray(mk))
+        rngFwdSet = sqtpp_koch_get_rng_id(mk, 10, 16, False):
         mk = None
         crr_pth = f'{os.path.dirname(os.path.abspath(__file__))}/sqtpp-koch'
         mskf = False
