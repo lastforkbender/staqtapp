@@ -15,7 +15,6 @@
 #       four sets of keys for double AES encryptions/decryptions and any --
 #       routed/layered XOR obfuscation keys in between any AES|RSA changes.
 #       Is timedoor trapped to specific algorithm connects of addr pointers.
-#       If set master key(mk) wrong then is env-var files lockout, no retry.
 
 
 # ● ■  Staqtapp-Koch Env-Vars Library Overview:
@@ -42,7 +41,7 @@
 # Imported core python module(s) for this module's objectives.
 import os
 import abc
-import random
+import random as r_
 import math as m_
 
 # Imported PySqTpp_Koch module(s) for this module's objectives.
@@ -53,15 +52,19 @@ from PySqTpp_Koch_RNG import sqtpp_koch_get_rng_id
 class _KSMS_(abc.ABC):
     def __new__(cls,*args,**kwargs):
         if cls is _KSMS_:
-            pass
-        return super().__new__(cls) 
+            raise TypeError('!!__KSMS__[!smsKsms!]__KSMS__[!smsKsms!]__KSMS__!!')
+        return super().__new__(cls)
+        
+    def __init__(self,___):
+        self.____=___
+        del ___
 #______________________________________________________________________________
 
     @abc.abstractmethod
-    def set_mk_container_(self, mk):
-        frclMap = sqtpp_koch_get_noedaddr(bytearray(mk))
-        rngFwdSet = sqtpp_koch_get_rng_id(mk, 10, 16, False):
-        mk = None
+    def set_mk_container_(self):
+        frclMap = sqtpp_koch_get_noedaddr(bytearray(self.____))
+        rngFwdSet = sqtpp_koch_get_rng_id(self.____,10,16,False)
+        del self.____
         crr_pth = f'{os.path.dirname(os.path.abspath(__file__))}/sqtpp-koch'
         mskf = False
         gnes = False
@@ -71,12 +74,21 @@ class _KSMS_(abc.ABC):
         else:
             lmb_dir = lambda dirPth: [(fNm, eNm, len(fNm) if fNm.isdigit() else 0) for file in os.listdir(dirPth) for fNm, eNm in [os.path.splitext(file)]]
             fNms = lmb_dir(crr_pth)
-            if len(fNms):
+            fNmsLen = len(fNms)
+            if fNmsLen:
                 # fNms = tuple[('filename','extension',numbered_filename_length),...
+                for k in range(fNmsLen):
+                    if fNms[k][2] == 16:
+                        if fNms[k][1] == 'skrm' or fNms[k][1] == 'skhm':
+                            if fNms[k][0] == rngFwdSet:
+                                pass
+                            else:
+                                # NO GO, WRONG MASTER KEY ------------------------
+                                # Re-encrypt all files with embedded key, lockout.
+                                pass
                 # Get both atomic sequences, write all the immersion nodes to new.
-                print(self.get_atomic_sequence_(30))
-                print(self.get_atomic_sequence_(30))
-                pass
+                as1 = self.get_atomic_sequence_(30)
+                as2 = self.get_atomic_sequence_(30)
             else:
                 # files not there...
                 mskf = True
@@ -85,68 +97,41 @@ class _KSMS_(abc.ABC):
 #______________________________________________________________________________
 
     @abc.abstractmethod
-    def r_(self, s, e) -> float:
-        return float(random.randint(s,e))
-#______________________________________________________________________________
-
-    @abc.abstractmethod
-    def get_atomic_sequence_(self, l) -> list:
-        
-        p = None
-        P = None
-        Pz = None
-        AT = None
-        I = None
-        d = None
-        u = None
-        o = None
-        O = None
-        t = None
-        T = None
-        
-        x = 0
-        R1 = None
-        R2 = []
-        while x < l:
-            p = self.r_(9,999)
-            P = self.r_(3,12)
-            Pz = self.r_(10,10000)
-            AT = self.r_(10,1000)
-            I = self.r_(10,100)
-            d = self.r_(10,100)
-            u = self.r_(10,100)
-            o = self.r_(12,32)
-            O = self.r_(12,64)
-            t = self.r_(5,64)
-            T = self.r_(5,128)
-            
-            R1 = 1-(Pz*(m_.sin(O*2)))/(m_.sqrt(AT)*u*p)*(m_.sqrt(I*P*(O*o*t))/m_.sqrt(d*T*p))
-            
-            x+=1
-            if R1 < 1: R2.append(0)
-            else: R2.append(1)
-        return R2
-# __________________________________________________________________________________
-# __________________________________________________________________________________
+    def get_atomic_sequence_(self,__) -> list:
+        # [p,  P,  Pz,  AT,  I,  d,  u,  o,  O,  t,  T]
+        _=[None]*11
+        _____=0
+        ___=None
+        ____=[]
+        while _____<__:
+            _[0]=float(r_.randint(9,999))
+            _[1]=float(r_.randint(3,12))
+            _[2]=float(r_.randint(10,10000))
+            _[3]=float(r_.randint(10,1000))
+            _[4]=float(r_.randint(10,100))
+            _[5]=float(r_.randint(10,100))
+            _[6]=float(r_.randint(10,100))
+            _[7]=float(r_.randint(12,32))
+            _[8]=float(r_.randint(12,64))
+            _[9]=float(r_.randint(5,64))
+            _[10]=float(r_.randint(5,128))
+            ___=1-(_[2]*(m_.sin(_[8]*2)))/(m_.sqrt(_[3])*_[6]*_[0])*(m_.sqrt(_[4]*_[1]*(_[8]*_[7]*_[9]))/m_.sqrt(_[5]*_[10]*_[0]))
+            _____+=1
+            if ___<1:____.append(0)
+            else: ____.append(1)
+        return ____
 # __________________________________________________________________________________
 # __________________________________________________________________________________
 
 class Kms_Stack_(_KSMS_):
+    def __init__(self,____):
+        super().__init__(____)
+        del ____
     
-    def set_mk_container_(self, mk):
-        return _KSMS_.set_mk_container_(self, mk)
-        
-    def r_(self, s, e) -> float:
-        return _KSMS_.r_(self, s, e)
+    def set_mk_container_(self):
+        _KSMS_.set_mk_container_(self)
         
     def get_atomic_sequence_(self, l) -> list:
         return _KSMS_.get_atomic_sequence_(self, l)
 #______________________________________________________________________________
 
-
-def test():
-
-    nwCls = Kms_Stack_()
-    tpl = nwCls.set_mk_container_(50328200)
-
-test()
