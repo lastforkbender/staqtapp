@@ -36,6 +36,7 @@
 
 
 # Imported core python module(s) for this module's objectives.
+import secrets
 import os
 import re
 
@@ -61,12 +62,11 @@ import PySqTpp_Koch_AES as aes
     # -5  = mkdir parameter path already exist
     # -6  = could not perform mkdir
     # -7  = rsv change error
-    # -8  = lck change error
 # __________________________________________________________________________________
 
 class VFS():
       
-    def __init__(self, fn):
+    def __init__(self, fn: str):
         self._cf = crr_pth = f'{os.path.dirname(os.path.abspath(__file__))}/sqtpp-koch'
         self._fn = fn
         self._fc = self._vfs_flchk()
@@ -101,14 +101,19 @@ class VFS():
             with open(f'{self._cf}/{self._fn}',mode='rb') as fVfsObj:
                 self._fl = fVfsObj.read()
         except Exception as err_vfs_opnfl:
+            self._fx = False
             return -3
         self._fx = True
         return 2
 # __________________________________________________________________________________
 
-    def _vfs_dirsc(self, s, e) -> list:
-        pntLst = [self._fl.find(s),self._fl.find(e)]
-        return [self._fl[0:pntLst[0]+len(s)],self._fl[pntLst[0]+len(s)+1:pntLst[1]-1],self._fl[pntLst[1]:len(self._fl)]]
+    def _vfs_dirslc(self, stk: bool, fndS, fndE) -> list:
+        lenS = len(fndS)
+        pntLst = [self._fl.find(fndS),self._fl.find(fndE)]
+        if not stk:
+            return [self._fl[0:pntLst[0]+lenS],self._fl[pntLst[0]+lenS+1:pntLst[1]-1],self._fl[pntLst[1]:len(self._fl)]]
+        else:
+            return [self._fl[0:pntLst[0]+lenS],b'...',self._fl[pntLst[1]:len(self._fl)]]
 # __________________________________________________________________________________
 
     def _vfs_wrtstg(self, ptrn: str, stg: str, src):
@@ -117,6 +122,16 @@ class VFS():
             ptrn = re.findall(bytes(ptrn,'utf-8'),cnts)
             fWrObj.seek(0,0)
             fWrObj.write(cnts.replace(ptrn[0],bytes(stg,'utf-8')+src+b'>'))
+# __________________________________________________________________________________
+
+    def _vfs_lstdir(self, dirPth: str) -> list:
+        if not self._fx:
+            if self._vfs_opnfl() < 0:
+                return -3
+        lstDir = []
+        rltLst = re.findall(b'\/\/'+re.escape(str.encode(dirPth,'utf-8'))+b'\/.*?\/',self._fl)
+        for x in range(len(rltLst)): lstDir.append(rltLst[x])
+        return lstDir
 # __________________________________________________________________________________
 
     def _vfs_mkdir(self, nwPth: str) -> int:
@@ -128,32 +143,54 @@ class VFS():
                         nwPth = nwPth.split('/')
                         cLen = len(nwPth)-1
                         dirTyp = None
+                        dirLst = None
+                        dirStk = False
                         slcLst = None
                         if cLen==2 and nwPth[0]=='v' and nwPth[1]=='sk':
-                            dirType = ['●-□','v/sk/','---◇-sk-']
+                            dirLst = self._vfs_lstdir('sk')
+                            if len(dirLst) > 0: dirStk = True
+                            if dirStk:
+                                dirType = ['●-□','v/sk/',f'◇{bytes.decode(dirLst[0],"utf-8")}']
+                            else: dirType = ['●-□','v/sk/','---◇-sk-']
                         elif cLen==3 and nwPth[0]=='v' and nwPth[1]=='sk' and nwPth[2]=='sys':
-                            dirType = ['○-■','v/sk/sys/','---◇-sys-']
+                            dirLst = self._vfs_lstdir('sys')
+                            if len(dirLst) > 0: dirStk = True
+                            if dirStk:
+                                dirType = ['○-■','v/sk/sys/',f'◇{bytes.decode(dirLst[0],"utf-8")}']
+                            else: dirType = ['○-■','v/sk/sys/','---◇-sys-']
                         elif cLen==4 and nwPth[0]=='v' and nwPth[1]=='sk' and nwPth[2]=='sys' and nwPth[3]=='env':
-                            dirType = ['●-■','v/sk/sys/env/','---◇-env-']
+                            dirLst = self._vfs_lstdir('env')
+                            if len(dirLst) > 0: dirStk = True
+                            if dirStk:
+                                dirType = ['●-■','v/sk/sys/env/',f'◇{bytes.decode(dirLst[0],"utf-8")}']
+                            else: dirType = ['●-■','v/sk/sys/env/','---◇-env-']
                         else:
                             return -4
                         if self._fl.find(bytes(f'◇//{nwPth[len(nwPth)-2]}/{nwPth[len(nwPth)-1]}/','utf-8')) > -1:
                             return -5
                         else:
-                            slcLst = self._vfs_dirsc(bytes(f'{dirType[0]}{dirType[1]}','utf-8'),bytes(dirType[2],'utf-8'))
+                            slcLst = self._vfs_dirslc(dirStk,bytes(f'{dirType[0]}{dirType[1]}','utf-8'),bytes(dirType[2],'utf-8'))
                             if slcLst[1] == b'...':
                                 slcLst[1] = bytes(f'◇//{nwPth[len(nwPth)-2]}/{nwPth[len(nwPth)-1]}/\n...\n---◇-{nwPth[len(nwPth)-1]}-','utf-8')
                             else:
                                 slcLst[1] = bytes(f'{slcLst[1]}\n◇//{nwPth[len(nwPth)-2]}/{nwPth[len(nwPth)-1]}/\n...\n---◇-{nwPth[len(nwPth)-1]}-','utf-8')
                             with open(f'{self._cf}/{self._fn}',mode='wb') as fMkDirObj: fMkDirObj.write(b'\n'.join(slcLst))
                             slcLst = None
-                            return 3
+                            if self._vfs_opnfl() < 0:
+                                return -3
+                            else:
+                                return 3
                     else:
                         return -3
             else:
                 return -1
         except Exception as err_vfs_mkdir:
-            return -6
+            print(err_vfs_mkdir)
+# __________________________________________________________________________________
+
+    def _vfs_crtfl(self, pth, src) -> int:
+        pass
+
 # __________________________________________________________________________________
 
     def _vfs_cfg(self, rst: bool, dsg: str, vls: list) -> int:
@@ -173,26 +210,28 @@ class VFS():
             pass
 # __________________________________________________________________________________
 
-    def _vfs_rsv(self, rsvNum: list) -> int:
+    def _vfs_rsv(self, pD, pK1, pV1, pL1, pK2, pK3, pV2, pL2) -> int:
         try:
-            rsv = aes.sqtpp_koch_aes_encode_data(rsvNum[0],rsvNum[1],rsvNum[2],rsvNum[3])
-            xrk = bytes(rsvNum[4],'utf-8')
+            rsv = aes.sqtpp_koch_aes_encode_data(pD,pK1,pV1,pL1)
+            xrk = bytes(pK2,'utf-8')
             bRy = bytearray()
             for x in range(len(rsv)):bRy.append(rsv[x]^xrk[x%len(xrk)])
-            rsvNum = bytes(aes.sqtpp_koch_aes_encode_data(bRy,rsvNum[5],rsvNum[6],rsvNum[7]))
-            self._vfs_wrtstg('RSV<.*?>','RSV<',rsvNum)
+            rsv = pL2
+            xrk = bytes(aes.sqtpp_koch_aes_encode_data(bRy,pK3,pV2,pL2))
+            bRy = pL1
+            self._vfs_wrtstg('RSV<.*?>','RSV<',xrk)
             if self._vfs_opnfl() == -3:
                 return -3
             else:
                 return 4
         except Exception as err_vfs_rsv:
-            return -7
+            print -7
 # __________________________________________________________________________________
 
-    def _vfs_lck(self, src, ky, iv, blkSz):
+    def _vfs_lck(self, src, ky, iv, blkSz: int):
         try:
-            xrtl = xortl.sqtpp_koch_xortl(True,src,ky,iv,blkSz)
-            self._vfs_wrtstg('LCK<.*?>','LCK<',xrtl)
+            src = xortl.sqtpp_koch_xortl(True,src,ky,iv,blkSz)
+            self._vfs_wrtstg('LCK<.*?>','LCK<',src)
         except Exception as err_vfs_lck:
             self._vfs_wrtstg('LCK<.*?>','LCK<',b'TIMELOCK')
         if self._vfs_opnfl() == -3:
@@ -201,9 +240,49 @@ class VFS():
             return 5
 # __________________________________________________________________________________
 
-#def test():
-    #cls = VFS('sk-vfs-0001.envfs')
-    #import secrets
-    #print(cls._vfs_lck(bytes('500438202228711904238550','utf-8'),secrets.token_bytes(256),secrets.token_bytes(16),16))
-#test()
+    def _vfs_pntbrk(self, cmd: list, bExt: list):
+        cmds = None
+        rtrn = None
+        for s in range(len(cmd)):
+            if cmd[s].find('ltdir(') > -1:
+                cmds = cmd[s].replace('lstdir(','').strip(')')
+                rtrn = self._vfs_ltdir(cmds)
+            elif cmd[s].find('mkdir(') > -1:
+                cmds = cmd[s].replace('mkdir(','').strip(')')
+                rtrn = self._vfs_mkdir(cmds)
+            elif cmd[s].find('cfg(') > -1:
+                pass
+            elif cmd[s].find('rsv(') > -1:
+                cmds = cmd[s].replace('rsv(','').strip(')').split(',')
+                rtrn = self._vfs_rsv(bExt[0],bExt[1],bExt[2],int(cmds[0]),cmds[1],bExt[3],bExt[4],int(cmds[2]))
+            elif cmd[s].find('lck(') > -1:
+                cmds = cmd[s].replace('lck(','').strip(')')
+                rtrn = self._vfs_lck(bExt[0],bExt[1],bExt[2],int(cmds))
+            if isinstance(rtrn,int):
+                if rtrn < 0:
+                    break
+        return rtrn
+# __________________________________________________________________________________
+
+def sqtpp_koch_vfs(fn: str, cmnds: list, btsExt: list):
+    cls = VFS(fn)
+    return cls._vfs_pntbrk(cmnds,btsExt)
+
+
+#print(sqtpp_koch_vfs('sk-vfs-0001.envfs',['mkdir(v/sk/sys/top_path)'],[None]))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
