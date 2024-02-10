@@ -69,7 +69,10 @@ import PySqTpp_Koch_AES as aes
     # -9  = could not perform crtfl
     # -10 = encdir parameter path not found
     # -11 = encdir seten module addr not found
-    
+    # -12 = could not perform encdir
+    # -13 = gtfl directory not found
+    # -14 = gtfl filename was not found
+    # -15 = could not perform gtfl
 # __________________________________________________________________________________
 
 class VFS():
@@ -106,7 +109,7 @@ class VFS():
             return -1
 # __________________________________________________________________________________
 
-    def _vfs_adrsec(self, w):
+    def _vfs_adrsec(self, w: str) -> list:
         fLst = list(os.listdir(os.path.dirname(os.path.abspath(__file__))))
         fLst = list(filter(lambda x: w in x, fLst))
         cLst = None
@@ -228,7 +231,7 @@ class VFS():
                             for x in range(len(xnr)): xnr[x] = str(xnr[x])
                             xnr = ''.join(xnr)
                             self._fl = self._fl.replace(bytes(f'◇//{pthLst[0]}/{pthLst[1]}/','utf-8'),bytes(f'◇//{pthLst[0]}/{xnr}/','utf-8'))
-                            self._fl = self._fl.replace(bytes(f'---◇-{pthLst[1]}-','utf-8'),bytes('---◇-!!!-','utf-8'))
+                            self._fl = self._fl.replace(bytes(f'---◇-{pthLst[1]}-','utf-8'),bytes(f'---◇-{xnr}-','utf-8'))
                         elif dsg == 'seten':
                             if not self._fsx: self._fs = self._vfs_adrsec('Seten')
                             vld = False
@@ -240,12 +243,10 @@ class VFS():
                                 encStnAddr = lambda a,k1,k2,k3: ''.join(''.join(chr(ord(c)^ord(k1)^ord(k2)^ord(k3)) for c,k1,k2,k3 in zip(blk.ljust(8,'!'),k1,k2,k3)) for blk in (a[i:i+8] for i in range(0,len(a),8)))
                                 encStn = encStnAddr(stnAdr,xnrA,xnrB,xnrC)
                                 self._fl = self._fl.replace(bytes(f'◇//{pthLst[0]}/{pthLst[1]}/','utf-8'),bytes(f'◇//{pthLst[0]}/{encStn}/','utf-8'))
-                                self._fl = self._fl.replace(bytes(f'---◇-{pthLst[1]}-','utf-8'),bytes('---◇-!!!-','utf-8'))
+                                self._fl = self._fl.replace(bytes(f'---◇-{pthLst[1]}-','utf-8'),bytes(f'---◇-{encStn}-','utf-8'))
                             else:
                                 return -11
                     else:
-                        # A super complex joined vfs directory, XNR-XOR retained for DRL decipher stacking.
-                        # Any env-var having same name in another file, set assigned added cat id to each.
                         pass
                     with open(f'{self._cf}/{self._fn}',mode='wb') as fEncDirObj: fEncDirObj.write(self._fl)
                     if dsg == 'drl-hv':
@@ -259,8 +260,7 @@ class VFS():
             else:
                 return -1 
         except Exception as err_vfs_encdir:
-            print(err_vfs_encdir)
-            #return -12
+            return -12
 # __________________________________________________________________________________
 
     def _vfs_crtfl(self,____,______) -> int:
@@ -293,6 +293,40 @@ class VFS():
                 return -1
         except Exception as err_vfs_crtfl:
             return -9
+# __________________________________________________________________________________
+
+    def _vfs_gtfl(self, fldr, flnm):
+        # Full Filename: lllll-lllll-lllll-####-<Staqtapp-Koch VFS file type>
+        try:
+            if self._fc==1:
+                if not self._fx:
+                    if self._vfs_opnfl()<0:
+                        return -3
+                dirP = self._fl.find(bytes(f'◇//{fldr}/','utf-8'))
+                if dirP > -1:
+                    s = self._fl.find(bytes(f']{flnm}[','utf-8'),dirP)
+                    e = None
+                    if s > -1:
+                        s = s+len(flnm)
+                        e = self._fl.find(bytes(f'---[{flnm}]-','utf-8'),s)
+                        # Returned file content is always bytes.
+                        return self._fl[s+3:e-1]
+                    else:
+                        return -14
+                else:
+                    return -13
+            else:
+                return -1
+        except Exception as err_vfs_gtfl:
+            return -15
+# __________________________________________________________________________________
+
+    def _vfs_gtvr(self, fldr, flnm, vrnm):
+        
+        try:
+            pass
+        except Exception as err_vfs_getvar:
+            print(err_vfs_getvar)
 # __________________________________________________________________________________
 
     def _vfs_cfg(self, rst: bool, dsg: str, vls: list) -> int:
@@ -336,7 +370,7 @@ class VFS():
             print -7
 # __________________________________________________________________________________
 
-    def _vfs_lck(self,______,____,________,_______):
+    def _vfs_lck(self,______,____,________,_______) -> int:
         try:
             if self._fc==1:
                 if not self._fx:
@@ -385,6 +419,11 @@ class VFS():
             elif cmd[s].find('crtfl(') > -1:
                 cmds = cmd[s].replace('crtfl(','').strip(')')
                 rtrn = self._vfs_crtfl(cmds,bExt[0])
+            # _______________GTFL____________________________________________
+            # _______________________________________________________________
+            elif cmd[s].find('gtfl(') > -1:
+                	 cmds = cmd[s].replace('gtfl(','').strip(')').split(',')
+                	 rtrn = self._vfs_gtfl(cmds[0],cmds[1])
             # _______________CFG_____________________________________________
             # _______________________________________________________________
             elif cmd[s].find('cfg(') > -1:
@@ -410,5 +449,15 @@ def sqtpp_koch_vfs(fn: str, cmnds: list, btsExt: list):
     cls = VFS(fn)
     return cls._vfs_pntbrk(cmnds,btsExt)
     
-#print(sqtpp_koch_vfs('sk-vfs-0001.envfs',['encdir(sk/middle_dir,1,seten,uE!8%1F5*45?8Z#7,53#9@7h2C5/3%5R2,*&7!32&j6X%2Q+43,rViHqtAinoZarvltksmR)'],[None]))
+    
+def get_file_test():
+    
+    fRslt = sqtpp_koch_vfs('sk-vfs-0001.envfs',['mkdir(v/sk/dir_aux_0001)','encdir(sk/dir_aux_0001,1,seten,mE73&1df*45?8Z#7,A390@7h2C5%3%5R2,*&74327j6X%2Q#43,rViHqtAinoZarvltksmR'],[None])
+    fls = b']abcde-fghij-klmno-0001-aux[\nThis files contents.\n---[abcde-fghij-klmno-0001-aux]-'
+    data = sqtpp_koch_vfs('sk-vfs-0001.envfs',[f'crtfl(sk/{fRslt})',f'gtfl(sk/{fRslt},abcde-fghij-klmno-0001-aux)'],[fls])
+    print(data)
+    
+get_file_test()
+
+
 
