@@ -295,22 +295,20 @@ class VFS():
             return -9
 # __________________________________________________________________________________
 
-    def _vfs_gtfl(self, fldr, flnm):
-        # Full Filename: lllll-lllll-lllll-####-<Staqtapp-Koch VFS file type>
+    def _vfs_gtfl(self,_____,____):
         try:
             if self._fc==1:
                 if not self._fx:
                     if self._vfs_opnfl()<0:
                         return -3
-                dirP = self._fl.find(bytes(f'◇//{fldr}/','utf-8'))
-                if dirP > -1:
-                    s = self._fl.find(bytes(f']{flnm}[','utf-8'),dirP)
-                    e = None
-                    if s > -1:
-                        s = s+len(flnm)
-                        e = self._fl.find(bytes(f'---[{flnm}]-','utf-8'),s)
-                        # Returned file content is always bytes.
-                        return self._fl[s+3:e-1]
+                ______=self._fl.find(bytes(f'◇//{_____}/','utf-8'))
+                if ______>-1:
+                    ________=self._fl.find(bytes(f']{____}[','utf-8'),______)
+                    __=None
+                    if ________>-1:
+                        ________=________+len(____)
+                        __=self._fl.find(bytes(f'---[{____}]-','utf-8'),________)
+                        return self._fl[________+3:__-1]
                     else:
                         return -14
                 else:
@@ -321,10 +319,35 @@ class VFS():
             return -15
 # __________________________________________________________________________________
 
-    def _vfs_gtvr(self, fldr, flnm, vrnm):
+    def _vfs_gtvr(self, isSar, sarCat, fldr, flnm, vrnm):
+        # □|■|●|○vrnm<var_data><var_type><ksms_addrs(s)/seten_addr(s)>
         
+        # *****Chars '<' & '>' cannot be used in a variable's data*****
+        
+        # All three sections <> are encrypted at least once.
+        # If ● then env-var has multi encryption applied.
+        # If sar variables---returns a list of the category.
+        # If □ sar variables---sarCat encrypted to mstr key.
+        # All sar-vars are assigned to ten digit random vrnm
+        # of their one category naming: sarCat_##########<...
+        
+        # ***Use of sar-vars in a large dataset category stops
+        # any breach by ai/quantum computers in the future.
+        # The seten modules' addr routings far too entanlged
+        # in K-pointers of KSMS module's addr-sec assigns. Just
+        # one five digit added addr-sec to a 50 sar variables
+        # category count, then +50 million combinations added.
+        # 3,012 5-digit addr-sec uses are not unusual. Render
+        # of the most powerful ai/quantum computers in the ---
+        # future utterly fail in tracing the enc-routes linked.
+        # [Note: 50 sar-vars count does have hardware issues]
         try:
-            pass
+            if self._fc==1:
+                if not self._fx:
+                    if self._vfs_opnfl()<0:
+                        return -3
+                # See CALL::Doc_Secrets, _vfs_gtvr()
+                pass
         except Exception as err_vfs_getvar:
             print(err_vfs_getvar)
 # __________________________________________________________________________________
@@ -422,8 +445,8 @@ class VFS():
             # _______________GTFL____________________________________________
             # _______________________________________________________________
             elif cmd[s].find('gtfl(') > -1:
-                	 cmds = cmd[s].replace('gtfl(','').strip(')').split(',')
-                	 rtrn = self._vfs_gtfl(cmds[0],cmds[1])
+                cmds = cmd[s].replace('gtfl(','').strip(')').split(',')
+                rtrn = self._vfs_gtfl(cmds[0],cmds[1])
             # _______________CFG_____________________________________________
             # _______________________________________________________________
             elif cmd[s].find('cfg(') > -1:
@@ -450,14 +473,10 @@ def sqtpp_koch_vfs(fn: str, cmnds: list, btsExt: list):
     return cls._vfs_pntbrk(cmnds,btsExt)
     
     
-def get_file_test():
+def test():
     
-    fRslt = sqtpp_koch_vfs('sk-vfs-0001.envfs',['mkdir(v/sk/dir_aux_0001)','encdir(sk/dir_aux_0001,1,seten,mE73&1df*45?8Z#7,A390@7h2C5%3%5R2,*&74327j6X%2Q#43,rViHqtAinoZarvltksmR'],[None])
-    fls = b']abcde-fghij-klmno-0001-aux[\nThis files contents.\n---[abcde-fghij-klmno-0001-aux]-'
-    data = sqtpp_koch_vfs('sk-vfs-0001.envfs',[f'crtfl(sk/{fRslt})',f'gtfl(sk/{fRslt},abcde-fghij-klmno-0001-aux)'],[fls])
-    print(data)
     
-get_file_test()
+test()
 
 
 
