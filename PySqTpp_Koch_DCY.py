@@ -48,7 +48,7 @@ import string as srg
 from PySqTpp_Koch_VFS import sqtpp_koch_vfs
 # __________________________________________________________________________________
 
-def _vfs_mkdcy(vfsFlnm: str, isDF: bool, src: str, vfsPth: str) -> bool:
+def _vfs_mkdcy(vfsFlnm: str, src: str, vfsPth: str):
     # ::PUBLIC VERSION::
     
     # PARAMETERS:
@@ -105,45 +105,16 @@ def _vfs_mkdcy(vfsFlnm: str, isDF: bool, src: str, vfsPth: str) -> bool:
         # A dummy vfs sub-directory of random letters + random placed underscores.
         dcyDir = rdm_sub_dir(17,rdm.randint(18,42))
         # Fake directory will get seten-addr klp-length XOR encryption, three keys.
-        # The seten-addr XOR type encryption has padding & block ciphering shifting.
-        # Is not a multiple layered AES encryption routing as done on env-var data,
-        # however is prone to adding multiple newlines---making the taking apart of
-        # the vfs file for analysis useless if many of these vfs decoy directories.
-        # Reverse parsing tools will fail on the encoded padding lengths separated,
-        # similar to space-shift encryption seen in embedded firmware protections.
         kChrs = 'abcdefghijklmnopqrstuvwxyz0123456789?$&#*%!'
         kLst = []
         for x in range(3): kLst.append(''.join(scs.choice(kChrs) for ___ in range(16)))
-        if isDF:
-            # A decoy vfs encrypted directory and a decoy file via @src is expected.
-            # Call vfs mdl-cmds to make dir and encrypt it. Return will be enc-dir.
-            # A parameter can be added to this method for a seten-addr, other than
-            # the one used for this set of vfs commands. Must be a valid seten-addr.
-            dcyDir = sqtpp_koch_vfs(vfsFlnm,[f'mkdir({pth}{dcyDir})',f'encdir({vfsPth}/{dcyDir},1,seten,{kLst[0]},{kLst[1]},{kLst[2]},rViHqtAinoZarvltksmR'],[None])
-            sqtpp_koch_vfs(vfsFlnm,[f'crtfl({vfsPth}/{dcyDir})'],[src])
-            return dcyDir
-        else:
-            # A empty directory or not, encrypted.
-            pass
+        # A decoy vfs encrypted directory and a decoy file via @src is expected.
+        # This may add @src or not depending on type random keys made to encrypt.
+        # Is a higher percentage task it will add the source with decoy enc-dir.
+        # These changes to this function met to keep the .envfs file's integrity.
+        dcyDir = sqtpp_koch_vfs(vfsFlnm,[f'mkdir({pth}{dcyDir})',f'encdir({vfsPth}/{dcyDir},1,seten,{kLst[0]},{kLst[1]},{kLst[2]},rViHqtAinoZarvltksmR'],[None])
+        sqtpp_koch_vfs(vfsFlnm,[f'crtfl({vfsPth}/{str(dcyDir)})'],[src])
+        return str(dcyDir)
     except Exception as err_vfs_mkdcy:
-        return err_vfs_mkdcy
-         
-                
-#def test():  
-     #print(_vfs_mkdcy('sk-vfs-0001.envfs', True, str.encode(']aaaaa-bbbbb-ccccc-0001-enc[\nThis fake files contents.\n---[aaaaa-bbbbb-ccccc-0001-enc]-'),'sys'))    
-#test()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return -2
 
