@@ -11,7 +11,11 @@
 
 # ● ■  Description of this module's purpose:
     
-#       This module is the virtual file system for Staqtapp-Koch library.
+#       This module is the virtual file system for Staqtapp-Koch library:
+#       An diamond grade vfs, obfuscation/multi-encryption addr routing;
+#       includes XORTL time-lock settings for all modules' addr-locks. At
+#       runtime .envfs file will have hundreds of deep decoy sub-dirs----
+#       rendering future ai comprehension useless in cracking it's routing.
 
 
 # ● ■  Staqtapp-Koch Env-Vars Library Overview:
@@ -37,7 +41,6 @@
 
 # Imported core python module(s) for this module's objectives.
 import random
-import secrets
 import os
 import re
 
@@ -50,29 +53,32 @@ import PySqTpp_Koch_AES as aes
 # VFS FUNCTIONS' INT RETURNS:
     
     # NO ERRORS: 
-    #  1  = .envfs file is there
-    #  2  = .envfs file was read without error
-    #  3  = mkdir finished without error
-    #  4  = rsv number change finished without error
-    #  5  = lck sequence change finished without error
-    #  6  = crtfl finished without error
+    #  1  = -----------------------------------------------
+    #  2  = -----------------------------------------------
+    #  3  = -----------------------------------------------
+    #  4  = -----------------------------------------------
+    #  5  = -----------------------------------------------
+    #  6  = -----------------------------------------------
     
     # ERRORS:
-    # -1  = missing sqtpp-koch folder
-    # -2  = write new .envfs file error
-    # -3  = .envfs file read error
-    # -4  = mkdir parameter path error
-    # -5  = mkdir parameter path already exist
-    # -6  = could not perform mkdir
-    # -7  = rsv change error
-    # -8  = crtfl parameter path not found
-    # -9  = could not perform crtfl
-    # -10 = encdir parameter path not found
-    # -11 = encdir seten module addr not found
-    # -12 = could not perform encdir
-    # -13 = gtfl directory not found
-    # -14 = gtfl filename was not found
-    # -15 = could not perform gtfl
+    # -1  = -----------------------------------------------
+    # -2  = -----------------------------------------------
+    # -3  = -----------------------------------------------
+    # -4  = -----------------------------------------------
+    # -5  = -----------------------------------------------
+    # -6  = -----------------------------------------------
+    # -7  = -----------------------------------------------
+    # -8  = -----------------------------------------------
+    # -9  = -----------------------------------------------
+    # -10 = -----------------------------------------------
+    # -11 = -----------------------------------------------
+    # -12 = -----------------------------------------------
+    # -13 = -----------------------------------------------
+    # -14 = -----------------------------------------------
+    # -15 = -----------------------------------------------
+    # -16 = -----------------------------------------------
+    # -17 = -----------------------------------------------
+    # -18 = -----------------------------------------------
 # __________________________________________________________________________________
 
 class VFS():
@@ -89,14 +95,12 @@ class VFS():
 
     def _vfs_flchk(self) -> int:
         if os.path.isdir(self._cf):
-            # VFS file naming, sk-vfs-####.envfs
             if os.path.isfile(f'{self._cf}/{self._fn}'):
                 if self._vfs_opnfl() < 0:
                     return -3
                 else:
                     return 1
             else:
-                # Make new .envfs file.
                 structLst =['● ■ Staqtapp-Koch V.F.S.(v2.01.079)\n']
                 structLst.append('____________________________________________________________\n○-◇CFG<UY:?,UR:?,UM:?,UL:?,IA:?,WR:?,POS:?,CLP:?,ORDER:?,METHOD:?,EXPIRE:?>\n')
                 structLst.append('____________________________________________________________\n○-◇RSV<...>\n')
@@ -177,18 +181,18 @@ class VFS():
         return rltLst
 # __________________________________________________________________________________
 
-    def _vfs_gtflnm(self,_____) -> list:
+    def _vfs_gtflnm(self,_____):
         if not self._vfs_chkfx(True):
             return -3
         try:
             ________=[]
             __=bytes('\◇\/\/','utf-8')
-            ______=re.search(__+re.escape(_____)+b'\/',self._fl)
-            ________.append(______.span()[1])
-            __________=______.group().split(b'/')
+            _____=re.search(__+re.escape(_____)+b'\/',self._fl)
+            ________.append(_____.span()[1])
+            __________=_____.group().split(b'/')
             __=bytes('---◇-','utf-8')
-            ______=re.search(__+re.escape(__________[len(__________)-2])+b'-',self._fl)
-            ________.append(______.span()[0])
+            _____=re.search(__+re.escape(__________[len(__________)-2])+b'-',self._fl)
+            ________.append(_____.span()[0])
             _________=re.findall(rb'\[(.*?)\]',self._fl[________[0]:________[1]])
             if len(_________)>0:
                 return _________[0].replace(b'[',b'').strip(b']')
@@ -198,7 +202,7 @@ class VFS():
             return None
 # __________________________________________________________________________________
 
-    def _vfs_mkdir(self,__) -> int:
+    def _vfs_mkdir(self,__):
         try:
             if self._fc==1:
                 if not self._fx:
@@ -244,45 +248,43 @@ class VFS():
             return -6
 # __________________________________________________________________________________
 
-    def _vfs_encdir(self, pth, islobe, dsg, xnrA, xnrB, xnrC, stnAdr):
+    def _vfs_encdir(self,_____,____,______,_,__,___,_________):
         try:
             if self._fc==1:
                 if not self._vfs_chkfx(True):
                     return -3
-                pthLst = pth.split('/')
-                if self._fl.find(bytes(f'◇//{pthLst[0]}/{pthLst[1]}/','utf-8')) > -1:
-                    xnr = None
-                    encStn = None
-                    if islobe > 0:
-                        if dsg == 'xnr':
-                            xnr = immr.sqtpp_koch_get_addr_xnr_lst(xnrA,xnrB,xnrC,random.randint(32,64))
-                            for x in range(len(xnr)): xnr[x] = str(xnr[x])
-                            xnr = ''.join(xnr)
-                            self._fl = self._fl.replace(bytes(f'◇//{pthLst[0]}/{pthLst[1]}/','utf-8'),bytes(f'◇//{pthLst[0]}/{xnr}/','utf-8'))
-                            self._fl = self._fl.replace(bytes(f'---◇-{pthLst[1]}-','utf-8'),bytes(f'---◇-{xnr}-','utf-8'))
-                        elif dsg == 'seten':
-                            if not self._fsx: self._fs = self._vfs_adrsec('Seten')
-                            vld = False
-                            for sa in range(len(self._fs)):
-                                if stnAdr == self._fs[sa]:
-                                    vld = True
+                _____=_____.split('/')
+                if self._fl.find(bytes(f'◇//{_____[0]}/{_____[1]}/','utf-8'))>-1:
+                    ___________=None
+                    _______________=None
+                    if ____>0:
+                        if ______=='xnr':
+                            ___________=immr.sqtpp_koch_get_addr_xnr_lst(_,__,___,random.randint(32,64))
+                            for ____________________ in range(len(___________)):___________[____________________]=str(___________[____________________])
+                            ___________=''.join(___________)
+                            self._fl = self._fl.replace(bytes(f'◇//{_____[0]}/{_____[1]}/','utf-8'),bytes(f'◇//{_____[0]}/{___________}/','utf-8'))
+                            self._fl = self._fl.replace(bytes(f'---◇-{_____[1]}-','utf-8'),bytes(f'---◇-{___________}-','utf-8'))
+                        elif ______=='seten':
+                            if not self._fsx: self._fs=self._vfs_adrsec('Seten')
+                            ________________=False
+                            for ______________________ in range(len(self._fs)):
+                                if _________==self._fs[______________________]:
+                                    ________________=True
                                     break
-                            if vld:
-                                encStnAddr = lambda a,k1,k2,k3: ''.join(''.join(chr(ord(c)^ord(k1)^ord(k2)^ord(k3)) for c,k1,k2,k3 in zip(blk.ljust(8,'!'),k1,k2,k3)) for blk in (a[i:i+8] for i in range(0,len(a),8)))
-                                encStn = encStnAddr(stnAdr,xnrA,xnrB,xnrC)
-                                self._fl = self._fl.replace(bytes(f'◇//{pthLst[0]}/{pthLst[1]}/','utf-8'),bytes(f'◇//{pthLst[0]}/{encStn}/','utf-8'))
-                                self._fl = self._fl.replace(bytes(f'---◇-{pthLst[1]}-','utf-8'),bytes(f'---◇-{encStn}-','utf-8'))
+                            if ________________:
+                                __________________=lambda a,k1,k2,k3: ''.join(''.join(chr(ord(c)^ord(k1)^ord(k2)^ord(k3)) for c,k1,k2,k3 in zip(blk.ljust(8,'!'),k1,k2,k3)) for blk in (a[i:i+8] for i in range(0,len(a),8)))
+                                _______________=__________________(_________,_,__,___)
+                                self._fl = self._fl.replace(bytes(f'◇//{_____[0]}/{_____[1]}/','utf-8'),bytes(f'◇//{_____[0]}/{_______________}/','utf-8'))
+                                self._fl = self._fl.replace(bytes(f'---◇-{_____[1]}-','utf-8'),bytes(f'---◇-{_______________}-','utf-8'))
                             else:
                                 return -11
                     else:
-                        pass
+                        return '_!_'
                     with open(f'{self._cf}/{self._fn}',mode='wb') as fEncDirObj: fEncDirObj.write(self._fl)
-                    if dsg == 'drl-hv':
-                        return 'drl-hv not yet implemented'
-                    elif dsg == 'xnr':
-                        return xnr
-                    elif dsg == 'seten':
-                        return encStn
+                    if ______=='xnr':
+                        return ___________
+                    elif ______=='seten':
+                        return _______________
                 else:
                     return -10
             else:
@@ -291,7 +293,7 @@ class VFS():
             return -12
 # __________________________________________________________________________________
 
-    def _vfs_crtfl(self,____,______) -> int:
+    def _vfs_crtfl(self,____,______):
         try:
             if self._fc==1:
                 if not self._vfs_chkfx(True):
@@ -342,43 +344,33 @@ class VFS():
             return -15
 # __________________________________________________________________________________
 
-    def _vfs_gtvr(self, isSar, sarCat, fldr, flnm, vrnm):
-        # □|■|●|○vrnm<var_data><var_type><ksms_addrs(s)/seten_addr(s)>
-        
-        # *****Chars '<' & '>' cannot be used in a variable's data*****
-        
-        # All three sections <> are encrypted at least once.
-        # If ● then env-var has multi encryption applied.
-        # If sar variables---returns a list of the category.
-        # If □ sar variables---sarCat encrypted to mstr key.
-        # All sar-vars are assigned to ten digit random vrnm
-        # of their one category naming: sarCat_##########<...
+    def _vfs_gtvr(self,____,_____,______,_______,________):
         try:
             if self._fc==1:
                 if not self._vfs_chkfx(True):
                     return -3
-                pass
+                _____=self._fl.find(bytes(f'◇//{____}/{_____}/','utf-8'))
+                _______=None
+                if _____>-1:
+                    ________=None
+                    ___________=str.encode('[\□|\■|\○|\●]')
+                    __________=re.findall(___________+re.escape(str.encode(______))+b'<(?s:.*?).*><.*?><.*?>',self._fl)
+                    if len(__________)>0:
+                        __________[0]=__________[0].replace(b'>',b'')
+                        __________=__________[0].split(b'<')
+                        ________=re.findall(b'[\xa1|\xa0|\x8b|\x8f]',__________[0])
+                        ________=________[0]
+                        __________[0]=__________[0].replace(________,b'')
+                        __________.append(________)
+                        return __________
+                    else:
+                        return -17
+                else:
+                    return -16
             else:
                 return -1
         except Exception as err_vfs_getvar:
-            print(err_vfs_getvar)
-# __________________________________________________________________________________
-
-    def _vfs_cfg(self, rst: bool, dsg: str, vls: list) -> int:
-        # vls/UY:d,UR:d,UM:d,UL:d,IA:i,WR:i,POS:i,CLP:i,ORDER:f,METHOD:f,EXPIRE:f
-        if not rst:
-            if dsg == 'yrml':
-                pass
-            elif dsg == 'iwpc':
-                pass
-            elif dsg == 'order':
-                pass
-            elif dsg == 'method':
-                pass
-            elif dsg == 'expire':
-                pass
-        else:
-            pass
+            return -18
 # __________________________________________________________________________________
 
     def _vfs_rsv(self,__,_______,_____,___________,___,_________,________,_) -> int:
@@ -421,18 +413,12 @@ class VFS():
         nmsc = None
         rtrn = None
         for s in range(len(cmd)):
-            # _______________LSTDIR__________________________________________
-            # _______________________________________________________________
             if cmd[s].find('lstdir(') > -1:
                 cmds = cmd[s].replace('lstdir(','').strip(')')
                 rtrn = self._vfs_lstdir(cmds)
-            # _______________MKDIR___________________________________________
-            # _______________________________________________________________
             elif cmd[s].find('mkdir(') > -1:
                 cmds = cmd[s].replace('mkdir(','').strip(')')
                 rtrn = self._vfs_mkdir(cmds)
-            # _______________ENCDIR__________________________________________
-            # _______________________________________________________________
             elif cmd[s].find('encdir(') > -1:
                 cmds = cmd[s].replace('encdir(','').strip(')').split(',')
                 nmsc = int(cmds[1])
@@ -441,37 +427,25 @@ class VFS():
                 elif nmsc == 1 and cmds[2] == 'seten':
                     rtrn = self._vfs_encdir(cmds[0],nmsc,cmds[2],cmds[3],cmds[4],cmds[5],cmds[6])
                 else:
-                    pass
-            # _______________CRTFL___________________________________________
-            # _______________________________________________________________
+                    return '_!_'
             elif cmd[s].find('crtfl(') > -1:
                 cmds = cmd[s].replace('crtfl(','').strip(')')
                 rtrn = self._vfs_crtfl(cmds,bExt[0])
-            # _______________GTFLNM__________________________________________
-            # _______________________________________________________________
             elif cmd[s].find('gtflnm') > -1:
                 cmds = cmd[s].replace('gtflnm(','').strip(')')
                 rtrn = self._vfs_gtflnm(bExt[0])
-            # _______________GTFL____________________________________________
-            # _______________________________________________________________
             elif cmd[s].find('gtfl(') > -1:
                 cmds = cmd[s].replace('gtfl(','').strip(')').split(',')
                 rtrn = self._vfs_gtfl(cmds[0],cmds[1])
-            # _______________CFG_____________________________________________
-            # _______________________________________________________________
-            elif cmd[s].find('cfg(') > -1:
-                pass
-            # _______________RSV_____________________________________________
-            # _______________________________________________________________
+            elif cmd[s].find('gtvr(') > -1:
+                cmds = cmd[s].replace('gtvr(','').strip(')').split(',')
+                rtrn = self._vfs_gtvr(cmds[0],bExt[0],cmds[1],int(cmds[2]),cmds[3])
             elif cmd[s].find('rsv(') > -1:
                 cmds = cmd[s].replace('rsv(','').strip(')').split(',')
                 rtrn = self._vfs_rsv(bExt[0],bExt[1],bExt[2],int(cmds[0]),cmds[1],bExt[3],bExt[4],int(cmds[2]))
-            # _______________LCK_____________________________________________
-            # _______________________________________________________________
             elif cmd[s].find('lck(') > -1:
                 cmds = cmd[s].replace('lck(','').strip(')')
                 rtrn = self._vfs_lck(bExt[0],bExt[1],bExt[2],int(cmds))
-                
             if isinstance(rtrn,int):
                 if rtrn < 0:
                     break
@@ -481,14 +455,4 @@ class VFS():
 def sqtpp_koch_vfs(fn: str, cmnds: list, btsExt: list):
     cls = VFS(fn)
     return cls._vfs_pntbrk(cmnds,btsExt)
-    
-    
-def test():
-    
-    #fl = b']__loadf-loadf_-_loadf__-1568-rux[\nload file sys contents\n[__loadf-loadf_-loadf-1568-rux]'
-    print(sqtpp_koch_vfs('sk-vfs-0001.envfs',['gtflnm()'],[b'sys/load_file']))
-    
-test()
-
-
 
