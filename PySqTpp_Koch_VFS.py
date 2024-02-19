@@ -11,11 +11,18 @@
 
 # ● ■  Description of this module's purpose:
     
-#       This module is the virtual file system for Staqtapp-Koch library:
-#       An diamond grade vfs, obfuscation/multi-encryption addr routing;
-#       includes XORTL time-lock settings for all modules' addr-locks. At
-#       runtime .envfs file will have hundreds of deep decoy sub-dirs----
-#       rendering future ai comprehension useless in cracking it's routing.
+#       This module is the virtual file system for this env-var library.
+#       It's features include XORTL time locks, fast deep dir changes,
+#       AES dir encryption, vfs file namespace linking with encrypted
+#       dirs, XNR-addr stacked dir pointer obfuscations, and multiple
+#       settings for embedded settings with other vfs files tiled. This
+#       vfs is a diamond grade vfs, no two files are allowed of sub-dir.
+#       Any sub-directories in /sk, /sys or /env main directories must
+#       contain only one file & be of a correct compressed type naming.
+#       Also known as a submarine type vfs, no leaking between sub-dirs.
+#       Of the smartest ai comprehensions in the future, fail at finding
+#       which sub-dir/file are decoy or not when implemented correctly.
+#       The XORTL time lock setting further complicates those parsings.
 
 
 # ● ■  Staqtapp-Koch Env-Vars Library Overview:
@@ -431,7 +438,7 @@ class VFS():
             elif cmd[s].find('crtfl(') > -1:
                 cmds = cmd[s].replace('crtfl(','').strip(')')
                 rtrn = self._vfs_crtfl(cmds,bExt[0])
-            elif cmd[s].find('gtflnm') > -1:
+            elif cmd[s].find('gtflnm(') > -1:
                 cmds = cmd[s].replace('gtflnm(','').strip(')')
                 rtrn = self._vfs_gtflnm(bExt[0])
             elif cmd[s].find('gtfl(') > -1:
