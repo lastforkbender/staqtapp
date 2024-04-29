@@ -1,5 +1,11 @@
 # staqtapp
 
-● Staqtapp is a full global variables stack feature rich library, covering all solid i/o functions calls from the stpp.py module or stpx.py pro module. Features included are precise parsings, interchangable & dynamic .tpqt lock function files for avoiding entanglements, mmap responsive reads-writes-edits across all it's functional calls and much more like the scanning of any py module for potential global variables conflicts. Staqtapp uses only in-built python libraries and has no current package release, until it's scope exceeds any expected relations or utterly bypass any formatted opinions of filed global variables uses. With q-bit computing very near. A long-term goal of Staqtapp is to provide alt simulations of such circumstanced in the future, whereof global variables use by concentrated files use in hybrid communication layers quickly desolves accepted bad opinions of global variables use altogether.
+● Staqtapp 1.2
 
-GJR-6943-8205011
+One of a slots kind env-var library module. Includes all needed env-var uses and exotic ones only found of Staqtapp.
+
+Staqtapp 1.2 uses a vfs system exclusive for env-var keeps and functional interactions.
+
+*This version includes the rev9 feature central to Staqtapp 1, that builds it's own custom env-var libaries with bluetooth integrations of communication for other builds.
+
+(The library is a work in progress and differs greatly from the Koch version of Staqtapp, which is the most secure env-vars library in the world. That version and it's updates are no longer posted for public content.)
