@@ -1,4 +1,4 @@
-# Staqtapp v1.2.57 - rev9
+# Staqtapp-v1.2.59 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -96,6 +96,17 @@
 #     not only prove poor performance but will also be insecure in the near future.
 #     (That includes Kyber lattice encrypt that can be cracked by parentheses char
 #     chewing attacks using a dual side channel repeater from a mere single phone.)
+#
+# --> revar(isNewSetVfsPath, newVfsFileName, newVfsDirName, newVfsFldrName),
+#     replicates a new .sqtpp vfs file in the .../staqtapp/ folder, having only the
+#     env-var(s) from the current set vfs file that are linked to a tpqt lockvar
+#     entry. @isNewSetVfsPath as True will reset current set vfs file path to the
+#     now new vfs file and it's tqpt path. (If this function is called and the ----
+#     current set vfs file has no tpqt lockvar entries found a exception is raised.)
+#     **This function is used for advanced rev9 staqtapp features in building custom
+#     env-var library modules from within a staqtapp1.2 vfs thru self-replications.
+#     Can respawn any missing stalkvar() env-vars to a new self-made svvs sub file.
+#     The svvs file from the current set vfs file is lost on the new transfer.**
 #
 # --> findvar(varName), returns True if variable present to set vfs tqpt file.
 #
@@ -279,6 +290,26 @@ class Sqtpp(dict):
         else:
             self.mcf_err_handler(8, 'keyvar')
 #_______________________________________________________________________________________
+    def mcf_revar(self, isNewSetPth: bool, newVfsFlNm: str, newVfsDirNm: str, newVfsFldrNm: str):
+        # Respawns a new .sqtpp vfs file via tpqt lockvar tagged env-vars only content.
+        # __slots__ in use: (_sRtrn)
+        sfCls = SqtppFncs()
+        if newVfsFlNm.find(':') < 0:
+            if newVfsDirNm != newVfsFldrNm:
+                if sfCls.sqtpp_chars_check(1, newVfsDirNm):
+                    if sfCls.sqtpp_chars_check(1, newVfsFldrNm):
+                        self._sRtrn = sfCls.sqtpp_revar(isNewSetPth, newVfsFlNm, newVfsDirNm, newVfsFldrNm)
+                        if self._sRtrn == -1: self.mcf_err_handler(6, 'revar')
+                        elif self._sRtrn == -2: self.mcf_err_handler(7, 'keyvar')
+                        elif self._sRtrn == -3: self.mcf_err_handler(25, 'keyvar')
+                        elif self._sRtrn == -4: self.mcf_err_handler(26, 'keyvar')
+                        elif self._sRtrn == -5: self.mcf_err_handler(27, 'keyvar')
+                        elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'revar')
+                    else: self.mcf_err_handler(1, 'revar')
+                else: self.mcf_err_handler(2, 'revar')
+            else: self.mcf_err_handler(3, 'revar')
+        else: self.mcf_err_handler(4, 'revar')
+#_______________________________________________________________________________________
     def mcf_findvar(self, varNm: str):
         # Searches for @varNm in listed vars of set path vfs tqpt file contents.
         # __slots__ in use: (_sRtrn)
@@ -357,6 +388,9 @@ class Sqtpp(dict):
             # 22 = @initialTreePathList has invalid chars
             # 23 = invalid chars for a smvt tree branch id/key
             # 24 = invalid chars for a smvt tree branch value
+            # 25 = revar: new vfs file name same as current set vfs file name
+            # 26 = no found tpqt lockvar entries
+            # 27 = revar: no found tqpt env-vars matched to tpqt lockvar entries
             if altErrCd == 1: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name chars; allowed -a-zA-Z')
             elif altErrCd == 2: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid directory name chars; allowed -a-zA-Z')
             elif altErrCd == 3: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name, cannot be the same as directory name')
@@ -381,6 +415,9 @@ class Sqtpp(dict):
             elif altErrCd == 22: raise Exception("staqtapp1.2 (" + clnFnc + ") error: invalid chars @initialTreePathList; non-allowed chars are \n,':{}☆")
             elif altErrCd == 23: raise Exception("staqtapp1.2 (" + clnFnc + ") error: invalid chars for a smv branch tree id; invalid chars: \n,':{}☆")
             elif altErrCd == 24: raise Exception("staqtapp1.2 (" + clnFnc + ") error: invalid chars for a smv branch tree value; invalid chars: \n,':{}☆")
+            elif altErrCd == 25: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @newVfsFileName cannot be the same as the current set vfs file name')
+            elif altErrCd == 26: raise Exception(f'staqtapp1.2 ({clnFnc}) error: no found tpqt lockvar entries...')
+            elif altErrCd == 27: raise Exception(f'staqtapp1.2 ({clnFnc}) error: no found tqpt env-vars matched to tpqt lockvar entries')
         else:
             if self._sRtrn == 'FNC-ERR': raise Exception(f'staqtapp1.2 {clnFnc}-->{self._sErr}')
             elif self._sRtrn == 'FOO-BAR': raise Exception('staqtapp1.2 io error: unable to perform file reads or writes')
@@ -401,7 +438,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆staqtapp-v1.2.57\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.59\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -526,6 +563,66 @@ class SqtppFncs(Sqtpp):
         except Exception as err_vars_add:
             if not isStlkVar: self._sErr = f'staqtapp1.2 (vars_add) error: {err_vars_add}'
             else: self._sErr = f'staqtapp1.2 (var_stalk) error: {err_vars_add}'
+            return self.sqtpp_err_rcrd(self._sErr)
+#_______________________________________________________________________________________
+    def sqtpp_revar(self, isCurrVfsPth: bool, newVfsFlNm: str, newVfsDirNm: str, newVfsFldrNm: str):
+        # Replicates a new .sqtpp vfs file from current set vfs file, having env-vars
+        # from the current set vfs that are only associated with a tpqt lockvar entry.
+        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rLstD, _sf_StrA, _sf_rIntA, _sf_rIntB)
+        # returns:
+        # -1=empty vfs path settings file
+        # -2=invalid vfs path
+        # -3=@newVfsFlNm same as the current set vfs file name
+        # -4=no found lockvar env-var entries
+        # -5=no found tqpt env-var entries for a new revar vfs
+        try:
+            if self.sqtpp_set_vfs_file() == 1:
+                if self.sqtpp_vfs_tqpt_file(True) != -1:
+                    if self.sqtpp_vfs_tpqt_file(True) != -1:
+                        if newVfsFlNm != self._sf_sVfs:
+                            self._sf_rLstA = re.findall(r'<\:.*?=', self._sf_sPq)
+                            if len(self._sf_rLstA) > 0:
+                                self._sf_rIntB = len(self._sf_rLstA)
+                                self._sf_rLstC = []
+                                for self._sf_rIntA in range(self._sf_rIntB):
+                                    self._sf_rStrA = self._sf_rLstA[self._sf_rIntA].replace('<:','').replace('=','')
+                                    self._sf_rLstB = re.findall(r'(?s:)'+re.escape(self._sf_rStrA)+r'<@qp\(.*?\):>', self._sf_sQp)
+                                    if len(self._sf_rLstB) > 0: self._sf_rLstC.append(self._sf_rLstB[0])
+                                    else:
+                                        self._sf_rLstD = re.findall(r'<:'+re.escape(self._sf_rStrA)+r'=(?s:.*?).*:>', self._sf_sPq)
+                                        if len(self._sf_rLstD) > 0:
+                                            self._sf_sPq = self._sf_sPq.replace(self._sf_rLstD[0], '')
+                                            self._sf_sPq = self._sf_sPq.replace('\n\n','')
+                                if len(self._sf_rLstC) > 0:
+                                    self._sf_rLstC = '\n'.join(self._sf_rLstC)
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.59\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    if isCurrVfsPth:
+                                        self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
+                                        self._sf_rLstB = self._sf_sSrc.split(':')
+                                        self._sf_rLstB[0] = newVfsFlNm
+                                        self._sf_rLstB[1] = newVfsDirNm
+                                        self._sf_rLstB[2] = newVfsFldrNm
+                                        self._sf_rLstB[3] = f'sub-{newVfsFldrNm}'
+                                        self._sf_rLstB[4] = f'tqpt-{newVfsFldrNm}'
+                                        self._sf_rLstB = ':'.join(self._sf_rLstB)
+                                        self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', self._sf_rLstB)
+                                    self._sf_rLstC = None
+                                    self._sf_sQp = None
+                                    self._sf_sPq = None
+                                else:
+                                    return -5
+                            else:
+                                return -4
+                        else:
+                            return -3
+                    else:
+                        return -2
+                else:
+                    return -2
+            else:
+                return -1
+        except Exception as err_revar:
+            self._sErr = f'staqtapp1.2 (revar) error: {err_revar}'
             return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
     def sqtpp_spok_mv_tree(self, trNm: str, initPthLst: list):
@@ -1520,6 +1617,39 @@ class SqtppFncs(Sqtpp):
         else:
             return True
 #_______________________________________________________________________________________
+    def reset_slots(self, isStcSlts: bool):
+        # Resets slots attribute variables to None.
+        # returns: none
+        if isStcSlts:
+            self._sf_sVfs = None
+            self._sf_sVfsFldr = None
+            self._sf_sSrc = None
+            self._sf_sQp = None
+            self._sf_sPq = None
+            self._sf_sVd = None
+            self._sf_sRtrn = None
+            self._sf_sKntId = None
+        self._sf_rStrA = None
+        self._sf_rStrB = None
+        self._sf_rStrC = None
+        self._sf_rStrD = None
+        self._sf_rStrE = None
+        self._sf_rLstA = None
+        self._sf_rLstB = None
+        self._sf_rLstC = None
+        self._sf_rLstD = None
+        self._sf_rIntA = None
+        self._sf_rIntB = None
+        self._sf_rIntC = None
+        self._sf_rIntD = None
+        self._sf_rIntE = None
+        self._sf_rIntF = None
+        self._sf_rIntG = None
+        self._sf_rBoolA = None
+        self._sf_rBoolB = None
+        self._sf_rBoolC = None
+        self._sf_rBoolD = None
+#_______________________________________________________________________________________
     def sqtpp_err_rcrd(self, errMsg: str) -> str:
         # Writes any main parsing function type errors to a err-log file to staqtapp1_2 folder.
         # __slots__ in use: (none)
@@ -1564,6 +1694,10 @@ def keyvar(varName: str, fncName) -> bool:
     sqtppCls = Sqtpp()
     return sqtppCls.mcf_keyvar(varName, fncName)
 #_______________________________________________________________________________________
+def revar(isNewSetVfsPath, newVfsFileName, newVfsDirName, newVfsFldrName):
+    sqtppCls = Sqtpp()
+    sqtppCls.mcf_revar(isNewSetVfsPath, newVfsFileName, newVfsDirName, newVfsFldrName)
+#_______________________________________________________________________________________
 def findvar(varName: str) -> bool:
     sqtppCls = Sqtpp()
     return sqtppCls.mcf_findvar(varName)
@@ -1590,6 +1724,7 @@ def stalkvar(varName: str, varData: str):
     #addbranch_stx('tree_test1', 'b', 'knt', 7948233)
     #print(getbranch_stx(True, 'tree_test1', None))
     #print(keyvar('faster_stacks', 'someFnc8'))
+    #revar(True, 'new-vfs', 'new-vfs-dir', 'new-vfs-folder')
     #--------------------------------------------------------------------<'(((((>< 
 #test()
         
