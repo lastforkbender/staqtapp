@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.61 rev9
+# Staqtapp-v1.2.63 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -38,6 +38,24 @@
 #     a comma separation for a list return when more than one. This function does
 #     not change variable data, see changevar to edit stacked variable datas. Is
 #     suggested to use lockvar after adding a variable with this function.
+#
+# --> changevar(varName, newVarData), change @varName env-var data to @newVarData
+#     if @newVarData has proper @qp(...): data tag(s) found. To change the names
+#     of env-vars in a vfs tqpt source, see renamevar. Duplicates only allowed for
+#     the stalkvar() feature. *This function should be used with lockvar & keyvar.
+#     If the @varName is a stalked env-var, the original stalked and not the other
+#     incremented spawned vars from it, then this function will check if any of --
+#     the incremented spawned var data matches the @newVarData string. If it does
+#     then any spawned vars matching @newVarData are removed; and any spawned vars
+#     left are renamed of a new incremented naming, re-named to a new number order.
+#     This changes no env-var data. Becomes a find and remove operation allowing a
+#     programmer more advanced control over stalkvar spawned env-vars, in a larger
+#     scope use of stalkvar env-var spawnings in the tqpt source. If any spawned
+#     env-var is removed from tqpt and svvs sub file listings, is also removed @ a
+#     lockvar tpqt listing if found. Will not do any of this if the stalked var is
+#     read as having only one spawned env-var. Raises a non-allowed svvs exception.
+#     If this function switches to this type find & del, returns named list of the
+#     spawned env-var(s) it deleted or else returns None.
 #
 # --> addtree_stx(treeName, initialTreePathList), adds a initial dict type tree
 #     structure to vfs tqpt stacks for deep spahk-mv type tree edits. @initial-
@@ -229,6 +247,21 @@ class Sqtpp(dict):
                 elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'addvar')
             else: self.mcf_err_handler(8, 'addvar')
         else: self.mcf_err_handler(5, 'addvar')
+#_______________________________________________________________________________________
+    def mcf_changevar(self, varNm: str, newVarDt: str):
+        # See changevar at top of this module for description of this linked method.
+        # __slots__ in use: (_sRtrn)
+        sfCls = SqtppFncs()
+        if sfCls.sqtpp_chars_check(2, varNm):
+            self._sRtrn = sfCls.sqtpp_vars_change(varNm, newVarDt)
+            if self._sRtrn == -1: self.mcf_err_handler(6, 'changevar')
+            elif self._sRtrn == -2: self.mcf_err_handler(7, 'changevar')
+            elif self._sRtrn == -3: self.mcf_err_handler(9, 'changevar')
+            elif self._sRtrn == -4: self.mcf_err_handler(10, 'changevar')
+            elif self._sRtrn == -5: self.mcf_err_handler(11, 'changevar')
+            elif self._sRtrn == -6: self.mcf_err_handler(14, 'changevar')
+            elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'changevar')
+        else: self.mcf_err_handler(8, 'changevar')
 #_______________________________________________________________________________________
     def mcf_addtree_stx(self, trNm: str, initPthLst: list):
         # Adds a spahk-mv type initial path keys built dict tree to vfs tqpt source.
@@ -468,7 +501,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.61\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.63\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -595,6 +628,56 @@ class SqtppFncs(Sqtpp):
             else: self._sErr = f'staqtapp1.2 (var_stalk) error: {err_vars_add}'
             return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
+    def sqtpp_vars_change(self, varNm: str, newVarDt: str):
+        # This module heavy quality slots, see changevar at top for method description.
+        # Edit of this function is problematic and may cause rev9 to fight against you
+        # having any further use of this module as an advanced purpose env-var usage.
+        # **All rev9 features/methods are of UXRG obfuscation and hardened trained on
+        # the fovea-mantis script engine to recognize standard methods have changed.**
+        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_rLstA, _sf_rStrA, _sf_rIntA, _sf_rBoolA, )
+        # returns:
+        # -1=empty vfs path settings file
+        # -2=invalid vfs path
+        # -3=newline chars found
+        # -4=no @qp(...): data declaring found
+        # -5=no closing ): for @qp( data tag found
+        # -6=@varNm not found in tqpt source
+        try:
+            if self.sqtpp_set_vfs_file() == 1:
+                if self.sqtpp_vfs_tqpt_file(True) != -1:
+                    self._sf_rIntA = self.sqtpp_tqpt_spdr(True, False, None, newVarDt)
+                    if self._sf_rIntA == 2:
+                        return -3
+                    elif self._sf_rIntA == 6:
+                        return -4
+                    elif self._sf_rIntA == 7:
+                        return -5
+                    self._sf_rBoolA = False
+                    if self._sf_sSrc.find(f'<sbf-{self._sf_sVfsFldr}-svvs:') > -1:
+                        if self.sqtpp_svvs_list(varNm) == 8: self._sf_rBoolA = True
+                    if not self._sf_rBoolA:
+                        # @varNm is not a stalked env-var.
+                        if self.sqtpp_var_value(varNm):
+                            self._sf_rStrA = self._sf_sQp
+                            self._sf_sQp = self._sf_sQp.replace(f'{varNm}<{self._sf_sVd}>', f'{varNm}<{newVarDt}>')
+                            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc.replace(f'{self._sf_rStrA}:\n', f'{self._sf_sQp}:\n'))
+                            self._sf_sSrc = None
+                            self._sf_sQp = None
+                            self._sf_rStrA = None
+                        else:
+                            return -6
+                    else:
+                        # Is now a spawned env-var(s) find & del method.
+                        # TODO
+                        raise Exception('not yet implemented')
+                else:
+                    return -2
+            else:
+                return -1
+        except Exception as err_vars_change:
+            self._sErr = f'staqtapp1.2 (changevar) error: {err_vars_change}'
+            return self.sqtpp_err_rcrd(self._sErr)
+#_______________________________________________________________________________________
     def sqtpp_revar(self, isCurrVfsPth: bool, newVfsFlNm: str, newVfsDirNm: str, newVfsFldrNm: str):
         # Replicates a new .sqtpp vfs file from current set vfs file, having env-vars
         # from the current set vfs that are only associated with a tpqt lockvar entry.
@@ -625,7 +708,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.61\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.63\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -1735,6 +1818,10 @@ def addvar(varName: str, varData: str):
     sqtppCls = Sqtpp()
     sqtppCls.mcf_addvar(varName, varData)
 #_______________________________________________________________________________________
+def changevar(varName: str, newVarData: str):
+    sqtppCls = Sqtpp()
+    return sqtppCls.mcf_changevar(varName, newVarData)
+#_______________________________________________________________________________________
 def addtree_stx(treeName: str, initialTreePathList: list):
     sqtppCls = Sqtpp()
     sqtppCls.mcf_addtree_stx(treeName, initialTreePathList)
@@ -1794,6 +1881,7 @@ def stalkvar(varName: str, varData: str):
     #print(keyvar('faster_stacks', 'someFnc8'))
     #revar(True, 'new-vfs', 'new-vfs-dir', 'new-vfs-folder')
     #print(loadvar(True, 'faster_stacks3_1', 'mode=deque'))
+    #print(changevar('faster_stacks3_1', '@qp(spawned env-var data has changed):'))
     #--------------------------------------------------------------------<'(((((>< 
 #test()
         
