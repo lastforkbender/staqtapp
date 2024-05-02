@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.63 rev9
+# Staqtapp-v1.2.70 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -260,7 +260,11 @@ class Sqtpp(dict):
             elif self._sRtrn == -4: self.mcf_err_handler(10, 'changevar')
             elif self._sRtrn == -5: self.mcf_err_handler(11, 'changevar')
             elif self._sRtrn == -6: self.mcf_err_handler(14, 'changevar')
+            elif self._sRtrn == -7: self.mcf_err_handler(28, 'changevar')
+            elif self._sRtrn == -8: self.mcf_err_handler(29, 'changevar')
             elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'changevar')
+            else:
+                return self._sRtrn
         else: self.mcf_err_handler(8, 'changevar')
 #_______________________________________________________________________________________
     def mcf_addtree_stx(self, trNm: str, initPthLst: list):
@@ -454,6 +458,8 @@ class Sqtpp(dict):
             # 25 = revar: new vfs file name same as current set vfs file name
             # 26 = no found tpqt lockvar entries
             # 27 = revar: no found tqpt env-vars matched to tpqt lockvar entries
+            # 28 = svvs file has only one spawned var from stalkvar
+            # 29 = cannot remove all spawned env-vars(changevar)
             if altErrCd == 1: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name chars; allowed -a-zA-Z')
             elif altErrCd == 2: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid directory name chars; allowed -a-zA-Z')
             elif altErrCd == 3: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name, cannot be the same as directory name')
@@ -481,6 +487,8 @@ class Sqtpp(dict):
             elif altErrCd == 25: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @newVfsFileName cannot be the same as the current set vfs file name')
             elif altErrCd == 26: raise Exception(f'staqtapp1.2 ({clnFnc}) error: no found tpqt lockvar entries...')
             elif altErrCd == 27: raise Exception(f'staqtapp1.2 ({clnFnc}) error: no found tqpt env-vars matched to tpqt lockvar entries')
+            elif altErrCd == 28: raise Exception(f'staqtapp1.2 ({clnFnc}) error: svvs has one spawned env-var, only stalkvar can remove a stalked variable and a svvs listing')
+            elif altErrCd == 29: raise Exception(f'staqtapp1.2 ({clnFnc}) error: cannot remove all spawned vars, only stalkvar can remove all spawned env-vars')
         else:
             if self._sRtrn == 'FNC-ERR': raise Exception(f'staqtapp1.2 {clnFnc}-->{self._sErr}')
             elif self._sRtrn == 'FOO-BAR': raise Exception('staqtapp1.2 io error: unable to perform file reads or writes')
@@ -501,7 +509,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.63\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.70\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -634,7 +642,7 @@ class SqtppFncs(Sqtpp):
         # having any further use of this module as an advanced purpose env-var usage.
         # **All rev9 features/methods are of UXRG obfuscation and hardened trained on
         # the fovea-mantis script engine to recognize standard methods have changed.**
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_rLstA, _sf_rStrA, _sf_rIntA, _sf_rBoolA, )
+        # __slots__ in use: (||_*)
         # returns:
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -642,6 +650,8 @@ class SqtppFncs(Sqtpp):
         # -4=no @qp(...): data declaring found
         # -5=no closing ): for @qp( data tag found
         # -6=@varNm not found in tqpt source
+        # -7=only one spawned env-var from stalkvar
+        # -8=changevar cannot remove all spawned vars
         try:
             if self.sqtpp_set_vfs_file() == 1:
                 if self.sqtpp_vfs_tqpt_file(True) != -1:
@@ -656,7 +666,6 @@ class SqtppFncs(Sqtpp):
                     if self._sf_sSrc.find(f'<sbf-{self._sf_sVfsFldr}-svvs:') > -1:
                         if self.sqtpp_svvs_list(varNm) == 8: self._sf_rBoolA = True
                     if not self._sf_rBoolA:
-                        # @varNm is not a stalked env-var.
                         if self.sqtpp_var_value(varNm):
                             self._sf_rStrA = self._sf_sQp
                             self._sf_sQp = self._sf_sQp.replace(f'{varNm}<{self._sf_sVd}>', f'{varNm}<{newVarDt}>')
@@ -664,12 +673,67 @@ class SqtppFncs(Sqtpp):
                             self._sf_sSrc = None
                             self._sf_sQp = None
                             self._sf_rStrA = None
+                            return 8
                         else:
                             return -6
                     else:
-                        # Is now a spawned env-var(s) find & del method.
-                        # TODO
-                        raise Exception('not yet implemented')
+                        self._sf_rIntD = len(self._sf_rLstA)
+                        if self._sf_rIntD > 1:
+                            self._sf_rBoolB = False
+                            self._sf_rBoolC = False
+                            self._sf_rLstB = []
+                            self._sf_rIntE = 0
+                            for self._sf_rIntC in range(self._sf_rIntD):
+                                if self.sqtpp_var_value(self._sf_rLstA[self._sf_rIntC]):
+                                    if newVarDt == self._sf_sVd:
+                                        if not self._sf_rBoolB:
+                                            self._sf_rBoolB = True
+                                            self._sf_rStrB = self.sqtpp_vfs_sub_file(False, False, 'svvs', None)
+                                            self._sf_rStrC = self._sf_rStrB
+                                        self._sf_rIntE+=1
+                                        if self._sf_rIntE != self._sf_rIntD:
+                                            self._sf_rLstB.append(self._sf_rLstA[self._sf_rIntC])
+                                            if not self._sf_rBoolC:
+                                                self._sf_rBoolC = True
+                                                self._sf_rStrD = self._sf_sQp
+                                            self._sf_sQp = self._sf_sQp.replace(f'\n{self._sf_rLstA[self._sf_rIntC]}<{self._sf_sVd}>','')
+                                            if self._sf_rStrB.find(f'={self._sf_rLstA[self._sf_rIntC]},') > -1: self._sf_rStrB = self._sf_rStrB.replace(f'{self._sf_rLstA[self._sf_rIntC]},','')
+                                            else: self._sf_rStrB = self._sf_rStrB.replace(f',{self._sf_rLstA[self._sf_rIntC]}','')
+                                        else:
+                                            return -8
+                            if self._sf_rIntE > 0:
+                                self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrC, self._sf_rStrB)
+                                self._sf_sSrc = self._sf_sSrc.replace(f'{self._sf_rStrD}:\n', f'{self._sf_sQp}:\n')
+                                self._sf_sRtrn = self._sf_rLstB
+                                self._sf_sQp = None
+                                self.sqtpp_reset_slots(False)
+                                with open(f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg','r') as stgFl: self._sf_rLstA = stgFl.read().split(':')
+                                self.sqtpp_vfs_tpqt_file(True)
+                                if len(self._sf_sPq) > 0 and self._sf_sPq != 'null':
+                                    self._sf_rBoolA = False
+                                    self._sf_rStrA = None
+                                    self._sf_rIntB = len(self._sf_sRtrn)
+                                    for self._sf_rIntA in range(self._sf_rIntB):
+                                        self._sf_rLstB = re.findall(r'<:'+re.escape(self._sf_sRtrn[self._sf_rIntA])+r'=(?s:.*?).*:>', self._sf_sPq)
+                                        if len(self._sf_rLstB) > 0:
+                                            if not self._sf_rBoolA:
+                                                self._sf_rBoolA = True
+                                                self._sf_rStrA = self._sf_sPq
+                                            self._sf_sPq = self._sf_sPq.replace(self._sf_rLstB[0],'')
+                                            self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
+                                    if self._sf_rStrA != None:
+                                        self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrA, self._sf_sPq)
+                                        self._sf_rStrA = None
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
+                                    self._sf_sSrc = None
+                                    self._sf_sPq = None
+                                    return self._sf_sRtrn
+                                else:
+                                    return self._sf_sRtrn
+                            else:
+                                return None
+                        else:
+                            return -7
                 else:
                     return -2
             else:
@@ -708,7 +772,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.63\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.70\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -739,7 +803,7 @@ class SqtppFncs(Sqtpp):
             return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
     def sqtpp_loadvar(self, isAllNmbrs: bool, varNm: str, mode: str):
-        #
+        # Returns env-var data as str, list or a deque type.
         # __slots__ in use: (_sf_rIntA, _sf_sRtrn)
         # returns:
         # -1=empty vfs path settings file
@@ -1764,7 +1828,7 @@ class SqtppFncs(Sqtpp):
         else:
             return True
 #_______________________________________________________________________________________
-    def reset_slots(self, isStcSlts: bool):
+    def sqtpp_reset_slots(self, isStcSlts: bool):
         # Resets slots attribute variables to None.
         # returns: none
         if isStcSlts:
@@ -1881,7 +1945,7 @@ def stalkvar(varName: str, varData: str):
     #print(keyvar('faster_stacks', 'someFnc8'))
     #revar(True, 'new-vfs', 'new-vfs-dir', 'new-vfs-folder')
     #print(loadvar(True, 'faster_stacks3_1', 'mode=deque'))
-    #print(changevar('faster_stacks3_1', '@qp(spawned env-var data has changed):'))
+    #print(changevar('faster_stacks3', '@qp(spawned):'))
     #--------------------------------------------------------------------<'(((((>< 
 #test()
         
