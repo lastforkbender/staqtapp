@@ -724,12 +724,10 @@ class SqtppFncs(Sqtpp):
                                     if self._sf_rStrA != None:
                                         self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrA, self._sf_sPq)
                                         self._sf_rStrA = None
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
-                                    self._sf_sSrc = None
-                                    self._sf_sPq = None
-                                    return self._sf_sRtrn
-                                else:
-                                    return self._sf_sRtrn
+                                self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
+                                self._sf_sSrc = None
+                                self._sf_sPq = None
+                                return self._sf_sRtrn
                             else:
                                 return None
                         else:
