@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.70 rev9
+# Staqtapp-v1.2.73 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -153,6 +153,20 @@
 #     set vfs path files contents. This feature is used for recursive analysis or
 #     chained events hidden from a pivot conclusion or escape type params forming.
 #
+# --> lockdel(isRemoveAll, varName, fncName), removes lockvar entries from a tpqt
+#     block of names that are associated to a env-var name. The @fncName parameter
+#     can be str or a list for the entries to remove. The previous Staqtapp 1 ver.
+#     had a log function name when a keyvar is called option. That is no longer in
+#     use. If @isRemoveAll then the entire tpqt block is removed for @varName. If
+#     you need a list return of what @fncName exist of a tpqt block, see getlocks.
+#     Once again, there is no security measures added of this function. To have
+#     full password & tor like vfs dir encryption security for this, you must have
+#     the Staqtapp-Koch version. The full ver is not open freeware and is the most
+#     secure env-var library on earth, that does not use any online third party to
+#     to store any env-var data or passwords. If you are relying on a third party
+#     cloud profit service, to keep your env-vars data safe or private? Their not.
+#     Especially in the United States of America or the aka United Kingdom.
+#
 # --> modrev9(prmsLst), builds a complete custom env-var module. @prmsLst elements
 #     for this staqtapp feature is 28 arguments. The type modules generated can be
 #     very difficult to understand, with obfuscation turned on or not. Some of the
@@ -165,9 +179,10 @@
 
 #_______________________________________________________________________________________
 
-# NOTE: I switch between different ide when testing this machine----if you see
+# NOTE: I switch between different ide when testing this library----if you see
 #       a _err slots error.....is because this lets me know to switch and read
 #       the real error that was logged in the .../staqtapp1_2/err-log.txt file
+
 
 # email: rcttcr5@gmail.com
 # github: https://github.com/lastforkbender/staqtapp
@@ -342,6 +357,18 @@ class Sqtpp(dict):
             elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'lockvar')
         else: self.mcf_err_handler(8, 'lockvar')
 #_______________________________________________________________________________________
+    def mcf_lockdel(self, isDelAll: bool, varNm: str, fncNm):
+        # Removes tpqt lock entries @fncNm for a env-var @varNm tagged blocks.
+        # __slots__ in use: (_sRtrn)
+        sfCls = SqtppFncs()
+        if sfCls.sqtpp_chars_check(2, varNm):
+            self._sRtrn = sfCls.sqtpp_del_locks(isDelAll, varNm, fncNm)
+            if self._sRtrn == -1: self.mcf_err_handler(6, 'lockdel')
+            elif self._sRtrn == -2: self.mcf_err_handler(7, 'lockdel')
+            elif self._sRtrn == -3: self.mcf_err_handler(13, 'lockdel')
+            elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'lockdel')
+        else: self.mcf_err_handler(8, 'lockdel')
+#_______________________________________________________________________________________
     def mcf_keyvar(self, varNm: str, fncNm: str) -> bool:
         # Returns False if @fncNm is not a listed key name for any @varNm edits.
         # __slots__ in use: (_sRtrn)
@@ -354,8 +381,7 @@ class Sqtpp(dict):
             elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'keyvar')
             else:
                 return self._sRtrn
-        else:
-            self.mcf_err_handler(8, 'keyvar')
+        else: self.mcf_err_handler(8, 'keyvar')
 #_______________________________________________________________________________________
     def mcf_revar(self, isNewSetPth: bool, newVfsFlNm: str, newVfsDirNm: str, newVfsFldrNm: str):
         # Respawns a new .sqtpp vfs file via tpqt lockvar tagged env-vars only content.
@@ -472,7 +498,7 @@ class Sqtpp(dict):
             elif altErrCd == 10: raise Exception(f'staqtapp1.2 ({clnFnc}) error: no proper @qp(...): data declaring tags found')
             elif altErrCd == 11: raise Exception(f'staqtapp1.2 ({clnFnc}) error: missing closing ): for @qp( variable data declaring')
             elif altErrCd == 12: raise Exception(f'staqtapp1.2 ({clnFnc}) error: variable name duplicate, use changevar for variable edits')
-            elif altErrCd == 13: raise Exception(f'staqtapp1.2 ({clnFnc}) error: variable not found in tqpt var lock file')
+            elif altErrCd == 13: raise Exception(f'staqtapp1.2 ({clnFnc}) error: variable not found in tpqt var lock file')
             elif altErrCd == 14: raise Exception(f'staqtapp1.2 ({clnFnc}) error: variable was not found in tqpt var file')
             elif altErrCd == 15: raise Exception(f'staqtapp1.2 ({clnFnc}) error: svvs sub-file is not created, cannot begin stalkvar with identical values')
             elif altErrCd == 16: raise Exception(f'staqtapp1.2 ({clnFnc}) error: no found svvs commons stalk-entry element list for @varNm')
@@ -509,7 +535,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.70\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.73\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -770,7 +796,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.70\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.73\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -1543,6 +1569,59 @@ class SqtppFncs(Sqtpp):
                     else:
                         return 6
 #_______________________________________________________________________________________
+    def sqtpp_del_locks(self, isDelAll: bool, varNm:str, fncNm):
+        # Deletes tpqt lock entries from @varNm listed block or removes the entire block.
+        # __slots__ in use: (_sf_sSrc, _sf_sPq, _sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rBoolA)
+        # returns:
+        # -1=invalid vfs path
+        # -2=bad path in vfs path setting file
+        # -3=@varNm was not found in tpqt vfs file
+        try:
+            if self.sqtpp_set_vfs_file() == 1:
+                if self.sqtpp_vfs_tpqt_file(True) != -1:
+                    self._sf_rLstA = re.findall(r'<:'+re.escape(varNm)+r'=(?s:.*?).*:>', self._sf_sPq)
+                    if len(self._sf_rLstA) > 0:
+                        self._sf_rStrA = self._sf_sPq
+                        if not isDelAll:
+                            self._sf_rLstB = self._sf_rLstA[0]
+                            self._sf_rLstA = self._sf_rLstA[0].split('\n')
+                            self._sf_rLstA.pop(0)
+                            self._sf_rLstA[len(self._sf_rLstA)-1] = self._sf_rLstA[len(self._sf_rLstA)-1].replace(':>','')
+                            if isinstance(fncNm, str): fncNm = [fncNm]
+                            self._sf_rIntB = len(fncNm)
+                            self._sf_rBoolA = False
+                            for self._sf_rIntA in range(self._sf_rIntB):
+                                if self._sf_rBoolA:
+                                    break
+                                for self._sf_rIntC in range(len(self._sf_rLstA)):
+                                    if fncNm[self._sf_rIntA] == self._sf_rLstA[self._sf_rIntC]:
+                                        if len(self._sf_rLstA) > 1:
+                                            self._sf_rLstA.pop(self._sf_rIntC)
+                                            break
+                                        else:
+                                            self._sf_rBoolA = True
+                                            break
+                            if not self._sf_rBoolA:
+                                self._sf_rLstA = '<:'+varNm+'=\n'+'\n'.join(self._sf_rLstA)+':>'
+                                self._sf_sPq = self._sf_sPq.replace(self._sf_rLstB, self._sf_rLstA)
+                        if self._sf_rBoolA or isDelAll:
+                            if isDelAll: self._sf_sPq = self._sf_sPq.replace(self._sf_rLstA[0],'')
+                            else: self._sf_sPq = self._sf_sPq.replace(self._sf_rLstB,'')
+                            self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
+                        self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc.replace(self._sf_rStrA, self._sf_sPq))
+                        self._sf_sSrc = None
+                        self._sf_sPq = None
+                        self._sf_rStrA = None
+                    else:
+                        return -3
+                else:
+                    return -2
+            else:
+                return -1
+        except Exception as err_del_locks:
+            self._sErr = f'staqtapp1.2 (del_locks) error: {err_del_locks}'
+            return self.sqtpp_err_rcrd(self._sErr)
+#_______________________________________________________________________________________
     def sqttp_tpqt_spok(self, pq_isRdr: bool, pq_isExst: bool, pq_varNm: str, pq_fncNm):
         # Handles vfs tpqt lock var file reads & writes. Is very accurate, do not edit!
         # __slots__ in use: (_sf_sPq, _sf_rLstA, _sf_rLstB, _sf_rIntA, _sf_rIntB, _sf_rStrA, _sf_rStrB, _sf_rBoolA, _sf_rBoolB)
@@ -1903,6 +1982,10 @@ def lockvar(varName: str, fncName):
     sqtppCls = Sqtpp()
     sqtppCls.mcf_lockvar(varName, fncName)
 #_______________________________________________________________________________________
+def lockdel(isDelAll: bool, varName: str, fncName):
+    sqtppCls = Sqtpp()
+    sqtppCls.mcf_lockdel(isDelAll, varName, fncName)
+#_______________________________________________________________________________________
 def keyvar(varName: str, fncName) -> bool:
     sqtppCls = Sqtpp()
     return sqtppCls.mcf_keyvar(varName, fncName)
@@ -1944,6 +2027,7 @@ def stalkvar(varName: str, varData: str):
     #revar(True, 'new-vfs', 'new-vfs-dir', 'new-vfs-folder')
     #print(loadvar(True, 'faster_stacks3_1', 'mode=deque'))
     #print(changevar('faster_stacks3', '@qp(spawned):'))
+    #lockdel(False, 'faster_stacks',['someFnc1','someFnc2','someFnc3','someFnc4','someFnc9','someFnc10'])
     #--------------------------------------------------------------------<'(((((>< 
 #test()
         
