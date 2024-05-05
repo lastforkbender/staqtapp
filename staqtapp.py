@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.75 rev9
+# Staqtapp-v1.2.76 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -559,7 +559,7 @@ class Sqtpp(dict):
 #_________________________MAIN PARSING FUNCTIONS:
 #_______________________________________________________________________________________
 class SqtppFncs(Sqtpp):
-    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sQp', '_sf_sPq', '_sf_sVd', '_sf_sRtrn', '_sf_sKntId', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD')
+    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sQp', '_sf_sPq', '_sf_sVd', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD')
     
     def __init__(self):
         pass
@@ -571,7 +571,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.75\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.76\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -885,7 +885,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.75\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.76\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -1241,6 +1241,7 @@ class SqtppFncs(Sqtpp):
                             self._sf_sSrc = self._sf_sSrc.replace(f'{self._sf_sQp}:\n', f'{self._sf_sQp}\n{varNm}_{self._sf_rIntA}<{varDat}>:\n')
                             self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc.replace(f'({varNm}={self._sf_rStrA})', f'({varNm}={self._sf_rLstA})'))
                         else:
+                            self.sqtpp_silent_lock_remove(self._sf_rLstA)
                             self._sf_rStrB = self._sf_sQp
                             self.sqtpp_var_remove(self._sf_rLstA)
                             if self._sf_sSrc.find(f';({varNm}={self._sf_rStrA})') > -1: self._sf_sSrc = self._sf_sSrc.replace(f';({varNm}={self._sf_rStrA})', '')
@@ -1252,6 +1253,7 @@ class SqtppFncs(Sqtpp):
                         self._sf_rStrB = None
                         self._sf_sSrc = None
                         self._sf_sQp = None
+                        self._sf_sPq = None
                         return 8
                     else:
                         return -6
@@ -1484,6 +1486,41 @@ class SqtppFncs(Sqtpp):
         # returns: none
         self._sf_rIntD = len(varNmLst)
         for self._sf_rIntC in range(self._sf_rIntD): self._sf_sQp = re.sub(r'(?s:.)'+re.escape(varNmLst[self._sf_rIntC])+r'<@qp\(.*?\):>', '', self._sf_sQp)
+#_______________________________________________________________________________________
+    def sqtpp_silent_lock_remove(self, varNmLst: list):
+        # Removes tpqt func/var lock block(s) quietly. Assumes _sf_sSrc already vfs content.
+        # *Slots attribute _sf_sLstX retains any var name(s) to block(s) that got removed.*
+        # __slots__ in use: (_sf_sSrc, _sf_sPq, _sf_sLstX, _sf_sStrX, _sf_sIntX, _sf_sBoolX)
+        # returns: none
+        try:
+            x = None
+            xLst = None
+            with open(f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', 'r') as fObjStg: self._sf_sLstX = fObjStg.read().split(':')
+            self._sf_sLstX[4] = self._sf_sLstX[4].replace('tqpt', 'tpqt')
+            self._sf_sLstX = [f'|:{self._sf_sLstX[1]}<', f'_|:{self._sf_sLstX[2]}<', f'__|:{self._sf_sLstX[3]}<', f'___|:{self._sf_sLstX[4]}<']
+            for pth in range(4):
+                if pth < 1: x = self._sf_sSrc.find(self._sf_sLstX[pth])
+                else: x = self._sf_sSrc.find(self._sf_sLstX[pth],x+1)
+                if x < 0:
+                    break
+            if x > -1:
+                self._sf_sPq = self._sf_sSrc[x:self._sf_sSrc.find('___|:',x+5)-2]
+                self._sf_sIntX = len(varNmLst)
+                self._sf_sBoolX = False
+                self._sf_sLstX = []
+                for x in range(self._sf_sIntX):
+                    xLst = re.findall(r'<:'+re.escape(varNmLst[x])+r'=(?s:.*?).*:>', self._sf_sPq)
+                    if len(xLst) > 0:
+                        if not self._sf_sBoolX:
+                            self._sf_sBoolX = True
+                            self._sf_sStrX = self._sf_sPq
+                        self._sf_sLstX.append(varNmLst[x])
+                        self._sf_sPq = self._sf_sPq.replace(xLst[0],'')
+                        self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
+                if len(self._sf_sLstX) > 0: self._sf_sSrc = self._sf_sSrc.replace(self._sf_sStrX, self._sf_sPq)
+                self._sf_sStrX = None
+        except Exception as e:
+            pass
 #_______________________________________________________________________________________
     def sqtpp_svvs_list(self, varNm: str):
         # Sets _sf_rLstA to the viable svvs associated and expanded @varNm category.
@@ -2006,6 +2043,10 @@ class SqtppFncs(Sqtpp):
             self._sf_sVd = None
             self._sf_sRtrn = None
             self._sf_sKntId = None
+            self._sf_sLstX = None
+            self._sf_sStrX = None
+            self._sf_sIntX = None
+            self._sf_sBoolX = None
         self._sf_rStrA = None
         self._sf_rStrB = None
         self._sf_rStrC = None
