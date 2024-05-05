@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.76 rev9
+# Staqtapp-v1.2.77 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -10,8 +10,9 @@
 # (A vfs staqtapp 1.2 file must be created first. Auto sets the tqpt vars set path.)
 
 
-# If you need the most secure env-vars library in the world, Staqtapp2-Koch version,
+# If you need the most secure env-vars library in the world, Staqtapp-Koch version,
 # then you can contact me by the email below, with agreements by voice/phone arranged.
+# (See the renamevar_stx() function description for details on why is Staqtapp-Koch.)
 
 
 # This env-var library has features included for simulations in q-bit computing via
@@ -146,6 +147,23 @@
 #     env-var library modules from within a staqtapp1.2 vfs thru self-replications.
 #     Can respawn any missing stalkvar() env-vars to a new self-made svvs sub file.
 #     The svvs file from the current set vfs file is lost on the new transfer.**
+#
+# --> renamevar_stx(varName newVarName), this function a important one to the data
+#     structure of this new staqtapp one version. It actions a normal renaming of a
+#     env-var if does not conflict with other namings and can also change the ----
+#     spawned var(s) naming(s) from a stalkvar() use just as staqtapp koch version.
+#     To do this there must be more than one spawned env-var from a stalked var. By
+#     param @newVarName being a int and @varName being the stalked var, the renames
+#     of the spawned vars take order increasing from the int value. If is a negative
+#     number or zero for @newVarName then will remove the spawned var(s) until reach
+#     of int one or is only one spawned var left..if negative int, replaced positive.
+#     That explained, removes spawned vars by nearest increment of the spawned names.
+#     This is tricky at first to use with negative del order, however a very powerful
+#     useable when matching spawned env-vars to a replaced branching of smv-tree use.
+#     (The Staqtapp Koch version does this in between multi-layered encryption key --
+#     padding, while encrypt of vdf path directories as most secure env-var vfs ever.)
+#     Returns 1 if renamed env-var, 2 if renamed spawned var(s) and there is only --
+#     one left spawned var of the stalked var and 3 if renamed spawned env-var(s).
 #
 # --> findvar(varName), returns True if variable present to set vfs tqpt file.
 #
@@ -283,6 +301,23 @@ class Sqtpp(dict):
                 elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'addvar')
             else: self.mcf_err_handler(8, 'addvar')
         else: self.mcf_err_handler(5, 'addvar')
+#_______________________________________________________________________________________
+    def mcf_renamevar_stx(self, varNm: str, newVarNm):
+        # Returns 1 if renamed var, 2 if renamed spawned vars with one left spawned
+        # var or 3 if renamed spawned vars and more than one left from stalked var.
+        # __slots__ in use: (_sRtrn)
+        sfCls = SqtppFncs()
+        if sfCls.sqtpp_chars_check(2, varNm):
+            self._sRtrn = sfCls.sqtpp_vars_rename_stx(varNm, newVarNm)
+            if self._sRtrn == -1: self.mcf_err_handler(6, 'renamevar_stx')
+            elif self._sRtrn == -2: self.mcf_err_handler(7, 'renamevar_stx')
+            elif self._sRtrn == -3: self.mcf_err_handler(31, 'renamevar_stx')
+            elif self._sRtrn == -4: self.mcf_err_handler(14, 'renamevar_stx')
+            elif self._sRtrn == -5: self.mcf_err_handler(8, 'renamevar_stx')
+            elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'renamevar_stx')
+            else:
+                return self._sRtrn
+        else: self.mcf_err_handler(8, 'renamevar_stx')
 #_______________________________________________________________________________________
     def mcf_joinvars(self, newVarNm: str, varNms: list):
         # Joins a list of @varNms into a newly merged env-var in vfs tqpt source or
@@ -521,6 +556,7 @@ class Sqtpp(dict):
             # 28 = svvs file has only one spawned var from stalkvar
             # 29 = cannot remove all spawned env-vars(changevar)
             # 30 = found '☆' char for join of var data
+            # 31 = @varNm is a stalked var but @newVarNm is not a int type
             if altErrCd == 1: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name chars; allowed -a-zA-Z')
             elif altErrCd == 2: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid directory name chars; allowed -a-zA-Z')
             elif altErrCd == 3: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name, cannot be the same as directory name')
@@ -551,6 +587,7 @@ class Sqtpp(dict):
             elif altErrCd == 28: raise Exception(f'staqtapp1.2 ({clnFnc}) error: svvs has one spawned env-var, only stalkvar can remove a stalked variable and a svvs listing')
             elif altErrCd == 29: raise Exception(f'staqtapp1.2 ({clnFnc}) error: cannot remove all spawned vars, only stalkvar can remove all spawned env-vars')
             elif altErrCd == 30: raise Exception(f'staqtapp1.2 ({clnFnc}) error: cannot join a smv-tree type data with other env-var data')
+            elif altErrCd == 31: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @newVarName not a int type, @varName was found as a svvs listed stalked env-var')
         else:
             if self._sRtrn == 'FNC-ERR': raise Exception(f'staqtapp1.2 {clnFnc}-->{self._sErr}')
             elif self._sRtrn == 'FOO-BAR': raise Exception('staqtapp1.2 io error: unable to perform file reads or writes')
@@ -571,7 +608,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.76\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.77\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -597,7 +634,7 @@ class SqtppFncs(Sqtpp):
         # __slots__ in use: (_sf_sPq)
         # returns: -1=path not found
         if isTpqt:
-            self._sf_rLstA[4] = self._sf_rLstA[4].replace('tqpt', 'tpqt')
+            self._sf_rLstA[4] = self._sf_rLstA[4].replace('tqpt','tpqt')
             self.sqtpp_vfs_pointer([f'|:{self._sf_rLstA[1]}<', f'_|:{self._sf_rLstA[2]}<', f'__|:{self._sf_rLstA[3]}<', f'___|:{self._sf_rLstA[4]}<'])
             if self._sf_rIntA != -1: self._sf_sPq = self._sf_sSrc[self._sf_rIntA:self._sf_sSrc.find('___|:',self._sf_rIntA+5)-2]
             else:
@@ -751,6 +788,59 @@ class SqtppFncs(Sqtpp):
             self._sErr = f'staqtapp1.2 (joinvars) error: {err_vars_join}'
             return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
+    def sqtpp_vars_rename_stx(self, varNm: str, newVarNm):
+        # This module heavy env-var quality slots, see renamevar_stx info. Do not edit!
+        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_rLstA, _sf_rStrA, _sf_rBoolA, _sf_rBoolB)
+        # returns:
+        # -1=empty vfs path settings file
+        # -2=invalid vfs path
+        # -3=@newVarNm must be int if @varNm is a stalked env-var
+        # -4=@varNm not found in tqpt source, normal renaming
+        # -5=@newVarNm is of invalid chars, normal renaming
+        try:
+            if self.sqtpp_set_vfs_file() == 1:
+                if self.sqtpp_vfs_tqpt_file(True) != -1:
+                    if self.sqtpp_vfs_tpqt_file(True) != -1:
+                        self._sf_rBoolA = False
+                        if self.sqtpp_svvs_list(varNm) == 8:
+                            if isinstance(newVarNm, int): self._sf_rBoolA = True
+                            else:
+                                return -3
+                        if not self._sf_rBoolA:
+                            if self.sqtpp_var_value(varNm):
+                                if self.sqtpp_chars_check(2, newVarNm):
+                                    self._sf_rStrA = self._sf_sQp
+                                    self._sf_sQp = self._sf_sQp.replace(f'{varNm}<{self._sf_sVd}>', f'{newVarNm}<{self._sf_sVd}>')
+                                    self._sf_sSrc = self._sf_sSrc.replace(f'{self._sf_rStrA}:\n', f'{self._sf_sQp}:\n')
+                                    self._sf_sQp = None
+                                    self._sf_rBoolB = False
+                                    if self._sf_sPq.find(f'<:{varNm}=') > -1:
+                                        self._sf_rBoolB = True
+                                        self._sf_rStrA = self._sf_sPq
+                                        self._sf_sPq = self._sf_sPq.replace(f'<:{varNm}=',f'<:{newVarNm}=')
+                                    if self._sf_rBoolB: self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc.replace(self._sf_rStrA, self._sf_sPq))
+                                    else: self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
+                                    self._sf_sSrc = None
+                                    self._sf_rStrA = None
+                                    return 1
+                                else:
+                                    return -5
+                            else:
+                                return -4
+                        else:
+                            # rename spawned vars
+                            #TODO, interupted!
+                            pass
+                    else:
+                        return -2
+                else:
+                    return -2
+            else:
+                return -1
+        except Exception as err_vars_rename_stx:
+            self._sErr = f'staqtapp1.2 (renamevar_stx) error: {err_vars_rename_stx}'
+            return self.sqtpp_err_rcrd(self._sErr)
+#_______________________________________________________________________________________
     def sqtpp_vars_change(self, varNm: str, newVarDt: str):
         # This module heavy quality slots, see changevar at top for method description.
         # Edit of this function is problematic and may cause rev9 to fight against you
@@ -885,7 +975,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.76\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.77\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -1517,8 +1607,9 @@ class SqtppFncs(Sqtpp):
                         self._sf_sLstX.append(varNmLst[x])
                         self._sf_sPq = self._sf_sPq.replace(xLst[0],'')
                         self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
-                if len(self._sf_sLstX) > 0: self._sf_sSrc = self._sf_sSrc.replace(self._sf_sStrX, self._sf_sPq)
-                self._sf_sStrX = None
+                if len(self._sf_sLstX) > 0:
+                    self._sf_sSrc = self._sf_sSrc.replace(self._sf_sStrX, self._sf_sPq)
+                    self._sf_sStrX = None
         except Exception as e:
             pass
 #_______________________________________________________________________________________
@@ -2079,6 +2170,7 @@ class SqtppFncs(Sqtpp):
             return 'FOO-BAR'
 #_______________________________________________________________________________________
 #_______________________________________________________________________________________
+#_______________________________________________________________________________________
 #_________________________IMPORT CALLABLE FRONT FUNCTIONS:
 #_______________________________________________________________________________________
 def makevfs(vfsFileName: str, directoryName: str, folderName:str):
@@ -2088,6 +2180,10 @@ def makevfs(vfsFileName: str, directoryName: str, folderName:str):
 def addvar(varName: str, varData: str):
     sqtppCls = Sqtpp()
     sqtppCls.mcf_addvar(varName, varData)
+#_______________________________________________________________________________________
+def renamevar_stx(varName: str, newVarName):
+    sqtppCls = Sqtpp()
+    return sqtppCls.mcf_renamevar_stx(varName, newVarName)
 #_______________________________________________________________________________________
 def joinvars(newVarName: str, varNames: list):
     sqtppCls = Sqtpp()
@@ -2163,6 +2259,7 @@ def stalkvar(varName: str, varData: str):
     #print(changevar('faster_stacks3', '@qp(spawned):'))
     #lockdel(False, 'faster_stacks',['someFnc1','someFnc2','someFnc3','someFnc4','someFnc9','someFnc10'])
     #joinvars('faster_stacks6', ['tree_test1'])
+    #print(renamevar_stx('faster_stacks4000', 'floating_needles_album1'))
     #--------------------------------------------------------------------<'(((((>< 
 #test()
         
