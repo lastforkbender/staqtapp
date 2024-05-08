@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.86 rev9
+# Staqtapp-v1.2.93 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -17,7 +17,6 @@
 # and merged spawned interlinking gates with lockvar() and keyvar() in outer-phasing
 # to a tri-junction with stalkvar spawned vars; assigned to lockvar as move|lock|key,
 # with the addbranch_stx() & getbranch_stx() merge branch and shift specific feature.
-# If repeated calls with getbranch_stx() and alf option true, you are doing it wrong.
 
 # If you need the most secure env-vars library in the world, Staqtapp-Koch version,
 # then you can contact me by the email below, with agreements by voice/phone arranged.
@@ -669,7 +668,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.86\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.93\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1125,6 +1124,37 @@ class SqtppFncs(Sqtpp):
         else:
             return -1
 #_______________________________________________________________________________________
+    def sqtpp_darkvar(self):
+        #
+        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rIntA, _sf_rIntB, _sf_rStrA, _sf_rStrB)
+        self._sf_rLstB = set()
+        self._sf_rLstA = ['8','6','7','5','3','1','9','4','2']
+        self._sf_rStrA = self._sf_rLstA[random.randint(0,len(self._sf_rLstA)-1)]
+        def eject():
+            self._sf_rStrB = self._sf_rStrB[::-1]
+            self._sf_rIntA = self._sf_rStrB.index(self._sf_rStrA)
+            self._sf_rIntB = 1
+            while self._sf_rIntA > 0 or self._sf_rStrB[self._sf_rIntA-1] == self._sf_rStrA:
+                if len(self._sf_rStrB) == 7:
+                    self._sf_rLstB.add(self._sf_rStrB)
+                    if self._sf_rIntB == 1000:
+                        break
+                    else: self._sf_rIntB+=1
+                if self._sf_rIntA == 0 or self._sf_rIntA == len(self._sf_rStrB)-1:
+                    return int(self._sf_rStrB)
+                if self._sf_rStrB[self._sf_rIntA-1] == self._sf_rStrB[self._sf_rIntA+1]: self._sf_rStrB = self._sf_rStrB[:self._sf_rIntA-1]+self._sf_rStrB[self._sf_rIntA+1:]
+                else: self._sf_rStrB = self._sf_rStrB[:self._sf_rIntA]+self._sf_rStrB[self._sf_rIntA+1]+self._sf_rStrB[self._sf_rIntA]+self._sf_rStrB[self._sf_rIntA-2]
+                self._sf_rIntA-=1
+            return self._sf_rIntA
+        self._sf_rLstA = [str(random.randint(1111111,9999999)) for _ in range(10)]
+        for self._sf_rStrB in self._sf_rLstA:
+            if self._sf_rStrA in self._sf_rStrB:
+                addr_key_regressor = eject()
+                if addr_key_regressor > 0:
+                    print(addr_key_regressor)
+        print(self._sf_rLstB)
+        #TODO
+#_______________________________________________________________________________________
     def sqtpp_revar(self, isCurrVfsPth: bool, newVfsFlNm: str, newVfsDirNm: str, newVfsFldrNm: str):
         # Replicates a new .sqtpp vfs file from current set vfs file, having env-vars
         # from the current set vfs that are only associated with a tpqt lockvar entry.
@@ -1155,7 +1185,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.86\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.93\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -2437,8 +2467,8 @@ def stalkvar(varName: str, varData: str):
     sqtppCls.mcf_stalkvar(varName, varData)
 #_______________________________________________________________________________________
 
-#def test():
-    #sfCls = SqtppFncs()
+def test():
+    sfCls = SqtppFncs()
     # ><)))))))))))))))))'>-------------------------------------------------------
     #makevfs('vfs-test','dir-test','folder-test')
     #addvar('stalk_var1', '@qp(78000,xrp):')
@@ -2457,6 +2487,7 @@ def stalkvar(varName: str, varData: str):
     #joinvars('faster_stacks6', ['tree_test1'])
     #print(renamevar_stx('globe', -1))
     #removevar('floating_needles_album1')
+    sfCls.sqtpp_darkvar()
     #--------------------------------------------------------------------<'(((((>< 
-#test()
+test()
         
