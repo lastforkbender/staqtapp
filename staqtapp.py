@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.93 rev9
+# Staqtapp-v1.2.95 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -506,6 +506,11 @@ class Sqtpp(dict):
                 return self._sRtrn
         else: self.mcf_err_handler(8, 'keyvar')
 #_______________________________________________________________________________________
+    def mcf_darkvar(self):
+        # See darkvar() info at top of this module. Has no returns or any error returns.
+        sfCls = SqtppFncs()
+        sfCls.sqtpp_darkvar()
+#_______________________________________________________________________________________
     def mcf_revar(self, isNewSetPth: bool, newVfsFlNm: str, newVfsDirNm: str, newVfsFldrNm: str):
         # Respawns a new .sqtpp vfs file via tpqt lockvar tagged env-vars only content.
         # __slots__ in use: (_sRtrn)
@@ -656,7 +661,7 @@ class Sqtpp(dict):
 #_________________________MAIN PARSING FUNCTIONS:
 #_______________________________________________________________________________________
 class SqtppFncs(Sqtpp):
-    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sQp', '_sf_sPq', '_sf_sVd', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD')
+    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sQp', '_sf_sPq', '_sf_sVd', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD')
     
     def __init__(self):
         pass
@@ -668,7 +673,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.93\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.95\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1126,34 +1131,109 @@ class SqtppFncs(Sqtpp):
 #_______________________________________________________________________________________
     def sqtpp_darkvar(self):
         #
-        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rIntA, _sf_rIntB, _sf_rStrA, _sf_rStrB)
-        self._sf_rLstB = set()
-        self._sf_rLstA = ['8','6','7','5','3','1','9','4','2']
-        self._sf_rStrA = self._sf_rLstA[random.randint(0,len(self._sf_rLstA)-1)]
-        def eject():
+        #
+        #returns: (none)
+        addr = '1078325220718433816110836220841839004720850000384196383922184'
+        self._sf_rIntH = self.sqtpp_darkvar_quick_hand_rand_palindrome(66)
+        print(self._sf_rIntH)
+        self._sf_rIntH = self.sqtpp_darkvar_menorah_outer_loop_resum(self._sf_rIntH, addr)
+        #print(self._sf_rIntH)
+        
+#_______________________________________________________________________________________
+    def sqtpp_darkvar_menorah_outer_loop_resum(self, tetBase: int, vssvAddr: str):
+        # Outer-halfloop encoded 7-digit palindrome int for a vssv-addr pointer. There
+        # is no way python could handle this beyond inner, is multiverse counting with
+        # spiral parallel-coned multi-looping, each RL^3 in a 4D LR parameters of digit.
+        # You would need more q-bits than could fit in all the oceans of earth for such
+        # a number: 1078325220718433816110836220841839004720850000384196383922184. Your
+        # mind would need to be so cold, begin | end never had any makeup of you at all.
+        # But if you think you are slicker than grease and is bs? Ha, email me I'll show
+        # you the full set of algorithms you'll need to do it properly, with explain.
+        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rBoolA)
+        # returns: (int)
+        self._sf_rStrA = str(tetBase)[0:3]
+        self._sf_rIntA = int(self._sf_rStrA)
+        self._sf_rStrB = str(tetBase)[2:5]
+        self._sf_rIntB = int(self._sf_rStrB)
+        self._sf_rIntC = int(self._sf_rStrA[0])
+        if self._sf_rIntA == self._sf_rIntB: self._sf_rIntC = 3
+        elif self._sf_rIntA > self._sf_rIntB:
+            self._sf_rIntD = math.floor(math.tan(self._sf_rIntA-self._sf_rIntB))
+            if self._sf_rIntD+self._sf_rIntB >= self._sf_rIntA-self._sf_rIntD: self._sf_rIntC = 5
+            else: self._sf_rIntC = 4
+        elif self._sf_rIntA < self._sf_rIntB:
+            self._sf_rIntD = math.floor(math.tan(self._sf_rIntA+self._sf_rIntB))
+            if self._sf_rIntD-self._sf_rIntB <= self._sf_rIntA+self._sf_rIntD: self._sf_rIntC = 3
+            else: self._sf_rIntC = 5
+        self._sf_rIntD = len(vssvAddr)-1
+        self._sf_rIntE = 0
+        self._sf_rLstA = []
+        self._sf_rLstB = []
+        self._sf_rLstC = []
+        self._sf_rBoolA = False
+        while self._sf_rIntE < self._sf_rIntD:
+            if len(self._sf_rLstA) == self._sf_rIntC:
+                self._sf_rBoolA = True
+                if self._sf_rLstA[0] == '0': self._sf_rLstA[0] = '1'
+                self._sf_rIntF = int(''.join(self._sf_rLstA))
+                print(self._sf_rIntF)
+            else: self._sf_rLstA.append(f'{vssvAddr[self._sf_rIntD]}')
+            if self._sf_rBoolA:
+                if self._sf_rLstB[0] == '0': self._sf_rLstB[0] = '1'
+                self._sf_rIntG = int(''.join(self._sf_rLstB))
+                print(self._sf_rIntG)
+            else: self._sf_rLstB.append(f'{vssvAddr[self._sf_rIntE]}')
+            if self._sf_rBoolA:
+                self._sf_rBoolA = False
+                if self._sf_rIntF == self._sf_rIntG: self._sf_rLstC.append(self._sf_rIntC+2)
+                elif self._sf_rIntF > self._sf_rIntG:
+                    if (self._sf_rIntF-self._sf_rIntG)*2 < self._sf_rIntC+self._sf_rIntG: self._sf_rLstC.append(self._sf_rIntC+1)
+                    else: self._sf_rLstC.append(self._sf_rIntC-1)
+                elif self._sf_rIntF < self._sf_rIntG:
+                    if (self._sf_rIntG-self._sf_rIntF)*2 > self._sf_rIntC+self._sf_rIntG: self._sf_rLstC.append(self._sf_rIntC-1)
+                    else: self._sf_rLstC.append(self._sf_rIntC+1)
+                self._sf_rLstA = [f'{vssvAddr[self._sf_rIntD]}']
+                self._sf_rLstB = [f'{vssvAddr[self._sf_rIntE]}']
+            self._sf_rIntD-=1
+            self._sf_rIntE+=1
+        self._sf_rStrC = f'{"".join(self._sf_rLstB)}{"".join(self._sf_rLstA)[::-1]}'
+        print(self._sf_rStrC)
+        print(self._sf_rIntC)
+        
+        return self._sf_rIntC
+#_______________________________________________________________________________________
+    def sqtpp_darkvar_quick_hand_rand_palindrome(self, rng: int) -> int:
+        # Returns a random lm-shift 5-digit palindrome int for darkvar() pointer begins.
+        # __slots__ in use: (_sf_rLstA, _sf_rIntA, _sf_rIntB, _sf_rStrA, _sf_rStrB, _sf_rStrC)
+        # returns: (int)
+        def sqtpp_eject_plndrm() -> str:
             self._sf_rStrB = self._sf_rStrB[::-1]
             self._sf_rIntA = self._sf_rStrB.index(self._sf_rStrA)
             self._sf_rIntB = 1
             while self._sf_rIntA > 0 or self._sf_rStrB[self._sf_rIntA-1] == self._sf_rStrA:
-                if len(self._sf_rStrB) == 7:
-                    self._sf_rLstB.add(self._sf_rStrB)
-                    if self._sf_rIntB == 1000:
-                        break
-                    else: self._sf_rIntB+=1
                 if self._sf_rIntA == 0 or self._sf_rIntA == len(self._sf_rStrB)-1:
-                    return int(self._sf_rStrB)
+                    return self._sf_rStrB
                 if self._sf_rStrB[self._sf_rIntA-1] == self._sf_rStrB[self._sf_rIntA+1]: self._sf_rStrB = self._sf_rStrB[:self._sf_rIntA-1]+self._sf_rStrB[self._sf_rIntA+1:]
                 else: self._sf_rStrB = self._sf_rStrB[:self._sf_rIntA]+self._sf_rStrB[self._sf_rIntA+1]+self._sf_rStrB[self._sf_rIntA]+self._sf_rStrB[self._sf_rIntA-2]
+                if self._sf_rStrB == self._sf_rStrB[::-1]:
+                    return self._sf_rStrB
                 self._sf_rIntA-=1
-            return self._sf_rIntA
-        self._sf_rLstA = [str(random.randint(1111111,9999999)) for _ in range(10)]
-        for self._sf_rStrB in self._sf_rLstA:
-            if self._sf_rStrA in self._sf_rStrB:
-                addr_key_regressor = eject()
-                if addr_key_regressor > 0:
-                    print(addr_key_regressor)
-        print(self._sf_rLstB)
-        #TODO
+                if self._sf_rIntB==998:
+                    break
+                elif self._sf_rIntB==248 or self._sf_rIntB==498 or self._sf_rIntB==748: self._sf_rStrA = self._sf_rLstA[random.randint(0,len(self._sf_rLstA)-1)]
+                else: self._sf_rIntB+=1
+            return str(self._sf_rIntA)
+        def sqtpp_rand_tet_plndrm() -> int:
+            self._sf_rLstA = ['8','6','7','5','3','1','9','4','2']
+            while True:
+                self._sf_rStrA = self._sf_rLstA[random.randint(0,len(self._sf_rLstA)-1)]
+                self._sf_rLstA = [str(random.randint(1111111,9999999)) for _ in range(rng)]
+                for self._sf_rStrB in self._sf_rLstA:
+                    if self._sf_rStrA in self._sf_rStrB:
+                        self._sf_rStrC = sqtpp_eject_plndrm()
+                        if len(self._sf_rStrC) > 4 and self._sf_rStrC == self._sf_rStrC[::-1] and self._sf_rStrC[0] != '0' and self._sf_rStrC[2] != '0':
+                            return int(self._sf_rStrC)
+        return sqtpp_rand_tet_plndrm()
 #_______________________________________________________________________________________
     def sqtpp_revar(self, isCurrVfsPth: bool, newVfsFlNm: str, newVfsDirNm: str, newVfsFldrNm: str):
         # Replicates a new .sqtpp vfs file from current set vfs file, having env-vars
@@ -1185,7 +1265,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.93\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.95\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -2376,6 +2456,7 @@ class SqtppFncs(Sqtpp):
         self._sf_rIntE = None
         self._sf_rIntF = None
         self._sf_rIntG = None
+        self._sf_rIntH = None
         self._sf_rBoolA = None
         self._sf_rBoolB = None
         self._sf_rBoolC = None
@@ -2446,6 +2527,10 @@ def keyvar(varName: str, fncName) -> bool:
     sqtppCls = Sqtpp()
     return sqtppCls.mcf_keyvar(varName, fncName)
 #_______________________________________________________________________________________
+def darkvar():
+    sqtppCls = Sqtpp()
+    sqtppCls.mcf_darkvar()
+#_______________________________________________________________________________________
 def revar(isNewSetVfsPath, newVfsFileName, newVfsDirName, newVfsFldrName):
     sqtppCls = Sqtpp()
     sqtppCls.mcf_revar(isNewSetVfsPath, newVfsFileName, newVfsDirName, newVfsFldrName)
@@ -2467,8 +2552,8 @@ def stalkvar(varName: str, varData: str):
     sqtppCls.mcf_stalkvar(varName, varData)
 #_______________________________________________________________________________________
 
-def test():
-    sfCls = SqtppFncs()
+#def test():
+    #sfCls = SqtppFncs()
     # ><)))))))))))))))))'>-------------------------------------------------------
     #makevfs('vfs-test','dir-test','folder-test')
     #addvar('stalk_var1', '@qp(78000,xrp):')
@@ -2487,7 +2572,7 @@ def test():
     #joinvars('faster_stacks6', ['tree_test1'])
     #print(renamevar_stx('globe', -1))
     #removevar('floating_needles_album1')
-    sfCls.sqtpp_darkvar()
+    #darkvar()
     #--------------------------------------------------------------------<'(((((>< 
-test()
+#test()
         
