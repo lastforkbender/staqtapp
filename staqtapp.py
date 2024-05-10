@@ -661,7 +661,7 @@ class Sqtpp(dict):
 #_________________________MAIN PARSING FUNCTIONS:
 #_______________________________________________________________________________________
 class SqtppFncs(Sqtpp):
-    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sQp', '_sf_sPq', '_sf_sVd', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD')
+    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sQp', '_sf_sPq', '_sf_sVd', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD')
     
     def __init__(self):
         pass
@@ -1133,58 +1133,51 @@ class SqtppFncs(Sqtpp):
         #
         #
         #returns: (none)
-        addr = '1078325220718433816110836220841839004720850000384196383922184'
-        self._sf_rIntH = self.sqtpp_darkvar_quick_hand_rand_palindrome(66)
-        print(self._sf_rIntH)
-        self._sf_rIntH = self.sqtpp_darkvar_menorah_outer_loop_resum(self._sf_rIntH, addr)
+        addr = '6920493375800379116386596403769'
+        self._sf_rIntI = self.sqtpp_darkvar_quick_hand_rand_palindrome(66)
+        print(self._sf_rIntI)
+        self._sf_rIntI = self.sqtpp_darkvar_menorah_outer_loop_resum(self._sf_rIntI, addr)
         #print(self._sf_rIntH)
         
 #_______________________________________________________________________________________
     def sqtpp_darkvar_menorah_outer_loop_resum(self, tetBase: int, vssvAddr: str):
-        # Outer-halfloop encoded 7-digit palindrome int for a vssv-addr pointer. There
-        # is no way python could handle this beyond inner, is multiverse counting with
-        # spiral parallel-coned multi-looping, each RL^3 in a 4D LR parameters of digit.
-        # You would need more q-bits than could fit in all the oceans of earth for such
-        # a number: 1078325220718433816110836220841839004720850000384196383922184. Your
-        # mind would need to be so cold, begin | end never had any makeup of you at all.
-        # But if you think you are slicker than grease and is bs? Ha, email me I'll show
-        # you the full set of algorithms you'll need to do it properly, with explain.
-        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rBoolA)
+        # Outer-halfloop encoded 7-digit palindrome int for a vssv-addr pointer list.
+        # @vssvAddr a 31-digit pin for speed or can go into a infinite loop of other.
+        # This ensures we get a easy center collect natural for calculations; beyond
+        # 31-digit pin compared is very tricky and beyond scope of this env-var lib:
+        # 5-digits and more odd length slicing with inner sqrt RL-LR calcs multi-rev.
+        # Also, find of a palindrome number via RL&LR scanning has also been skipped;
+        # making this not a real quantum base non-zero menorah multi-loop calcs.
+        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rIntH)
         # returns: (int)
         self._sf_rStrA = str(tetBase)[0:3]
         self._sf_rIntA = int(self._sf_rStrA)
         self._sf_rStrB = str(tetBase)[2:5]
         self._sf_rIntB = int(self._sf_rStrB)
-        self._sf_rIntC = int(self._sf_rStrA[0])
         if self._sf_rIntA == self._sf_rIntB: self._sf_rIntC = 3
         elif self._sf_rIntA > self._sf_rIntB:
             self._sf_rIntD = math.floor(math.tan(self._sf_rIntA-self._sf_rIntB))
-            if self._sf_rIntD+self._sf_rIntB >= self._sf_rIntA-self._sf_rIntD: self._sf_rIntC = 5
+            if self._sf_rIntD+self._sf_rIntB >= self._sf_rIntA-self._sf_rIntD: self._sf_rIntC = 3
             else: self._sf_rIntC = 4
         elif self._sf_rIntA < self._sf_rIntB:
-            self._sf_rIntD = math.floor(math.tan(self._sf_rIntA+self._sf_rIntB))
-            if self._sf_rIntD-self._sf_rIntB <= self._sf_rIntA+self._sf_rIntD: self._sf_rIntC = 3
-            else: self._sf_rIntC = 5
+            self._sf_rIntD = math.floor(math.tan(self._sf_rIntB+self._sf_rIntA))
+            if self._sf_rIntD-self._sf_rIntA <= self._sf_rIntB+self._sf_rIntD: self._sf_rIntC = 3
+            else: self._sf_rIntC = 4
         self._sf_rIntD = len(vssvAddr)-1
         self._sf_rIntE = 0
+        self._sf_rIntH = 0
         self._sf_rLstA = []
         self._sf_rLstB = []
         self._sf_rLstC = []
-        self._sf_rBoolA = False
         while self._sf_rIntE < self._sf_rIntD:
+            self._sf_rIntH+=1
             if len(self._sf_rLstA) == self._sf_rIntC:
-                self._sf_rBoolA = True
                 if self._sf_rLstA[0] == '0': self._sf_rLstA[0] = '1'
-                self._sf_rIntF = int(''.join(self._sf_rLstA))
-                print(self._sf_rIntF)
-            else: self._sf_rLstA.append(f'{vssvAddr[self._sf_rIntD]}')
-            if self._sf_rBoolA:
                 if self._sf_rLstB[0] == '0': self._sf_rLstB[0] = '1'
+                self._sf_rIntF = int(''.join(self._sf_rLstA))
                 self._sf_rIntG = int(''.join(self._sf_rLstB))
+                print(self._sf_rIntF)
                 print(self._sf_rIntG)
-            else: self._sf_rLstB.append(f'{vssvAddr[self._sf_rIntE]}')
-            if self._sf_rBoolA:
-                self._sf_rBoolA = False
                 if self._sf_rIntF == self._sf_rIntG: self._sf_rLstC.append(self._sf_rIntC+2)
                 elif self._sf_rIntF > self._sf_rIntG:
                     if (self._sf_rIntF-self._sf_rIntG)*2 < self._sf_rIntC+self._sf_rIntG: self._sf_rLstC.append(self._sf_rIntC+1)
@@ -1194,12 +1187,17 @@ class SqtppFncs(Sqtpp):
                     else: self._sf_rLstC.append(self._sf_rIntC+1)
                 self._sf_rLstA = [f'{vssvAddr[self._sf_rIntD]}']
                 self._sf_rLstB = [f'{vssvAddr[self._sf_rIntE]}']
+            else:
+                self._sf_rLstA.append(f'{vssvAddr[self._sf_rIntD]}')
+                self._sf_rLstB.append(f'{vssvAddr[self._sf_rIntE]}')  
             self._sf_rIntD-=1
             self._sf_rIntE+=1
-        self._sf_rStrC = f'{"".join(self._sf_rLstB)}{"".join(self._sf_rLstA)[::-1]}'
+        if self._sf_rLstB[0] == '0': self._sf_rLstB[0] = '1'
+        if self._sf_rIntH+self._sf_rIntH < len(vssvAddr): self._sf_rStrC = f'{"".join(self._sf_rLstB)}{vssvAddr[self._sf_rIntE]}{"".join(self._sf_rLstA)[::-1]}'
+        else: self._sf_rStrC = f'{"".join(self._sf_rLstB)}{"".join(self._sf_rLstA)[::-1]}'
         print(self._sf_rStrC)
         print(self._sf_rIntC)
-        
+        #TODO
         return self._sf_rIntC
 #_______________________________________________________________________________________
     def sqtpp_darkvar_quick_hand_rand_palindrome(self, rng: int) -> int:
@@ -1231,7 +1229,7 @@ class SqtppFncs(Sqtpp):
                 for self._sf_rStrB in self._sf_rLstA:
                     if self._sf_rStrA in self._sf_rStrB:
                         self._sf_rStrC = sqtpp_eject_plndrm()
-                        if len(self._sf_rStrC) > 4 and self._sf_rStrC == self._sf_rStrC[::-1] and self._sf_rStrC[0] != '0' and self._sf_rStrC[2] != '0':
+                        if len(self._sf_rStrC) == 5 and self._sf_rStrC == self._sf_rStrC[::-1] and self._sf_rStrC[0] != '0' and self._sf_rStrC[2] != '0':
                             return int(self._sf_rStrC)
         return sqtpp_rand_tet_plndrm()
 #_______________________________________________________________________________________
@@ -2552,8 +2550,8 @@ def stalkvar(varName: str, varData: str):
     sqtppCls.mcf_stalkvar(varName, varData)
 #_______________________________________________________________________________________
 
-#def test():
-    #sfCls = SqtppFncs()
+def test():
+    sfCls = SqtppFncs()
     # ><)))))))))))))))))'>-------------------------------------------------------
     #makevfs('vfs-test','dir-test','folder-test')
     #addvar('stalk_var1', '@qp(78000,xrp):')
@@ -2572,7 +2570,7 @@ def stalkvar(varName: str, varData: str):
     #joinvars('faster_stacks6', ['tree_test1'])
     #print(renamevar_stx('globe', -1))
     #removevar('floating_needles_album1')
-    #darkvar()
+    darkvar()
     #--------------------------------------------------------------------<'(((((>< 
-#test()
+test()
         
