@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.112 rev9
+# Staqtapp-v1.2.116 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -673,7 +673,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.112\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.116\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1131,19 +1131,23 @@ class SqtppFncs(Sqtpp):
 #_______________________________________________________________________________________
     def sqtpp_darkvar(self):
         # See darkvar info for explain. Very complex env-var vfs-functionals, do not edit.
-        # __slots__ in use: (_sf_sLstX, _sf_sStrX, _sf_sIntX, _sf_sBoolX, _sf_rStrE)
+        # __slots__ in use: (_sf_sLstX, _sf_sStrX, _sf_sIntX, _sf_sBoolX)
         # returns: (none)
         self._sf_sBoolX = True
+        addr = None
         if self._sf_sBoolX:
-            self._sf_rStrE = f'{random.randint(1111111111,9999999999)}{random.randint(1111111111,9999999999)}{random.randint(1111111111,9999999999)}{random.randint(1,9)}'
-            self._sf_sRtrn = self.sqtpp_darkvar_quick_hand_rand_palindrome(66)
-            self._sf_sRtrn = self.sqtpp_darkvar_menorah_outer_loop_resum(self._sf_sRtrn, self._sf_rStrE)
-            if self._sf_sStrX == 'EVE': self._sf_sStrX = f'E:{self._sf_rStrE}:{self._sf_sRtrn}'
-            elif self._sf_sStrX == 'OHM': self._sf_sStrX = f'O:{self._sf_rStrE}:{self._sf_sRtrn}'
-            elif self._sf_sStrX == 'NTL': self._sf_sStrX = f'N:{self._sf_rStrE}:{self._sf_sRtrn}'
-            self.sqtpp_reset_slots(False)
-            print(self._sf_sStrX)
-            # TODO
+            try:
+                addr = f'{random.randint(1111111111,9999999999)}{random.randint(1111111111,9999999999)}{random.randint(1111111111,9999999999)}{random.randint(1,9)}'
+                self._sf_sRtrn = self.sqtpp_darkvar_quick_hand_rand_palindrome(66)
+                self._sf_sRtrn = self.sqtpp_darkvar_menorah_outer_loop_resum(self._sf_sRtrn, addr)
+                if self._sf_sStrX == 'EVE': self._sf_sStrX = f'E:{addr}:{self._sf_sRtrn}'
+                elif self._sf_sStrX == 'OHM': self._sf_sStrX = f'O:{addr}:{self._sf_sRtrn}'
+                elif self._sf_sStrX == 'NTL': self._sf_sStrX = f'N:{addr}:{self._sf_sRtrn}'
+                self.sqtpp_reset_slots(False)
+                print(self._sf_sStrX)
+            except Exception as e:
+                raise Exception(f'staqtapp1.2 (darkvar) error: inauthentic staqtapp1 menorah mirror-address algorithm')
+            # Write new vssv sub-file listing for new addr-pointer, check _sf_sLstX list
         else:
             # Is read & parse dark env-var with vssv sub-file. Even or Odd.
             pass
@@ -1197,48 +1201,45 @@ class SqtppFncs(Sqtpp):
         else: self._sf_rStrC = f'{"".join(self._sf_rLstB)}{"".join(self._sf_rLstA)[::-1]}'
         tetBase = str(tetBase)
         self._sf_rLstC = ''.join(self._sf_rLstC)
-        if len(self._sf_rStrC) != 5:
-            if self._sf_rLstC == '4224': self._sf_sStrX = 'EVE'
-            elif self._sf_rLstC == '535': self._sf_sStrX = 'OHM'
-            else:
-                # Default outer loop chaim pairing, neutral begin return.
-                self._sf_sStrX = 'NTL'
-                return f'1{str(tetBase)}1'
-            self._sf_rIntH = 0
-            for self._sf_rStrD in tetBase:
-                self._sf_rIntI = 0
-                for self._sf_rStrE in self._sf_rStrC:
-                    self._sf_rIntI+=1
-                    self._sf_rIntF = int(self._sf_rStrD)
-                    self._sf_rIntG = int(self._sf_rStrE)
-                    if self._sf_sStrX == 'OHM':
-                        if self._sf_rIntI < 4:
-                            if (self._sf_rIntF+self._sf_rIntG)/3 > 0: self._sf_rIntH+=1
-                        else:
-                            if self._sf_rIntF > 4:
-                                if self._sf_rIntG+2 < self._sf_rIntF: self._sf_rIntH-=1
-                                else:
-                                    if self._sf_rIntG+3 <= self._sf_rIntF: self._sf_rIntH+=1
+        if self._sf_rLstC == '4224': self._sf_sStrX = 'EVE'
+        elif self._sf_rLstC == '535': self._sf_sStrX = 'OHM'
+        else:
+            self._sf_sStrX = 'NTL'
+            return f'1{str(tetBase)}1'
+        self._sf_rIntH = 0
+        for self._sf_rStrD in tetBase:
+            self._sf_rIntI = 0
+            for self._sf_rStrE in self._sf_rStrC:
+                self._sf_rIntI+=1
+                self._sf_rIntF = int(self._sf_rStrD)
+                self._sf_rIntG = int(self._sf_rStrE)
+                if self._sf_sStrX == 'OHM':
+                    if self._sf_rIntI < 4:
+                        if (self._sf_rIntF+self._sf_rIntG)/3 > 0: self._sf_rIntH+=1
                     else:
-                        if self._sf_rIntI > 3:
-                            if (self._sf_rIntF+self._sf_rIntG)/3 <= 2: self._sf_rIntH-=1
-                            else: self._sf_rIntH+=1
-                        else:
-                            if self._sf_rIntF-self._sf_rIntG > 0: self._sf_rIntH+=1   
+                        if self._sf_rIntF > 4:
+                            if self._sf_rIntG+2 < self._sf_rIntF: self._sf_rIntH-=1
                             else:
-                                if self._sf_rIntG > self._sf_rIntF+1: self._sf_rIntH-=1
-                                else:
-                                    if (self._sf_rIntG+4)/2 > 3: self._sf_rIntH-=1
-                                    else: self._sf_rIntH+=1
-            self._sf_rIntH = str(self._sf_rIntH)
-            if self._sf_rIntH == self._sf_rIntH[::-1]:
-                return f'{self._sf_rIntH[0]}{str(tetBase)}{self._sf_rIntH[0]}'
-            else:
-                if len(self._sf_rIntH) > 1 and int(self._sf_rIntH) < 36:
-                    return f'{self._sf_rIntH[1]}{str(tetBase)}{self._sf_rIntH[1]}'
+                                if self._sf_rIntG+3 <= self._sf_rIntF: self._sf_rIntH+=1
                 else:
-                    return f'{self._sf_rIntH[0]}{str(tetBase)}{self._sf_rIntH[0]}'
-        else: raise Exception(f'staqtapp1.2 (darkvar) error: inauthentic staqtapp1 darkvar algorithm')
+                    if self._sf_rIntI > 3:
+                        if (self._sf_rIntF+self._sf_rIntG)/3 <= 2: self._sf_rIntH-=1
+                        else: self._sf_rIntH+=1
+                    else:
+                        if self._sf_rIntF-self._sf_rIntG > 0: self._sf_rIntH+=1   
+                        else:
+                            if self._sf_rIntG > self._sf_rIntF+1: self._sf_rIntH-=1
+                            else:
+                                if (self._sf_rIntG+4)/2 > 3: self._sf_rIntH-=1
+                                else: self._sf_rIntH+=1
+        self._sf_rIntH = str(self._sf_rIntH).replace('0','1')
+        if self._sf_rIntH == self._sf_rIntH[::-1]:
+            return f'{self._sf_rIntH[0]}{str(tetBase)}{self._sf_rIntH[0]}'
+        else:
+            if len(self._sf_rIntH) > 1 and int(self._sf_rIntH) < 36:
+                return f'{self._sf_rIntH[1]}{str(tetBase)}{self._sf_rIntH[1]}'
+            else:
+                return f'{self._sf_rIntH[0]}{str(tetBase)}{self._sf_rIntH[0]}'
 #_______________________________________________________________________________________
     def sqtpp_darkvar_quick_hand_rand_palindrome(self, rng: int) -> int:
         # Returns a random lm-shift 5-digit palindrome int for darkvar() pointer begins.
@@ -1306,7 +1307,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.112\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.116\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -2595,8 +2596,8 @@ def stalkvar(varName: str, varData: str):
     sqtppCls.mcf_stalkvar(varName, varData)
 #_______________________________________________________________________________________
 
-def test():
-    sfCls = SqtppFncs()
+#def test():
+    #sfCls = SqtppFncs()
     # ><)))))))))))))))))'>-------------------------------------------------------
     #makevfs('vfs-test','dir-test','folder-test')
     #addvar('stalk_var1', '@qp(78000,xrp):')
@@ -2615,7 +2616,7 @@ def test():
     #joinvars('faster_stacks6', ['tree_test1'])
     #print(renamevar_stx('globe', -1))
     #removevar('floating_needles_album1')
-    darkvar()
+    #darkvar()
     #--------------------------------------------------------------------<'(((((>< 
-test()
+#test()
         
