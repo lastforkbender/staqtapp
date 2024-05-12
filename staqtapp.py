@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.116 rev9
+# Staqtapp-v1.2.121 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -661,7 +661,7 @@ class Sqtpp(dict):
 #_________________________MAIN PARSING FUNCTIONS:
 #_______________________________________________________________________________________
 class SqtppFncs(Sqtpp):
-    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sQp', '_sf_sPq', '_sf_sVd', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD')
+    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sQp', '_sf_sPq', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD')
     
     def __init__(self):
         pass
@@ -673,7 +673,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.116\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.121\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1133,21 +1133,27 @@ class SqtppFncs(Sqtpp):
         # See darkvar info for explain. Very complex env-var vfs-functionals, do not edit.
         # __slots__ in use: (_sf_sLstX, _sf_sStrX, _sf_sIntX, _sf_sBoolX)
         # returns: (none)
-        self._sf_sBoolX = True
-        addr = None
         if self._sf_sBoolX:
+            mAddr = None
             try:
-                addr = f'{random.randint(1111111111,9999999999)}{random.randint(1111111111,9999999999)}{random.randint(1111111111,9999999999)}{random.randint(1,9)}'
+                mAddr = f'{random.randint(1111111111,9999999999)}{random.randint(1111111111,9999999999)}{random.randint(1111111111,9999999999)}{random.randint(1,9)}'
                 self._sf_sRtrn = self.sqtpp_darkvar_quick_hand_rand_palindrome(66)
-                self._sf_sRtrn = self.sqtpp_darkvar_menorah_outer_loop_resum(self._sf_sRtrn, addr)
-                if self._sf_sStrX == 'EVE': self._sf_sStrX = f'E:{addr}:{self._sf_sRtrn}'
-                elif self._sf_sStrX == 'OHM': self._sf_sStrX = f'O:{addr}:{self._sf_sRtrn}'
-                elif self._sf_sStrX == 'NTL': self._sf_sStrX = f'N:{addr}:{self._sf_sRtrn}'
+                self._sf_sRtrn = self.sqtpp_darkvar_menorah_outer_loop_resum(self._sf_sRtrn, mAddr)
                 self.sqtpp_reset_slots(False)
-                print(self._sf_sStrX)
             except Exception as e:
                 raise Exception(f'staqtapp1.2 (darkvar) error: inauthentic staqtapp1 menorah mirror-address algorithm')
-            # Write new vssv sub-file listing for new addr-pointer, check _sf_sLstX list
+            self._sf_rStrA = f'____d__v____{self._sf_sVn}<@qp:...:vd(@qp(st1={self._sf_sRtrn},zny=tetbase34,lpm=13:12,drome-r=y,drome-s=n,drome-v=n,rev9-btb=n,rev9-blb=n):@qp(addr='
+            if self._sf_sQp.find(self._sf_rStrA) < 0:
+                self._sf_rLstA = set()
+                for ev in range(self._sf_sLstX):
+                    if self.sqtpp_var_value(self._sf_sLstX[ev]):
+                        self._sf_sVd = self._sf_sVd.replace('@qp(','').replace('):','').replace(' ','')
+                        self._sf_rLstA.add(self._sf_sVd)
+                if len(self._sf_rLstA) > 0:
+                    self._sf_rStrA = f'{self._sf_rStrA}{self._sf_sStrX}-{mAddr},atdl=31,m-lrs=y,m-rlv=y,rev9-sldq=n):@qp({str(self._sf_rLstA)}):>'
+                    #TODO
+            else:
+                pass 
         else:
             # Is read & parse dark env-var with vssv sub-file. Even or Odd.
             pass
@@ -1201,10 +1207,10 @@ class SqtppFncs(Sqtpp):
         else: self._sf_rStrC = f'{"".join(self._sf_rLstB)}{"".join(self._sf_rLstA)[::-1]}'
         tetBase = str(tetBase)
         self._sf_rLstC = ''.join(self._sf_rLstC)
-        if self._sf_rLstC == '4224': self._sf_sStrX = 'EVE'
-        elif self._sf_rLstC == '535': self._sf_sStrX = 'OHM'
+        if self._sf_rLstC == '4224': self._sf_sStrX = 'E'
+        elif self._sf_rLstC == '535': self._sf_sStrX = 'O'
         else:
-            self._sf_sStrX = 'NTL'
+            self._sf_sStrX = 'N'
             return f'1{str(tetBase)}1'
         self._sf_rIntH = 0
         for self._sf_rStrD in tetBase:
@@ -1213,7 +1219,7 @@ class SqtppFncs(Sqtpp):
                 self._sf_rIntI+=1
                 self._sf_rIntF = int(self._sf_rStrD)
                 self._sf_rIntG = int(self._sf_rStrE)
-                if self._sf_sStrX == 'OHM':
+                if self._sf_sStrX == 'O':
                     if self._sf_rIntI < 4:
                         if (self._sf_rIntF+self._sf_rIntG)/3 > 0: self._sf_rIntH+=1
                     else:
@@ -1307,7 +1313,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.116\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.121\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -1663,15 +1669,20 @@ class SqtppFncs(Sqtpp):
                             self._sf_sSrc = self._sf_sSrc.replace(f'{self._sf_sQp}:\n', f'{self._sf_sQp}\n{varNm}_{self._sf_rIntA}<{varDat}>:\n')
                             self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc.replace(f'({varNm}={self._sf_rStrA})', f'({varNm}={self._sf_rLstA})'))
                         else:
-                            self.sqtpp_silent_lock_remove(self._sf_rLstA)
+                            # All spawned vars are to be removed & the stalked env-var.
+                            lstA_cpy = self._sf_rLstA
+                            strA_cpy = self._sf_rStrA
+                            self._sf_sVn = varNm
+                            # This call is going to create a dark env-var if @lstA_cpy
+                            # has at least one spawned var associated lockvar() entry.
+                            # Like dark matter; compression without being compression.
+                            self.sqtpp_silent_lock_remove(True, lstA_cpy)
                             self._sf_rStrB = self._sf_sQp
-                            self.sqtpp_var_remove(self._sf_rLstA)
-                            if self._sf_sSrc.find(f';({varNm}={self._sf_rStrA})') > -1: self._sf_sSrc = self._sf_sSrc.replace(f';({varNm}={self._sf_rStrA})', '')
-                            elif self._sf_sSrc.find(f'\n({varNm}={self._sf_rStrA});') > -1: self._sf_sSrc = self._sf_sSrc.replace(f'({varNm}={self._sf_rStrA});', '')
-                            else: self._sf_sSrc = self._sf_sSrc.replace(f'\n<sbf-{self._sf_sVfsFldr}-svvs:\n({varNm}={self._sf_rStrA})//>', '')
+                            self.sqtpp_var_remove(lstA_cpy)
+                            if self._sf_sSrc.find(f';({varNm}={strA_cpy})') > -1: self._sf_sSrc = self._sf_sSrc.replace(f';({varNm}={strA_cpy})', '')
+                            elif self._sf_sSrc.find(f'\n({varNm}={strA_cpy});') > -1: self._sf_sSrc = self._sf_sSrc.replace(f'({varNm}={strA_cpy});', '')
+                            else: self._sf_sSrc = self._sf_sSrc.replace(f'\n<sbf-{self._sf_sVfsFldr}-svvs:\n({varNm}={strA_cpy})//>', '')
                             self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc.replace(f'{self._sf_rStrB}:\n', f'{self._sf_sQp}:\n'))
-                        self._sf_rLstA = None
-                        self._sf_rStrA = None
                         self._sf_rStrB = None
                         self._sf_sSrc = None
                         self._sf_sQp = None
@@ -1909,7 +1920,7 @@ class SqtppFncs(Sqtpp):
         self._sf_rIntD = len(varNmLst)
         for self._sf_rIntC in range(self._sf_rIntD): self._sf_sQp = re.sub(r'(?s:.)'+re.escape(varNmLst[self._sf_rIntC])+r'<@qp\(.*?\):>', '', self._sf_sQp)
 #_______________________________________________________________________________________
-    def sqtpp_silent_lock_remove(self, varNmLst: list):
+    def sqtpp_silent_lock_remove(self, isStlkVar: bool, varNmLst: list):
         # Removes tpqt func/var lock block(s) quietly. Assumes _sf_sSrc already vfs content.
         # *Slots attribute _sf_sLstX retains any var name(s) to block(s) that got removed.*
         # __slots__ in use: (_sf_sSrc, _sf_sPq, _sf_sLstX, _sf_sStrX, _sf_sIntX, _sf_sBoolX)
@@ -1935,12 +1946,17 @@ class SqtppFncs(Sqtpp):
                     if len(xLst) > 0:
                         if not self._sf_sBoolX:
                             self._sf_sBoolX = True
+                            if isStlkVar:
+                                self._sf_sLstX = varNmLst
+                                self.sqtpp_darkvar()
+                                self._st_sLstX = []
                             self._sf_sStrX = self._sf_sPq
                         self._sf_sLstX.append(varNmLst[x])
                         self._sf_sPq = self._sf_sPq.replace(xLst[0],'')
                         self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                 if len(self._sf_sLstX) > 0:
                     self._sf_sSrc = self._sf_sSrc.replace(self._sf_sStrX, self._sf_sPq)
+                    self._sf_sBoolX = False
                     self._sf_sStrX = None
         except Exception as e:
             pass
@@ -2476,6 +2492,7 @@ class SqtppFncs(Sqtpp):
             self._sf_sQp = None
             self._sf_sPq = None
             self._sf_sVd = None
+            self._sf_sVn = None
             self._sf_sRtrn = None
             self._sf_sKntId = None
             self._sf_sLstX = None
