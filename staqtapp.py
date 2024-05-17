@@ -2009,18 +2009,18 @@ class SqtppFncs(Sqtpp):
         self._sf_rLstB = ['8','6','7','5','3','1','9','4','2']
         self._sf_rIntA = -1
         self._sf_rIntB = 9
-        while self._sf_rIntA != 'kgb jon dung':
+        while True:
             self._sf_rIntA+=1
-            if self._sf_rIntA == 0: self._sf_rLstA.append(self._sf_rLstB[random.randint(0,self._sf_rIntB)-1])
+            if self._sf_rIntA == 0: self._sf_rLstA.append(self._sf_rLstB[random.randint(0,8)])
             else:
                 if not self._sf_rBoolA:
                     self._sf_rLstB.append('0')
                     self._sf_rBoolA = True
                     self._sf_rIntB+=1
-                self._sf_rLstA.append(self._sf_rLstB[random.randint(0,self._sf_rIntB)-1])
+                self._sf_rLstA.append(self._sf_rLstB[random.randint(0,9)])
                 if self._sf_rIntA+1 == ttBranch:
                     self._sf_rLstA = ''.join(self._sf_rLstA)
-                    self._sf_sDv = int(f'{self._sf_rLstA}{self._sf_rLstB[random.randint(0,self._sf_rIntB)-1]}{self._sf_rLstA[::-1]}')
+                    self._sf_sDv = int(f'{self._sf_rLstA}{self._sf_rLstB[random.randint(0,9)]}{self._sf_rLstA[::-1]}')
                     break
 #_______________________________________________________________________________________
     def sqtpp_tqpt_spdr(self, isRdr: bool, isAllNmbrs: bool, callFnc: str, src: str):
