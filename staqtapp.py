@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.128 rev9
+# Staqtapp-v1.2.135 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -45,6 +45,8 @@
 #     not change variable data, see changevar to edit stacked variable datas. Is
 #     suggested to use lockvar after adding a variable with this function.
 #
+# --> listvars(), returns stack list names of current env-vars in tqpt vfs source.
+#
 # --> joinvars(newVarName, varNames), as a list of str names @varNames, this will
 #     join together those env-var datas at the qp(...): taggings merged into one
 #     new env-var @newVarName. Precaution assumed, if does not find a valid name
@@ -87,25 +89,25 @@
 #     replaces, or spawns merged branch for a mv-tree. Behavior of mv-tree branch
 #     edits are in exotic relation to stalkvar. The examples below show this. The
 #     first dict key cannot be changed, will raise exception. Is 'a' in examples:
-
-      # Example A:
-      # smvt-state {'a':{'b':{'c':'vl1','d':'vl2'}, 'e':'vl3'}}
-      # .addbranch_stx('smvt_tree_a', 'c', 2035, None)
-      # results ---> {'a':{'b':{'c':{'2035':'knt'}, 'd':'vl2'}, 'e':'vl3'}}
-      # 'vl1' now a nested branch, not a separate value
-    
-      # Example B:
-      # smvt-state {'a':{'b':{'c':'vl1'},'e':'vl3'}}
-      # .addbranch_stx('smvt_tree_b', 'b', 2056, None)
-      # results ---> {'a':{'b':{'2056':'knt'},'b_2056':{'c':'vl1'},'e':'vl3'}}
-      # 'b' hoplinked to branch&value, however not full link replace parse 
-      # @'b_2056', feature serves as replace options and other features
-    
-      # Example C:
-      # smvt-state {'a':{'b':{'c'},'e':'vl3'}}
-      # .addbranch_stx('smvt_tree_c', 'c', 2032, 2051)
-      # results ---> {'a':{'b':{'2032':'2051'},'e':'vl3'}}
-      # 'c' replaced by {'2032':'2051'} branch
+#
+#       Example A:
+#       smvt-state {'a':{'b':{'c':'vl1','d':'vl2'}, 'e':'vl3'}}
+#       .addbranch_stx('smvt_tree_a', 'c', 2035, None)
+#       results ---> {'a':{'b':{'c':{'2035':'knt'}, 'd':'vl2'}, 'e':'vl3'}}
+#       'vl1' now a nested branch, not a separate value
+#  
+#       Example B:
+#       smvt-state {'a':{'b':{'c':'vl1'},'e':'vl3'}}
+#       .addbranch_stx('smvt_tree_b', 'b', 2056, None)
+#       results ---> {'a':{'b':{'2056':'knt'},'b_2056':{'c':'vl1'},'e':'vl3'}}
+#       'b' hoplinked to branch&value, however not full link replace parse 
+#       @'b_2056', feature serves as replace options and other features
+#  
+#       Example C:
+#       smvt-state {'a':{'b':{'c'},'e':'vl3'}}
+#       .addbranch_stx('smvt_tree_c', 'c', 2032, 2051)
+#       results ---> {'a':{'b':{'2032':'2051'},'e':'vl3'}}
+#       'c' replaced by {'2032':'2051'} branch
 #
 # --> getbranch_stx(isAlf, treeName, branchId), returns a found branch value or
 #     None. @branchId can be either int or str for param usage. @isAlf is for a
@@ -123,6 +125,8 @@
 #     version Staqtapp, however is very useful in preventing any env-vars mishaps.
 #     @fncName can be either a string; or, list parameter of string names properly.
 #     To delete vfs entries from a lockvar use, see lockdel to do that effectively.
+#
+# --> locklist(varName), returns listed fnc/etc. names for a lockvar tpqt vfs entry.
 #
 # --> keyvar(varName, fncName), returns True if @fncNm is allowed to edit @varNm,
 #     is a listed key to @varNm. Other very useful conditions of this include ---
@@ -258,14 +262,10 @@
 
 #_______________________________________________________________________________________
 
-# NOTE: I switch between different ide when testing this library----if you see
-#       a _err slots error.....is because this lets me know to switch and read
-#       the real error that was logged in the .../staqtapp1_2/err-log.txt file
-
-
 # email: rcttcr5@gmail.com
-# github: https://github.com/lastforkbender/staqtapp
 # contact: https://pastebin.com/eumqiBAx
+# github: https://github.com/lastforkbender/staqtapp
+# photo: https://i.postimg.cc/nLNZ4Szr/flatiscube144.jpg
 
 
 from decimal import Decimal as dcml
@@ -373,6 +373,17 @@ class Sqtpp(dict):
             elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'removevar')
         else: self.mcf_err_handler(8, 'removevar')
 #_______________________________________________________________________________________
+    def mcf_listvars(self) -> list:
+        # Returns listed names of all env-vars in vfs tqpt source.
+        # __slots__ in use: (_sRtrn)
+        sfCls = SqtppFncs()
+        self._sRtrn = sfCls.sqtpp_vars_list()
+        if self._sRtrn == -1: self.mcf_err_handler(6, 'listvars')
+        elif self._sRtrn == -2: self.mcf_err_handler(7, 'listvars')
+        elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'listvars')
+        else:
+            return self._sRtrn
+#_______________________________________________________________________________________
     def mcf_joinvars(self, newVarNm: str, varNms: list):
         # Joins a list of @varNms into a newly merged env-var in vfs tqpt source or
         # joins list of spawned env-vars data to @newVarNm if @newVarNm is stalked.
@@ -479,6 +490,18 @@ class Sqtpp(dict):
             elif self._sRtrn == -2: self.mcf_err_handler(13, 'lockvar')
             elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'lockvar')
         else: self.mcf_err_handler(8, 'lockvar')
+#_______________________________________________________________________________________
+    def mcf_locklist(self, varNm: str):
+        # Returns list type for listed fnc/etc. names in use from lockvar use @varNm.
+        # __slots__ in use: (_sRtrn)
+        sfCls = SqtppFncs()
+        if sfCls.sqtpp_chars_check(2, varNm):
+            self._sRtrn = sfCls.sqtpp_list_lock(varNm)
+            if self._sRtrn == -1: self.mcf_err_handler(6, 'locklist')
+            elif self._sRtrn == -2: self.mcf_err_handler(7, 'locklist')
+            elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'locklist')
+            else:
+                return self._sRtrn
 #_______________________________________________________________________________________
     def mcf_lockdel(self, isDelAll: bool, varNm: str, fncNm):
         # Removes tpqt lock entries @fncNm for a env-var @varNm tagged blocks.
@@ -673,7 +696,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.128\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.135\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -814,6 +837,33 @@ class SqtppFncs(Sqtpp):
         except Exception as err_vars_add:
             if not isStlkVar: self._sErr = f'staqtapp1.2 (vars_add) error: {err_vars_add}'
             else: self._sErr = f'staqtapp1.2 (var_stalk) error: {err_vars_add}'
+            return self.sqtpp_err_rcrd(self._sErr)
+#_______________________________________________________________________________________
+    def sqtpp_vars_list(self) -> list:
+        # Returns vfs stack list names of env-vars currently in the tqpt file.
+        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rIntA, _sf_rIntB)
+        # returns:
+        # -1=empty vfs path settings file
+        # -2=invalid vfs path
+        try:
+            if self.sqtpp_set_vfs_file() == 1:
+                if self.sqtpp_vfs_tqpt_file(True) != -1:
+                    self._sf_rLstA = self._sf_sQp.split('\n')
+                    self._sf_rLstA.pop(0)
+                    self._sf_rLstA.pop(0)
+                    self._sf_rIntB = len(self._sf_rLstA)
+                    self._sf_rLstC = []
+                    for self._sf_rIntA in range(self._sf_rIntB):
+                        self._sf_rLstB = self._sf_rLstA[self._sf_rIntA].split('<')
+                        self._sf_rLstC.append(self._sf_rLstB[0])
+                    self._sf_sSrc = None
+                    self._sf_sQp = None
+                    return self._sf_rLstC
+                return -2
+            else:
+                return -1
+        except Exception as err_vars_list:
+            self._sErr = f'staqtapp1.2 (listvars) error: {err_vars_list}'
             return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
     def sqtpp_vars_join(self, newVarNm: str, varNms: list):
@@ -1266,13 +1316,10 @@ class SqtppFncs(Sqtpp):
                                     if (self._sf_rIntG+4)/2 > 3: self._sf_rIntH-=1
                                     else: self._sf_rIntH+=1
             self._sf_rIntH = str(self._sf_rIntH).replace('0','1')
-            if self._sf_rIntH == self._sf_rIntH[::-1]:
-                self._sf_sDv = f'{self._sf_rIntH[0]}{str(tetBase)}{self._sf_rIntH[0]}'
+            if self._sf_rIntH == self._sf_rIntH[::-1]: self._sf_sDv = f'{self._sf_rIntH[0]}{str(tetBase)}{self._sf_rIntH[0]}'
             else:
-                if len(self._sf_rIntH) > 1 and int(self._sf_rIntH) < 36:
-                    self._sf_sDv = f'{self._sf_rIntH[1]}{str(tetBase)}{self._sf_rIntH[1]}'
-                else:
-                    self._sf_sDv = f'{self._sf_rIntH[0]}{str(tetBase)}{self._sf_rIntH[0]}'
+                if len(self._sf_rIntH) > 1 and int(self._sf_rIntH) < 36: self._sf_sDv = f'{self._sf_rIntH[1]}{str(tetBase)}{self._sf_rIntH[1]}'
+                else: self._sf_sDv = f'{self._sf_rIntH[0]}{str(tetBase)}{self._sf_rIntH[0]}'
 #_______________________________________________________________________________________
     def sqtpp_revar(self, isCurrVfsPth: bool, newVfsFlNm: str, newVfsDirNm: str, newVfsFldrNm: str):
         # Replicates a new .sqtpp vfs file from current set vfs file, having env-vars
@@ -1304,7 +1351,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.128\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.135\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -1803,6 +1850,35 @@ class SqtppFncs(Sqtpp):
                 return -1
         except Exception as err_var_key:
             self._sErr = f'staqtapp1.2 (var_key) error: {err_var_key}'
+            return self.sqtpp_err_rcrd(self._sErr)
+#_______________________________________________________________________________________
+    def sqtpp_list_lock(self, varNm: str) -> list:
+        # Returns list type of the vfs tpqt lock block fnc/etc. names for @varNm.
+        # __slots__ in use: (_sf_sSrc, _sf_sPq, _sf_rLstA, _sf_rIntA)
+        # returns:
+        # -1=invalid vfs path
+        # -2=bad path in vfs path setting file
+        try:
+            if self.sqtpp_set_vfs_file() == 1:
+                if self.sqtpp_vfs_tpqt_file(True) != -1:
+                    self._sf_rLstA = re.findall(r'<:'+re.escape(varNm)+r'=(?s:.*?).*:>', self._sf_sPq)
+                    self._sf_rIntA = len(self._sf_rLstA)
+                    if self._sf_rIntA > 0:
+                        self._sf_rLstA = self._sf_rLstA[0].split('\n')
+                        self._sf_rLstA.pop(0)
+                        self._sf_rIntA-=2
+                        self._sf_rLstA[self._sf_rIntA] = self._sf_rLstA[self._sf_rIntA].replace(':>','')
+                        self._sf_sSrc = None
+                        self._sf_sPq = None
+                        return self._sf_rLstA
+                    else:
+                        return None
+                else:
+                    return -2
+            else:
+                return -1
+        except Exception as err_list_lock:
+            self._sErr = f'staqtapp1.2 (list_lock) error: {err_list_lock}'
             return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
     def sqtpp_locate_var(self, rmv: bool, varNm: str):
@@ -2570,6 +2646,10 @@ def removevar(varName: str):
     sqtppCls = Sqtpp()
     sqtppCls.mcf_removevar(varName)
 #_______________________________________________________________________________________
+def listvars() -> list:
+    sqtppCls = Sqtpp()
+    return sqtppCls.mcf_listvars()
+#_______________________________________________________________________________________
 def joinvars(newVarName: str, varNames: list):
     sqtppCls = Sqtpp()
     sqtppCls.mcf_joinvars(newVarName, varNames)
@@ -2596,6 +2676,10 @@ def lockvar(varName: str, fncName):
     # @fncName can be either a single str or list of str elements
     sqtppCls = Sqtpp()
     sqtppCls.mcf_lockvar(varName, fncName)
+#_______________________________________________________________________________________
+def locklist(varName: str) -> list:
+    sqtppCls = Sqtpp()
+    return sqtppCls.mcf_locklist(varName)
 #_______________________________________________________________________________________
 def lockdel(isDelAll: bool, varName: str, fncName):
     sqtppCls = Sqtpp()
@@ -2637,7 +2721,7 @@ def stalkvar(varName: str, varData: str):
     #addvar('stalk_var1', '@qp(78000,xrp):')
     #print(findvar('faster_stacks'))
     #lockvar('faster_stacks3', ['someFnc12','someFnc8','someFnc14','someFnc19'])
-    stalkvar('globe', '@qp(4,3,9):')
+    #stalkvar('globe', '@qp(4,3,9):')
     #print(findvar_stx(['faster_stacks2','faster_stacks4'], 'faster_stacks3'))
     #addtree_stx('tree_test1', ['a', 'b', 'c', 'd', 'e', 'f', 'g'])
     #addbranch_stx('tree_test1', 'b', 'knt', 7948233)
@@ -2651,6 +2735,8 @@ def stalkvar(varName: str, varData: str):
     #print(renamevar_stx('globe', -1))
     #removevar('floating_needles_album1')
     #darkvar()
+    #print(listvars())
+    #print(locklist('__KLF__DSG__'))
     #--------------------------------------------------------------------<'(((((>< 
 #test()
         
