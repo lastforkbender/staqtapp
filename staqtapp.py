@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.135 rev9
+# Staqtapp-v1.2.136 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -271,13 +271,14 @@
 from decimal import Decimal as dcml
 from collections import deque
 
-import datetime
-import hashlib
+import statistics
+#import datetime
+#import hashlib
 import pickle
 import random
 import math
-import mmap
-import glob
+#import mmap
+#import glob
 import sys
 import ast
 import os
@@ -684,7 +685,7 @@ class Sqtpp(dict):
 #_________________________MAIN PARSING FUNCTIONS:
 #_______________________________________________________________________________________
 class SqtppFncs(Sqtpp):
-    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sQp', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD')
+    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sQp', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rLstE', '_sf_rLstF', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD')
     
     def __init__(self):
         pass
@@ -696,7 +697,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.135\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.136\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -733,7 +734,7 @@ class SqtppFncs(Sqtpp):
     def sqtpp_vfs_folder_write_dvcpn(self, dvAddrPntr: str):
         # Writes DVCPN file containing listed darkvar addrs or/and dimensional pntr cXV.
         # (Only rev9 integrated classes/functions removes contents of a DVCPN vfs-file.)
-        # __slots__ in use: (_sf_rLstA, _sf_rStrA, _sf_rIntA, _sf_rIntB)
+        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_rIntA, _sf_rIntB)
         # returns: none
         self._sf_rIntA = self._sf_sSrc.find(f'_|:{self._sf_sVfsFldr}<sub-{self._sf_sVfsFldr}>')
         self._sf_rIntB = self._sf_sSrc.find(f'__|:sub-{self._sf_sVfsFldr}<')
@@ -741,9 +742,12 @@ class SqtppFncs(Sqtpp):
             self._sf_rStrA = self._sf_sSrc[self._sf_rIntA:self._sf_rIntB-1]
             self._sf_rLstA = re.findall(r'<:DVCPN=(?s:.*?).*\/\/:>', self._sf_rStrA)
             if len(self._sf_rLstA) > 0:
-                # Figure cXV global pointer and re-write all dvcpn addr-pntr listings.
-                # TODO
-                pass
+                self._sf_rLstB = self._sf_rLstA[0].split('\n')
+                self._sf_rLstB.pop(0)
+                self._sf_rLstB.pop(0)
+                self._sf_rIntA = len(self._sf_rLstB)
+                self._sf_rLstB[self._sf_rIntA-1] = self._sf_rLstB[self._sf_rIntA-1].replace('//:>','')
+                
             else: self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrA, f'{self._sf_rStrA}\n<:DVCPN=\nnull\n{dvAddrPntr}//:>')
 #_______________________________________________________________________________________
     def sqtpp_vfs_sub_file(self, isAddFl: bool, isRplcFl: bool, flNm: str, src: str):
@@ -1351,7 +1355,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.135\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.136\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -2075,6 +2079,44 @@ class SqtppFncs(Sqtpp):
         xRtrn+=1
         return xRtrn
 #_______________________________________________________________________________________
+    def sqtpp_vssv_menorah_cxv_rod(self, adrsNws: str, adrsPrv: str):
+        # Applies a cXV calculation involving Base10 shift conversion owned palindromes.
+        # *This is a dual parity probability feasible and better suited for speed here;
+        # normally rotationals & incremented parity but tuple _sf_rLstF shortcuts that,
+        # which again would not be an exact Menorah Base loop within loop avgs. dists.*
+        # __slots__ in use: (_sf_rLstA, _sf_rLstC, _sf_rLstD, _sf_rLstE, _sf_rStrD, _sf_rStrE, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, )
+        # returns: none 
+        def sqtpp_vssv_cmsp():
+            self._sf_rLstA = []
+            for x in range(2):
+                for self._sf_rIntC in range(30):
+                    if x == 1:
+                        self._sf_rIntD = math.sqrt(self._sf_rLstD[self._sf_rIntC-1] if self._sf_rIntC > 0 else 0
+                        self._sf_rIntE = math.sqrt(self._sf_rLstD[(self._sf_rIntC+1)%len(self._sf_rLstD)]
+                        self._sf_rIntF = (self._sf_rIntD+self._sf_rIntE)/(2*math.sqrt(self._sf_rLstD[self._sf_rIntC]))
+                    else:
+                        self._sf_rIntD = math.sqrt(self._sf_rLstE[self._sf_rIntC-1] if self._sf_rIntC > 0 else 0
+                        self._sf_rIntE = math.sqrt(self._sf_rLstE[(self._sf_rIntC+1)%len(self._sf_rLstE)]
+                        self._sf_rIntF = (self._sf_rIntD+self._sf_rIntE)/(2*math.sqrt(self._sf_rLstE[self._sf_rIntC]))
+                    self._sf_rLstA.append(self._sf_rIntF)
+            for self._sf_rIntC in range(len(self._sf_rLstF)):
+                self._sf_rIntD = math.sqrt(self._sf_rLstF[self._sf_rIntC-1][0]) if self._sf_rIntC > 0 else 0
+                self._sf_rIntE = math.sqrt(self._sf_rLstF[(self._sf_rIntC)%len(self._sf_rLstF)][0])
+                self._sf_rIntF = (self._sf_rIntD+self._sf_rIntE)/(2*math.sqrt(self._sf_rLstF[self._sf_rIntC][0]))
+            self._sf_rLstA.append(self._sf_rIntF)
+        self._sf_rLstC = adrsNws.split(',')
+        self._sf_rStrD = self._sf_rLstC[1]
+        self._sf_rLstD = [int(dgt) for dgt in self._sf_rLstC[0]]
+        self._sf_rLstC = adrsPrv.split(',')
+        self._sf_rStrE = self._sf_rLstC[1]
+        self._sf_rLstE = [int(dgt) for dgt in self._sf_rLstC[0]]
+        self._sf_rLstF = [(self._sf_rLstD[len(self._sf_rLstD)-1],self._sf_rLstE[len(self._sf_rLstE)-1]),(int(self._sf_rStrD[4]),int(self._sf_rStrE[6])),(int(self._sf_rStrD[3]),int(self._sf_rStrE[5])),(int(self._sf_rStrD[2]),int(self._sf_rStrE[4])),(int(self._sf_rStrD[1]),int(self._sf_rStrE[3])),(int(self._sf_rStrD[0]),int(self._sf_rStrE[2])),(int(self._sf_rStrD[5]),int(self._sf_rStrE[1]))]
+        def sqtpp_vssv_mlid():
+            # TODO
+            # Build string of least vs greatest median matches to most previous
+            # vssv added addr and the new one. Set the cXV probability string
+            # to vssv new cXV and move new char assemble of just added darkvar.
+#_______________________________________________________________________________________
     def sqtpp_plndrm(self, ttBranch: int) -> int:
         # Sets palindrome @_sf_sDv, @ttBranch half semi-loops before center1 rod/candle.
         # Example: 3 half semi-loops = 7 digits, 4 half semi-loops = 9 digits........
@@ -2602,6 +2644,8 @@ class SqtppFncs(Sqtpp):
         self._sf_rLstB = None
         self._sf_rLstC = None
         self._sf_rLstD = None
+        self._sf_rLstE = None
+        self._sf_rLstF = None
         self._sf_rIntA = None
         self._sf_rIntB = None
         self._sf_rIntC = None
