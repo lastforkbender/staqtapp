@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.159 rev9
+# Staqtapp-v1.2.161 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -697,7 +697,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.159\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.161\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1215,7 +1215,7 @@ class SqtppFncs(Sqtpp):
                 self.sqtpp_darkvar_menorah_outer_loop_resum(self._sf_sDv, mAddr)
                 self.sqtpp_reset_slots(False)
             except Exception as e:
-                raise Exception(f'staqtapp1.2 (darkvar) error: inauthentic staqtapp1 menorah mirror-address algorithm')
+                raise Exception(f'staqtapp1.2 (darkvar) error: inauthentic staqtapp1.2 menorah mirror-address algorithm')
             self._sf_rStrA = f'____d__v____{self._sf_sVn}<@qp:...:vd(@qp(st1.2={self._sf_sDv},zny=tetbase34,lpm=13:12,drome-r=y,drome-s=n,drome-v=n,rev9-btb=n,rev9-blb=n):@qp(addr='
             if self._sf_sQp.find(self._sf_rStrA) < 0:
                 self._sf_rLstA = set()
@@ -1359,7 +1359,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.159\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.161\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -1727,8 +1727,8 @@ class SqtppFncs(Sqtpp):
                             else: self._sf_sSrc = self._sf_sSrc.replace(f'\n<sbf-{self._sf_sVfsFldr}-svvs:\n({varNm}={strA_cpy})//>','')
                             self._sf_sSrc = self._sf_sSrc.replace(f'{self._sf_sQpRplcX}:\n', f'{self._sf_sQp}:\n')
                             self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
+                        self._sf_sQpRplcX = None
                         self._sf_rStrA = None
-                        self._sf_sRplc = None
                         self._sf_sSrc = None
                         self._sf_sQp = None
                         self._sf_sPq = None
@@ -1882,7 +1882,7 @@ class SqtppFncs(Sqtpp):
                         self._sf_sPq = None
                         return self._sf_rLstA
                     else:
-                        return None
+                        return []
                 else:
                     return -2
             else:
@@ -2086,11 +2086,9 @@ class SqtppFncs(Sqtpp):
         return xRtrn
 #_______________________________________________________________________________________
     def sqtpp_vssv_menorah_cxv_rod(self, adrsNws: str, adrsPrv: str):
-        # Applies a cXV calculation involving Base10 shift conversion owned palindromes.
-        # Can be adapted into an strong 4-digit pin/key padding noise using deque types
-        # but no random lib; and slots class attributes hid from a time-copy partitions
-        # via use of randomized tunneling with the yield generator, locking each thread;
-        # that would take half a book to explain here and not the focus of Staqtapp 1.2
+        # Applies an cXV calculation involving Base10 shift conversion owned palindromes.
+        # Very accurate palindrome % calculation; like hitting a dime a 1,000 miles down.
+        # (No need for a double equal right now, is left in the try block for later usage)
         # __slots__ in use: (_sf_rLstA, _sf_rLstC, _sf_rLstD, _sf_rLstE, _sf_rStrD, _sf_rStrE, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rIntH, _sf_rBoolA)
         # returns: (menorah inverse type palindrome medians collide of a timed LR-analogous)
         self._sf_rLstC = adrsNws.split(',')
@@ -2711,6 +2709,41 @@ class SqtppFncs(Sqtpp):
         self._sf_rBoolC = None
         self._sf_rBoolD = None
 #_______________________________________________________________________________________
+    def sqtpp_slots_rcrd(self) -> bool:
+        # Writes cache state of sf s-type slots variables data to vfs file, minus slots
+        # _sf_sSrc, _sf_sQp, _sf_sQpRplcX and _sf_sPq that are constant txt replacement.
+        # __slots__ in use: (_sf_rLstA, _sf_rLstD, _sf_rStrA)
+        # returns: none
+        if self.sqtpp_set_vfs_file() == 1:
+            if self.sqtpp_vfs_tpqt_file(True) != -1:
+                self._sf_rStrA = "___csvfs___stp___zael33M1JC777"
+                self._sf_rLstD = re.findall(r'<:'+re.escape(self._sf_rStrA)+r'=(?s:.*?).*:>', self._sf_sPq)
+                if len(self._sf_rLstD) > 0:
+                    self._sf_sPq = self._sf_sPq.replace(self._sf_rLstD[0],'')
+                    self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
+                    self._sf_sPq = self._sf_sPq.replace(':>\n:',':>:')
+                self._sf_rLstD = []  
+                self._sf_rLstD.append(f'_sf_sVfsFldr________{self._sf_sVfsFldr}'
+                self._sf_rLstD.append(f'_sf_sBoolCxv________{self._sf_sBoolCxv}'
+                self._sf_rLstD.append(f'_sf_sKntId________{self._sf_sKntId}'
+                self._sf_rLstD.append(f'_sf_sBoolX________{self._sf_sBoolX}'
+                self._sf_rLstD.append('_sf_sRtrn________'+str(self._sf_sRtrn).replace('\n','☆')
+                self._sf_rLstD.append('_sf_sLstX________'+str(self._sf_sLstX).replace('\n','☆')
+                self._sf_rLstD.append('_sf_sStrX________'+self._sf_sStrX.replace('\n','☆')
+                self._sf_rLstD.append(f'_sf_sIntX________{self._sf_sIntX}'
+                self._sf_rLstD.append('_sf_sRplc________'+self._sf_sRplc.replace('\n','☆')
+                self._sf_rLstD.append(f'_sf_sVfs_______{self._sf_sVfs}'
+                self._sf_rLstD.append('_sf_sVd________{self._sf_sVd}'
+                self._sf_rLstD.append('_sf_sDv________'+str(self._sf_sDv).replace('\n','☆')
+                self._sf_rLstD.append(f'_sf_sVn________{self._sf_sVn}'
+                self.sqttp_tpqt_spok(False, False, self._sf_rStrA, self._sf_rLstD)
+                self._sf_rLstD = None
+                self._sf_sSrc = None
+                self._sf_sPq = None
+                return True
+            return False
+        return False
+#_______________________________________________________________________________________
     def sqtpp_err_rcrd(self, errMsg: str) -> str:
         # Writes any main parsing function type errors to a err-log file to staqtapp1_2 folder.
         # __slots__ in use: (none)
@@ -2816,7 +2849,7 @@ def stalkvar(varName: str, varData: str):
     #addvar('stalk_var1', '@qp(78000,xrp):')
     #print(findvar('faster_stacks'))
     #lockvar('faster_stacks3', ['someFnc12','someFnc8','someFnc14','someFnc19'])
-    #stalkvar('sVar', '@qp(1,2,3):')
+    #stalkvar('sVar2', '@qp(1,2,3):')
     #print(findvar_stx(['faster_stacks2','faster_stacks4'], 'faster_stacks3'))
     #addtree_stx('tree_test1', ['a', 'b', 'c', 'd', 'e', 'f', 'g'])
     #addbranch_stx('tree_test1', 'b', 'knt', 7948233)
