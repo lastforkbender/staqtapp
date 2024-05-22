@@ -2733,7 +2733,7 @@ class SqtppFncs(Sqtpp):
                 self._sf_rLstD.append(f'_sf_sIntX________{self._sf_sIntX}'
                 self._sf_rLstD.append('_sf_sRplc________'+self._sf_sRplc.replace('\n','☆')
                 self._sf_rLstD.append(f'_sf_sVfs_______{self._sf_sVfs}'
-                self._sf_rLstD.append('_sf_sVd________{self._sf_sVd}'
+                self._sf_rLstD.append(f'_sf_sVd________{self._sf_sVd}'
                 self._sf_rLstD.append('_sf_sDv________'+str(self._sf_sDv).replace('\n','☆')
                 self._sf_rLstD.append(f'_sf_sVn________{self._sf_sVn}'
                 self.sqttp_tpqt_spok(False, False, self._sf_rStrA, self._sf_rLstD)
