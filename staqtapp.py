@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.161 rev9
+# Staqtapp-v1.2.168 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -697,7 +697,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.161\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.168\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1359,7 +1359,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.161\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.168\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -2467,6 +2467,76 @@ class SqtppFncs(Sqtpp):
                 self._sf_sSrc = self._sf_sSrc.replace(f'{self._sf_sPq}:\n', f'___|:tpqt-{self._sf_sVfsFldr}<tpqt,{len(pq_varNm)},n>:\n{self._sf_rLstB}:\n')
                 self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
 #_______________________________________________________________________________________
+    def sqtpp_rqnv_menorah_reorder(self, lNms: list, pPrbLen: int, qnvRtm: int) -> str:
+        # Scans @lNms for each palindrome probability mirroring threshold @qnvRtm and
+        # if match or greater @pPrbLen frequency, will reverse order the loop's window
+        # in quest to a made palindrome via previous numbers & shifting right>=.<left.
+        # The order of when a probability higher than @qnvRtm to then seeking a nearest
+        # palindrome to do reverse order is kept non-apparent as in real shadow cvx and
+        # shifted to R-L, aka front of string. There is no neutral-odd or neutral-even
+        # darkvar addrs & determining factor of why these function's fastest paths; yet
+        # here they are not, because is simulated prob of a observerless cast reorders.
+        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rStrA, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rIntH, _sf_rIntI, _sf_rBoolA)
+        # returns:
+        self._sf_rLstA = []
+        self._sf_rIntB = len(lNms)
+        self._sf_rIntF = self._sf_rIntB-(pPrbLen-1)
+        for self._sf_rIntA in range(self._sf_rIntB):
+            self._sf_rLstB = []
+            self._sf_rIntC = self._sf_rIntA
+            if self._sf_rIntC > 0: self._sf_rIntD = self._sf_rIntC+pPrbLen
+            else: self._sf_rIntD = pPrbLen
+            if self._sf_rIntD <= self._sf_rIntB:
+                while self._sf_rIntC < self._sf_rIntD:
+                    self._sf_rLstB.append(lNms[self._sf_rIntC])
+                    self._sf_rIntC+=1
+                for self._sf_rIntE in range(self._sf_rIntF):
+                    self._sf_rIntI = 0
+                    self._sf_rIntG = 0
+                    self._sf_rIntH = pPrbLen-1
+                    while self._sf_rIntH > -1:
+                        if lNms[self._sf_rIntE+self._sf_rIntG] == self._sf_rLstB[self._sf_rIntH]: self._sf_rIntI+=1
+                        self._sf_rIntG+=1
+                        self._sf_rIntH-=1
+                self._sf_rLstA.append(self._sf_rIntI/(self._sf_rIntB-self._sf_rIntA-(pPrbLen-2)))
+            else:
+                self._sf_rStrA = ''.join(map(str, lNms))
+                self._sf_sIntX = int(self._sf_rStrA[self._sf_rIntA:self._sf_rIntB])
+                break
+        self._sf_sLstX = []
+        self._sf_rIntC = len(self._sf_rLstA)
+        while self._sf_rIntA < self._sf_rIntC:
+            if self._sf_rLstA[self._sf_rIntA] > qnvRtm:
+                self._sf_rLstB = []
+                # Beyond this would be non-comprehensible in real space. The
+                # specific saying in Hebrew translates the universe does not
+                # sleep but is not G•d ..aka none can comprehend dark matter
+                # however irrelevant English, nothing or none doesn't exist.
+                # 'Nothing' being of any can or can comprehend is impossible
+                # because nothing is impossible, not nothing is possible. An
+                # important travels of Menorah based palindrome multi-loops.
+                for self._sf_rIntD in range(self._sf_rIntF):
+                    self._sf_rLstB.append(lNms[self._sf_rIntD])
+                    if len(self._sf_rLstB) == pPrbLen:
+                        self._sf_rIntB = self._sf_rIntD+pPrbLen
+                        while self._sf_rIntB < len(lNms) and lNms[self._sf_rIntB] < self._sf_rLstB[len(self._sf_rLstB)-1]:
+                            self._sf_rIntB+=1
+                        if self._sf_rIntB < len(lNms):
+                            self._sf_rIntE = self._sf_rIntB-1
+                            while self._sf_rIntE > self._sf_rIntD:
+                                self._sf_sLstX.append(lNms[self._sf_rIntE])
+                                self._sf_rIntE-=1
+                        self._sf_rIntE = len(self._sf_rLstB)-1
+                        while self._sf_rIntE > -1:
+                            self._sf_sLstX.append(self._sf_rLstB[self._sf_rIntE])
+                            self._sf_rIntE-=1
+                        if self._sf_rIntB < len(lNms): self._sf_rIntD = self._sf_rIntB
+                        else: self._sf_rIntD = self._sf_rIntD+pPrbLen
+                    else:
+                        self._sf_sLstX.append(lNms[self._sf_rIntD])
+                        self._sf_rIntD+=1
+        self.sqtpp_reset_slots(False)
+#_______________________________________________________________________________________
     def sqtpp_mv_prometes_kn(self, isRead: bool, dsgFnc: str, srcStr: str, brId: str, brNwId: str, brNwVl: str):
         # __slots__ in use: (none)
         # returns: (mv-tree dict ast encoded)
@@ -2723,19 +2793,19 @@ class SqtppFncs(Sqtpp):
                     self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                     self._sf_sPq = self._sf_sPq.replace(':>\n:',':>:')
                 self._sf_rLstD = []  
-                self._sf_rLstD.append(f'_sf_sVfsFldr________{self._sf_sVfsFldr}'
-                self._sf_rLstD.append(f'_sf_sBoolCxv________{self._sf_sBoolCxv}'
-                self._sf_rLstD.append(f'_sf_sKntId________{self._sf_sKntId}'
-                self._sf_rLstD.append(f'_sf_sBoolX________{self._sf_sBoolX}'
-                self._sf_rLstD.append('_sf_sRtrn________'+str(self._sf_sRtrn).replace('\n','☆')
-                self._sf_rLstD.append('_sf_sLstX________'+str(self._sf_sLstX).replace('\n','☆')
-                self._sf_rLstD.append('_sf_sStrX________'+self._sf_sStrX.replace('\n','☆')
-                self._sf_rLstD.append(f'_sf_sIntX________{self._sf_sIntX}'
-                self._sf_rLstD.append('_sf_sRplc________'+self._sf_sRplc.replace('\n','☆')
-                self._sf_rLstD.append(f'_sf_sVfs_______{self._sf_sVfs}'
-                self._sf_rLstD.append(f'_sf_sVd________{self._sf_sVd}'
-                self._sf_rLstD.append('_sf_sDv________'+str(self._sf_sDv).replace('\n','☆')
-                self._sf_rLstD.append(f'_sf_sVn________{self._sf_sVn}'
+                self._sf_rLstD.append(f'_sf_sVfsFldr________{self._sf_sVfsFldr}')
+                self._sf_rLstD.append(f'_sf_sBoolCxv________{self._sf_sBoolCxv}')
+                self._sf_rLstD.append(f'_sf_sKntId________{self._sf_sKntId}')
+                self._sf_rLstD.append(f'_sf_sBoolX________{self._sf_sBoolX}')
+                self._sf_rLstD.append('_sf_sRtrn________' + self._sf_sRtrn.replace('\n','☆'))
+                self._sf_rLstD.append('_sf_sLstX________' + self._sf_sLstX.replace('\n','☆'))
+                self._sf_rLstD.append('_sf_sStrX________' + self._sf_sStrX.replace('\n','☆'))
+                self._sf_rLstD.append(f'_sf_sIntX________{self._sf_sIntX}')
+                self._sf_rLstD.append('_sf_sRplc________' + self._sf_sRplc.replace('\n','☆'))
+                self._sf_rLstD.append(f'_sf_sVfs_______{self._sf_sVfs}')
+                self._sf_rLstD.append(f'_sf_sVd________{self._sf_sVd}')
+                self._sf_rLstD.append('_sf_sDv________' + self._sf_sDv.replace('\n','☆'))
+                self._sf_rLstD.append(f'_sf_sVn________{self._sf_sVn}')
                 self.sqttp_tpqt_spok(False, False, self._sf_rStrA, self._sf_rLstD)
                 self._sf_rLstD = None
                 self._sf_sSrc = None
@@ -2865,6 +2935,10 @@ def stalkvar(varName: str, varData: str):
     #darkvar()
     #print(listvars())
     #print(locklist('__KLF__DSG__'))
+    #tmpLst = [9,3,7,5,3,9,0,4,2,0,4,2,7,8,5,1,8,0,5,9,4,3,1,1,8,5,4,0,0,3,2,7,8,4,5,9]
+    #sfCls.sqtpp_rqnv_menorah_reorder(tmpLst, 5, 0.31)
+    #print(sfCls._sf_sLstX)
+    #print(sfCls._sf_sIntX)
     #--------------------------------------------------------------------<'(((((>< 
 #test()
         
