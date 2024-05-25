@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.168 rev9
+# Staqtapp-v1.2.174 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -269,7 +269,7 @@
 
 
 from decimal import Decimal as dcml
-from collections import deque
+from collections import deque, Counter
 
 import statistics
 #import datetime
@@ -697,7 +697,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.168\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.174\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1359,7 +1359,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.168\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.174\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -2163,6 +2163,48 @@ class SqtppFncs(Sqtpp):
             except Exception as e:
                 pass
 #_______________________________________________________________________________________
+    def sqtpp_combined_addr_darkvar_search(self, cmbAddr: str, srchWndw: str):
+        # Performs an sliding window search over a joined darkvar addrs, either finding
+        # palindromes or anagrams. @srchWndw is the digit sequence in question of find.
+        # Also performs a reduction count left to right & right to left for cvx lists.
+        # (This for RVM type calculations, that can use embedded char distances types.
+        # Relaxed variable mapping is a variable naming type associated with very long
+        # palindrome numbers(500mb+) and encrypted pointers to designated sections of
+        # those long palindrome numbers, whereof variable names are encrypted every---
+        # time is encountered/ran. In the future, quantum generative AI can make their
+        # own number systems to crack many types of encryption you would think are ----
+        # secure. Hardware RVM related variable name encryption integration stops it. A
+        # example as so: myVar_884121488_10 where _10 is encrypted with sectional of a
+        # palindrome number and the myVar_. The programmer would not see the very large
+        # palindrome number, just a section chosen & a suggested var-name choice list.
+        # *The specific hardware for this RVM tech mentioned is very secretive kept.*)
+        # __slots__ in use: (_sf_sLstX, _sf_rLstA, _sf_rStrA, _sf_rStrB, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG)
+        # returns: (none), _sf_sLstX is the search results
+        self._sf_sLstX = {}
+        self._sf_rLstA = deque(srchWndw)
+        self._sf_rIntA = Counter(srchWndw)
+        self._sf_rStrA = None
+        self._sf_rIntB = len(cmbAddr)-len(srchWndw)+1
+        for self._sf_rIntC in range(self._sf_rIntB):
+            self._sf_rStrB = cmbAddr[self._sf_rIntC:self._sf_rIntC+len(srchWndw)]
+            if self._sf_rStrB == self._sf_rStrB[::-1]:
+                if self._sf_rStrA:
+                    self._sf_rIntD = sum(self._sf_rIntF != self._sf_rIntG for self._sf_rIntF, self._sf_rIntG in zip(self._sf_rStrB, self._sf_rStrA))
+                    self._sf_rIntE = sum(self._sf_rIntF != self._sf_rIntG for self._sf_rIntF, self._sf_rIntG in zip(self._sf_rStrB[::-1], self._sf_rStrA))
+                    self._sf_sLstX[self._sf_rStrA].setdefault('rdc',{})[self._sf_rStrB] = {'l': self._sf_rIntD,'r': self._sf_rIntE}
+                self._sf_sLstX.setdefault(self._sf_rStrB,{'pld':[(self._sf_rIntC,self._sf_rIntC+len(srchWndw)-1)]})
+            elif Counter(self._sf_rStrB) == self._sf_rIntA:
+                self._sf_rStrA = self._sf_rStrB
+                self._sf_sLstX.setdefault(self._sf_rStrB, {'ang':[]})['ang'].append((self._sf_rIntC,self._sf_rIntC+len(srchWndw)-1))
+                self._sf_rIntD = sum(self._sf_rIntF != self._sf_rIntG for self._sf_rIntF, self._sf_rIntG in zip(self._sf_rStrB, srchWndw))
+                self._sf_rIntE = sum(self._sf_rIntF != self._sf_rIntG for self._sf_rIntF, self._sf_rIntG in zip(self._sf_rStrB[::-1], srchWndw))
+                self._sf_sLstX[self._sf_rStrB].setdefault('rdc',{})[self._sf_rStrB] = {'l': self._sf_rIntD,'r': self._sf_rIntE}
+            self._sf_rLstA.popleft()
+            if self._sf_rIntC+len(srchWndw) < len(cmbAddr): self._sf_rLstA.append(cmbAddr[self._sf_rIntC+len(srchWndw)])
+            else:
+                break
+            self._sf_rIntA = Counter(''.join(self._sf_rLstA))
+#_______________________________________________________________________________________
     def sqtpp_plndrm(self, ttBranch: int) -> int:
         # Sets palindrome @_sf_sDv, @ttBranch half semi-loops before center1 rod/candle.
         # Example: 3 half semi-loops = 7 digits, 4 half semi-loops = 9 digits........
@@ -2912,8 +2954,8 @@ def stalkvar(varName: str, varData: str):
     sqtppCls.mcf_stalkvar(varName, varData)
 #_______________________________________________________________________________________
 
-#def test():
-    #sfCls = SqtppFncs()
+def test():
+    sfCls = SqtppFncs()
     # ><)))))))))))))))))'>-------------------------------------------------------
     #makevfs('vfs-test','dir-test','folder-test')
     #addvar('stalk_var1', '@qp(78000,xrp):')
@@ -2936,9 +2978,8 @@ def stalkvar(varName: str, varData: str):
     #print(listvars())
     #print(locklist('__KLF__DSG__'))
     #tmpLst = [9,3,7,5,3,9,0,4,2,0,4,2,7,8,5,1,8,0,5,9,4,3,1,1,8,5,4,0,0,3,2,7,8,4,5,9]
-    #sfCls.sqtpp_rqnv_menorah_reorder(tmpLst, 5, 0.31)
-    #print(sfCls._sf_sLstX)
-    #print(sfCls._sf_sIntX)
+    sfCls.sqtpp_combined_addr_darkvar_search('8493028461184743541725210418472696364521749274511', '41725')
+    print(sfCls._sf_sLstX)
     #--------------------------------------------------------------------<'(((((>< 
-#test()
+test()
         
