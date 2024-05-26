@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.174 rev9
+# Staqtapp-v1.2.176 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -220,6 +220,13 @@
 #     chained events hidden from a pivot conclusion or escape type params forming.
 #     [If stalked var will have thousands of spawned naming see modvar for lambda
 #     spawned res-type slots attribute class caching before calling this method.]
+#
+# --> vardata_stx(isRegex, varNameList, search), returns list type from search on
+#     the @varNameList if @search terms found in a env-var data; returns names of
+#     env-var(s) from @varNameList, not the env-var data. @isRegEx instructs the
+#     @search is a regex type pattern search. Can search mv-tree stx var types of
+#     their keys & values for a listed name return also if @search pattern found.
+#     Either way, regular find or regex of no found results returns a empty list.
 #
 # --> loadvar(isAllNumbers, varName, mode), returns a env-var data from @varName.
 #     @mode either 'd' for deque type return or 's' for a string type return. All
@@ -586,6 +593,17 @@ class Sqtpp(dict):
         else:
             return self._sRtrn
 #_______________________________________________________________________________________
+    def mcf_vardata_stx(self, isRegex: bool, varNmLst: list, srch):
+        # Search & find @varNmLst data from srch string option @srch. Returns name list.
+        # __slots__ in use: (_sRtrn)
+        sfCls = SqtppFncs()
+        self._sRtrn = sfCls.sqtpp_locate_var_data(isRegex, varNmLst, srch)
+        if self._sRtrn == -1: self.mcf_err_handler(6, 'vardata_stx')
+        elif self._sRtrn == -2: self.mcf_err_handler(7, 'vardata_stx')
+        elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'vardata_stx')
+        else:
+            return self._sRtrn
+#_______________________________________________________________________________________
     def mcf_stalkvar(self, varNm: str, varDat: str):
         # Performs incremental @varNm mirroring collapse for @varDat conditions.
         # __slots__ in use: (_sRtrn)
@@ -697,7 +715,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.174\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.176\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1359,7 +1377,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.174\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.176\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -1889,6 +1907,42 @@ class SqtppFncs(Sqtpp):
                 return -1
         except Exception as err_list_lock:
             self._sErr = f'staqtapp1.2 (list_lock) error: {err_list_lock}'
+            return self.sqtpp_err_rcrd(self._sErr)
+#_______________________________________________________________________________________
+    def sqtpp_locate_var_data(self, isRgx: bool, varNmLst: list, srch: str):
+        # "The fact that our Universe may be simulatable by a quite short computer
+        # program calls into question wether it makes any ontological difference
+        # wether simulations are run or not." - Max Tegmark
+        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_sVd, _sf_rLstA, _sf_rLstB, _sf_rIntA, _sf_rIntB, _sf_rBoolA)
+        # returns:
+        # -1=invalid vfs path
+        # -2=empty vfs path settings file
+        try:
+            if self.sqtpp_set_vfs_file() == 1:
+                if self.sqtpp_vfs_tqpt_file(True) != -1:
+                    self._sf_rIntA = 0
+                    self._sf_rLstA = []
+                    self._sf_rIntB = len(varNmLst)
+                    while self._sf_rIntA < self._sf_rIntB:
+                        self._sf_rBoolA = False
+                        if self.sqtpp_var_value(varNmLst[self._sf_rIntA]):
+                            if self._sf_sVd.find('(c__main__') > -1 and self._sf_sVd.find('c__builtin__') > -1:
+                                try:
+                                    self._sf_sVd = str(pickle.loads(str.encode(self._sf_sVd)))
+                                except Exception as e:
+                                    self._sf_rBoolA = True
+                            if not self._sf_rBoolA:
+                                if not isRgx:
+                                    if self._sf_sVd.find(srch) > -1: self._sf_rLstA.append(varNmLst[self._sf_rIntA])
+                                else:
+                                    self._sf_rLstB = re.findall(srch, self._sf_sVd)
+                                    if len(self._sf_rLstB) > 0: self._sf_rLstA.append(varNmLst[self._sf_rIntA])
+                        self._sf_rIntA+=1
+                    return self._sf_rLstA
+                return -2
+            return -1
+        except Exception as err_locate_var_data:
+            self._sErr = f'staqtapp1.2 (locate_var_data) error: {err_locate_var_data}'
             return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
     def sqtpp_locate_var(self, rmv: bool, varNm: str):
@@ -2912,6 +2966,10 @@ def getbranch_stx(isAlf: bool, treeName: str, branchKey):
     sqtppCls = Sqtpp()
     return sqtppCls.mcf_getbranch_stx(isAlf, treeName, branchKey)
 #_______________________________________________________________________________________
+def vardata_stx(isRegex: bool, varNameList: list, search: str) -> list:
+    sqtppCls = Sqtpp()
+    return sqtppCls.mcf_vardata_stx(isRegex, varNameList, search)
+#_______________________________________________________________________________________
 def lockvar(varName: str, fncName):
     # @fncName can be either a single str or list of str elements
     sqtppCls = Sqtpp()
@@ -2954,8 +3012,8 @@ def stalkvar(varName: str, varData: str):
     sqtppCls.mcf_stalkvar(varName, varData)
 #_______________________________________________________________________________________
 
-def test():
-    sfCls = SqtppFncs()
+#def test():
+    #sfCls = SqtppFncs()
     # ><)))))))))))))))))'>-------------------------------------------------------
     #makevfs('vfs-test','dir-test','folder-test')
     #addvar('stalk_var1', '@qp(78000,xrp):')
@@ -2978,8 +3036,9 @@ def test():
     #print(listvars())
     #print(locklist('__KLF__DSG__'))
     #tmpLst = [9,3,7,5,3,9,0,4,2,0,4,2,7,8,5,1,8,0,5,9,4,3,1,1,8,5,4,0,0,3,2,7,8,4,5,9]
-    sfCls.sqtpp_combined_addr_darkvar_search('8493028461184743541725210418472696364521749274511', '41725')
-    print(sfCls._sf_sLstX)
+    #sfCls.sqtpp_combined_addr_darkvar_search('8493028461184743541725210418472696364521749274511', '41725')
+    #print(sfCls._sf_sLstX)
+    #print(vardata_stx(True, ['faster_stacks3','faster_stacks5'], r'\[\]@'))
     #--------------------------------------------------------------------<'(((((>< 
-test()
+#test()
         
