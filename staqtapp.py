@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.176 rev9
+# Staqtapp-v1.2.178 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -22,21 +22,21 @@
 # then you can contact me by the email below, with agreements by voice/phone arranged.
 # (See the renamevar_stx() function description for details on why is Staqtapp-Koch.)
 
-
-
-# WARNING: THIS ENV-VAR MODULE WORK INCLUDES EXOTIC CALLABLE IMPORT METHODS. ANY USE
-# OF THESE EXOTIC FUNCTIONS FOR BLOATWARE, MALWARE, RANSOMWARE OR ETC. WILL BE FOUND.
-# ONCE A CORPORATION, PARTY OR PERSONS DECIDES ON SUCH USAGE OTHER THAN INTENDED FOR
-# OF THIS ENV-VAR MODULE, THEY ARE RESPONSIBLE WETHER IN A WORLDLY LAW DEFINE OR NOT.
-# NECESSARY ACTIONS CAN INCLUDE LOSS OF MONETARY ACCUMULATION FOR FAIR DISTRIBUTE OR
-# A COMPLETE LOSS OF COMPUTER PRIVILEGES INDEFINITELY IF SUCH OF A THREAT IS EVIDENT.
-
 #_______________________________________________________________________________________
 # STAQTAPP V1.2 IMPORT FUNCTION CALLS:
 #
 # --> makevfs(vfsFileName, directoryName, folderName), builds a .sqtpp vfs file
 #     in current ../staqtapp/* directory; @vfsFileName cannot include ':' chars,
 #     tqpt file auto inserted to sub-folder naming of @folderName & is set path.
+#
+# --> setpath(vfsFileName, directoryName, folderName), sets the working path for
+#     the .sqtpp vfs file @vfsFileName, inline with @directoryName + @folderName
+#     paths given to a env-var stack/tqpt file. This can also be done by opening
+#     the .stg file in the current working module dir .../staqtapp1_2/ where for
+#     a path example: 'vfs-A:dir-A:folder-A:subFolder-A:tqpt-A' can be editted.
+#     A subfolder name required and only dash chars - allowed, not underscores _.
+#     By use of this function is assumed @folderName is same for subfolder name.
+#     (This wouldn't be true for a rev9 built vfs file having many dirs+folders.)
 #
 # --> addvar(varName, varData), adds variable to path set vfs tqpt file. @varData
 #     must be tagged with '@qp(...):' for staqtapps unique read parsing routines.
@@ -285,7 +285,7 @@ import pickle
 import random
 import math
 #import mmap
-#import glob
+import glob
 import sys
 import ast
 import os
@@ -332,6 +332,26 @@ class Sqtpp(dict):
                 else: self.mcf_err_handler(2, 'makevfs')
             else: self.mcf_err_handler(3, 'makevfs')
         else: self.mcf_err_handler(4, 'makevfs')
+#_______________________________________________________________________________________
+    def mcf_setpath(self, vfsFlNm: str, vfsDirNm: str, vfsFldrNm: str):
+        # Sets a direct virtual path to a tqpt file/env-var @qp(): stack.
+        # __slots__ in use: (_sRtrn)
+        sfCls = SqtppFncs()
+        if vfsFlNm.find(':') < 0:
+            if vfsDirNm != vfsFldrNm:
+                if sfCls.sqtpp_chars_check(1, vfsDirNm):
+                    if sfCls.sqtpp_chars_check(1, vfsFldrNm):
+                        self._sRtrn = sfCls.sqtpp_change_vfs_path(vfsFlNm, vfsDirNm, vfsFldrNm)
+                        if self._sRtrn == -1: self.mcf_err_handler(35, 'setpath')
+                        elif self._sRtrn == -2: self.mcf_err_handler(36, 'setpath')
+                        elif self._sRtrn == -3: self.mcf_err_handler(37, 'setpath')
+                        elif self._sRtrn == -4: self.mcf_err_handler(38, 'setpath')
+                        elif self._sRtrn == -5: self.mcf_err_handler(39, 'setpath')
+                        elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'setpath')
+                    else: self.mcf_err_handler(1, 'setpath')
+                else: self.mcf_err_handler(2, 'setpath')
+            else: self.mcf_err_handler(3, 'setpath')
+        else: self.mcf_err_handler(4, 'setpath')
 #_______________________________________________________________________________________
     def mcf_addvar(self, varNm: str, varDat: str):
         # Adds variables to the set path vfs tqpt file.
@@ -661,6 +681,11 @@ class Sqtpp(dict):
             # 32 = no renamevar for stalked var having only one spawn
             # 33 = @varNm is a stalked env-var, cannot remove with removevar
             # 34 = @varNm is a dark env-var, cannot remove with removevar
+            # 35 = @vfsFile .sqtpp vfs file was not found
+            # 36 = @vfsDirName .sqtpp vfs file was not found
+            # 37 = @vfsFolderName .sqtpp vfs file was not found
+            # 38 = subfolder naming @vfsFolderName .sqtpp vfs file was not found
+            # 39 = tqpt file naming @vfsFolderName .sqtpp vfs file was not found
             if altErrCd == 1: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name chars; allowed -a-zA-Z')
             elif altErrCd == 2: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid directory name chars; allowed -a-zA-Z')
             elif altErrCd == 3: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name, cannot be the same as directory name')
@@ -695,6 +720,11 @@ class Sqtpp(dict):
             elif altErrCd == 32: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @varName is a stalked var having only one spawned env-var, no increment order can be applied')
             elif altErrCd == 33: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @varName is a stalked listed env-var, removal by vfs sub-file dependency functions only')
             elif altErrCd == 34: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @varName is a dark listed env-var, removal by vfs sub-file dependency functions only')
+            elif altErrCd == 35: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @vfsFileName was not a found .sqtpp file in .../staqtapp1_2/ working module folder')
+            elif altErrCd == 36: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @vfsDirName was not found in .sqtpp vfs file')
+            elif altErrCd == 37: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @vfsFolderName was not found in .sqtpp vfs file')
+            elif altErrCd == 38: raise Exception(f'staqtapp1.2 ({clnFnc}) error: subfolder naming for @vfsFolderName was not found in .sqtpp vfs file')
+            elif altErrCd == 39: raise Exception(f'staqtapp1.2 ({clnFnc}) error: tqpt subfolder naming for @vfsFolderName was not found in .sqtpp vfs file')
         else:
             if self._sRtrn == 'FNC-ERR': raise Exception(f'staqtapp1.2 {clnFnc}-->{self._sErr}')
             elif self._sRtrn == 'FOO-BAR': raise Exception('staqtapp1.2 io error: unable to perform file reads or writes')
@@ -715,7 +745,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.176\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.178\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -813,6 +843,38 @@ class SqtppFncs(Sqtpp):
             return 1
         else:
             return -1
+#_______________________________________________________________________________________
+    def sqtpp_change_vfs_path(self, flNm: str, dirNm: str, fldrNm: str):
+        # Sets the vfs file dir + folder + subfolder + tqpt working path @.stg file.
+        # __slots__ in use: (_sf_sSrc, _sf_rLstA, _sf_rStrA, _sf_rIntA, _sf_rIntB, _sf_rBoolA)
+        # returns: none
+        try:
+            self._sf_rLstA = glob.glob(f'{SQTPP_MDL_DIR}/staqtapp1_2/*.sqtpp')
+            self._sf_rIntB = len(self._sf_rLstA)
+            self._sf_rBoolA = False
+            for self._sf_rIntA in range(self._sf_rIntB):
+                if self._sf_rLstA[self._sf_rIntA].find(f'{flNm}.sqtpp') > -1: self._sf_rBoolA = True
+            if self._sf_rBoolA:
+                with open(f'{SQTPP_MDL_DIR}/staqtapp1_2/{flNm}.sqtpp', mode='r') as sqtppFl: self._sf_rStrA = sqtppFl.read()
+                if self._sf_rStrA.find(f'\n:|{dirNm}<{fldrNm}>\n') > -1:
+                    if self._sf_rStrA.find(f'\n:_|{fldrNm}<sub-{fldrNm}>\n') > -1:
+                        if self._sf_rStrA.find(f'\n:__|sub-{fldrNm}<') > -1:
+                            if self._sf_rStrA.find(f'\n:___|tqpt-{fldrNm}<') > -1:
+                                self._sf_rStrA = None
+                                with open(f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', mode='w') as sqtppStgFl: sqtppStgFl.write(f'{flNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
+                            else:
+                                return -5
+                        else:
+                            return -4
+                    else:
+                        return -3
+                else:
+                    return -2 
+            else:
+                return -1
+        except Exception as err_change_vfs_path:
+            self._sErr = f'staqtapp1.2 (change_vfs_path) error: {err_change_vfs_path}'
+            return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
     def sqtpp_vfs_pointer(self, pthLst: list):
         # Searches a vfs path integrity @pthLst, returns last index found.
@@ -1377,7 +1439,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.176\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.178\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -2221,17 +2283,6 @@ class SqtppFncs(Sqtpp):
         # Performs an sliding window search over a joined darkvar addrs, either finding
         # palindromes or anagrams. @srchWndw is the digit sequence in question of find.
         # Also performs a reduction count left to right & right to left for cvx lists.
-        # (This for RVM type calculations, that can use embedded char distances types.
-        # Relaxed variable mapping is a variable naming type associated with very long
-        # palindrome numbers(500mb+) and encrypted pointers to designated sections of
-        # those long palindrome numbers, whereof variable names are encrypted every---
-        # time is encountered/ran. In the future, quantum generative AI can make their
-        # own number systems to crack many types of encryption you would think are ----
-        # secure. Hardware RVM related variable name encryption integration stops it. A
-        # example as so: myVar_884121488_10 where _10 is encrypted with sectional of a
-        # palindrome number and the myVar_. The programmer would not see the very large
-        # palindrome number, just a section chosen & a suggested var-name choice list.
-        # *The specific hardware for this RVM tech mentioned is very secretive kept.*)
         # __slots__ in use: (_sf_sLstX, _sf_rLstA, _sf_rStrA, _sf_rStrB, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG)
         # returns: (none), _sf_sLstX is the search results
         self._sf_sLstX = {}
@@ -2604,13 +2655,6 @@ class SqtppFncs(Sqtpp):
         while self._sf_rIntA < self._sf_rIntC:
             if self._sf_rLstA[self._sf_rIntA] > qnvRtm:
                 self._sf_rLstB = []
-                # Beyond this would be non-comprehensible in real space. The
-                # specific saying in Hebrew translates the universe does not
-                # sleep but is not G•d ..aka none can comprehend dark matter
-                # however irrelevant English, nothing or none doesn't exist.
-                # 'Nothing' being of any can or can comprehend is impossible
-                # because nothing is impossible, not nothing is possible. An
-                # important travels of Menorah based palindrome multi-loops.
                 for self._sf_rIntD in range(self._sf_rIntF):
                     self._sf_rLstB.append(lNms[self._sf_rIntD])
                     if len(self._sf_rLstB) == pPrbLen:
@@ -2928,6 +2972,10 @@ def makevfs(vfsFileName: str, directoryName: str, folderName:str):
     sqtppCls = Sqtpp()
     sqtppCls.mcf_makevfs(vfsFileName, directoryName, folderName)
 #_______________________________________________________________________________________
+def setpath(vfsFileName: str, directoryName: str, folderName: str):
+    sqtppCls = Sqtpp()
+    sqtppCls.mcf_setpath(vfsFileName, directoryName, folderName)
+#_______________________________________________________________________________________
 def addvar(varName: str, varData: str):
     sqtppCls = Sqtpp()
     sqtppCls.mcf_addvar(varName, varData)
@@ -3039,6 +3087,7 @@ def stalkvar(varName: str, varData: str):
     #sfCls.sqtpp_combined_addr_darkvar_search('8493028461184743541725210418472696364521749274511', '41725')
     #print(sfCls._sf_sLstX)
     #print(vardata_stx(True, ['faster_stacks3','faster_stacks5'], r'\[\]@'))
+    #setpath('vfs','dir','folder')
     #--------------------------------------------------------------------<'(((((>< 
 #test()
         
