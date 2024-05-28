@@ -1,4 +1,4 @@
-# Staqtapp-v1.2.178 rev9
+# Staqtapp-v1.2.180 rev9
 
 
 # Staqtapp v1.2 Description:
@@ -234,7 +234,10 @@
 #     decimals for decimal type returns and etc. via @qp(...): env-var data tags.
 #     Be aware if @isAllNumbers set to True then will return list within list if
 #     reads multiple qp tags having commas. This will also convert to decimal if
-#     tqpt_spdr() finds use of '.' with numbers for a deque type returns.
+#     tqpt_spdr() finds use of '.' with numbers for a deque type returns. (By use
+#     of char * only @varName, load most recent added spawned var from stalkvar()
+#     function use. This spawned var tracking found in the tpqt lockvar stacks --
+#     with the special header naming as '___SQTPP___MRSV___' and can be editted.)
 #
 # --> stalkvar(varName, varData), keeps the original env-var as a static read only
 #     var and makes a new but same @varName, with extension '_#' as a numbered
@@ -702,7 +705,7 @@ class Sqtpp(dict):
             elif altErrCd == 14: raise Exception(f'staqtapp1.2 ({clnFnc}) error: variable was not found in tqpt var file')
             elif altErrCd == 15: raise Exception(f'staqtapp1.2 ({clnFnc}) error: svvs sub-file is not created, cannot begin stalkvar with identical values')
             elif altErrCd == 16: raise Exception(f'staqtapp1.2 ({clnFnc}) error: no found svvs commons stalk-entry element list for @varNm')
-            elif altErrCd == 17: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @varData matches var to begin stalk; nothing is impossible, not is possible')
+            elif altErrCd == 17: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @varData matches env-var to begin stalk; nothing is impossible, not is possible')
             elif altErrCd == 18: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid chars for @stalkVarName; allowed _a-zA-Z0-9')
             elif altErrCd == 19: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @varNameList is empty')
             elif altErrCd == 20: raise Exception(f'staqtapp1.2 ({clnFnc}) error: no found svvs commons stalk-entry element list for @stalkVarName')
@@ -745,7 +748,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.178\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.180\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1439,7 +1442,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.178\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.180\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -1471,7 +1474,7 @@ class SqtppFncs(Sqtpp):
 #_______________________________________________________________________________________
     def sqtpp_loadvar(self, isAllNmbrs: bool, varNm: str, mode: str):
         # Returns env-var data as str, list or a deque type.
-        # __slots__ in use: (_sf_rIntA, _sf_sRtrn)
+        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_sPq, _sf_sRtrn, _sf_rLstA, _sf_rIntA)
         # returns:
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1482,6 +1485,17 @@ class SqtppFncs(Sqtpp):
         try:
             if self.sqtpp_set_vfs_file() == 1:
                 if self.sqtpp_vfs_tqpt_file(True) != -1:
+                    if varNm == '*':
+                        varNm = '___SQTPP___MRSV___'
+                        if self.sqtpp_vfs_tpqt_file(True) != -1:
+                            self._sf_rLstA = re.findall(r'<:'+re.escape(varNm)+r'=(?s:.*?).*:>', self._sf_sPq)
+                            if len(self._sf_rLstA) > 0:
+                                self._sf_rLstA = self._sf_rLstA[0].split('\n')
+                                varNm = self._sf_rLstA[len(self._sf_rLstA)-1].replace(':>','')
+                            else:
+                                return None
+                        else:
+                            return None
                     self._sf_sSrc = None
                     if self.sqtpp_var_value(varNm):
                         if mode==1: self._sf_sRtrn = self.sqtpp_tqpt_spdr(False, isAllNmbrs, 'lvsd', self._sf_sVd)
@@ -1493,6 +1507,8 @@ class SqtppFncs(Sqtpp):
                         elif self._sf_sRtrn == 7:
                             return -6
                         else:
+                            self._sf_sQp = None
+                            self._sf_sPq = None
                             return self._sf_sRtrn
                     else:
                         return -3
@@ -1793,7 +1809,9 @@ class SqtppFncs(Sqtpp):
                             self._sf_rLstA.append(f'{varNm}_{self._sf_rIntA}')
                             self._sf_rLstA = ','.join(self._sf_rLstA)
                             self._sf_sSrc = self._sf_sSrc.replace(f'{self._sf_sQp}:\n', f'{self._sf_sQp}\n{varNm}_{self._sf_rIntA}<{varDat}>:\n')
-                            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc.replace(f'({varNm}={self._sf_rStrA})', f'({varNm}={self._sf_rLstA})'))
+                            self._sf_sSrc = self._sf_sSrc.replace(f'({varNm}={self._sf_rStrA})', f'({varNm}={self._sf_rLstA})')
+                            self.sqtpp_silent_lock_add('___SQTPP___MRSV___', [f'{varNm}_{self._sf_rIntA}'])
+                            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
                         else:
                             lstA_cpy = self._sf_rLstA
                             strA_cpy = self._sf_rStrA
@@ -1821,7 +1839,9 @@ class SqtppFncs(Sqtpp):
                             self._sf_rStrA = self.sqtpp_vfs_sub_file(False, False, 'svvs', None)
                             self._sf_rStrB = f'{self._sf_rStrA};({varNm}={varNm}_1)'
                             self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrA, self._sf_rStrB)
-                            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc.replace(f'{self._sf_sQp}:\n', f'{self._sf_sQp}\n{varNm}_1<{varDat}>:\n'))
+                            self._sf_sSrc = self._sf_sSrc.replace(f'{self._sf_sQp}:\n', f'{self._sf_sQp}\n{varNm}_1<{varDat}>:\n')
+                            self.sqtpp_silent_lock_add('___SQTPP___MRSV___', [f'{varNm}_1'])
+                            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
                             self._sf_rStrA = None
                             self._sf_rStrB = None
                             self._sf_sSrc = None
@@ -1834,7 +1854,9 @@ class SqtppFncs(Sqtpp):
                 if self.sqtpp_var_value(varNm):
                     if varDat != self._sf_sVd:
                         self.sqtpp_vfs_sub_file(True, None, 'svvs', f'({varNm}={varNm}_1)')
-                        self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc.replace(f'{self._sf_sQp}:\n', f'{self._sf_sQp}\n{varNm}_1<{varDat}>:\n'))
+                        self._sf_sSrc = self._sf_sSrc.replace(f'{self._sf_sQp}:\n', f'{self._sf_sQp}\n{varNm}_1<{varDat}>:\n')
+                        self.sqtpp_silent_lock_add('___SQTPP___MRSV___', [f'{varNm}_1'])
+                        self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
                         self._sf_sSrc = None
                         self._sf_sQp = None
                     else:
@@ -2112,6 +2134,26 @@ class SqtppFncs(Sqtpp):
             self._sf_rLstA = re.findall(r'(?s:.)'+re.escape(varNmLst[self._sf_rIntA])+r'<@qp\(.*?\):>', self._sf_sQp)
             if len(self._sf_rLstA) > 0: self._sf_sQp = self._sf_sQp.replace(self._sf_rLstA[0],'')
         self._sf_sQp = self._sf_sQp.replace('):>\n:','):>:')
+#_______________________________________________________________________________________
+    def sqtpp_silent_lock_add(self, varNm: str, lckNmLst: list):
+        # Adds tpqt fnc/var lock blocks quietly. Assumes _sf_sSrc already vfs content.
+        # __slots__ in use: (_sf_sSrc, _sf_sPq, _sf_rLstA)
+        # returns: none
+        try:
+            xLst = None
+            xStr = None
+            with open(f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', 'r') as fObjStg: self._sf_rLstA = fObjStg.read().split(':')
+            if self.sqtpp_vfs_tpqt_file(True) != -1:
+                xLst = re.findall(r'<:'+re.escape(varNm)+r'=(?s:.*?).*:>', self._sf_sPq)
+                xStr = self._sf_sPq
+                if len(xLst) > 0: self._sf_sPq = self._sf_sPq.replace(xLst[0], '<:' + varNm + '=\n' + '\n'.join(lckNmLst) + ':>')
+                else:
+                    self._sf_sPq = self._sf_sPq.replace(':>:',':>')
+                    self._sf_sPq = self._sf_sPq + '\n<:' + varNm + '=\n' + '\n'.join(lckNmLst) + ':>'
+                self._sf_sSrc = self._sf_sSrc.replace(f'{xStr}:', f'{self._sf_sPq}:')
+                xStr = None
+        except Exception as e:
+            pass
 #_______________________________________________________________________________________
     def sqtpp_silent_lock_remove(self, isStlkVar: bool, varNmLst: list):
         # Removes tpqt func/var lock block(s) quietly. Assumes _sf_sSrc already vfs content.
@@ -3067,14 +3109,14 @@ def stalkvar(varName: str, varData: str):
     #addvar('stalk_var1', '@qp(78000,xrp):')
     #print(findvar('faster_stacks'))
     #lockvar('faster_stacks3', ['someFnc12','someFnc8','someFnc14','someFnc19'])
-    #stalkvar('sVar2', '@qp(1,2,3):')
+    #stalkvar('faster_stacks3', '@qp(1,2,3,4,5,6,7,8,9):')
     #print(findvar_stx(['faster_stacks2','faster_stacks4'], 'faster_stacks3'))
     #addtree_stx('tree_test1', ['a', 'b', 'c', 'd', 'e', 'f', 'g'])
     #addbranch_stx('tree_test1', 'b', 'knt', 7948233)
     #print(getbranch_stx(True, 'tree_test1', None))
     #print(keyvar('faster_stacks', 'someFnc8'))
     #revar(True, 'new-vfs', 'new-vfs-dir', 'new-vfs-folder')
-    #print(loadvar(True, 'faster_stacks3_1', 'mode=deque'))
+    #print(loadvar(True, '*', 'mode=deque'))
     #print(changevar('faster_stacks3', '@qp(spawned):'))
     #lockdel(False, 'faster_stacks',['someFnc1','someFnc2','someFnc3','someFnc4','someFnc9','someFnc10'])
     #joinvars('faster_stacks6', ['tree_test1'])
