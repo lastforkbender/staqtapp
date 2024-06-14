@@ -1,7 +1,28 @@
-# Staqtapp-v1.2.180 rev9
+# Staqtapp-v1.2.183
+#//////////••        .                           .
+#/////////••                 .                                   •
+#////////••    .                                   •            
+#///////••                        / //__|__\\ \             .             •
+#//////•• .         .            / //___|___\\ \       .   •          
+#\\\\\\••      .                 \.\\_._|_._//./                                .
+#//////••                 .      / //___|___\\ \         .         
+#///////••  .      .              / //_____\\ \                         •
+#////////••     .                  / //___\\ \     •            .
+#////////••              __________/ //___\\ \_________                     •
+#//////////••          __________________________________     •
 
 
-# Staqtapp v1.2 Description:
+
+
+
+
+
+# UPDATE THU, JUN13: Added sqtpp_lambda_scan_write() parsing method to save any found
+#                    lambda function str to be written of vfs tqpt source properly.
+
+
+
+# SQTPP V1.2 VFS Env-Vars Library Description:
     
 # A rework of the original Staqtapp env-vars library. Uses a vfs system for both tqpt,
 # tpqt and other needed files. Built to last in one concentrated module for __slots__
@@ -23,7 +44,11 @@
 # (See the renamevar_stx() function description for details on why is Staqtapp-Koch.)
 
 #_______________________________________________________________________________________
-# STAQTAPP V1.2 IMPORT FUNCTION CALLS:
+#     SQTPP V1.2 MODULE IMPORT FUNCTIONS USE:
+#
+#
+#     ** this all in one staqtapp module has no third party libraries depends **
+#
 #
 # --> makevfs(vfsFileName, directoryName, folderName), builds a .sqtpp vfs file
 #     in current ../staqtapp/* directory; @vfsFileName cannot include ':' chars,
@@ -43,7 +68,9 @@
 #     Can be as many @qp(...): tags as needed, with commenting in between. Read as
 #     a comma separation for a list return when more than one. This function does
 #     not change variable data, see changevar to edit stacked variable datas. Is
-#     suggested to use lockvar after adding a variable with this function.
+#     suggested to use lockvar after adding a variable with this function. **If 
+#     storing a lambda function as a env-var runnable, only use one @qp(...): tag
+#     for one lambda function use. See lambdalist() and lambdavar().
 #
 # --> listvars(), returns stack list names of current env-vars in tqpt vfs source.
 #
@@ -150,7 +177,26 @@
 #     Can respawn any missing stalkvar() env-vars to a new self-made svvs sub file.
 #     The svvs file from the current set vfs file is lost on the new transfer.**
 #
-# --> removevar(varNm), removes env-var from tqpt stack and any tpqt lockvar block.
+# --> lambdavar(lambdaName, inputVars), finds @lambdaName function in tqpt vfs file,
+#     creates a low footprint temp module with found lambda function, imports it and
+#     runs it for the return. (To get a list of all stored lambda functions in a tqpt
+#     vfs sqtpp subfile use lambdalist()) Once this function is used, makes a module
+#     in current staqtapp1_2/ working folder for returns use: .../sqtpp_1_2_LMD.py If
+#     @lambdaName found in module then direct runs it from there, no checks | loading.
+#     @inputVars as a list only of correct format as ['x=8','y=7,6,5,4,3','z=l,i,s,t']
+#     **The module sqtpp_1_2_LMB.py written does use slots attributes performance ---
+#     mapping any new lambda function variables to newly added created slots attrs.**
+#     (NOT YET IMPLEMENTED)
+#
+# --> lambdalist(isComplete), returns list of all found lambda functions in tqpt src,
+#     with the element(s) format being the function name and it's parameters if any.
+#     Example list return: ['my_lambda_function1(i,j,k)','my_lambda_function2(l)'] or
+#     if @isComplete true then returns the complete string of the lambda function(s).
+#     This staqtapp method returns an empty list if no lambda function(s) were found.
+#     Never forget how to write or lose lambda function again with these two methods.
+#     (NOT YET IMPLEMENTED)
+#
+# --> removevar(varName), removes env-var from tqpt stack and any tpqt lockvar block.
 #     Will not delete a stalked env-var or a dark env-var, raises a exception that
 #     the @varNm parameter choice is connected to a vfs dependency function only.
 #     This is a dangerous function; well not as dangerous as us, to rely on for env
@@ -186,8 +232,6 @@
 #     is tri-half looping, just as seen on the Menorah. Where a pairing loop is not
 #     matched to a static center necessary pairing(Base10), however of LR.R or RL.L
 #     rotation, of which either larger loop with middle exact to 1 | smaller " to 1.
-#     And " a very tough teach because you have been taught non-exist exist by fear
-#     via The Murderer, aka Satan-The Dragon, thru money(mammons) vanity & promises.
 #     (NOT YET IMPLEMENTED)
 #
 # --> renamevar_stx(varName newVarName), this function a important one to the data
@@ -275,19 +319,15 @@
 # email: rcttcr5@gmail.com
 # contact: https://pastebin.com/eumqiBAx
 # github: https://github.com/lastforkbender/staqtapp
-# photo: https://i.postimg.cc/nLNZ4Szr/flatiscube144.jpg
 
 
 from decimal import Decimal as dcml
 from collections import deque, Counter
 
 import statistics
-#import datetime
-#import hashlib
 import pickle
 import random
 import math
-#import mmap
 import glob
 import sys
 import ast
@@ -645,6 +685,20 @@ class Sqtpp(dict):
             elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'stalkvar')
         else: self.mcf_err_handler(8, 'stalkvar')
 #_______________________________________________________________________________________
+    def mcf_lambdavar(self, lmbNm: str, lmbPrms: list):
+        # Runs a stored & found env-var in tqpt vfs source as @lambda function return(s).
+        # __slots__ in use: (_sRtrn)
+        sfCls = SqtppFncs()
+        if sfCls.sqtpp_chars_check(2, lmbNm):
+            self._sRtrn = sfCls.sqtpp_vars_run_lambda(lmbNm, lmbPrms)
+            if self._sRtrn == -1: self.mcf_err_handler(6, 'lambdavar')
+            elif self._sRtrn == -2: self.mcf_err_handler(7, 'lambdavar')
+            elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'lambdavar')
+            else:
+                return self._sRtrn
+        else:
+            self.mcf_err_handler(8, 'lambdavar')
+#_______________________________________________________________________________________
     def mcf_err_handler(self, altErrCd: int, clnFnc: str):
         # Handles error returns for mcf mid check functions.
         # __slots__ in use: (_sRtrn)
@@ -736,7 +790,7 @@ class Sqtpp(dict):
 #_________________________MAIN PARSING FUNCTIONS:
 #_______________________________________________________________________________________
 class SqtppFncs(Sqtpp):
-    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sRplc', '_sf_sQp', '_sf_sQpRplcX', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_sBoolCxv', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rLstE', '_sf_rLstF', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD')
+    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sRplc', '_sf_sQp', '_sf_sQpRplcX', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_sBoolCxv', '_sf_sLstA', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rLstE', '_sf_rLstF', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD', '_sf_rBoolE')
     
     def __init__(self):
         pass
@@ -748,7 +802,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.180\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.183\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -910,7 +964,7 @@ class SqtppFncs(Sqtpp):
                     elif self._sf_rIntA == 7:
                         return -5
                     else:
-                        if not isStlkVar:
+                        if not isStlkVar and not self._sf_rBoolE:
                             if self._sf_sQp.find(f'\n{varNm}<@qp(') < 0:
                                 self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc.replace(f'{self._sf_sQp}:\n', f'{self._sf_sQp}\n{varNm}<{varDat}>:\n'))
                                 self._sf_sSrc = None
@@ -918,8 +972,10 @@ class SqtppFncs(Sqtpp):
                                 return 8
                             else:
                                 return -6
-                        else:
+                        else not self._rBoolE:
                             return self.sqtpp_var_stalk(varNm, varDat)
+                        else:
+                            return 9
                 else:
                     return -2
             else:
@@ -1442,7 +1498,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.180\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.183\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -1472,7 +1528,7 @@ class SqtppFncs(Sqtpp):
             self._sErr = f'staqtapp1.2 (revar) error: {err_revar}'
             return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
-    def sqtpp_loadvar(self, isAllNmbrs: bool, varNm: str, mode: str):
+    def sqtpp_loadvar(self, isAllNmbrs: bool, varNm: str, mode):
         # Returns env-var data as str, list or a deque type.
         # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_sPq, _sf_sRtrn, _sf_rLstA, _sf_rIntA)
         # returns:
@@ -1660,9 +1716,9 @@ class SqtppFncs(Sqtpp):
                                             return self._sf_rLstB
                                         if self._sf_rBoolA == True:
                                             self._sf_rBoolA = False
-                                            sqtpp_spok_mv_tree_get_branch_ohm(False, True, twRwSrc)
+                                            self.sqtpp_spok_mv_tree_get_branch_ohm(False, True, twRwSrc)
                                         else:
-                                            if self._sf_rIntD[1] > self._sf_rIntC: sqtpp_spok_mv_tree_get_branch_ohm(False, True, twRwSrc)
+                                            if self._sf_rIntD[1] > self._sf_rIntC: self.sqtpp_spok_mv_tree_get_branch_ohm(False, True, twRwSrc)
                                             else:
                                                 self.sqtpp_spok_mv_tree_get_branch_ohm(True, False, None)
                                                 return self._sf_rLstB
@@ -2103,7 +2159,6 @@ class SqtppFncs(Sqtpp):
         # Sets variable data(_sf_sVd) of @varNm from set vfs tqpt file content _sf_sQp.
         # __slots__ in use: (_sf_sSrc, _sf_sVd)
         # returns: True or False
-        # ):> = m∓ ... {◑>i,...} ⍅ U◐ⁿ⁺ⁱ-U◑ⁱ⁻ⁿ
         self._sf_sVd = re.findall(r'(?s:)'+re.escape(varNm)+r'<@qp\(.*?\):>', self._sf_sQp)
         if len(self._sf_sVd) > 0:
             self._sf_sVd = self._sf_sVd[0].replace(f'{varNm}<','')
@@ -2387,133 +2442,171 @@ class SqtppFncs(Sqtpp):
         # 5 = false check for isAllNmbrs
         # 6 = no proper @qp(...): variables' data tags found
         # 7 = missing a closing ): for data declare @qp(
-        self._sf_rLstA = [False for _ in range(9)]
-        nmbrChrs = set('.-, 0123456789')
-        dqRtn = deque()
-        lstRtn = []
-        dqLst = None
-        qdLst = None
-        self._sf_rStrB = ''
-        self._sf_rStrC = None
-        self._sf_rIntA = 0
-        self._sf_rIntB = 0
-        for self._sf_rStrA in src:
-            self._sf_rIntA+=1
-            if not self._sf_rLstA[3]:
-                if self._sf_rLstA[2]:
-                    self._sf_rLstA[0] = False
-                    self._sf_rLstA[1] = False
-                    self._sf_rLstA[2] = False
-                if self._sf_rStrA == '@': self._sf_rStrC = self._sf_rStrA
-                elif self._sf_rStrC == '@' and self._sf_rStrA == 'q': self._sf_rStrC = self._sf_rStrA
-                elif self._sf_rStrC == 'q' and self._sf_rStrA == 'p': self._sf_rStrC = self._sf_rStrA
-                elif self._sf_rStrC == 'p' and self._sf_rStrA == '(':
-                    self._sf_rLstA[0] = True
-                    self._sf_rLstA[3] = True
-            else:
-                if self._sf_rStrA == '.':
-                    self._sf_rLstA[6] = True
-                    if not isRdr: self._sf_rStrB = f'{self._sf_rStrB}{self._sf_rStrA}'
-                elif self._sf_rStrA == ',':
-                    self._sf_rLstA[4] = True
-                    if not isRdr: self._sf_rStrB = f'{self._sf_rStrB}{self._sf_rStrA}'
-                elif self._sf_rStrA == '\n':
-                    return 2
-                elif self._sf_rStrA == ')': self._sf_rStrC = self._sf_rStrA
-                elif self._sf_rStrA == ':' and self._sf_rStrC == ')':
-                    self._sf_rIntB+=1
-                    self._sf_rLstA[1] = True
-                    self._sf_rLstA[3] = False
-                    if not isRdr and isAllNmbrs:
-                        if self._sf_rLstA[4] and self._sf_rLstA[6]:
-                            dqLst = self._sf_rStrB.split(',')
-                            if callFnc == 'lvsd':
-                                qdLst = [dcml(x.strip(' ')) for x in dqLst]
-                                dqRtn.append(qdLst)
-                            elif callFnc == 'lvss': lstRtn.append(dqLst)
-                        elif not self._sf_rLstA[4] and self._sf_rLstA[6]:
-                            if callFnc == 'lvsd': dqRtn.append(dcml(self._sf_rStrB.strip(' ')))
-                            elif callFnc == 'lvss': lstRtn.append(self._sf_rStrB)
-                        elif self._sf_rLstA[4] and not self._sf_rLstA[6]:
-                            dqLst = self._sf_rStrB.split(',')
-                            if callFnc == 'lvsd':
-                                qdLst = [int(x.strip(' ')) for x in dqLst]
-                                dqRtn.append(qdLst)
-                            elif callFnc == 'lvss': lstRtn.append(dqLst)
-                        elif not self._sf_rLstA[4] and not self._sf_rLstA[6]:
-                            if callFnc == 'lvsd': dqRtn.append(int(self._sf_rStrB.strip(' ')))
-                            elif callFnc == 'lvss': lstRtn.append(self._sf_rStrB)
-                    elif not isRdr and not isAllNmbrs:
-                        if self._sf_rLstA[4]:
-                            dqLst = self._sf_rStrB.split(',')
-                            for ds in range(len(dqLst)):
+        self._sf_rBoolE = False
+        # Check to see if @src has formats for being a lambda function string.
+        if not isRdr: self._sf_rBoolE = self.sqtpp_lambda_scan_write(src)
+        if not self._sf_rBoolE:
+            self._sf_rLstA = [False for _ in range(9)]
+            nmbrChrs = set('.-, 0123456789')
+            dqRtn = deque()
+            lstRtn = []
+            dqLst = None
+            qdLst = None
+            self._sf_rStrB = ''
+            self._sf_rStrC = None
+            self._sf_rIntA = 0
+            self._sf_rIntB = 0
+            for self._sf_rStrA in src:
+                self._sf_rIntA+=1
+                if not self._sf_rLstA[3]:
+                    if self._sf_rLstA[2]:
+                        self._sf_rLstA[0] = False
+                        self._sf_rLstA[1] = False
+                        self._sf_rLstA[2] = False
+                    if self._sf_rStrA == '@': self._sf_rStrC = self._sf_rStrA
+                    elif self._sf_rStrC == '@' and self._sf_rStrA == 'q': self._sf_rStrC = self._sf_rStrA
+                    elif self._sf_rStrC == 'q' and self._sf_rStrA == 'p': self._sf_rStrC = self._sf_rStrA
+                    elif self._sf_rStrC == 'p' and self._sf_rStrA == '(':
+                        self._sf_rLstA[0] = True
+                        self._sf_rLstA[3] = True
+                else:
+                    if self._sf_rStrA == '.':
+                        self._sf_rLstA[6] = True
+                        if not isRdr: self._sf_rStrB = f'{self._sf_rStrB}{self._sf_rStrA}'
+                    elif self._sf_rStrA == ',':
+                        self._sf_rLstA[4] = True
+                        if not isRdr: self._sf_rStrB = f'{self._sf_rStrB}{self._sf_rStrA}'
+                    elif self._sf_rStrA == '\n':
+                        return 2
+                    elif self._sf_rStrA == ')': self._sf_rStrC = self._sf_rStrA
+                    elif self._sf_rStrA == ':' and self._sf_rStrC == ')':
+                        self._sf_rIntB+=1
+                        self._sf_rLstA[1] = True
+                        self._sf_rLstA[3] = False
+                        if not isRdr and isAllNmbrs:
+                            if self._sf_rLstA[4] and self._sf_rLstA[6]:
+                                dqLst = self._sf_rStrB.split(',')
+                                if callFnc == 'lvsd':
+                                    qdLst = [dcml(x.strip(' ')) for x in dqLst]
+                                    dqRtn.append(qdLst)
+                                elif callFnc == 'lvss': lstRtn.append(dqLst)
+                            elif not self._sf_rLstA[4] and self._sf_rLstA[6]:
+                                if callFnc == 'lvsd': dqRtn.append(dcml(self._sf_rStrB.strip(' ')))
+                                elif callFnc == 'lvss': lstRtn.append(self._sf_rStrB)
+                            elif self._sf_rLstA[4] and not self._sf_rLstA[6]:
+                                dqLst = self._sf_rStrB.split(',')
+                                if callFnc == 'lvsd':
+                                    qdLst = [int(x.strip(' ')) for x in dqLst]
+                                    dqRtn.append(qdLst)
+                                elif callFnc == 'lvss': lstRtn.append(dqLst)
+                            elif not self._sf_rLstA[4] and not self._sf_rLstA[6]:
+                                if callFnc == 'lvsd': dqRtn.append(int(self._sf_rStrB.strip(' ')))
+                                elif callFnc == 'lvss': lstRtn.append(self._sf_rStrB)
+                        elif not isRdr and not isAllNmbrs:
+                            if self._sf_rLstA[4]:
+                                dqLst = self._sf_rStrB.split(',')
+                                for ds in range(len(dqLst)):
+                                    self._sf_rLstA[7] = False
+                                    self._sf_rLstA[8] = False
+                                    for dChr in dqLst[ds]:
+                                        if set(dChr).issubset(nmbrChrs): self._sf_rLstA[7] = True
+                                        else:
+                                            self._sf_rLstA[7] = False
+                                            break
+                                        if dChr == '.': self._sf_rLstA[8] = True
+                                    if self._sf_rLstA[7] and self._sf_rLstA[8]:
+                                        if callFnc == 'lvsd': dqRtn.append(dcml(dqLst[ds].strip(' ')))
+                                        elif callFnc == 'lvss': lstRtn.append(dqLst[ds])
+                                    elif self._sf_rLstA[7] and not self._sf_rLstA[8]:
+                                        if callFnc == 'lvsd': dqRtn.append(int(dqLst[ds].strip(' ')))
+                                        elif callFnc == 'lvss': lstRtn.append(dqLst[ds])
+                                    elif not self._sf_rLstA[7]:
+                                        if callFnc == 'lvsd': dqRtn.append(dqLst[ds])
+                                        elif callFnc == 'lvss': lstRtn.append(dqLst[ds])
+                            else:
                                 self._sf_rLstA[7] = False
                                 self._sf_rLstA[8] = False
-                                for dChr in dqLst[ds]:
-                                    if set(dChr).issubset(nmbrChrs): self._sf_rLstA[7] = True
+                                for sChr in self._sf_rStrB:
+                                    if set(sChr).issubset(nmbrChrs): self._sf_rLstA[7] = True
                                     else:
                                         self._sf_rLstA[7] = False
                                         break
-                                    if dChr == '.': self._sf_rLstA[8] = True
+                                    if sChr == '.': self._sf_rLstA[8] = True
                                 if self._sf_rLstA[7] and self._sf_rLstA[8]:
-                                    if callFnc == 'lvsd': dqRtn.append(dcml(dqLst[ds].strip(' ')))
-                                    elif callFnc == 'lvss': lstRtn.append(dqLst[ds])
+                                    if callFnc == 'lvsd': dqRtn.append(dcml(self._sf_rStrB.strip(' ')))
+                                    elif callFnc == 'lvss': lstRtn.append(self._sf_rStrB)
                                 elif self._sf_rLstA[7] and not self._sf_rLstA[8]:
-                                    if callFnc == 'lvsd': dqRtn.append(int(dqLst[ds].strip(' ')))
-                                    elif callFnc == 'lvss': lstRtn.append(dqLst[ds])
+                                    if callFnc == 'lvsd': dqRtn.append(int(self._sf_rStrB.strip(' ')))
+                                    elif callFnc == 'lvss': lstRtn.append(self._sf_rStrB)
                                 elif not self._sf_rLstA[7]:
-                                    if callFnc == 'lvsd': dqRtn.append(dqLst[ds])
-                                    elif callFnc == 'lvss': lstRtn.append(dqLst[ds])
-                        else:
-                            self._sf_rLstA[7] = False
-                            self._sf_rLstA[8] = False
-                            for sChr in self._sf_rStrB:
-                                if set(sChr).issubset(nmbrChrs): self._sf_rLstA[7] = True
-                                else:
-                                    self._sf_rLstA[7] = False
-                                    break
-                                if sChr == '.': self._sf_rLstA[8] = True
-                            if self._sf_rLstA[7] and self._sf_rLstA[8]:
-                                if callFnc == 'lvsd': dqRtn.append(dcml(self._sf_rStrB.strip(' ')))
-                                elif callFnc == 'lvss': lstRtn.append(self._sf_rStrB)
-                            elif self._sf_rLstA[7] and not self._sf_rLstA[8]:
-                                if callFnc == 'lvsd': dqRtn.append(int(self._sf_rStrB.strip(' ')))
-                                elif callFnc == 'lvss': lstRtn.append(self._sf_rStrB)
-                            elif not self._sf_rLstA[7]:
-                                if callFnc == 'lvsd': dqRtn.append(self._sf_rStrB)
-                                elif callFnc == 'lvss': lstRtn.append(self._sf_rStrB)
-                    self._sf_rLstA[2] = True
-                    if self._sf_rLstA[4]: self._sf_rLstA[5] = True
-                    self._sf_rLstA[4] = False
-                    self._sf_rLstA[6] = False
-                    if not isRdr: self._sf_rStrB = ''
-                elif self._sf_rStrA != ')' and self._sf_rStrA != ':' and self._sf_rStrA != '.' and self._sf_rStrA != ',':
-                    if isAllNmbrs:
-                        if not set(self._sf_rStrA).issubset(nmbrChrs):
-                            return 5
-                    if not isRdr: self._sf_rStrB = f'{self._sf_rStrB}{self._sf_rStrA}'            
-        if self._sf_rLstA[0] and not self._sf_rLstA[1]:
-            return 7
-        else:
-            if not isRdr:
-                if callFnc == 'lvsd':
-                    return dqRtn
-                elif callFnc == 'lvss':
-                    return lstRtn
+                                    if callFnc == 'lvsd': dqRtn.append(self._sf_rStrB)
+                                    elif callFnc == 'lvss': lstRtn.append(self._sf_rStrB)
+                        self._sf_rLstA[2] = True
+                        if self._sf_rLstA[4]: self._sf_rLstA[5] = True
+                        self._sf_rLstA[4] = False
+                        self._sf_rLstA[6] = False
+                        if not isRdr: self._sf_rStrB = ''
+                    elif self._sf_rStrA != ')' and self._sf_rStrA != ':' and self._sf_rStrA != '.' and self._sf_rStrA != ',':
+                        if isAllNmbrs:
+                            if not set(self._sf_rStrA).issubset(nmbrChrs):
+                                return 5
+                        if not isRdr: self._sf_rStrB = f'{self._sf_rStrB}{self._sf_rStrA}'            
+            if self._sf_rLstA[0] and not self._sf_rLstA[1]:
+                return 7
             else:
-                if isAllNmbrs:
-                    return 1
+                if not isRdr:
+                    if callFnc == 'lvsd':
+                        return dqRtn
+                    elif callFnc == 'lvss':
+                        return lstRtn
                 else:
-                    if self._sf_rIntB > 0:
-                        if callFnc != 'savn':
-                            return 3
-                        else:
-                            if self._sf_rLstA[5]:
-                                return 4
-                            else:
-                                return 3
+                    if isAllNmbrs:
+                        return 1
                     else:
-                        return 6
+                        if self._sf_rIntB > 0:
+                            if callFnc != 'savn':
+                                return 3
+                            else:
+                                if self._sf_rLstA[5]:
+                                    return 4
+                                else:
+                                    return 3
+                        else:
+                            return 6
+        else:
+            return 9
+#_______________________________________________________________________________________
+    def sqtpp_lambda_scan_write(self, src: str) -> bool:
+        # Handles find & write of any found lambda function src/str to a tqpt source.
+        # The spider method above would store a lambda function as a list because of
+        # any comma uses. This writes @qp(...): tagging to tqpt source as one liner.
+        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_sLstA, _sf_rStrA)
+        src = src.replace('):',"")
+        self._sf_sLstA = re.findall(r'lambda(?:\s*[a-zA-Z_][a-zA-Z_0-9]*(?:\s*,\s*[a-zA-Z_][a-zA-Z_0-9]*)*)?\s*:\s*.+', src)
+        if len(self._sf_sLstA[0]) > 0:
+            fndLmb = False
+            for self._sf_rStrA in src:
+                if self._sf_rStrA != '=': self._sf_sLstA.append(self._sf_rStrA)
+                else:
+                    fndLmb = True
+                    break
+            if fndLmb and len(self._sf_sLstA) > 1:
+                self._sf_rStrA = f' = {self._sf_sLstA[0]}'
+                self._sf_sLstA.pop(0)
+                self._sf_rStrA = f'{"".join(self._sf_sLstA)}{self._sf_rStrA}'
+                if self._sf_rStrA.find('@qp(') > -1:
+                    self._sf_rStrA = self._sf_rStrA.replace('@qp(','@q|p(')
+                    self._sf_rStrA = f'{self._sf_rStrA}):'
+                elif: self._sf_rStrA.find('@q|p(') > -1: self._sf_rStrA = f'{self._sf_rStrA}):'
+                else: self._sf_rStrA = f'@q|p({self._sf_rStrA}):'
+                self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc.replace(f'{self._sf_sQp}:\n', f'{self._sf_sQp}\nst1_atlaspice_{random.randint(111111111,999999999)}<{self._sf_rStrA}>:\n')
+                return True
+            else:
+                return False
+        else:
+            return False
+        else:
+            return False
 #_______________________________________________________________________________________
     def sqtpp_del_locks(self, isDelAll: bool, varNm:str, fncNm):
         # Deletes tpqt lock entries from @varNm listed block or removes the entire block.
@@ -2567,6 +2660,12 @@ class SqtppFncs(Sqtpp):
         except Exception as err_del_locks:
             self._sErr = f'staqtapp1.2 (del_locks) error: {err_del_locks}'
             return self.sqtpp_err_rcrd(self._sErr)
+#_______________________________________________________________________________________
+    def sqttp_vars_run_lambda(self, lmbNm: str, lmdPrms: list):
+        #
+        # __slots__ in use: ( )
+        # returns:
+        pass
 #_______________________________________________________________________________________
     def sqttp_tpqt_spok(self, pq_isRdr: bool, pq_isExst: bool, pq_varNm: str, pq_fncNm):
         # Handles vfs tpqt lock var file reads & writes. Is very accurate, do not edit!
@@ -2935,6 +3034,7 @@ class SqtppFncs(Sqtpp):
             self._sf_sIntX = None
             self._sf_sBoolX = None
             self._sf_sBoolCxv = None
+            self._sf_sLstA = None
         self._sf_rStrA = None
         self._sf_rStrB = None
         self._sf_rStrC = None
@@ -2960,6 +3060,7 @@ class SqtppFncs(Sqtpp):
         self._sf_rBoolB = None
         self._sf_rBoolC = None
         self._sf_rBoolD = None
+        self._sf_rBoolE = None
 #_______________________________________________________________________________________
     def sqtpp_slots_rcrd(self) -> bool:
         # Writes cache state of sf s-type slots variables data to vfs file, minus slots
@@ -3116,7 +3217,7 @@ def stalkvar(varName: str, varData: str):
     #print(getbranch_stx(True, 'tree_test1', None))
     #print(keyvar('faster_stacks', 'someFnc8'))
     #revar(True, 'new-vfs', 'new-vfs-dir', 'new-vfs-folder')
-    #print(loadvar(True, '*', 'mode=deque'))
+    #print(loadvar(True, 'faster_stacks3_1', 'mode=deque'))
     #print(changevar('faster_stacks3', '@qp(spawned):'))
     #lockdel(False, 'faster_stacks',['someFnc1','someFnc2','someFnc3','someFnc4','someFnc9','someFnc10'])
     #joinvars('faster_stacks6', ['tree_test1'])
