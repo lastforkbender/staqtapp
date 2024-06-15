@@ -1,4 +1,4 @@
-#Staqtapp-v1.2.186
+#Staqtapp-v1.2.189
 #//////////••        .                           .
 #/////////••                 .                                   •
 #////////••    .                                        •            
@@ -15,10 +15,9 @@
 
 
 
-# UPDATE FRI, JUN14: Fixed different issues concerning sqtpp_lambda_scan_write() fnc
-#                    and now properly writes the lambda one-liner to a vfs tqpt src.
-#                    Began forming the parsing nature of running a env-var lambda --
-#                    functions from sqtpp_lambda_spdr() & sqtpp_vars_run_lambda()
+# UPDATE SAT, JUN15: Of lambdavar() now constructs a beginning slots class module
+#                                      for running any lambda function kept there. Fixed common -----
+#                                      code issues with sqtpp_lambda_spdr() function & main checks.
 
 
 
@@ -183,7 +182,7 @@
 #     creates a low footprint temp module with found lambda function, imports it and
 #     runs it for the return. (To get a list of all stored lambda functions in a tqpt
 #     vfs sqtpp subfile use lambdalist()) Once this function is used, makes a module
-#     in current staqtapp1_2/ working folder for returns use: .../sqtpp_1_2_LMD.py If
+#     in current staqtapp1_2/ working folder for returns use: .../sqtpp_1_2_LMB.py If
 #     @lambdaName found in module then direct runs it from there, no checks | loading.
 #     @inputVars as a list only of correct format as ['x=8','y=7,6,5,4,3','z=l,i,s,t']
 #     **The module sqtpp_1_2_LMB.py written does use slots attributes performance ---
@@ -703,8 +702,9 @@ class Sqtpp(dict):
             if self._sRtrn == -1: self.mcf_err_handler(6, 'lambdavar')
             elif self._sRtrn == -2: self.mcf_err_handler(7, 'lambdavar')
             elif self._sRtrn == -3: self.mcf_err_handler(41, 'lambdavar')
-            # Of all things suspicious of simulations........
             elif self._sRtrn == -4: self.mcf_err_handler(42, 'lambdavar')
+            elif self._sRtrn == -5: self.mcf_err_handler(43, 'lambdavar')
+            elif self._sRtrn == -6: self.mcf_err_handler(44, 'lambdavar')
             elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'lambdavar')
             else:
                 return self._sRtrn
@@ -758,6 +758,8 @@ class Sqtpp(dict):
             # 40 = unable to add runnable lambda env-var as a stalked env-var
             # 41 = @lambdaName was not found in tqpt env-var @q|p(...): sources
             # 42 = no proper constructed lambda function found to run
+            # 43 = mismatch params length @lambdaParams for lambda function run
+            # 44 = parameters names for found lambda function do not matchup
             if altErrCd == 1: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name chars; allowed -a-zA-Z')
             elif altErrCd == 2: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid directory name chars; allowed -a-zA-Z')
             elif altErrCd == 3: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name, cannot be the same as directory name')
@@ -800,6 +802,8 @@ class Sqtpp(dict):
             elif altErrCd == 40: raise Exception(f'staqtapp1.2 ({clnFnc}) error: cannot store a env-var lambda runnable as a stalked env-var')
             elif altErrCd == 41: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @lambdaName was not found in vfs tqpt source @q|p(...): tagged type env-vars')
             elif altErrCd == 42: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @lambdaName was found but not a properly constructed lambda function for run')
+            elif altErrCd == 43: raise Exception(f'staqtapp1.2 ({clnFnc}) error: mismatch params lengths @lambdaParams, number of args does not match the found lambda')
+            elif altErrCd == 44: raise Exception(f'staqtapp1.2 ({clnFnc}) error: param name(s) for found lambda function do not matchup, unable to run lambda')
         else:
             if self._sRtrn == 'FNC-ERR': raise Exception(f'staqtapp1.2 {clnFnc}-->{self._sErr}')
             elif self._sRtrn == 'FOO-BAR': raise Exception('staqtapp1.2 io error: unable to perform basic file reads or writes')
@@ -820,7 +824,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.186\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.189\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1518,7 +1522,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.186\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.189\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -2686,28 +2690,47 @@ class SqtppFncs(Sqtpp):
             self._sErr = f'staqtapp1.2 (del_locks) error: {err_del_locks}'
             return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
-    def sqtpp_vars_run_lambda(self, lmbNm: str, lmdPrms: list):
-        # See lambdavar() description @ top of this module.
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_rLstA, _sf_rStrD, _sf_rBoolA)
+    def sqtpp_vars_run_lambda(self, lmbNm: str, lmbPrms: list):
+        # See lambdavar() description.
+        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_sStrX, _sf_rLstA, _sf_rStrD, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rBoolA, _sf_rBoolB)
         # returns:
         # -1=invalid vfs path
         # -2=bad path in vfs path setting file
         # -3=lambda function name not found
-        # -4=no proper lambda function found to run
+        # -4=lambda function found no proper construct
+        # -5=mismatch params lengths @lmbPrms
+        # -6=params names do not matchup @lmbPrms
         try:
             if self.sqtpp_set_vfs_file() == 1:
                 if self.sqtpp_vfs_tqpt_file(True) != -1:
                     self._sf_rLstA = re.findall(r'st1_atlaspice_.*?<\@q\|p\('+re.escape(lmbNm)+r'.*?\):>', self._sf_sQp)
                     if len(self._sf_rLstA[0]) > 0:
+                        self._sf_sStrX = re.findall(r'st1_atlaspice_[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]', self._sf_rLstA[0])
+                        if len(self._sf_sStrX[0]) > 0: self._sf_sStrX = self._sf_sStrX[0].replace('st1_atlaspice_','')
+                        else: self._sf_sStrX = 'unknown'
                         self._sf_sRtrn = self.sqtpp_lambda_spdr()
                         if self._sf_sRtrn == -1:
                             return -4
                         elif self._sf_sRtrn == 1: self._sf_rBoolA = True
                         else: self._sf_rBoolA = False
-                        # TODO
-                        # Check @lmbPrms for matchup with _sf_rLstA param assignments
-                        # Write the module, import it and run the lambda for return.
-                        print(self._sf_rBoolA)
+                        if self._sf_rBoolA:
+                            if len(lmbPrms) == len(self._sf_rLstA):
+                                self._sf_rIntB = len(lmbPrms)
+                                for self._sf_rIntA in range(self._sf_rIntB):
+                                    if self._sf_rIntA > 0 and not self._sf_rBoolB:
+                                        break
+                                    self._sf_rBoolB = False
+                                    self._sf_rIntC = 0
+                                    while self._sf_rIntC < self._sf_rIntB:
+                                        if lmbPrms[self._sf_rIntA].find(f'{self._sf_rLstA[self._sf_rIntC]}=') > -1:
+                                            self._sf_rBoolB = True
+                                            break
+                                        self._sf_rIntC+=1
+                                if not self._sf_rBoolB:
+                                    return -6
+                            else:
+                                return -5
+                        return self.sqtpp_lambda_clsw(False, lmbNm)
                     else:
                         return -3
                 else:
@@ -2718,29 +2741,58 @@ class SqtppFncs(Sqtpp):
             self._sErr = f'staqtapp1.2 (vars_run_lambda) error: {err_vars_run_lambda}'
             return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
+    def sqtpp_lambda_clsw(self, lmbNm: str):
+        # Edit/Write function for the lambda slots class import module & run.
+        # __slots__ in use: (_sf_sStrX, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rIntA, _sf_rIntB)
+        # returns:
+        if os.path.isfile(f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2_LMB.py'):
+            # Do search of lambda function already present in module for import & run.
+            pass
+        else:
+            self._sf_rLstB = ['# This py-module is auto-generated by the Staqtapp1.2 vfs env-var library for lambda functions use. Edit at your own risk, seriously.\n\n\nclass SqtppLLL():\n\n    __slots__ = ()\n\n    def __init__(self):\n        pass\n\n\nclass SqtppLLL_Joints(SqtppLLL):\n\n    __slots__ = (']
+            if self._sf_rBoolA:
+                self._sf_rLstC = []
+                self._sf_rIntB = len(self._sf_rLstA)
+                for self._sf_rIntA in range(self._sf_rIntB): self._sf_rLstC.append("'"+self._sf_rLstA[self._sf_rIntA]+"'")
+                self._sf_rLstB.append(f'{",".join(self._sf_rLstC)})')
+            else: self._sf_rLstB.append(')')
+            self._sf_rLstB.append('\n\n    def __init__(self):\n        pass\n#_______________________________________________________________________________________\n\n    # CTMN-LLL:' + str(self._sf_sStrX) + ':' + lmbNm + '\n')
+            self._sf_rStrD = self._sf_rStrD.replace('):>','')
+            self._sf_rLstB.append(f'    {lmbNm} = {self._sf_rStrD}')
+            with open(f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2_LMB.py', 'w') as lllfObjWrt: lllfObjWrt.write(''.join(self._sf_rLstB))
+            # Import it and run it for the return.
+#_______________________________________________________________________________________
     def sqtpp_lambda_spdr(self) -> int:
         # Parses an lambda string declared params for list use on re-assembly & run.
-        # __slots__ in use: (_sf_rLstA, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_rIntA)
+        # __slots__ in use: (_sf_rLstA, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_rIntA, _sf_rIntB)
         # returns:
-        # -1 no proper lambda function found
+        # -1=no proper lambda function found
+        #  1=lambda function has variable params
+        #  0=lambda function has no variable params
         self._sf_rStrB = re.findall(r'lambda(?:\s*[a-zA-Z_][a-zA-Z_0-9]*(?:\s*,\s*[a-zA-Z_][a-zA-Z_0-9]*)*)?\s*:\s*.+', self._sf_rLstA[0])
         if len(self._sf_rStrB[0]) > 0:
             self._sf_rStrD = self._sf_rStrB[0]
-            self._sf_rStrB = self._sf_rStrB[0].replace('lambda','').replace('  ',' ').replace('):','')
+            self._sf_rStrB = self._sf_rStrB[0].replace('lambda','').replace(' ','')
             self._sf_rLstA = []
             self._sf_rStrC = ''
             self._sf_rIntA = 0
+            self._sf_rIntB = 0
             for self._sf_rStrA in self._sf_rStrB:
                 if self._sf_rStrA != ':':
                     if self._sf_rStrA == ',':
-                        self._sf_rLstA.append(self._sf_rStrC.replace(' ',''))
-                        self._sf_rIntA = 1
+                        self._sf_rLstA.append(self._sf_rStrC)
                         self._sf_rStrC = ''
-                    else: self._sf_rStrC = f'{self._sf_rStrC}{self._sf_rStrA}'
+                        self._sf_rIntA = 0
+                        if self._sf_rIntB == 0: self._sf_rIntB = 1
+                    else:
+                        self._sf_rStrC = f'{self._sf_rStrC}{self._sf_rStrA}'
+                        if self._sf_rIntA == 0: self._sf_rIntA = 1
                 else:
-                    if self._rIntA > 0: self._sf_rLstA.append(self._sf_rStrC.replace(' ',''))
-                    break
-            return self._sf_rIntA
+                    if self._sf_rIntA == 1:
+                        self._sf_rLstA.append(self._sf_rStrC)
+                        self._sf_rIntB = 1
+                        break
+            return self._sf_rIntB
         else:
             return -1
 #_______________________________________________________________________________________
@@ -3312,7 +3364,7 @@ def lambdavar(lambdaName: str, lambdaParams: list):
     #print(vardata_stx(True, ['faster_stacks3','faster_stacks5'], r'\[\]@'))
     #setpath('vfs','dir','folder')
     #addvar(None, 'bin_srch = lambda l, x, lo, hi: -1 if lo > hi else (lo+hi)//2 if l[(lo+hi)//2] == x else bin_srch(l, x, lo, (lo+hi)//2-1) if l[(lo+hi)//2] > x else bin_srch(l, x, (lo+hi)//2+1, hi)')
-    #lambdavar('bin_srch', None)
+    #lambdavar('bin_srch', ['l=3','x=4','lo=5','hi=6'])
     #--------------------------------------------------------------------<'(((((>< 
 #test()
         
