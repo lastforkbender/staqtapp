@@ -1,4 +1,4 @@
-#Staqtapp-v1.2.196
+#Staqtapp-v1.2.204
 #//////////••        .                           .
 #/////////••                 .                                   •
 #////////••    .                                        •            
@@ -15,10 +15,13 @@
 
 
 
-# UPDATE MON, JUN17: Added sqtpp_lambda_lambda_lambda_clsr_remap_slots() function for
-#                    append of new lambdas added to sqtpp1_2_LMB.py import & runs and
-#                    precise edit of slots attrs if any to add from new lambda vars.
-#                    See lambdavar & lambdalist for clear descriptions of use given.
+# UPDATE TUE, JUN18: Fixed a slew of problems around conversion of a lambda function
+#                    param vars to slots vars in the spawned py module sqtpp1_2_LMB;
+#                    sqtpp_lambda_lambda_lambda_clsr_remap_slots and the sqtpp_lambda
+#                    replace function body vars to slots attrs all works smoothly and
+#                    correct for a fnc import & run call on any lambda stored there--
+#                    in parallel of the non-slots attr lambda stored in vfs tqpt stack.
+#                    See addvar() description of this special lambda store & run case.
 
 
 
@@ -825,7 +828,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.196\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.204\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1523,7 +1526,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.196\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.204\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -2692,7 +2695,15 @@ class SqtppFncs(Sqtpp):
             return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
     def sqtpp_vars_run_lambda(self, lmbNm: str, lmbPrms: list):
-        # See lambdavar() description.
+        # Because of time must be time; or toroidal space of initial time more? Then is
+        # continued by only time, thus post equivalent as a ...{T^(hf:t)*Re-1 + Re+1 as
+        # seed regularity string, visits nonplane simultaneous conversions. Such with R
+        # that uniform regions expanse in a example: z^r(T[<{...}]^Rt> - Re/+1 + e , or
+        # a result last boundary of a initial & substantial increase in forwards R atop
+        # a embodied necessary symmetry structue with t^<xyi>= without constituent parts.
+        # And only correct with timing via palindrome number system pairing half-loops,
+        # whereof a central LtoR or/and RtoL exact initial uniform regions re-combined
+        # do not issue a fractional difference shared static singular loop of an znero.
         # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_sStrX, _sf_rLstA, _sf_rStrD, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rBoolA, _sf_rBoolB)
         # returns:
         # -1=invalid vfs path
@@ -2701,7 +2712,7 @@ class SqtppFncs(Sqtpp):
         # -4=lambda function found no proper construct
         # -5=mismatch params lengths @lmbPrms
         # -6=params names do not matchup @lmbPrms
-        try:
+        #try:
             if self.sqtpp_set_vfs_file() == 1:
                 if self.sqtpp_vfs_tqpt_file(True) != -1:
                     self._sf_rLstA = re.findall(r'st1_atlaspice_.*?<\@q\|p\('+re.escape(lmbNm)+r'.*?\):>', self._sf_sQp)
@@ -2716,6 +2727,7 @@ class SqtppFncs(Sqtpp):
                         else: self._sf_rBoolA = False
                         if self._sf_rBoolA:
                             if len(lmbPrms) == len(self._sf_rLstA):
+                                self._sf_sLstX = []
                                 self._sf_rIntB = len(lmbPrms)
                                 for self._sf_rIntA in range(self._sf_rIntB):
                                     if self._sf_rIntA > 0 and not self._sf_rBoolB:
@@ -2724,6 +2736,8 @@ class SqtppFncs(Sqtpp):
                                     self._sf_rIntC = 0
                                     while self._sf_rIntC < self._sf_rIntB:
                                         if lmbPrms[self._sf_rIntA].find(f'{self._sf_rLstA[self._sf_rIntC]}=') > -1:
+                                            self._sf_rStrA = lmbPrms[self._sf_rIntA].split('=')
+                                            self._sf_sLstX.append(self._sf_rStrA[0])
                                             self._sf_rBoolB = True
                                             break
                                         self._sf_rIntC+=1
@@ -2738,9 +2752,9 @@ class SqtppFncs(Sqtpp):
                     return -2
             else:
                 return -1
-        except Exception as err_vars_run_lambda:
-            self._sErr = f'staqtapp1.2 (vars_run_lambda) error: {err_vars_run_lambda}'
-            return self.sqtpp_err_rcrd(self._sErr)
+        #except Exception as err_vars_run_lambda:
+            #self._sErr = f'staqtapp1.2 (vars_run_lambda) error: {err_vars_run_lambda}'
+            #return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
     def sqtpp_lambda_lambda_lambda_clsr(self, lmbNm: str):
         # Edit/write function for the lambda slots class and import & run.
@@ -2748,16 +2762,17 @@ class SqtppFncs(Sqtpp):
         # returns: (lambda)
         if os.path.isfile(f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2_LMB.py'):
             with open(f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2_LMB.py', 'r') as lllfObjRdr: self._sf_rStrA = lllfObjRdr.read()
-            self._sf_rLstB = re.findall(r'\#CTMN-LLL<[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]:' + re.escape(lmbNm) + r'>')
+            self._sf_rLstB = re.findall(r'\#CTMN-LLL<[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]>' + re.escape(lmbNm) + r'>', self._sf_rStrA)
             if len(self._sf_rLstB) > 0:
-                self.sqtpp_lambda_lambda_lambda_clsr_remap_slots(False)
-                with open(f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2_LMB.py', 'w') as lllfObjA_wrt: lllfObjA_wrt.write(f'{self._sf_rStrA}\n    {lmbNm} = {self._sf_rStrD.replace("):>","")}')
+                print('is there')
             else:
-                return ['#/NO CTMN!']
+                self.sqtpp_lambda_lambda_lambda_clsr_remap_slots(False)
+                self._sf_rStrD = self._sf_rStrD.replace("):>","")
+                with open(f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2_LMB.py', 'w') as lllfObjA_wrt: lllfObjA_wrt.write(self._sf_rStrA + '\n    ' + '#CTMN-LLL<' + self._sf_sStrX + ':' + lmbNm + '>\n    ' + lmbNm + ' = ' + self._sf_rStrD)
         else:
             self._sf_rLstB = ['# This py-module is auto-generated by the Staqtapp1.2 vfs env-var library for lambda functions use. Edit at your own risk, seriously.\n\n\nclass SqtppLLL():\n\n    __slots__ = ()\n\n    def __init__(self):\n        pass\n\n\nclass SqtppLLL_Joints(SqtppLLL):\n\n    __slots__ = (']
             self.sqtpp_lambda_lambda_lambda_clsr_remap_slots(True)
-            self._sf_rLstB.append('\n\n    def __init__(self):\n        pass\n#_______________________________________________________________________________________\n\n    #CTMN-LLL<' + str(self._sf_sStrX) + ':' + lmbNm + '>\n')
+            self._sf_rLstB.append('\n\n    def __init__(self):\n        pass\n#_______________________________________________________________________________________\n\n    #CTMN-LLL<' + self._sf_sStrX + ':' + lmbNm + '>\n')
             self._sf_rLstB.append(f'    {lmbNm} = {self._sf_rStrD.replace("):>","")}')
             with open(f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2_LMB.py', 'w') as lllfObjN_wrt: lllfObjN_wrt.write(''.join(self._sf_rLstB))
         # TODO: Import module and run @lmbNm for the return.
@@ -2769,8 +2784,7 @@ class SqtppFncs(Sqtpp):
         if self._sf_rBoolA:
             if isNewlllMdl:
                 self._sf_rLstC = []
-                self._sf_rIntB = len(self._sf_rLstA)
-                for self._sf_rIntA in range(self._sf_rIntB): self._sf_rLstC.append("'" + self._sf_rLstA[self._sf_rIntA] + "'")
+                for self._sf_rIntA in range(len(self._sf_rLstA)): self._sf_rLstC.append("'" + self._sf_rLstA[self._sf_rIntA] + "'")
                 self._sf_rLstB.append(f'{",".join(self._sf_rLstC)})')
             else:
                 self._sf_rLstC = re.findall(r'__slots__.*?\)', self._sf_rStrA)
@@ -2782,9 +2796,6 @@ class SqtppFncs(Sqtpp):
                 self._sf_rLstC = self._sf_rLstC.split(',')
                 self._sf_rIntB = len(self._sf_rLstC)
                 self._sf_rBoolC = True
-                # No use of set() here; open for other rev9 features
-                # including multi klf mv-tree keys pairs lambda uses
-                # with Staqtapp-Koch ver after move&enc lmbd dirs.
                 for self._sf_rIntA in range(self._sf_rIntB):
                     self._sf_rBoolB = True
                     self._sf_rIntC = 0
@@ -2798,17 +2809,19 @@ class SqtppFncs(Sqtpp):
                         else:
                             self._sf_rBoolC = False
                             break
+                print(self._sf_sLstX)
                 if self._sf_rBoolC:
                     self._sf_rLstD = []
                     for self._sf_rIntA in range(len(self._sf_rLstA)): self._sf_rLstD.append("'" + self._sf_rLstA[self._sf_rIntA] + "'")
-                    self._sf_rStrE = f'__slots__ = ({self._sf_rStrB.replace("__slots__ = (","")},{",".join(self._sf_rLstD)})'
+                    self._sf_rStrE = f'__slots__ = ({self._sf_rStrB.replace("__slots__ = (","")},{",".join(self._sf_rLstD)}'
                     self._sf_rStrE = self._sf_rStrE.replace(')','')
-                    self._sf_rStrA = self._sf_rStrA.replace(self._sf_rStrB, self._sf_rStrE)
+                    self._sf_rStrA = self._sf_rStrA.replace(self._sf_rStrB, f'{self._sf_rStrE})')
+                self._sf_rLstA = self._sf_sLstX
             self._sf_rLstC = []
             for self._sf_rIntA in range(len(self._sf_rLstA)): self._sf_rLstC.append(f' self.{self._sf_rLstA[self._sf_rIntA]} ')
             self._sf_rLstE = ''.join(self._sf_rLstE)
             self._sf_rStrD = self._sf_rStrD.replace(self._sf_rLstE, '')
-            self._sf_rStrD = f'~{self._sf_rStrD}~'
+            self._sf_rStrD = f'~~~~~{self._sf_rStrD}~~~~~'
             self.sqtpp_lambda_lambda_rplc()
             self._sf_rStrD = f'lambda{",".join(self._sf_rLstC)}: {self._sf_rStrD}'
         else:
@@ -2816,15 +2829,19 @@ class SqtppFncs(Sqtpp):
 #_______________________________________________________________________________________
     def sqtpp_lambda_lambda_rplc(self):
         # Replaces a lambda's fnc body vars to slots classed attr assigned performances.
-        # __slots__ in use: (_sf_sLstX, _sf_rLstD, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD)
+        # __slots__ in use: (_sf_sLstX, _sf_rLstA, _sf_rLstD, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD)
         # returns: (none)
         self._sf_rLstF = set('_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')
+        self._sf_rIntB = len(self._sf_rLstA)
         for self._sf_rIntA in range(self._sf_rIntB):
-            self._sf_rIntC = 0
-            self._sf_rIntE = 0
+            self._sf_rIntC = 5
+            self._sf_rIntE = 5
             while self._sf_rIntC < len(self._sf_rStrD):
                 self._sf_rIntE = self._sf_rIntC
-                self._sf_rIntC = self._sf_rStrD.find(self._sf_rLstA[self._sf_rIntA], self._sf_rIntC)
+                if self._sf_rIntC >= len(self._sf_rStrD)-4:
+                    break
+                else:
+                    self._sf_rIntC = self._sf_rStrD.find(self._sf_rLstA[self._sf_rIntA], self._sf_rIntC)
                 if self._sf_rIntC > -1:
                     self._sf_rIntD = self._sf_rIntC+len(self._sf_rLstA[self._sf_rIntA])
                     if not set(self._sf_rStrD[self._sf_rIntC-1]).issubset(self._sf_rLstF) and not set(self._sf_rStrD[self._sf_rIntD]).issubset(self._sf_rLstF):
@@ -2833,7 +2850,7 @@ class SqtppFncs(Sqtpp):
                         self._sf_rIntC = self._sf_rIntD+5
                     else: self._sf_rIntC = self._sf_rIntE+1
                 else: self._sf_rIntC = self._sf_rIntE+1
-        self._sf_rStrD = self._sf_rStrD.replace('~','')
+        self._sf_rStrD = self._sf_rStrD.replace('~~~~~','')
 #_______________________________________________________________________________________
     def sqtpp_lambda_spdr(self) -> int:
         # Parses an lambda string declared params for list use on re-assembly & run.
@@ -3439,7 +3456,7 @@ def lambdavar(lambdaName: str, lambdaParams: list):
     #print(vardata_stx(True, ['faster_stacks3','faster_stacks5'], r'\[\]@'))
     #setpath('vfs','dir','folder')
     #addvar(None, 'bin_srch = lambda l, x, lo, hi: -1 if lo > hi else (lo+hi)//2 if l[(lo+hi)//2] == x else bin_srch(l, x, lo, (lo+hi)//2-1) if l[(lo+hi)//2] > x else bin_srch(l, x, (lo+hi)//2+1, hi)')
-    #lambdavar('bin_srch', ['l=3','x=4','lo=5','hi=6'])
+    #lambdavar('var_adds', ['a=3'])
     #--------------------------------------------------------------------<'(((((>< 
 #test()
         
