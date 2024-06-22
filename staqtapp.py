@@ -1,4 +1,4 @@
-#Staqtapp-v1.2.215
+#Staqtapp-v1.2.217
 #//////////••        .                           .
 #/////////••                 .                                   •
 #////////••    .                                        •            
@@ -15,11 +15,10 @@
 
 
 
-# UPDATE SAT, JUN22: Completed lambdavar() function call, a powerful lambda feature in
-#                    storage & run of parameterless slots converted lambdas. Updated
-#                    the description of lambdavar() also. [Some better ideas have come
-#                    about for the parallel lambdalist() to have more integration on a
-#                    call with lambdavar()]
+# UPDATE SAT, JUN22: Cut-off potential memory conflicts with import of sqtpp1_2_LMB.py
+#                    for lambdavar(). Uses importlib if prevention of that needed. And
+#                    this module, staqtapp.py, now full twin turbo slots performance;
+#                    class Sqtpp() no longer inherits of AbsSmvt in a slots d-hybrid.
 
 
 
@@ -326,6 +325,7 @@ from decimal import Decimal as dcml
 from collections import deque, Counter
 
 import statistics
+import importlib
 import pickle
 import random
 import math
@@ -824,7 +824,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.215\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.217\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1522,7 +1522,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.215\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.217\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -2761,12 +2761,13 @@ class SqtppFncs(Sqtpp):
                 # Is going to run the slots lambda @sqtpp1_2_LMB.py directly, no edits
                 # or conversion of lambda's params to slots attrs before run & return.
                 # Already there; already had it's params converted to slots attr(s).
-                pass
+                self._sf_rBoolC = False
             else:
                 self._sf_rStrA = self._sf_rStrA.replace('\n\ndef sqtpp_lll_run(lName: str, lPrms: list):\n    lllCls = SqtppLLL_Joints()\n    return lllCls.sqtpp_lambda_lambda_lambda_set_slots_attrs_and_run(lName, lPrms)',"")
                 self.sqtpp_lambda_lambda_lambda_clsr_remap_slots(False)
                 self._sf_rStrD = self._sf_rStrD.replace("):>","")
                 with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_LMB.py', 'w') as lllfObjA_wrt: lllfObjA_wrt.write(self._sf_rStrA + '\n    ' + '#CTMN-LLL<' + self._sf_sStrX + ':' + lmbNm + '>\n    ' + lmbNm + ' = ' + self._sf_rStrD + '\n\ndef sqtpp_lll_run(lName: str, lPrms: list):\n    lllCls = SqtppLLL_Joints()\n    return lllCls.sqtpp_lambda_lambda_lambda_set_slots_attrs_and_run(lName, lPrms)')
+                self._sf_rBoolC = True
         else:
             self._sf_rLstB = ['# This py-module is auto-generated by the Staqtapp1.2 vfs env-var library for lambda functions use. Edit at your own risk.\n\nimport math\n\nclass SqtppLLL():\n\n    __slots__ = ()\n\n    def __init__(self):\n        pass\n\n\nclass SqtppLLL_Joints(SqtppLLL):\n\n    __slots__ = (']
             self.sqtpp_lambda_lambda_lambda_clsr_remap_slots(True)
@@ -2783,8 +2784,16 @@ class SqtppFncs(Sqtpp):
             self._sf_rLstB.append(f'    {lmbNm} = {self._sf_rStrD.replace("):>","")}')
             self._sf_rLstB.append('\n\ndef sqtpp_lll_run(lName: str, lPrms: list):\n    lllCls = SqtppLLL_Joints()\n    return lllCls.sqtpp_lambda_lambda_lambda_set_slots_attrs_and_run(lName, lPrms)')
             with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_LMB.py', 'w') as lllfObjN_wrt: lllfObjN_wrt.write(''.join(self._sf_rLstB))
+            self._sf_rBoolC = True
             self._sf_rLstB = None
-        import sqtpp1_2_LMB
+        if not self._sf_rBoolC:
+            import sqtpp1_2_LMB
+        else:
+            if 'sqtpp1_2_LMB' in sys.modules:
+                importlib.reload(sqtpp1_2_LMB)
+                sys.modules.pop('sqtpp1_2_LMB', None)
+            else:
+                import sqtpp1_2_LMB
         return sqtpp1_2_LMB.sqtpp_lll_run(lmbNm, lmbPrms)
 #_______________________________________________________________________________________
     def sqtpp_lambda_lambda_lambda_clsr_remap_slots(self, isNewlllMdl: bool):
@@ -3443,9 +3452,9 @@ def lambdavar(lambdaName: str, lambdaParams: list):
     #lockvar('faster_stacks3', ['someFnc12','someFnc8','someFnc14','someFnc19'])
     #stalkvar('faster_stacks3', '@qp(1,2,3,4,5,6,7,8,9):')
     #print(findvar_stx(['faster_stacks2','faster_stacks4'], 'faster_stacks3'))
-    #addtree_stx('tree_test1', ['a', 'b', 'c', 'd', 'e', 'f', 'g'])
-    #addbranch_stx('tree_test1', 'b', 'knt', 7948233)
-    #print(getbranch_stx(True, 'tree_test1', None))
+    #addtree_stx('tree_test7', ['p', 'n', 'r'])
+    #addbranch_stx('tree_test7', 'n', 'knt', 7948233)
+    #print(getbranch_stx(True, 'tree_test7', None))
     #print(keyvar('faster_stacks', 'someFnc8'))
     #revar(True, 'new-vfs', 'new-vfs-dir', 'new-vfs-folder')
     #print(loadvar(True, 'faster_stacks3_1', 'mode=deque'))
@@ -3463,7 +3472,7 @@ def lambdavar(lambdaName: str, lambdaParams: list):
     #print(vardata_stx(True, ['faster_stacks3','faster_stacks5'], r'\[\]@'))
     #setpath('vfs','dir','folder')
     #addvar(None, 'bin_srch = lambda l, x, lo, hi: -1 if lo > hi else (lo+hi)//2 if l[(lo+hi)//2] == x else bin_srch(l, x, lo, (lo+hi)//2-1) if l[(lo+hi)//2] > x else bin_srch(l, x, (lo+hi)//2+1, hi)')
-    #print(lambdavar('var_adds', ['a=1']))
+    #print(lambdavar('var_divs', ['d=5','v=9']))
     #--------------------------------------------------------------------<'(((((>< 
 #test()
         
