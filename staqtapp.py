@@ -1,4 +1,4 @@
-#Staqtapp-v1.2.219
+#Staqtapp-v1.2.222
 #//////////••        .                           .
 #/////////••                 .                                   •
 #////////••    .                                        •            
@@ -22,6 +22,10 @@
 #                    extended group of slots attrs in the slots list. Performance is
 #                    gained upon the conditionals & at comparison of slots elements.
 #                    Staqtapp1.2's featured import call lambdavar() is finished.
+#
+#                    Added lambdalist() import call function for unique format return
+#                    string of lambda names + params; or a list of complete lambda(s),
+#                    entire functions, kept in a Staqtapp tqpt env-var stack.
 
 
 
@@ -197,7 +201,11 @@
 #     leads to all lambda parameters added to the slots attrs, keeping the parameter
 #     names generic to a lambda when use of addvar(), bypasses edits & slots length.
 #
-# --> lambdalist(isComplete), (NOT YET IMPLEMENTED)
+# --> lambdalist(isComplete), returns stored lambda data from a vfs tqpt stack. If is
+#     @isComplete=True then returns a list of the full lambda functions. Other option
+#     as @isComplete=False returns a special formatted string of the lambda functions
+#     name(s) and param(s) so is much easier to work alongside a lambdavar() call -->
+#     Example: '@.:my_lambda1,i=,p=,l=,@.:my_lambda2,x=,n=' whereof separated ",@.:"
 #
 # --> removevar(varName), removes env-var from tqpt stack and any tpqt lockvar block.
 #     Will not delete a stalked env-var or a dark env-var, raises a exception that
@@ -838,7 +846,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8,
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.219\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.222\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1050,16 +1058,46 @@ class SqtppFncs(Sqtpp):
             self._sErr = f'staqtapp1.2 (listvars) error: {err_vars_list}'
             return self.sqtpp_err_rcrd(self._sErr)
 #_______________________________________________________________________________________
-    def sqtpp_list_lamba(self, cmpltLmb: bool):
-        #
-        # __slots__ in use: ( )
-        # returns:
+    def sqtpp_list_lambda(self, cmpltLmb: bool):
+        # Returns a list of complete lambda functions or a special formatted str.
+        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rIntA, _sf_rIntB)
+        # returns: list
         # -1=empty vfs path settings file
         # -2=invalid vfs path
         try:
             if self.sqtpp_set_vfs_file() == 1:
                 if self.sqtpp_vfs_tqpt_file(True) != -1:
-                    pass
+                    self._sf_rLstA = re.findall(r'st1_atlaspice_.*?<@q\|p.*?\):>', self._sf_sQp)
+                    self._sf_rIntB = len(self._sf_rLstA)
+                    if self._sf_rIntB > 0:
+                        self._sf_rLstC = []
+                        for self._sf_rIntA in range(self._sf_rIntB):
+                            self._sf_rLstB = re.findall(r'lambda(?:\s*[a-zA-Z_][a-zA-Z_0-9]*(?:\s*,\s*[a-zA-Z_][a-zA-Z_0-9]*)*)?\s*:\s*.+', self._sf_rLstA[self._sf_rIntA])
+                            if len(self._sf_rLstB) > 0:
+                                if not cmpltLmb:
+                                    self._sf_rLstD = re.findall(r'da.*?:', self._sf_rLstB[0])
+                                    self._sf_rLstD[0] = self._sf_rLstD[0].replace('da','').replace(':','')
+                                    self._sf_rLstE = re.findall(r'\(.*?=', self._sf_rLstA[self._sf_rIntA])
+                                    self._sf_rLstE[0] = self._sf_rLstE[0].replace('(','').replace('=','')
+                                    self._sf_rLstC.append(f'@.:{self._sf_rLstE[0].replace(" ","")}')
+                                    if self._sf_rLstD[0].find(',') > -1:
+                                        self._sf_rLstD = self._sf_rLstD[0].split(',')
+                                        self._sf_rIntD = len(self._sf_rLstD)
+                                        for self._sf_rIntC in range(self._sf_rIntD):
+                                            self._sf_rLstC.append(f'{self._sf_rLstD[self._sf_rIntC].replace(" ","")}=')
+                                    else:
+                                        self._sf_rLstD[0] = self._sf_rLstD[0].replace(' ','')
+                                        if len(self._sf_rLstD[0]) > 0: self._sf_rLstC.append(self._sf_rLstD[0])
+                                else:
+                                    self._sf_rLstF = re.findall(r'\(.*?\):>', self._sf_rLstA[self._sf_rIntA])
+                                    self._sf_rLstF[0] = self._sf_rLstF[0].replace("(","").replace(":)>","")
+                                    self._sf_rLstC.append(self._sf_rLstF[0].replace('):>',''))
+                        if cmpltLmb:
+                            return self._sf_rLstC
+                        else:
+                            return ','.join(self._sf_rLstC)
+                    else:
+                        return []
                 else:
                     return -2
             else:
@@ -1554,7 +1592,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.219\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.222\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -2739,7 +2777,7 @@ class SqtppFncs(Sqtpp):
         try:
             if self.sqtpp_set_vfs_file() == 1:
                 if self.sqtpp_vfs_tqpt_file(True) != -1:
-                    self._sf_rLstA = re.findall(r'st1_atlaspice_.*?<\@q\|p\('+re.escape(lmbNm)+r'.*?\):>', self._sf_sQp)
+                    self._sf_rLstA = re.findall(r'st1_atlaspice_.*?<@q\|p\('+re.escape(lmbNm)+r'.*?\):>', self._sf_sQp)
                     if len(self._sf_rLstA[0]) > 0:
                         self._sf_sSrc = None
                         self._sf_sQp = None
@@ -3404,7 +3442,7 @@ def listvars() -> list:
     sqtppCls = Sqtpp()
     return sqtppCls.mcf_listvars()
 #_______________________________________________________________________________________
-def lambdalist(asComplete: bool) -> list:
+def lambdalist(asComplete: bool):
     sqtppCls = Sqtpp()
     return sqtppCls.mcf_lambdalist(asComplete)
 #_______________________________________________________________________________________
@@ -3509,6 +3547,7 @@ def lambdavar(lambdaName: str, lambdaParams: list):
     #setpath('vfs','dir','folder')
     #addvar(None, 'bin_srch = lambda l, x, lo, hi: -1 if lo > hi else (lo+hi)//2 if l[(lo+hi)//2] == x else bin_srch(l, x, lo, (lo+hi)//2-1) if l[(lo+hi)//2] > x else bin_srch(l, x, (lo+hi)//2+1, hi)')
     #print(lambdavar('var_mtpl', ['c=5','x=9','t=2']))
+    #print(lambdalist(True))
     #--------------------------------------------------------------------<'(((((>< 
 #test()
         
