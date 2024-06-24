@@ -1075,8 +1075,8 @@ class SqtppFncs(Sqtpp):
                             self._sf_rLstB = re.findall(r'lambda(?:\s*[a-zA-Z_][a-zA-Z_0-9]*(?:\s*,\s*[a-zA-Z_][a-zA-Z_0-9]*)*)?\s*:\s*.+', self._sf_rLstA[self._sf_rIntA])
                             if len(self._sf_rLstB) > 0:
                                 if not cmpltLmb:
-                                    self._sf_rLstD = re.findall(r'da.*?:', self._sf_rLstB[0])
-                                    self._sf_rLstD[0] = self._sf_rLstD[0].replace('da','').replace(':','')
+                                    self._sf_rLstD = re.findall(r'lambda.*?:', self._sf_rLstB[0])
+                                    self._sf_rLstD[0] = self._sf_rLstD[0].replace('lambda','').replace(':','')
                                     self._sf_rLstE = re.findall(r'\(.*?=', self._sf_rLstA[self._sf_rIntA])
                                     self._sf_rLstE[0] = self._sf_rLstE[0].replace('(','').replace('=','')
                                     self._sf_rLstC.append(f'@.:{self._sf_rLstE[0].replace(" ","")}')
