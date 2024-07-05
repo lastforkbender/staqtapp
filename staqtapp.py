@@ -1,4 +1,8 @@
-#Staqtapp-v1.2.225
+#QPython 3SE / Row4 / staqtapp.py (3,727 lines) / 11:22 Fri, Jul 5
+
+
+
+#Staqtapp-v1.2.225 | Hybrid VFS ENV-VAR Library
 #//////////••        .                           .
 #/////////••                 .                                   •
 #////////••    .                                        •            
@@ -369,8 +373,9 @@ class AbsSmvt(dict):
     def __eq__(self, other):
         return isinstance(self, AbsSmvt) and self.dt == other.dt
 #_______________________________________________________________________________________
-#_______________________________________________________________________________________
-#_________________________MID CHECKING FUNCTIONS:
+
+#                          .|MID ERROR-CHECKING FUNCTIONS|.
+
 #_______________________________________________________________________________________
 class Sqtpp():
     __slots__ = ('_sErr', '_sRtrn', '_rIntA', '_rIntB', '_rBoolA')
@@ -865,20 +870,21 @@ class Sqtpp():
             if self._sRtrn == 'FNC-ERR': raise Exception(f'staqtapp1.2 {clnFnc}-->{self._sErr}')
             elif self._sRtrn == 'FOO-BAR': raise Exception('staqtapp1.2 io error: unable to perform basic file reads or writes')
 #_______________________________________________________________________________________
-#_______________________________________________________________________________________
-#_________________________MAIN PARSING FUNCTIONS:
+
+#                          .|VFS/PARSING/UTILITY FUNCTIONS|.
+
 #_______________________________________________________________________________________
 class SqtppFncs(Sqtpp):
     __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sRplc', '_sf_sQp', '_sf_sQpRplcX', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_sBoolCxv', '_sf_sLstA', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rLstE', '_sf_rLstF', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD', '_sf_rBoolE')
     
     def __init__(self):
         self._sf_rBoolE = False
-#_______________________________________________________________________________________
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vfs_make(self, vfsNm: str, dirNm: str, fldrNm: str) -> int:
-        # Handles staqtapp's vfs .sqtpp file makes & edits.
-        # __slots__ in use: ()
-        # returns: 8,
+        # FNC_ID=ST12-15976814147762V
+        # SqtppFncs slots in use: (non-local)
+        # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
             self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.225\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
@@ -887,13 +893,13 @@ class SqtppFncs(Sqtpp):
         except Exception as err_vfs_make:
             self._sErr = f'staqtapp1.2 (vfs_make) error: {err_vfs_make}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vfs_tqpt_file(self, isTqpt: bool):
-        # Sets _sf_sQp to the set path tqpt file contents. Unlike the Staqtapp-Koch
-        # version this is a direct list order directory locate, no security at all.
-        # This env-vars library is built for speed, not tor like vfs-dir encrypts.
-        # __slots__ in use: (_sf_sQp)
-        # returns: -1=path not found
+        # FNC_ID=ST12-53391858780301V
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rLstA, _sf_sQp, _sf_sSrc)
+        # returns:
+        # -1=path not found
         if isTqpt:
             self.sqtpp_vfs_pointer([f'|:{self._sf_rLstA[1]}<', f'_|:{self._sf_rLstA[2]}<', f'__|:{self._sf_rLstA[3]}<', f'___|:{self._sf_rLstA[4]}<'])
             if self._sf_rIntA != -1: self._sf_sQp = self._sf_sSrc[self._sf_rIntA:self._sf_sSrc.find('___|:',self._sf_rIntA+5)-2]
@@ -901,11 +907,13 @@ class SqtppFncs(Sqtpp):
                 return -1
         else:
             pass
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vfs_tpqt_file(self, isTpqt: bool):
-        # Sets _sf_sPq to the set vfs path tpqt lockvar sub-file type contents.
-        # __slots__ in use: (_sf_sPq)
-        # returns: -1=path not found
+        # FNC_ID=ST12-90134370362249V
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rLstA, _sf_sPq, _sf_sSrc)
+        # returns:
+        # -1=path not found
         if isTpqt:
             self._sf_rLstA[4] = self._sf_rLstA[4].replace('tqpt','tpqt')
             self.sqtpp_vfs_pointer([f'|:{self._sf_rLstA[1]}<', f'_|:{self._sf_rLstA[2]}<', f'__|:{self._sf_rLstA[3]}<', f'___|:{self._sf_rLstA[4]}<'])
@@ -914,12 +922,12 @@ class SqtppFncs(Sqtpp):
                 return -1
         else:
             pass
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vfs_folder_write_dvcpn(self, dvAddrPntr: str):
-        # Writes DVCPN file containing listed darkvar addrs or/and dimensional pntr cXV.
-        # (Only rev9 integrated classes/functions removes contents of a DVCPN vfs-file.)
-        # __slots__ in use: (_sf_rIntA, _sf_rIntB)
-        # returns: none
+        # FNC_ID=ST12-93593218160027V
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_sRplc, _sf_sSrc, _sf_sVfsFldr)
+        # returns: (none)
         self._sf_rIntA = self._sf_sSrc.find(f'_|:{self._sf_sVfsFldr}<sub-{self._sf_sVfsFldr}>')
         self._sf_rIntB = self._sf_sSrc.find(f'__|:sub-{self._sf_sVfsFldr}<')
         if self._sf_rIntA > -1 and self._sf_rIntB > -1:
@@ -936,11 +944,14 @@ class SqtppFncs(Sqtpp):
                 self.sqtpp_reset_slots(False)
                 self._sf_sSrc = self._sf_sSrc.replace(dvcStr, '<:DVCPN=\n' + self._sf_sRplc + '\n' + '\n'.join(dvcLst) + '//:>')
             else: self._sf_sSrc = self._sf_sSrc.replace(dvcStr, f'{dvcStr}\n<:DVCPN=\nnull\n{dvAddrPntr}//:>')
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vfs_sub_file(self, isAddFl: bool, isRplcFl: bool, flNm: str, src: str):
-        # Read, insert or replace sub-file from a set vfs file/top sub-folder path.
-        # __slots__ in use: (_sf_sSrc, _sf_sRtrn, _sf_rStrA, _sf_rIntA, _sf_rIntB)
-        # returns: -1=cannot locate sub-folder, -2=sub file not found
+        # FNC_ID=ST12-93830098777343V
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rStrA, _sf_sRtrn, _sf_sSrc, _sf_sVfs, _sf_sVfsFldr)
+        # returns:
+        # -1=cannot locate sub-folder
+        # -2=sub file not found
         self._sf_rIntA = self._sf_sSrc.find(f'__|:sub-{self._sf_sVfsFldr}<')
         self._sf_rIntB = self._sf_sSrc.find(f'___|:tqpt-{self._sf_sVfsFldr}<')
         if self._sf_rIntA > -1 and self._sf_rIntB > -1:
@@ -966,10 +977,13 @@ class SqtppFncs(Sqtpp):
                     return -2
         else:
             return -1
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_set_vfs_file(self):
-        # Sets the set path vfs file contents to the slots attribute _sf_sSrc.
-        # __slots__ in use: (_sf_sSrc, _sf_rLstA, _sf_sVfs, _sf_sVfsFldr)
+        # FNC_ID=ST12-20927427257479V
+        # SqtppFncs slots in use: (_sf_rLstA, _sf_sSrc, _sf_sVfs, _sf_sVfsFldr)
+        # returns:
+        # -1=false tqpt path
         self.sqtpp_tqpt_path(False, None)
         if len(self._sf_sSrc) > 0:
             self._sf_rLstA = self._sf_sSrc.split(':')
@@ -979,11 +993,12 @@ class SqtppFncs(Sqtpp):
             return 1
         else:
             return -1
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_change_vfs_path(self, flNm: str, dirNm: str, fldrNm: str):
-        # Sets the vfs file dir + folder + subfolder + tqpt working path @.stg file.
-        # __slots__ in use: (_sf_sSrc, _sf_rLstA, _sf_rStrA, _sf_rIntA, _sf_rIntB, _sf_rBoolA)
-        # returns: none
+        # FNC_ID=ST12-92351394595405U
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_rStrA)
+        # returns: (none)
         try:
             self._sf_rLstA = glob.glob(f'{SQTPP_MDL_DIR}/staqtapp1_2/*.sqtpp')
             self._sf_rIntB = len(self._sf_rLstA)
@@ -1011,20 +1026,23 @@ class SqtppFncs(Sqtpp):
         except Exception as err_change_vfs_path:
             self._sErr = f'staqtapp1.2 (change_vfs_path) error: {err_change_vfs_path}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vfs_pointer(self, pthLst: list):
-        # Searches a vfs path integrity @pthLst, returns last index found.
-        # __slots__ in use: (_sf_rIntA)
-        # returns: -1=path not found
+        # FNC_ID=ST12-78442583569511V
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_sSrc)
+        # returns:
+        # -1=path not found
         for pth in range(len(pthLst)):
             if pth < 1: self._sf_rIntA = self._sf_sSrc.find(pthLst[pth])
             else: self._sf_rIntA = self._sf_sSrc.find(pthLst[pth], self._sf_rIntA+1)
             if self._sf_rIntA < 0:
                 break
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vars_add(self, isStlkVar: bool, varNm: str, varDat: str):
-        # Adds variables to a vfs type tqpt file from set vfs dir path.
-        # __slots__ in use: (_sf_rStrA, _sf_rIntA)
+        # FNC_ID=ST12-87562753599213P
+        # SqtppFncs slots in use: (_sf_rBoolE, _sf_rIntA, _sf_sQp, _sf_sSrc, _sf_sVfs)
         # returns:
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1065,10 +1083,11 @@ class SqtppFncs(Sqtpp):
             if not isStlkVar: self._sErr = f'staqtapp1.2 (vars_add) error: {err_vars_add}'
             else: self._sErr = f'staqtapp1.2 (vars_add) error: {err_vars_add}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_applied_vars(self, varNms: list, varDts: list, varLks):
-        # Sets env-var(s) to a tqpt stack by list, including a fnc-lock list optional.
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rBoolA, _sf_rBoolB, _sf_rBoolC)
+        # FNC_ID=ST12-61455026636200P
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rBoolB, _sf_rBoolC, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rStrA, _sf_rStrD, _sf_sPq, _sf_sQp, _sf_sSrc, _sf_sVfs)
         # returns:
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1158,10 +1177,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_applied_vars:
             self._sErr = f'staqtapp1.2 (appvar) error: {err_applied_vars}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vars_list(self) -> list:
-        # Returns vfs stack list names of env-vars currently in the tqpt file.
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rIntA, _sf_rIntB)
+        # FNC_ID=ST12-13768462694222U
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_sQp, _sf_sSrc)
         # returns:
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1185,10 +1205,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_vars_list:
             self._sErr = f'staqtapp1.2 (listvars) error: {err_vars_list}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_list_lambda(self, cmpltLmb: bool):
-        # Returns a list of complete lambda functions or a special formatted str.
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rIntA, _sf_rIntB)
+        # FNC_ID=ST12-95170347920087U
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rLstD, _sf_rLstE, _sf_rLstF, _sf_sQp)
         # returns: list
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1233,10 +1254,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_list_lambda:
             self._sErr = f'staqtapp1.2 (lambdalist) error: {err_list_lambda}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vars_join(self, newVarNm: str, varNms: list):
-        # Joins multiple env-var data as a new env-var added to tqpt stack from @varNms.
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_rStrA, _sf_rStrB, _sf_rLstA, _sf_rLstB, _sf_rIntA, _sf_rIntB, _sf_rBoolA)
+        # FNC_ID=ST12-49975252842406P
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_rStrB, _sf_sQp, _sf_sSrc, _sf_sVd, _sf_sVfs, _sf_sVfsFldr)
         # returns:
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1285,12 +1307,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_vars_join:
             self._sErr = f'staqtapp1.2 (joinvars) error: {err_vars_join}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vars_rename_stx(self, varNm: str, newVarNm):
-        # This module heavy env-var quality slots, see renamevar_stx info. Do not edit!
-        # Renames stalked env-vars just like the Staqtapp-Koch version but has no tor
-        # like vfs dir renaming, with different random encryption sets being applied.
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rIntA, _sf_rIntB, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_rBoolA, _sf_rBoolB)
+        # FNC_ID=ST12-74328682109875S
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rBoolB, _sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_sPq, _sf_sQp, _sf_sSrc, _sf_sVd, _sf_sVfs)
         # returns:
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1345,8 +1366,6 @@ class SqtppFncs(Sqtpp):
                                         self._sf_rLstA.append(self._sf_rLstC[self._sf_rIntA])
                                         self._sf_rLstC.pop(self._sf_rIntA)
                                 if newVarNm > 0:
-                                    # True mastership of this return3 by the programmer, not ai...that is impossible,
-                                    # can make this env-var lib escape any env-var reality they would push corpo-off.
                                     self._sf_rStrA = self.sqtpp_vfs_sub_file(False, False, 'svvs', None)
                                     self._sf_rStrD = self._sf_rStrA
                                     self._sf_rStrB = self._sf_sQp
@@ -1416,14 +1435,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_vars_rename_stx:
             self._sErr = f'staqtapp1.2 (renamevar_stx) error: {err_vars_rename_stx}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vars_change(self, varNm: str, newVarDt: str):
-        # This module heavy quality slots, see changevar at top for method description.
-        # Edit of this function is problematic and may cause rev9 to fight against you
-        # having any further use of this module as an advanced purpose env-var usage.
-        # **All rev9 features/methods are of UXRG obfuscation and hardened trained on
-        # the fovea-mantis script engine to recognize standard methods have changed.**
-        # __slots__ in use: (||_*)
+        # FNC_ID=ST12-29435733185667P
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rBoolB, _sf_rBoolC, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_sPq, _sf_sQp, _sf_sRtrn, _sf_sSrc, _sf_sVd, _sf_sVfs, _sf_sVfsFldr)
         # returns:
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1520,10 +1536,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_vars_change:
             self._sErr = f'staqtapp1.2 (changevar) error: {err_vars_change}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vars_remove(self, varNm: str):
-        # Will delete @varNm from tqpt stack and then delete a @varNm tpqt block if find.
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_sPq, _sf_rLstA, _sf_rLstB, _sf_rStrA)
+        # FNC_ID=ST12-78916780048877P
+        # SqtppFncs slots in use: (_sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_sPq, _sf_sQp, _sf_sSrc, _sf_sVfs, _sf_sVfsFldr)
         # returns:
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1562,10 +1579,11 @@ class SqtppFncs(Sqtpp):
                 return -2
         else:
             return -1
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_darkvar(self):
-        # See darkvar info for explain. Very complex env-var vfs functionals connected, do not edit.
-        # __slots__ in use: (_sf_sLstX, _sf_sStrX, _sf_sIntX, _sf_sBoolX, _sf_rLstA, _sf_rStrA, _sf_IntA, _sf_IntB)
+        # FNC_ID=ST12-68028377117105D
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_rStrA, _sf_sBoolCxv, _sf_sBoolX, _sf_sDv, _sf_sLstX, _sf_sPq, _sf_sQp, _sf_sQpRplcX, _sf_sSrc, _sf_sStrX, _sf_sVd, _sf_sVn)
         # returns: (none)
         self._sf_sBoolCxv = False
         if self._sf_sBoolX:
@@ -1600,10 +1618,11 @@ class SqtppFncs(Sqtpp):
         else:
             # Is read & parse dark env-var with vssv sub-file. Even or Odd.
             pass
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_darkvar_menorah_outer_loop_resum(self, tetBase: int, vssvAddr: str) -> str:
-        # Outer-halfloop encoded 7-digit palindrome int for a vssv-addr pointer list.
-        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rIntH, _sf_rBoolA)
+        # FNC_ID=ST12-61233740348884D
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rIntH, _sf_rIntI, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_rStrE, _sf_sDv, _sf_sStrX)
         # returns: (int)
         self._sf_rBoolA = False
         self._sf_rStrA = str(tetBase)[0:3]
@@ -1689,11 +1708,11 @@ class SqtppFncs(Sqtpp):
             else:
                 if len(self._sf_rIntH) > 1 and int(self._sf_rIntH) < 36: self._sf_sDv = f'{self._sf_rIntH[1]}{str(tetBase)}{self._sf_rIntH[1]}'
                 else: self._sf_sDv = f'{self._sf_rIntH[0]}{str(tetBase)}{self._sf_rIntH[0]}'
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_revar(self, isCurrVfsPth: bool, newVfsFlNm: str, newVfsDirNm: str, newVfsFldrNm: str):
-        # Replicates a new .sqtpp vfs file from current set vfs file, having env-vars
-        # from the current set vfs that are only associated with a tpqt lockvar entry.
-        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rLstD, _sf_StrA, _sf_rIntA, _sf_rIntB)
+        # FNC_ID=ST12-41344068606299V
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rLstD, _sf_rStrA, _sf_sPq, _sf_sQp, _sf_sSrc, _sf_sVfs)
         # returns:
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1749,10 +1768,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_revar:
             self._sErr = f'staqtapp1.2 (revar) error: {err_revar}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_loadvar(self, isAllNmbrs: bool, varNm: str, mode):
-        # Returns env-var data as str, list or a deque type.
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_sPq, _sf_sRtrn, _sf_rLstA, _sf_rIntA)
+        # FNC_ID=ST12-32234428100934U
+        # SqtppFncs slots in use: (_sf_rLstA, _sf_sPq, _sf_sQp, _sf_sRtrn, _sf_sSrc, _sf_sVd)
         # returns:
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1797,12 +1817,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_loadvar:
             self._sErr = f'staqtapp1.2 (loadvar) error: {err_loadvar}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_spok_mv_tree(self, trNm: str, initPthLst: list):
-        # Adds a depth dict struct for a spahk-mv type tree edits in vfs tqpt source.
-        # **Allows staqtapp rev9 seg-read tree operations in layer(s) to stalkvar() &
-        # faster protocols--smoother error corrections encountered in build cycles.**
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_rLstA, _sf_rStrA, _sf_rStrB, _sf_rIntA, _sf_rIntB)
+        # FNC_ID=ST12-72756760162526S
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_rStrA, _sf_rStrB, _sf_sQp, _sf_sSrc, _sf_sVfs)
         # returns:
         # -1=@initPthLst is empty
         # -2=@initPthLst has invalid chars
@@ -1850,10 +1869,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_spok_mv_tree:
             self._sErr = f'staqtapp1.2 (spok_mv_tree) error: {err_spok_mv_tree}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_spok_mv_tree_add_branch(self, trNm: str, smvBrncId, newSmvBrnchId, newSmvBrnchVl):
-        # Adds, replaces, shifts or removes branching to mv-tree type. See addbranch_stx
-        # __slots__ in use: (_sf_sRtrn, _sf_sSrc, _sf_sVd, _sf_sQp)
+        # FNC_ID=ST12-91239509636329S
+        # SqtppFncs slots in use: (_sf_sQp, _sf_sRtrn, _sf_sSrc, _sf_sVd, _sf_sVfs)
         # returns:
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1901,10 +1921,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_spok_mv_tree_add_branch:
             self._sErr = f'staqtapp1.2 (spok_mv_tree_add_branch) error: {err_spok_mv_tree_add_branch}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_spok_mv_tree_get_branch(self, isAlf: bool, trNm: str, brnchId):
-        # Mv-tree main spider, get branch value. Very precise, manually, for rev9 vfs-register feature futures. Do not edit.
-        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_rStrB, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rBoolA)
+        # FNC_ID=ST12-83205842907837S
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_rStrB, _sf_sVd)
         # returns: 
         # -1=empty vfs path settings file
         # -2=invalid vfs path
@@ -1971,15 +1992,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_spok_mv_tree_get_branch_ohm:
             self._sErr = f'staqtapp1.2 (spok_mv_tree_get_branch_ohm) error: {err_spok_mv_tree_get_branch_ohm}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_spok_mv_tree_get_branch_alf(self, brnchId, trSrc):
-        # Returns list of all original branch key(s) + value(s) to an @brnchId merged.
-        # This parse function should not replace well written logical code, that uses
-        # the above function or other to know when merged add branch will be of value.
-        # A expensive function to rely upon with compounded calls frequently for trace
-        # when a staqtapp mv-tree env-var is many keys & values in a large length dict.
-        # As naming applied cannot avoid alf for any find yet in most cases you should.
-        # __slots__ in use: (_sf_rLstC, _sf_rStrC, _sf_rStrD, _sf_rStrE, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rBoolB, _sf_rBoolC, _sf_rBoolD)
+        # FNC_ID=ST12-28502992416320S
+        # SqtppFncs slots in use: (_sf_rBoolB, _sf_rBoolC, _sf_rBoolD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rLstC, _sf_rStrC, _sf_rStrD, _sf_rStrE)
         # returns: list --> ['br_br:br:bv',...]
         self._sf_rStrC = ''
         self._sf_rStrE = None
@@ -2048,10 +2065,11 @@ class SqtppFncs(Sqtpp):
             return self._sf_rBoolD
         else:
             return None
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_spok_mv_tree_get_branch_ohm(self, isClr: bool, isOhm: bool, trSrc):
-        # Extension for added register record; rev9 vfs integration, thru any fovae-mantis embedded script runs.
-        # __slots__ in use: (*_sf_sVd*, _sf_rLstA, _sf_rLstB, _sf_rStrA, /_sf_rStrB/, _sf_rIntB)
+        # FNC_ID=ST12-84970566104521S
+        # SqtppFncs slots in use: (_sf_rIntB, _sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_rStrB, _sf_sQp, _sf_sSrc)
         # returns: none
         if isOhm:
             self._sf_rStrA = re.compile(r"'"+re.escape(self._sf_rLstA[self._sf_rIntB])+r"'\:'.*?'")
@@ -2066,11 +2084,11 @@ class SqtppFncs(Sqtpp):
             self._sf_sQp = None
         else:
             pass
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_var_stalk(self, varNm: str, varDat: str):
-        # Re-actions stalkvar instruction sets for pairing ordered var name sequences.
-        # **Allows smarter staqtapp rev9 module building gen features in a vfs file**
-        # __slots__ in use: (_sf_sSrc, _sf_sVd, _sf_rStrA, _sf_rStrB, _sf_rLstA, _sf_rIntA)
+        # FNC_ID=ST12-35908606707598P
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rLstA, _sf_rStrA, _sf_rStrB, _sf_sPq, _sf_sQp, _sf_sQpRplcX, _sf_sSrc, _sf_sVd, _sf_sVfs, _sf_sVfsFldr, _sf_sVn)
         # returns:
         # -6=var not found in tqpt var source...
         # -7=var to stalk same data @varDat and there is no svvs sub-file present
@@ -2144,11 +2162,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_var_stalk:
             self._sErr = f'staqtapp1.2 (var_stalk) error: {err_var_stalk}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_locate_var_stx(self, varNmLst: list, stlkVarNm: str):
-        # Multi-vars search, with optional env-var spawned poly-matching find returns.
-        # **Allows next-gen staqtapp rev9 bluetooth coms/cmds features in a vfs file**
-        # __slots__ in use: (•_rIntA, _sf_sSrc, _sf_sQp, _sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_rIntA, _sf_rIntD)
+        # FNC_ID=ST12-76968457094376S
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntD, _sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_sQp, _sf_sSrc, _sf_sVd)
         # returns: 
         # -1=@varNmLst is empty
         # -2=invalid vfs path
@@ -2213,13 +2231,15 @@ class SqtppFncs(Sqtpp):
         except Exception as err_locate_var_stx:
             self._sErr = f'staqtapp1.2 (locate_var_stx) error: {err_locate_var_stx}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_var_key(self, varNm: str, fncNm: str) -> bool:
-        # Returns True if @fncNm is allowed to edit @varNm, is a listed key to @varNm.
-        # Other very useful conditions of this include @fncNm being a env-var name of
-        # a spawned var set, from use of the stalkvar function with multi-processing.
-        # __slots__ in use: (_sf_sSrc, _sf_sPq, _sf_rLstA)
-        # returns: -1=invalid vfs path, -2=bad path in vfs path setting file, -3=@varNm was not found in tpqt vfs file
+        # FNC_ID=ST12-15869682128595U
+        # SqtppFncs slots in use: (_sf_rLstA, _sf_sPq)
+        # returns:
+        # -1=invalid vfs path
+        # -2=bad path in vfs path setting file
+        # -3=@varNm was not found in tpqt vfs file
         try:
             if self.sqtpp_set_vfs_file() == 1:
                 if self.sqtpp_vfs_tpqt_file(True) != -1:
@@ -2241,10 +2261,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_var_key:
             self._sErr = f'staqtapp1.2 (var_key) error: {err_var_key}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_list_lock(self, varNm: str) -> list:
-        # Returns list type of the vfs tpqt lock block fnc/etc. names for @varNm.
-        # __slots__ in use: (_sf_sSrc, _sf_sPq, _sf_rLstA, _sf_rIntA)
+        # FNC_ID=ST12-28413947443746U
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rLstA, _sf_sPq, _sf_sSrc)
         # returns:
         # -1=invalid vfs path
         # -2=bad path in vfs path setting file
@@ -2270,12 +2291,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_list_lock:
             self._sErr = f'staqtapp1.2 (list_lock) error: {err_list_lock}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_locate_var_data(self, isRgx: bool, varNmLst: list, srch: str):
-        # "The fact that our Universe may be simulatable by a quite short computer
-        # program calls into question wether it makes any ontological difference
-        # wether simulations are run or not." - Max Tegmark
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_sVd, _sf_rLstA, _sf_rLstB, _sf_rIntA, _sf_rIntB, _sf_rBoolA)
+        # FNC_ID=ST12-61257731648827U
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_rLstB, _sf_sVd)
         # returns:
         # -1=invalid vfs path
         # -2=empty vfs path settings file
@@ -2306,11 +2326,14 @@ class SqtppFncs(Sqtpp):
         except Exception as err_locate_var_data:
             self._sErr = f'staqtapp1.2 (locate_var_data) error: {err_locate_var_data}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_locate_var(self, rmv: bool, varNm: str):
-        # Searches for @varNm in a set vfs path tqpt file, returns True if found.
-        # __slots__ in use: (_sf_rBoolA)
-        # returns: -1=invalid vfs path, -3=empty vfs path settings file
+        # FNC_ID=ST12-60961205499908U
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_sQp, _sf_sSrc)
+        # returns:
+        # -1=invalid vfs path
+        # -3=empty vfs path settings file
         try:
             if self.sqtpp_set_vfs_file() == 1:
                 if self.sqtpp_vfs_tqpt_file(True) != -1:
@@ -2327,11 +2350,14 @@ class SqtppFncs(Sqtpp):
         except Exception as err_locate_var:
             self._sErr = f'staqtapp1.2 (locate_var) error: {err_locate_var}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_limit_var_domain(self, varNm: str, fncNm):
-        # Adds lock-in function name(s) or other to set path vfs tpqt file for env-vars.
-        # __slots__ in use: (_sf_sPq, _sf_sRtrn, _sf_rStrA, _sf_rStrB, _sf_sVfsFldr)
-        # returns: -1=empty vfs path stg file, -2=@varNm not found in tqpt vars source
+        # FNC_ID=ST12-62068375105089P
+        # SqtppFncs slots in use: (_sf_rStrA, _sf_rStrB, _sf_sPq, _sf_sQp, _sf_sRtrn, _sf_sSrc, _sf_sVfsFldr)
+        # returns:
+        # -1=empty vfs path stg file
+        # -2=@varNm not found in tqpt vars source
         try:
             self._sf_sRtrn = self.sqtpp_locate_var(False, varNm)
             if self._sf_sRtrn == -3:
@@ -2354,17 +2380,19 @@ class SqtppFncs(Sqtpp):
         except Exception as err_limit_var_domain:
             self._sErr = f'staqtapp1.2 (limit_var_domain) error: {err_limit_var_domain}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_tqpt_path(self, isSetPth: bool, pth: str):
-        # Sets or gets the vfs tqpt file path.
-        # __slots__ in use: (none)
+        # FNC_ID=ST12-49796016410710U
+        # SqtppFncs slots in use: (non-local)
         # returns: none
         if isSetPth: self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', pth)
         else: self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_file(self, isWrt: bool, pth: str, src: str):
-        # Standard read or write file operations.
-        # __slots__ in use: (_sf_sSrc)
+        # FNC_ID=ST12-20194103037310U
+        # SqtppFncs slots in use: (_sf_sSrc)
         # returns: none
         if isWrt:
             with open(pth, mode='w', encoding='utf-8') as wrtFlObj:
@@ -2376,10 +2404,11 @@ class SqtppFncs(Sqtpp):
                 self._sf_sSrc = rdrFlObj.read()
                 rdrFlObj.close()
             rdrFlObj = None
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_var_value(self, varNm: str) -> bool:
-        # Sets variable data(_sf_sVd) of @varNm from set vfs tqpt file content _sf_sQp.
-        # __slots__ in use: (_sf_sSrc, _sf_sVd)
+        # FNC_ID=ST12-91960815315016P
+        # SqtppFncs slots in use: (_sf_sQp, _sf_sVd)
         # returns: True or False
         self._sf_sVd = re.findall(r'(?s:)'+re.escape(varNm)+r'<@qp\(.*?\):>', self._sf_sQp)
         if len(self._sf_sVd) > 0:
@@ -2388,11 +2417,11 @@ class SqtppFncs(Sqtpp):
             return True
         else:
             return False
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_var_change(self, varNm: str, varDat: str):
-        # Changes @varNm's data to @varDat; does no checking of name or data here.
-        # Assumes _sf_sSrc & _sf_sQp slots attrs have been set to their constants.
-        # __slots__ in use: (_sf_rStrA)
+        # FNC_ID=ST12-18072555690287P
+        # SqtppFncs slots in use: (_sf_rStrA, _sf_sQp, _sf_sSrc, _sf_sVfs)
         # returns: none
         rtrn = re.findall(r'(?s:)'+re.escape(varNm)+r'<@qp\(.*?\):>', self._sf_sQp)
         if len(rtrn) > 0:
@@ -2401,20 +2430,22 @@ class SqtppFncs(Sqtpp):
             self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrA, self._sf_sQp)
             self._sf_rStrA = None
             self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_var_remove(self, varNmLst: list):
-        # Removes env-var listed stacks from @varNmLst in vfs slots attribute _sf_sQp.
-        # __slots__ in use: (_sf_rLstA, _sf_rIntA, _sf_rIntB)
+        # FNC_ID=ST12-21570101576092P
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_sQp)
         # returns: none
         self._sf_rIntB = len(varNmLst)
         for self._sf_rIntA in range(self._sf_rIntB):
             self._sf_rLstA = re.findall(r'(?s:.)'+re.escape(varNmLst[self._sf_rIntA])+r'<@qp\(.*?\):>', self._sf_sQp)
             if len(self._sf_rLstA) > 0: self._sf_sQp = self._sf_sQp.replace(self._sf_rLstA[0],'')
         self._sf_sQp = self._sf_sQp.replace('):>\n:','):>:')
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_silent_lock_add(self, varNm: str, lckNmLst: list):
-        # Adds tpqt fnc/var lock blocks quietly. Assumes _sf_sSrc already vfs content.
-        # __slots__ in use: (_sf_sSrc, _sf_sPq, _sf_rLstA)
+        # FNC_ID=ST12-50629079615163P
+        # SqtppFncs slots in use: (_sf_rLstA, _sf_sPq, _sf_sSrc)
         # returns: none
         try:
             xLst = None
@@ -2431,11 +2462,11 @@ class SqtppFncs(Sqtpp):
                 xStr = None
         except Exception as e:
             pass
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_silent_lock_remove(self, isStlkVar: bool, varNmLst: list):
-        # Removes tpqt func/var lock block(s) quietly. Assumes _sf_sSrc already vfs content.
-        # *Slots attribute _sf_sLstX retains any var name(s) to block(s) that got removed.*
-        # __slots__ in use: (_sf_sSrc, _sf_sPq, _sf_sLstX, _sf_sBoolX)
+        # FNC_ID=ST12-49736634702942P
+        # SqtppFncs slots in use: (_sf_sBoolX, _sf_sLstX, _sf_sPq, _sf_sSrc)
         # returns: none
         try:
             x = None
@@ -2473,11 +2504,13 @@ class SqtppFncs(Sqtpp):
                     xStr = None
         except Exception as e:
             pass
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_svvs_list(self, varNm: str):
-        # Sets _sf_rLstA to the viable svvs associated and expanded @varNm category.
-        # __slots__ in use: (_sf_rLstA, _sf_rIntA, _sf_rIntB)
-        # returns: -8=no found svvs commons stalk-entry element list for @varNm
+        # FNC_ID=ST12-20355238173214V
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rLstA)
+        # returns:
+        # -8=no found svvs commons stalk-entry element list for @varNm
         self._sf_rLstA = self.sqtpp_vfs_sub_file(False, False, 'svvs', None).split('\n')
         if self._sf_rLstA[1].find(';') > -1: self._sf_rLstA = self._sf_rLstA[1].split(';')
         else: self._sf_rLstA = self._sf_rLstA[1]
@@ -2507,10 +2540,11 @@ class SqtppFncs(Sqtpp):
             else:
                 return -8
         return 8
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_svvs_next_int(self) -> int:
-        # Returns the next int increment naming for a added spawned env-var or related.
-        # __slots__ in use: (_sf_rLstA, _sf_sLstX, _sf_sIntX)
+        # FNC_ID=ST12-40663287376385V
+        # SqtppFncs slots in use: (_sf_rLstA, _sf_sIntX, _sf_sLstX)
         # returns: (int)
         xRtrn = 1
         for x in range(len(self._sf_rLstA)):
@@ -2519,12 +2553,11 @@ class SqtppFncs(Sqtpp):
             if  self._sf_sIntX > xRtrn: xRtrn = self._sf_sIntX
         xRtrn+=1
         return xRtrn
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vssv_menorah_cxv_rod(self, adrsNws: str, adrsPrv: str):
-        # Applies an cXV calculation involving Base10 shift conversion owned palindromes.
-        # Very accurate palindrome % calculation; like hitting a dime a 1,000 miles down.
-        # (No need for a double equal right now, is left in the try block for later usage)
-        # __slots__ in use: (_sf_rLstA, _sf_rLstC, _sf_rLstD, _sf_rLstE, _sf_rStrD, _sf_rStrE, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rIntH, _sf_rBoolA)
+        # FNC_ID=ST12-67730865259864D
+        # SqtppFncs slots in use: (_sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rIntH, _sf_rLstA, _sf_rLstC, _sf_rLstD, _sf_rLstE, _sf_rLstF, _sf_rStrD, _sf_rStrE, _sf_rStrF, _sf_sIntX, _sf_sRplc)
         # returns: (menorah inverse type palindrome medians collide of a timed LR-analogous)
         self._sf_rLstC = adrsNws.split(',')
         self._sf_rStrD = self._sf_rLstC[1].replace('0','1')
@@ -2597,12 +2630,11 @@ class SqtppFncs(Sqtpp):
                 self._sf_sRplc = f'{self._sf_sIntX},{self._sf_rLstD}'
             except Exception as e:
                 pass
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_combined_addr_darkvar_search(self, cmbAddr: str, srchWndw: str):
-        # Performs an sliding window search over a joined darkvar addrs, either finding
-        # palindromes or anagrams. @srchWndw is the digit sequence in question of find.
-        # Also performs a reduction count left to right & right to left for cvx lists.
-        # __slots__ in use: (_sf_sLstX, _sf_rLstA, _sf_rStrA, _sf_rStrB, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG)
+        # FNC_ID=ST12-56307656299472D
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rLstA, _sf_rStrA, _sf_rStrB, _sf_sLstX)
         # returns: (none), _sf_sLstX is the search results
         self._sf_sLstX = {}
         self._sf_rLstA = deque(srchWndw)
@@ -2628,11 +2660,11 @@ class SqtppFncs(Sqtpp):
             else:
                 break
             self._sf_rIntA = Counter(''.join(self._sf_rLstA))
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_plndrm(self, ttBranch: int) -> int:
-        # Sets palindrome @_sf_sDv, @ttBranch half semi-loops before center1 rod/candle.
-        # Example: 3 half semi-loops = 7 digits, 4 half semi-loops = 9 digits........
-        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rIntA, _sf_rIntB, _sf_rBoolA)
+        # FNC_ID=ST12-58878149731260U
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_rLstB, _sf_sDv)
         # returns: none
         self._sf_rBoolA = False
         self._sf_rLstA = []
@@ -2652,10 +2684,11 @@ class SqtppFncs(Sqtpp):
                     self._sf_rLstA = ''.join(self._sf_rLstA)
                     self._sf_sDv = int(f'{self._sf_rLstA}{self._sf_rLstB[random.randint(0,9)]}{self._sf_rLstA[::-1]}')
                     break
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_tqpt_spdr(self, isRdr: bool, isAllNmbrs: bool, callFnc: str, src: str):
-        # Parsing spider for tqpt env-var data. Very precise and tricky, do not edit.
-        # __slots__ in use: (_sf_rLstA, _sf_StrA, _sf_StrB, _sf_StrC, _sf_IntA, _sf_IntB)
+        # FNC_ID=ST12-34970343946932P
+        # SqtppFncs slots in use: (_sf_rBoolE, _sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_sQp, _sf_sSrc)
         # returns:
         # 1 = is all numbers
         # 2 = new line in data, not allowed
@@ -2798,15 +2831,12 @@ class SqtppFncs(Sqtpp):
             self._sf_sSrc = None
             self._sf_sQp = None
             return 9
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_lambda_scan_write(self, src: str) -> bool:
-        # Handles find & write of any found lambda function src/str to a tqpt source.
-        # The spider method above would store a lambda function as a list because of
-        # any comma uses. This writes @q|p(...): tagging to tqpt source as one liner.
-        # With this function & the lambdavar() import run function, is very possible
-        # to write entire python programs that would use lambda functions completely,
-        # without a confusing framework of the lambda functions stored @ module(s).
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_sLstA, _sf_rStrA)
+        # FNC_ID=ST12-23904241191810P
+        # SqtppFncs slots in use: (_sf_rStrA, _sf_sLstA, _sf_sQp, _sf_sSrc, _sf_sVfs)
+        # returns: (boolean)
         try:
             src = src.replace('):',"")
             self._sf_sLstA = re.findall(r'lambda(?:\s*[a-zA-Z_][a-zA-Z_0-9]*(?:\s*,\s*[a-zA-Z_][a-zA-Z_0-9]*)*)?\s*:\s*.+', src)
@@ -2834,10 +2864,11 @@ class SqtppFncs(Sqtpp):
                 return False
         except Exception as err_lambda_scan_write:
             print(f'staqtapp1.2 (lambda_scan_write) error: {err_lambda_scan_write}')
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_del_locks(self, isDelAll: bool, varNm:str, fncNm):
-        # Deletes tpqt lock entries from @varNm listed block or removes the entire block.
-        # __slots__ in use: (_sf_sSrc, _sf_sPq, _sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rBoolA)
+        # FNC_ID=ST12-81395077548719P
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_sPq, _sf_sSrc, _sf_sVfs)
         # returns:
         # -1=invalid vfs path
         # -2=bad path in vfs path setting file
@@ -2887,14 +2918,11 @@ class SqtppFncs(Sqtpp):
         except Exception as err_del_locks:
             self._sErr = f'staqtapp1.2 (del_locks) error: {err_del_locks}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vars_run_lambda(self, lmbNm: str, lmbPrms: list):
-        # Finds @lmbNm in vfs tqpt stack, @lmbPrms matchup and the call to parse & run it.
-        # If lambda is already saved in sqtpp1_2_LMB.py module, then straight parse of the
-        # @lmbPrms is done for run, no conversion of lambda params to slots attrs parsing.
-        # ***A person using this feature and not using generic naming like x, i, n etc for
-        # stored lambda params in the tqpt stack...then slots attrs are going to get large.
-        # __slots__ in use: (_sf_sSrc, _sf_sQp, _sf_sStrX, _sf_rLstA, _sf_rStrD, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rBoolA, _sf_rBoolB)
+        # FNC_ID=ST12-35405944673660P
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rBoolB, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rLstA, _sf_rStrA, _sf_sLstX, _sf_sQp, _sf_sRtrn, _sf_sSrc, _sf_sStrX)
         # returns:
         # -1=invalid vfs path
         # -2=bad path in vfs path setting file
@@ -2947,11 +2975,12 @@ class SqtppFncs(Sqtpp):
         except Exception as err_vars_run_lambda:
             self._sErr = f'staqtapp1.2 (vars_run_lambda) error: {err_vars_run_lambda}'
             return self.sqtpp_err_rcrd(self._sErr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_lambda_lambda_lambda_clsr(self, lmbNm: str, lmbPrms: list):
-        # Edit/write function for the lambda slots class and import & run.
-        # __slots__ in use: (_sf_sStrX, _sf_rLstB, _sf_rStrA, _sf_rStrD)
-        # returns: (lambda)
+        # FNC_ID=ST12-60560777779500P
+        # SqtppFncs slots in use: (_sf_rBoolC, _sf_rLstB, _sf_rStrA, _sf_rStrD, _sf_sStrX)
+        # returns: (lambda function results)
         if os.path.isfile(f'{SQTPP_MDL_DIR}/sqtpp1_2_LMB.py'):
             with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_LMB.py', 'r') as lllfObjRdr: self._sf_rStrA = lllfObjRdr.read()
             self._sf_rLstB = re.findall(r'\#CTMN-LLL<[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]\:' + re.escape(lmbNm) + r'>', self._sf_rStrA)
@@ -2993,10 +3022,11 @@ class SqtppFncs(Sqtpp):
             else:
                 import sqtpp1_2_LMB
         return sqtpp1_2_LMB.sqtpp_lll_run(lmbNm, lmbPrms)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_lambda_lambda_lambda_clsr_remap_slots(self, isNewlllMdl: bool):
-        # No std slots comprehended parse of lambda params to slots attrs for [watchmen]
-        # __slots__ in use: (_sf_sStrX, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rLstD, _sf_rLstE, _sf_rStrA, _sf_rStrB, _sf_rStrD, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rBoolB, _sf_rBoolC)
+        # FNC_ID=ST12-81604510638526P
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rBoolB, _sf_rBoolC, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rLstD, _sf_rLstE, _sf_rStrA, _sf_rStrB, _sf_rStrD, _sf_rStrE, _sf_sLstX)
         # returns: (none)
         if self._sf_rBoolA:
             if isNewlllMdl:
@@ -3040,10 +3070,11 @@ class SqtppFncs(Sqtpp):
             self._sf_rStrD = f'lambda self: {self._sf_rStrD}'
         else:
             if isNewlllMdl: self._sf_rLstB.append("'_lll_set_n','_lll_lst_a','_lll_lst_b','_lll_lst_c','_lll_lst_d')")
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_lambda_lambda_rplc(self):
-        # Replaces a lambda's fnc body vars to slots classed attr assigned performances.
-        # __slots__ in use: (_sf_sLstX, _sf_rLstA, _sf_rLstD, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD)
+        # FNC_ID=ST12-35098889431831P
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rLstA, _sf_rLstD, _sf_rLstF, _sf_rStrD)
         # returns: (none)
         self._sf_rLstF = set('_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890')
         self._sf_rIntB = len(self._sf_rLstA)
@@ -3065,10 +3096,11 @@ class SqtppFncs(Sqtpp):
                     else: self._sf_rIntC = self._sf_rIntE+1
                 else: self._sf_rIntC = self._sf_rIntE+1
         self._sf_rStrD = self._sf_rStrD.replace('~~~~~','')
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_lambda_spdr(self) -> int:
-        # Parses an lambda string declared params for list use on re-assembly & run.
-        # __slots__ in use: (_sf_rLstA, _sf_rLstE, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_rIntA, _sf_rIntB)
+        # FNC_ID=ST12-32132539142540P
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_rLstE, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rStrD)
         # returns:
         # -1=no proper lambda function found
         #  1=lambda function has variable params
@@ -3101,10 +3133,11 @@ class SqtppFncs(Sqtpp):
             return self._sf_rIntB
         else:
             return -1
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqttp_tpqt_spok(self, pq_isRdr: bool, pq_isExst: bool, pq_varNm: str, pq_fncNm):
-        # Handles vfs tpqt lock var file reads & writes. Is very accurate, do not edit!
-        # __slots__ in use: (_sf_sPq, _sf_rLstA, _sf_rLstB, _sf_rIntA, _sf_rIntB, _sf_rStrA, _sf_rStrB, _sf_rBoolA, _sf_rBoolB)
+        # FNC_ID=ST12-60243290032517P
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rBoolB, _sf_rIntA, _sf_rIntB, _sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_rStrB, _sf_sPq, _sf_sSrc, _sf_sVfs, _sf_sVfsFldr)
         # returns: 8, '<:!!'=no locks block find
         self._sf_rBoolA = None
         self._sf_rBoolB = None
@@ -3189,18 +3222,12 @@ class SqtppFncs(Sqtpp):
                 self._sf_rLstB = ''.join(self._sf_rLstB)
                 self._sf_sSrc = self._sf_sSrc.replace(f'{self._sf_sPq}:\n', f'___|:tpqt-{self._sf_sVfsFldr}<tpqt,{len(pq_varNm)},n>:\n{self._sf_rLstB}:\n')
                 self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_rqnv_menorah_reorder(self, lNms: list, pPrbLen: int, qnvRtm: int) -> str:
-        # Scans @lNms for each palindrome probability mirroring threshold @qnvRtm and
-        # if match or greater @pPrbLen frequency, will reverse order the loop's window
-        # in quest to a made palindrome via previous numbers & shifting right>=.<left.
-        # The order of when a probability higher than @qnvRtm to then seeking a nearest
-        # palindrome to do reverse order is kept non-apparent as in real shadow cvx and
-        # shifted to R-L, aka front of string. There is no neutral-odd or neutral-even
-        # darkvar addrs & determining factor of why these function's fastest paths; yet
-        # here they are not, because is simulated prob of a observerless cast reorders.
-        # __slots__ in use: (_sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rStrA, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rIntH, _sf_rIntI, _sf_rBoolA)
-        # returns:
+        # FNC_ID=ST12-17710590476882D
+        # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rIntH, _sf_rIntI, _sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_sIntX, _sf_sLstX)
+        # returns: (none)
         self._sf_rLstA = []
         self._sf_rIntB = len(lNms)
         self._sf_rIntF = self._sf_rIntB-(pPrbLen-1)
@@ -3252,9 +3279,11 @@ class SqtppFncs(Sqtpp):
                         self._sf_sLstX.append(lNms[self._sf_rIntD])
                         self._sf_rIntD+=1
         self.sqtpp_reset_slots(False)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_mv_prometes_kn(self, isRead: bool, dsgFnc: str, srcStr: str, brId: str, brNwId: str, brNwVl: str):
-        # __slots__ in use: (none)
+        # FNC_ID=ST12-23073391030325S
+        # SqtppFncs slots in use: (non-local)
         # returns: (mv-tree dict ast encoded)
         if not isRead:
             if dsgFnc == 'ab':
@@ -3292,9 +3321,11 @@ class SqtppFncs(Sqtpp):
                         return -2
                 else:
                     return -3
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_mv_prometes_eb(self, hldL: int, hldR: int, slTr: list, br: str, brNw: str, brVl: str):
-        # __slots__ in use: (none)
+        # FNC_ID=ST12-72739982417464S
+        # SqtppFncs slots in use: (non-local)
         # returns: (sqtpp_mv_prometes_gt encoded)
         pxLst = None
         if hldL == 1:
@@ -3347,10 +3378,12 @@ class SqtppFncs(Sqtpp):
                 pass
         else:
             pass
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_mv_prometes_gt(self, dsg: str, extDsg: str, slTr: list, pxLst: list, br: str, brNw: str, brVl: str) -> str:
-        # Brackets assembler for mv-tree dict type return. Resets slots attr _sf_sKntId.
-        # __slots__ in use: (_sf_sKntId, _sf_rLstA, _sf_rStrA)
+        # FNC_ID=ST12-52313792799266S
+        # SqtppFncs slots in use: (_sf_rLstA, _sf_rStrA, _sf_sKntId, _sf_sVd)
+        # returns: (multipass)
         self._sf_rStrA = None
         self._sf_rLstA = None
         self._sf_sKntId = None
@@ -3385,10 +3418,12 @@ class SqtppFncs(Sqtpp):
                 self._sf_sKntId = random.randint(11111111,99999999)
                 slTr[0] += "knt__"+ str(self._sf_sKntId) + "'"
             return ''.join(slTr)
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_smvt_char_seeks(self, dsg: str, src: str, pos: list):
-        # Returns char positionals for @sqtpp_mv_prometes_eb() brackets decisions.
-        # __slots__ in use: (_sf_rLstB, _sf_rIntA, _sf_rStrB, _sf_rStrC, _sf_rBoolA, _sf_rBoolB)
+        # FNC_ID=ST12-18028086676345S
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rBoolB, _sf_rIntA, _sf_rLstB, _sf_rStrB, _sf_rStrC)
+        # returns: (none)
         self._sf_rStrC = None
         if dsg == 'plr':
             self._sf_rLstB = [None, None]
@@ -3413,10 +3448,11 @@ class SqtppFncs(Sqtpp):
                         return self._sf_rLstB
                 self._sf_rStrC = self._sf_rStrB
                 self._sf_rIntA+=1
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_chars_check(self, dsg: int, txt: str) -> bool:
-        # Returns True if @txt is of allowed chars from the selected set comparison chars.
-        # __slots__ in use: (_sf_rBoolA)
+        # FNC_ID=ST12-29859877733999U
+        # SqtppFncs slots in use: (_sf_rBoolA)
         # returns: True or False
         self._sf_rBoolA = False
         if dsg == 1:
@@ -3425,12 +3461,11 @@ class SqtppFncs(Sqtpp):
         elif dsg == 2:
             if set(txt).issubset(SQTPP_SET_VARS): self._sf_rBoolA = True
         return self._sf_rBoolA
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_smvt_chars_check(self, src: str) -> bool:
-        # Spok-mv tree operations chars checks specific. Non-allowed chars for
-        # the branch-keys & branch-values: \n ,:'{ }☆ Staqtapp will not write
-        # @qp(...): tagged env-var data with '\n' chars, includes all versions.
-        # __slots__ in use: (none)
+        # FNC_ID=ST12-40065746246812U
+        # SqtppFncs slots in use: (non-local)
         # returns: True or False
         nc = [":", ",", "{", "}", "'", "\n", "☆"]
         if isinstance(src, str):
@@ -3447,10 +3482,12 @@ class SqtppFncs(Sqtpp):
             return True
         else:
             return True
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_reset_slots(self, isStcSlts: bool):
-        # Resets slots attribute variables to None.
-        # returns: none
+        # FNC_ID=ST12-43003520219156U
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rBoolB, _sf_rBoolC, _sf_rBoolD, _sf_rBoolE, _sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rIntH, _sf_rIntI, _sf_rLstA, _sf_rLstB, _sf_rLstC, _sf_rLstD, _sf_rLstE, _sf_rLstF, _sf_rStrA, _sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_rStrE, _sf_rStrF, _sf_sBoolCxv, _sf_sBoolX, _sf_sDv, _sf_sIntX, _sf_sKntId, _sf_sLstA, _sf_sLstX, _sf_sPq, _sf_sQp, _sf_sQpRplcX, _sf_sRplc, _sf_sRtrn, _sf_sSrc, _sf_sStrX, _sf_sVd, _sf_sVfs, _sf_sVfsFldr, _sf_sVn)
+        # returns: (none)
         if isStcSlts:
             self._sf_sVfs = None
             self._sf_sVfsFldr = None
@@ -3496,12 +3533,12 @@ class SqtppFncs(Sqtpp):
         self._sf_rBoolC = None
         self._sf_rBoolD = None
         self._sf_rBoolE = None
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_slots_rcrd(self) -> bool:
-        # Writes cache state of sf s-type slots variables data to vfs file, minus slots
-        # _sf_sSrc, _sf_sQp, _sf_sQpRplcX and _sf_sPq that are constant txt replacement.
-        # __slots__ in use: (_sf_rLstA, _sf_rLstD, _sf_rStrA)
-        # returns: none
+        # FNC_ID=ST12-46251614079358U
+        # SqtppFncs slots in use: (_sf_rLstD, _sf_rStrA, _sf_sBoolCxv, _sf_sBoolX, _sf_sDv, _sf_sIntX, _sf_sKntId, _sf_sLstX, _sf_sPq, _sf_sRplc, _sf_sRtrn, _sf_sSrc, _sf_sStrX, _sf_sVd, _sf_sVfs, _sf_sVfsFldr, _sf_sVn)
+        # returns: (none)
         if self.sqtpp_set_vfs_file() == 1:
             if self.sqtpp_vfs_tpqt_file(True) != -1:
                 self._sf_rStrA = "___csvfs___stp___zael33M1JC777"
@@ -3531,20 +3568,25 @@ class SqtppFncs(Sqtpp):
                 return True
             return False
         return False
-#_______________________________________________________________________________________
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_err_rcrd(self, errMsg: str) -> str:
-        # Writes any main parsing function type errors to a err-log file to staqtapp1_2 folder.
-        # __slots__ in use: (none)
-        # returns: FNC-ERR or FOO-BAR
+        # FNC_ID=ST12-78724239473714U
+        # SqtppFncs slots in use: (non-local)
+        # returns: (FNC-ERR or FOO-BAR)
         try:
             self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/err-log.txt', errMsg)
             return 'FNC-ERR'
         except Exception as err_err_rcrd:
             return 'FOO-BAR'
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+
+
 #_______________________________________________________________________________________
-#_______________________________________________________________________________________
-#_______________________________________________________________________________________
-#_________________________IMPORT CALLABLE FRONT FUNCTIONS:
+
+#                         .|IMPORTABLE FRONT FUNCTIONS|.
+
 #_______________________________________________________________________________________
 def makevfs(vfsFileName: str, directoryName: str, folderName:str):
     sqtppCls = Sqtpp()
@@ -3680,7 +3722,6 @@ def lambdavar(lambdaName: str, lambdaParams: list):
     #addvar(None, 'bin_srch = lambda l, x, lo, hi: -1 if lo > hi else (lo+hi)//2 if l[(lo+hi)//2] == x else bin_srch(l, x, lo, (lo+hi)//2-1) if l[(lo+hi)//2] > x else bin_srch(l, x, (lo+hi)//2+1, hi)')
     #print(lambdavar('var_mtpl', ['c=5','x=9','t=2']))
     #print(lambdalist(True))
-    #appvar(['door','bolt'], ['@qp(1,2,3,4):','@qp(4,3,2,1):'], ['door:lck1,lck4','bolt:lck2,lck3'])
+    #appvar(['door3','bolt3'], ['@qp(1,2,3,4):','@qp(4,3,2,1):'], ['door3:lck1,lck4','bolt3:lck2,lck3'])
     #--------------------------------------------------------------------<'(((((>< 
 #test()
-        
