@@ -1,8 +1,8 @@
-#QPython 3SE / Row4 / staqtapp.py (3,727 lines) / 11:22 Fri, Jul 5
+#QPython 3SE / Row4 / staqtapp.py (3,845 lines) / 5:13 Tue, Jul 9
 
 
 
-#Staqtapp-v1.2.225 | Hybrid VFS ENV-VAR Library
+#Staqtapp-v1.2.229 | Hybrid VFS ENV-VAR Library
 #//////////••        .                           .
 #/////////••                 .                                   •
 #////////••    .                                        •            
@@ -20,9 +20,11 @@
 
 
 
-# UPDATE SAT, JUN29: Function call appvar() added to Staqtapp 1.2 vfs env-var library.
-#                    Fixed bug from happening or potential happening with slots attr
-#                    _sf_rBoolE, a slots attr used for bypass of tqpt spider parsings.
+# UPDATE TUE, JUL9: Function call corevar() added to Staqtapp 1.2 vfs env-var library.
+#                   Deals with boolean list storing and of a unique delta RLE convert
+#                   for read returns; chosen encoding to tqpt stack when kept there.
+#                   On normal reads is same boolean list but with last bit flipped.
+#                   See corevar() description.
 
 
 
@@ -78,6 +80,11 @@
 #     function. @varName is ignored in this case. You can also skip qp tagging for
 #     this type env-var storing of which gets @q|p tagged anyway. See lambdavar().
 #     Example: @qp(my_lambda = lambda x,y,z,r: (x*z/y)/(r)): *****
+#
+# --> corevar(mode, varName, booleanList), for storing and reading boolean type list.
+#     If @mode == 1 is write, 2 is returned boolean list or 3 returns the special --
+#     delta RLE encoding that was saved to tqpt stack, a tuple(s) list encoding. (The
+#     parity bit[last index value of stored boolean list] is always flipped on read.)
 #
 # --> appvar(varNames, varDatas, varLocks), adds env-vars by lists only. All params
 #     must be list type except for @varLocks, which can be None value if not needed.
@@ -348,6 +355,7 @@ import statistics
 import importlib
 import pickle
 import random
+import base64
 import math
 import glob
 import sys
@@ -417,6 +425,22 @@ class Sqtpp():
                 else: self.mcf_err_handler(2, 'setpath')
             else: self.mcf_err_handler(3, 'setpath')
         else: self.mcf_err_handler(4, 'setpath')
+#_______________________________________________________________________________________
+    def mcf_corevar(self, mode: int, varNm: str, blLst: list):
+        # See corevar description. @mode 1=write, 2=normal return, 3=delta RLE return
+        # __slots__ in use: (_sRtrn)
+        sfCls = SqtppFncs()
+        if sfCls.sqtpp_chars_check(2, varNm):
+            self._sRtrn = sfCls.sqtpp_byte_vars(mode, varNm, blLst)
+            if self._sRtrn == -1: self.mcf_err_handler(6, 'corevar')
+            elif self._sRtrn == -2: self.mcf_err_handler(7, 'corevar')
+            elif self._sRtrn == -3: self.mcf_err_handler(12, 'corevar')
+            elif self._sRtrn == -4: self.mcf_err_handler(14, 'corevar')
+            elif self._sRtrn == -5: self.mcf_err_handler(47, 'corevar')
+            elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'corevar')
+            else:
+                return self._sRtrn
+        else: self.mcf_err_handler(8, 'corevar')
 #_______________________________________________________________________________________
     def mcf_addvar(self, varNm: str, varDat: str):
         # Adds variables to the set path vfs tqpt file. If finds the word 'lambda' in
@@ -820,6 +844,7 @@ class Sqtpp():
             # 44 = parameters names for found lambda function do not matchup
             # 45 = @varNms is not a list for @appvar function call
             # 46 = @varLks for appvar missing : format for add lock names
+            # 47 = @mode for corevar() is of a invalid int setting argument
             if altErrCd == 1: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name chars; allowed -a-zA-Z')
             elif altErrCd == 2: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid directory name chars; allowed -a-zA-Z')
             elif altErrCd == 3: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name, cannot be the same as directory name')
@@ -866,6 +891,7 @@ class Sqtpp():
             elif altErrCd == 44: raise Exception(f'staqtapp1.2 ({clnFnc}) error: param name(s) for found lambda function do not matchup, unable to run lambda')
             elif altErrCd == 45: raise Exception(f'staqtapp1.2 ({clnFnc}) error: params for @appvar must be list types')
             elif altErrCd == 46: raise Exception(f'staqtapp1.2 ({clnFnc}) error: str format for @varLocks param of appvar invalid, missing proper : seperator')
+            elif altErrCd == 47: raise Exception(f'staqtapp1.2 ({clnFnc}) error: @mode for corevar must 1, 2 or 3: 1=write, 2=normal list return, 3=RLE tuples list return')
         else:
             if self._sRtrn == 'FNC-ERR': raise Exception(f'staqtapp1.2 {clnFnc}-->{self._sErr}')
             elif self._sRtrn == 'FOO-BAR': raise Exception('staqtapp1.2 io error: unable to perform basic file reads or writes')
@@ -887,7 +913,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.225\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.229\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1038,6 +1064,54 @@ class SqtppFncs(Sqtpp):
             else: self._sf_rIntA = self._sf_sSrc.find(pthLst[pth], self._sf_rIntA+1)
             if self._sf_rIntA < 0:
                 break
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_byte_vars(self, mode: int, varNm: str, blLst: list):
+        # >>>
+        # <<<
+        # modes:
+        # 1=write
+        # 2=read: return boolean list
+        # 3=read: return RLE tuples list
+        # returns:
+        # -1=empty vfs path settings file
+        # -2=invalid vfs path
+        # -3=@varNm is duplicate
+        # -4=@varNm not found in tqpt stack
+        # -5=@mode of invalid int arg
+        try:
+            if self.sqtpp_set_vfs_file() == 1:
+                if self.sqtpp_vfs_tqpt_file(True) != -1:
+                    if mode == 1:
+                        if not self.sqtpp_var_value(varNm):
+                            self.sqtpp_delta_prle_encd(blLst)
+                            self._sf_rStrA = base64.b64encode(pickle.dumps(self._sf_rLstA)).decode('utf-8')
+                            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc.replace(f'{self._sf_sQp}:\n', f'{self._sf_sQp}\n{varNm}<@qp({self._sf_rStrA}):>:\n'))
+                            self._sf_rStrA = None
+                            self._sf_sSrc = None
+                            self._sf_sQp = None
+                            return None
+                        else:
+                            return -3
+                    elif mode == 2 or mode == 3:
+                        if self.sqtpp_var_value(varNm):
+                            self._sf_sVd = self._sf_sVd.replace('@qp(',"").replace('):',"")
+                            if mode == 2: self.sqtpp_delta_prle_decd(pickle.loads(base64.b64decode(self._sf_sVd.encode('utf-8'))))
+                            else: self._sf_rLstA = pickle.loads(base64.b64decode(self._sf_sVd.encode('utf-8')))
+                            self._sf_sSrc = None
+                            self._sf_sQp = None
+                            return self._sf_rLstA
+                        else:
+                            return -4
+                    else:
+                        return -5
+                else:
+                    return -2
+            else:
+                return -1
+        except Exception as err_byte_vars:
+            self._sErr = f'staqtapp1.2 (corevar) error: {err_byte_vars}'
+            return self.sqtpp_err_rcrd(self._sErr)
 #___________________________________________////////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_vars_add(self, isStlkVar: bool, varNm: str, varDat: str):
@@ -1739,7 +1813,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.225\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.229\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -2231,6 +2305,43 @@ class SqtppFncs(Sqtpp):
         except Exception as err_locate_var_stx:
             self._sErr = f'staqtapp1.2 (locate_var_stx) error: {err_locate_var_stx}'
             return self.sqtpp_err_rcrd(self._sErr)
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_delta_prle_encd(self, blLst: list):
+        # >>>
+        # <<<
+        # returns: (none)
+        self._sf_rLstA = [1 if self._sf_rIntA else 0 for self._sf_rIntA in blLst]
+        self._sf_rLstB = [self._sf_rLstA[0]]
+        self._sf_rIntB = len(self._sf_rLstA)
+        self._sf_rIntA = 1
+        while self._sf_rIntA < self._sf_rIntB:
+            self._sf_rLstB.append(self._sf_rLstA[self._sf_rIntA] ^ self._sf_rLstA[self._sf_rIntA-1])
+            self._sf_rIntA+=1
+        self._sf_rIntB = len(self._sf_rLstB)
+        self._sf_rLstA = []
+        self._sf_rIntC = 1
+        for self._sf_rIntA in range(1, self._sf_rIntB):
+            if self._sf_rLstB[self._sf_rIntA] == self._sf_rLstB[self._sf_rIntA-1]: self._sf_rIntC+=1
+            else:
+                self._sf_rLstA.append((self._sf_rLstB[self._sf_rIntA-1], self._sf_rIntC))
+                self._sf_rIntC = 1
+        self._sf_rLstA.append((self._sf_rLstB[self._sf_rIntA-1], self._sf_rIntC))
+#___________________________________________////////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_delta_prle_decd(self, rleLst):
+        # >>>
+        # <<<
+        # returns: (none)
+        self._sf_rLstA = []
+        for self._sf_rIntA, self._sf_rIntB in rleLst: self._sf_rLstA.extend([self._sf_rIntA] * self._sf_rIntB)
+        self._sf_rLstB = [self._sf_rLstA[0]]
+        self._sf_rIntB = len(self._sf_rLstA)
+        self._sf_rIntA = 1
+        while self._sf_rIntA < self._sf_rIntB:
+            self._sf_rLstB.append(self._sf_rLstB[self._sf_rIntA-1] ^ self._sf_rLstA[self._sf_rIntA])
+            self._sf_rIntA+=1
+        self._sf_rLstA = [self._sf_rIntA > 0 for self._sf_rIntA in self._sf_rLstB]
 #___________________________________________////////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_var_key(self, varNm: str, fncNm: str) -> bool:
@@ -3596,6 +3707,12 @@ def setpath(vfsFileName: str, directoryName: str, folderName: str):
     sqtppCls = Sqtpp()
     sqtppCls.mcf_setpath(vfsFileName, directoryName, folderName)
 #_______________________________________________________________________________________
+def corevar(mode: int, varName: str, booleanList: list):
+    sqtppCls = Sqtpp()
+    rtrn = sqtppCls.mcf_corevar(mode, varName, booleanList)
+    if rtrn != None:
+        return rtrn
+#_______________________________________________________________________________________
 def addvar(varName: str, varData: str):
     sqtppCls = Sqtpp()
     sqtppCls.mcf_addvar(varName, varData)
@@ -3723,5 +3840,6 @@ def lambdavar(lambdaName: str, lambdaParams: list):
     #print(lambdavar('var_mtpl', ['c=5','x=9','t=2']))
     #print(lambdalist(True))
     #appvar(['door3','bolt3'], ['@qp(1,2,3,4):','@qp(4,3,2,1):'], ['door3:lck1,lck4','bolt3:lck2,lck3'])
+    #print(corevar(3, 'cor_var1', [True,True,False,False,True,True,False,False,True,True,False]))
     #--------------------------------------------------------------------<'(((((>< 
 #test()
