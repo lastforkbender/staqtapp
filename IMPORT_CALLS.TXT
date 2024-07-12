@@ -1,0 +1,326 @@
+
+
+ 
+_______________________________________________________________________________________
+      STAQTAPP V1.2 IMPORT FUNCTIONS USAGE:
+      
+      
+      
+      *Staqtapp 1.2 is a all-in-one stand alone vfs env-var module. No third-party
+      libraries are needed to use staqtapp.py module or modules it makes for other
+      functional return uses, like lambdavar().
+    
+ 
+ 
+----> makevfs(vfsFileName, directoryName, folderName), builds a .sqtpp vfs file
+      in current ../staqtapp/* directory; @vfsFileName cannot include ':' chars,
+      tqpt file auto inserted to sub-folder naming of @folderName & is set path.
+ 
+ 
+----> setpath(vfsFileName, directoryName, folderName), sets the working path for
+      the .sqtpp vfs file @vfsFileName, inline with @directoryName + @folderName
+      paths given to a env-var stack/tqpt file. This can also be done by opening
+      the .stg file in the current working module dir .../staqtapp1_2/ where for
+      a path example: 'vfs-A:dir-A:folder-A:subFolder-A:tqpt-A' can be editted.
+      A subfolder name required and only dash chars - allowed, not underscores _.
+      By use of this function is assumed @folderName is same for subfolder name.
+      (This wouldn't be true for a rev9 built vfs file having many dirs+folders.)
+ 
+ 
+----> addvar(varName, varData), adds variable to path set vfs tqpt file. @varData
+      must be tagged with '@qp(...):' for staqtapps unique read parsing routines.
+      Can be as many @qp(...): tags as needed, with commenting in between. Read as
+      a comma separation for a list return when more than one. This function does
+      not change variable data, see changevar to edit stacked variable datas. Is
+      suggested to use lockvar after adding a variable with this function. *****If 
+      storing a lambda function as a env-var runnable, only use one @qp(...): tag
+      for that lambda function use, including the lambda name & equal sign for the
+      function. @varName is ignored in this case. You can also skip qp tagging for
+      this type env-var storing of which gets @q|p tagged anyway. See lambdavar().
+      Example: @qp(my_lambda = lambda x,y,z,r: (x*z/y)/(r)): *****
+ 
+ 
+----> corevar(mode, varName, booleanList), for storing and reading boolean type list.
+      If @mode == 1 is write, 2 is returned boolean list or 3 returns the special --
+      delta RLE encoding that was saved to tqpt stack, a tuple(s) list encoding. (The
+      parity bit[last index value of stored boolean list] is always flipped on read.)
+ 
+ 
+----> appvar(varNames, varDatas, varLocks), adds env-vars by lists only. All params
+      must be list type except for @varLocks, which can be None value if not needed.
+      If the list lengths between @varNames and @varDatas is unbalanced then can add
+      @qp(null): to the tqpt stack as a value for env-var; and also if no @varLocks
+      list element found then no lock block is made in the tpqt file for env-var. @
+      varLocks correct example index ..., 'myvar2:fnc1,fnc2,fnc3', ...] whereof this
+      type :, format to lock names must be to properly add a lock block for env-var.
+      When lock block only needs one fnc name or other name, no comma use is needed.
+      If you do not need a value or lock block for a env-var added, simply None as
+      that pair [element] bypasses any checking needed, otherwise can be error prone.
+      (Recognition of lambda function strings is not done with appvar, only addvar.)
+ 
+ 
+----> listvars(), returns stack list names of current env-vars in tqpt vfs source.
+ 
+ 
+----> joinvars(newVarName, varNames), as a list of str names @varNames, this will
+      join together those env-var datas at the qp(...): taggings merged into one
+      new env-var @newVarName. Precaution assumed, if does not find a valid name
+      listed in tqpt env-var source then does not add to joining. If @newVarName is
+      a stalked env-var then will merge all spawned vars from a stalkvar use. (No
+      spawned vars are removed from svvs listing or the tqpt vars stack.) No join
+      for any env-var data having chars ☆ in it, will raise exception that it is a
+      smv-tree type error that cannot be merged with other env-vars. This is power-
+      ful feature in connect of stalkvar function env-var spawned data use, of which
+      is possible to do multiple layered recursion from just a singular event loop.
+      However in some adv cases, would need the raw @qp(...): tagging to manipulate
+      ast converted smv-tree dict type for this mathematically, via some other dict
+      type conversions or abstract reductions of paired branching, see loadvar_stx.
+ 
+ 
+----> changevar(varName, newVarData), change @varName env-var data to @newVarData
+      if @newVarData has proper @qp(...): data tag(s) found. To change the names
+      of env-vars in a vfs tqpt source, see renamevar. Duplicates only allowed for
+      the stalkvar() feature. *This function should be used with lockvar & keyvar.
+      If the @varName is a stalked env-var, the original stalked and not the other
+      incremented spawned vars from it, then this function will check if any of --
+      the incremented spawned var data matches the @newVarData string. If it does
+      then any spawned vars matching @newVarData are removed; and any spawned vars
+      left are renamed of a new incremented naming, re-named to a new number order.
+      This changes no env-var data. Becomes a find and remove operation allowing a
+      programmer more advanced control over stalkvar spawned env-vars, in a larger
+      scope use of stalkvar env-var spawnings in the tqpt source. If any spawned
+      env-var is removed from tqpt and svvs sub file listings, is also removed @ a
+      lockvar tpqt listing if found. Will not do any of this if the stalked var is
+      read as having only one spawned env-var. Raises a non-allowed svvs exception.
+      If this function switches to this type find & del, returns named list of the
+      spawned env-var(s) it deleted or else returns None.
+ 
+ 
+----> addtree_stx(treeName, initialTreePathList), adds a initial dict type tree
+      structure to vfs tqpt stacks for deep spahk-mv type tree edits. @initial-
+      TreePathList is simply a list elements of strings or int values. Chars not
+      allowed @initialTreePathList string element(s) are \n,':{} and ☆ The ---
+      other functions that edit this type, all stalkvar() type similiar actions.
+ 
+ 
+----> addbranch_stx(treeName, branchId, newBranchId, newBranchValue), Adds, shifts,
+      replaces, or spawns merged branch for a mv-tree. Behavior of mv-tree branch
+      edits are in exotic relation to stalkvar. The examples below show this. The
+      first dict key cannot be changed, will raise exception. Is 'a' in examples:
+ 
+        Example A:
+        smvt-state {'a':{'b':{'c':'vl1','d':'vl2'}, 'e':'vl3'}}
+        .addbranch_stx('smvt_tree_a', 'c', 2035, None)
+        results ---> {'a':{'b':{'c':{'2035':'knt'}, 'd':'vl2'}, 'e':'vl3'}}
+        'vl1' now a nested branch, not a separate value
+   
+        Example B:
+        smvt-state {'a':{'b':{'c':'vl1'},'e':'vl3'}}
+        .addbranch_stx('smvt_tree_b', 'b', 2056, None)
+        results ---> {'a':{'b':{'2056':'knt'},'b_2056':{'c':'vl1'},'e':'vl3'}}
+        'b' hoplinked to branch&value, however not full link replace parse 
+        @'b_2056', feature serves as replace options and other features
+   
+        Example C:
+        smvt-state {'a':{'b':{'c'},'e':'vl3'}}
+        .addbranch_stx('smvt_tree_c', 'c', 2032, 2051)
+        results ---> {'a':{'b':{'2032':'2051'},'e':'vl3'}}
+        'c' replaced by {'2032':'2051'} branch
+ 
+ 
+----> getbranch_stx(isAlf, treeName, branchId), returns a found branch value or
+      None. @branchId can be either int or str for param usage. @isAlf is for a
+      return list of all original branch key(s) + value(s) to an @brnchId merge.
+      The return list format as ['br_br:br:bv',...], whereof first after :orig:
+      Avoid using alf as much as possible on large mv-trees. If use, @branchId=
+      None. A tip to this type dict tree type: Record env-var any adds done last
+      to a branch, that can be then known replaced or merged with other branch.
+      The staqtapp mv-tree type can be difficult to use at first, however opens
+      a whole other world for *indirect & *adapt recursion unions with stalkvar.
+ 
+ 
+----> lockvar(varName, fncName), adds a function name or else associated to a var-
+      Name in a tpqt type file. This can then be used with keyvar to gate what is
+      allowed to edit the env-var. There no real security/math to it like the Koch
+      version Staqtapp, however is very useful in preventing any env-vars mishaps.
+      @fncName can be either a string; or, list parameter of string names properly.
+      To delete vfs entries from a lockvar use, see lockdel to do that effectively.
+ 
+ 
+----> locklist(varName), returns listed fnc/etc. names for a lockvar tpqt vfs entry.
+ 
+ 
+----> keyvar(varName, fncName), returns True if @fncNm is allowed to edit @varNm,
+      is a listed key to @varNm. Other very useful conditions of this include ---
+      @fncNm being a env-var name of a spawned var set, from use of the stalkvar
+      function, with multi-processing. Unlike Staqtapp Koch version has no vfs --
+      tpqt directory restriction features via a directory split route linkers. The
+      listed keys to the @varName are a clear text read in view of .sqtpp vfs file.
+      Attempting to encrypt vfs file yourself, with standard encrypt libraries will
+      not only prove poor performance but will also be insecure in the near future.
+      (That includes Kyber lattice encrypt that can be cracked by parentheses char
+      chewing attacks using a dual side channel repeater from a mere single phone.)
+ 
+ 
+----> revar(isNewSetVfsPath, newVfsFileName, newVfsDirName, newVfsFldrName),
+      replicates a new .sqtpp vfs file in the .../staqtapp/ folder, having only the
+      env-var(s) from the current set vfs file that are linked to a tpqt lockvar
+      entry. @isNewSetVfsPath as True will reset current set vfs file path to the
+      now new vfs file and it's tqpt path. (If this function is called and the ----
+      current set vfs file has no tpqt lockvar entries found a exception is raised.)
+      **This function is used for advanced rev9 staqtapp features in building custom
+      env-var library modules from within a staqtapp1.2 vfs thru self-replications.
+      Can respawn any missing stalkvar() env-vars to a new self-made svvs sub file.
+      The svvs file from the current set vfs file is lost on the new transfer.**
+ 
+ 
+----> lambdavar(lambdaName, inputVars), this function is an original of Staqtapp1.2.
+      See addvar() for storing a lambda in tqpt stack first. Of the instruction sets
+      connected to lambdavar(): Makes sqtpp1_2_LMB.py module, converts  @lambdaName
+      function in tqpt stack to a parameterless lambda; params made to slots attrs @
+      sqtpp1_2_LMB.py. Once the parameterless lambda is there is then directly ran if
+      called again, no param/body conversions or edit of the module. With @inputVars
+      as str element list only. Example: ['x=4','y=2,3,4'] If is use of commas then
+      is converted to a list when the slots attrs are set before run of slots lambda.
+      If string elements after the = are all numbers is converted to int, both for a
+      list value(s) or single value. The created module in the working current dir of
+      staqtapp.py, with a import math declaring in the module. Because this function
+      leads to all lambda parameters added to the slots attrs, keeping the parameter
+      names generic to a lambda when use of addvar() bypasses edits & slots length.
+ 
+ 
+----> lambdalist(isComplete), returns stored lambda data from a vfs tqpt stack. If is
+      @isComplete=True then returns a list of the full lambda functions. Other option
+      as @isComplete=False returns a special formatted string of the lambda functions
+      name(s) and param(s) so is much easier to work alongside a lambdavar() call -->
+      Example: '@.:my_lambda1,i=,p=,l=,@.:my_lambda2,x=,n=' whereof separated ",@.:"
+ 
+ 
+----> removevar(varName), removes env-var from tqpt stack and any tpqt lockvar block.
+      Will not delete a stalked env-var or a dark env-var, raises a exception that
+      the @varNm parameter choice is connected to a vfs dependency function only.
+      This is a dangerous function; well not as dangerous as us, to rely on for env
+      var use. It is much better to just rename a env-var and go from there, when
+      then use of changevar function. Keeps your env-var stack smaller and more
+      easily controlled instead of wild adding until you don't know what to remove.
+      Which could then result in bad collisions of a spawned or dark env-var group
+      if using those to protect a hidden database of passwords or drone config file.
+ 
+ 
+----> darkvar(), mirrors any removal of a stalked env-var, placing the then removed
+      spawned vars datas to a assigned address, that is all the incremented numbers
+      of the spawned var namings to be removed. After this assigns a pointer to the
+      address by dash, example 56791218-3095903, a random 7-digit palindrome number
+      that will then be of a vssv sub-file content. A darkvar, or dark env-var does
+      not repeat any char when saving the data of the removed vars to a @qp(...):
+      tagging. It only interacts with other env-vars by any palindrome sequences of
+      those chars, if is visible/matching @ the new address to env-var(s) data. This
+      type env-var uses menorah base numbering, non-znero by shifting the pointer to
+      a most probable next match in chars of a recent env-var data viewed. The slots
+      attributes specific to this env-var are _sf_sLstX, _sf_sStrX and _sf_sIntX. To
+      call on this non-parameter method it will react either two ways: One, _sf_sLstX
+      is of a visible relevant list of env-var(s) in the tqpt source and is spawned
+      set of env-var(s) with at least one tpqt lock block visible. This will cause a
+      assignment probable str to @_sf_sStrX and a new palindrome pointer @_sf_sIntX.
+      Or two, then uses what is done by the first to build a new env-var having ---
+      data of a probable set of decisions chars relevant to a new spawned var added.
+      The rev9 features of this library to be added later, uses this to vastly alter
+      any module building it does from another, by decisions in conditionals choice;
+      by lengthing a klf id depend string or splicing it to lesser address probables.
+      (The Staqtapp-Koch does this similar type env-var actions by numerous modules
+      classed Seten modules, yet for random length key padding in vfs-dir routing.)
+      The type mathematical looping of this function with palindrome address shifts
+      is tri-half looping, just as seen on the Menorah. Where a pairing loop is not
+      matched to a static center necessary pairing(Base10), however of LR.R or RL.L
+      rotation, of which either larger loop with middle exact to 1 | smaller " to 1.
+      (UNDER CONSTRUCTION)
+ 
+ 
+----> renamevar_stx(varName newVarName), this function a important one to the data
+      structure of this new staqtapp one version. It actions a normal renaming of a
+      env-var if does not conflict with other namings and can also change the ----
+      spawned var(s) naming(s) from a stalkvar() use just as staqtapp koch version.
+      To do this there must be more than one spawned env-var from a stalked var. By
+      param @newVarName being a int and @varName being the stalked var, the renames
+      of the spawned vars take order increasing from the int value; but if negative
+      number or zero for @newVarName then will remove the spawned var(s) until reach
+      of int one or is only one spawned var left..if negative int, replaced positive.
+      That explained, removes spawned vars by nearest increment of the spawned names.
+      With negative param does not rename any individual spawned of env-var namings,
+      the renaming is central of svvs list, shifted left after any number of removes.
+      This is tricky at first to use with negative del order, however a very powerful
+      useable when matching spawned env-vars to a replaced branching of smv-tree use.
+      (The Staqtapp Koch version does this in between multi-layered encryption key --
+      padding, while encrypt of vdf path directories as most secure env-var vfs ever.)
+      Returns 1 if renamed env-var, 2 if renamed spawned var(s) and there is only --
+      one left spawned var of the stalked var and 3 if renamed spawned env-var(s).
+ 
+ 
+----> findvar(varName), returns True if variable present to set vfs tqpt file.
+ 
+ 
+----> findvar_stx(varNameList, stalkVarName), findvar function for multiple found
+      result list return. If @stalkVarName not None then returns the list of the
+      spawned incremented var names, with each element s-var name of a additional 
+      equal detail = <if @varNameList[ ]'s data ?= @incremented_var's data> which
+      will be either =1 or =-1. List length @varNameList determines return length
+      for both search options. This new feature is used for recursive analysis or
+      chained events hidden from a pivot conclusion or escape type params forming.
+      [If stalked var will have thousands of spawned naming see modvar for lambda
+      spawned res-type slots attribute class caching before calling this method.]
+ 
+ 
+----> vardata_stx(isRegex, varNameList, search), returns list type from search on
+      the @varNameList if @search terms found in a env-var data; returns names of
+      env-var(s) from @varNameList, not the env-var data. @isRegEx instructs the
+      @search is a regex type pattern search. Can search mv-tree stx var types of
+      their keys & values for a listed name return also if @search pattern found.
+      Either way, regular find or regex of no found results returns a empty list.
+ 
+ 
+----> loadvar(isAllNumbers, varName, mode), returns a env-var data from @varName.
+      @mode either 'd' for deque type return or 's' for a string type return. All
+      tqpt env-var data parsing is smart on if is a list return, has numbers with
+      decimals for decimal type returns and etc. via @qp(...): env-var data tags.
+      Be aware if @isAllNumbers set to True then will return list within list if
+      reads multiple qp tags having commas. This will also convert to decimal if
+      tqpt_spdr() finds use of '.' with numbers for a deque type returns. (By use
+      of char * only @varName, load most recent added spawned var from stalkvar()
+      function use. This spawned var tracking found in the tpqt lockvar stacks --
+      with the special header naming as '___SQTPP___MRSV___' and can be editted.)
+ 
+ 
+----> stalkvar(varName, varData), keeps the original env-var as a static read only
+      var and makes a new but same @varName, with extension '_ ' as a numbered
+      increment _1~ . If the @varData matches the original, is no longer a stalked
+      env-var and all the incremented spawns are removed from both the tqpt & svvs
+      set vfs path files contents. This feature is used for recursive analysis or
+      chained events hidden from a pivot conclusion or escape type params forming.
+ 
+ 
+----> lockdel(isRemoveAll, varName, fncName), removes lockvar entries from a tpqt
+      block of names that are associated to a env-var name. The @fncName parameter
+      can be str or a list for the entries to remove. The previous Staqtapp 1 ver.
+      had a log function name when a keyvar is called option. That is no longer in
+      use. If @isRemoveAll then the entire tpqt block is removed for @varName. If
+      you need a list return of what @fncName exist of a tpqt block, see getlocks.
+      Once again, there is no security measures added of this function. To have
+      full password & tor like vfs dir encryption security for this, you must have
+      the Staqtapp-Koch version. The full ver is not open freeware and is the most
+      secure env-var library on earth, that does not use any online third party to
+      to store any env-var data or passwords. If you are relying on a third party
+      cloud profit service, to keep your env-vars data safe or private? Their not.
+      Especially in the United States of America or the aka United Kingdom.
+ 
+ 
+----> modrev9(prmsLst), builds a complete custom env-var module. @prmsLst elements
+      for this staqtapp feature is 28 arguments. The type modules generated can be
+      very difficult to understand, with obfuscation turned on or not. Some of the
+      arguments need the DUN3.py random lambda generator module present. (The DUN3
+      random lambda generator is still being tested and refined.) This feature is
+      central to staqtapp. Enables bluetooth communication with any other builds &
+      can respawn itself, changed to meet any new bluetooth communication commands.
+      And being it would need an clean and semi-abstract vfs file system for that.
+      (UNDER CONSTRUCTION)
+
+ _______________________________________________________________________________________
