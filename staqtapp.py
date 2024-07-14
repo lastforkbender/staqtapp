@@ -1,8 +1,8 @@
-#QPython 3SE / Row4 / staqtapp.py (3,671 lines) / 11:24 Fri, Jul 12
+#QPython 3SE / Row4 / staqtapp.py (3,772 lines) / 7:55 Sun, Jul 14
 
 
 
-#Staqtapp-v1.2.241 | Hybrid VFS ENV-VAR Library
+#Staqtapp-v1.2.254 | Hybrid VFS ENV-VAR Library
 #//////////••        .                           .
 #/////////••                 .                                   •
 #////////••    .                                        •            
@@ -18,9 +18,8 @@
 
 
 
-# UPDATE FRI, JUL12: Functions sqtpp_rev9_vfs_router and sqtpp_rev9_vfs_mkdir added
-#                    to Staqtapp1.2; on begin of rev9 integration for mounting dirs
-#                    in the vfs file for embedded script generates, reads, edit/run.
+# UPDATE SUN, JUL14: Function sqtpp_emb_vfs_mkdir() passed all required test on it.
+#                    Began working on sqtpp_emb_vfs_mvdir() for rev9 integrations.
 
 
 #_______________________________________________________________________________________
@@ -617,7 +616,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.241\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.254\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1516,7 +1515,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.241\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.254\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3230,14 +3229,23 @@ class SqtppFncs(Sqtpp):
             return ''.join(slTr)
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
-    def sqtpp_rev9_vfs_router(self, reOpn: bool, nwMnt: bool, mode: int, dir, src):
-        # >>> pass
-        # modes: (1=mk_d, 2=cd_d, 3=rm_d, 4=cd_d, 5=ad_f, 6=cp_f, 7=mv_f, 8=dl_f, 9=wrt)
+    def sqtpp_emb_vfs_router(self, reOpn: bool, nwMnt: bool, mode: int, dir: list, dirRsv: list, src) -> int:
+        # <<<[count,evaluate]
+        # modes: (1=mk_d, 2=mv_d, 3=rm_d, 4=sd_d, 5=ad_f, 6=cp_f, 7=mv_f, 8=dl_f, 9=wrt)
         # returns:
-        # (reOpn) 1=invalid vfs path, -2=main vfs directories corrupted
-        # -3=functional error unknown
+        #   1= emb vfs directory instruction finished
+        #  -1=invalid vfs path(reOpn)
+        #  -2=main vfs directories corrupted(reOpn)
+        #  -3=functional error(general error)
+        #  -4=mnt not found
+        #  -5=dir already exist in mnt
+        #  -6=mnt already exist
+        #  -7=st1emb top dir is missing
+        #  -8=dir not found in mnt
+        #  -9=dir src not found in mnt src
+        # -10=...
         #try:
-            self._sf_sIntX = mode
+            self._sf_sRtrn = None
             if reOpn:
                 if self.sqtpp_set_vfs_file() == 1:
                     self._sf_rIntA = self._sf_sSrc.find(f'|:{self._sf_rLstA[1]}<{self._sf_rLstA[2]}>')
@@ -3248,67 +3256,47 @@ class SqtppFncs(Sqtpp):
                         if self._sf_sStrX.find(self._sf_rLstA[2] + '>\n_|:') > -1:
                             self._sf_rLstB = self._sf_sStrX.split('\n')
                             self._sf_sStrX = self._sf_rLstB[0] + '\n|::|st1emb<mnt1>\n_|::|mnt1<stgs:\n__|::|stgs<stgs:\nnone:|:>\n_|:|:|mnt1>\n' + self._sf_rLstB[1]
-                    else:
-                        return -2
-                else:
-                    return -1
-            if mode == 1:
-                self.sqtpp_rev9_vfs_mkdir(nwMnt,1,dir)
-            elif mode == 2:
-                # copy directory
-                pass
-            elif mode == 3:
-                # remove directory
-                pass
-            elif mode == 4:
-                self._sf_rLstB = re.findall(r'\|\:\:\|st1emb<.*?>', self._sf_sStrX)
-                self._sf_rStrB = self._sf_rLstB[0]
-                self._sf_rLstB = self._sf_rLstB[0].split('<')
-                self._sf_rLstB[1] = f'<{dir}>'
-                self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrB, ''.join(self._sf_rLstB))
-            elif mode == 5:
-                # add file
-                pass
-            elif mode == 6:
-                # copy file
-                pass
-            elif mode == 7:
-                # move file
-                pass
-            elif mode == 8:
-                # del file
-                pass
-            elif mode == 9:
-                # --->rev9*
-                self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrA, self._sf_sStrX)
-                self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
-                self.sqtpp_reset_slots(False)
-                self._sf_sStrX = None
+                    else: self._sf_sRtrn = -2
+                else: self._sf_sRtrn = -1
+            if self._sf_sRtrn == None:
+                if mode == 1: self.sqtpp_emb_vfs_mkdir(nwMnt, dir)
+                elif mode == 2: self.sqtpp_emb_vfs_mvdir(nwMnt, dir, dirRsv)
+                elif mode == 3:
+                    # remove directory
+                    pass
+                elif mode == 4:
+                    # set directory
+                    pass
+                elif mode == 5:
+                    # add file
+                    pass
+                elif mode == 6:
+                    # copy file
+                    pass
+                elif mode == 7:
+                    # move file
+                    pass
+                elif mode == 8:
+                    # del file
+                    pass
+                elif mode == 9:
+                    self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrA, self._sf_sStrX)
+                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
+                    self.sqtpp_reset_slots(False)
+                    self._sf_sStrX = None
+            return self._sf_sRtrn
         #except Exception as err_emb_vfs_director:
+            #self._sf_sRtrn = -3
             #return -3
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
-    def sqtpp_rev9_vfs_mkdir(self, nwMnt: bool, mode: int, dir) -> bool:
-        # >>> pass
-        # modes: 
-        # returns: (True or False)
+    def sqtpp_emb_vfs_mkdir(self, nwMnt: bool, dir: list) -> int:
+        # >>>
+        # returns: (emb_vfs_router returns: 1, -4, -5, -6, -7)
         if not nwMnt:
-            self._sf_rLstB = re.findall(r'_\|\:\:\|' + re.escape(dir[0]) + r'<.*?\:', self._sf_sStrX)
-            if len(self._sf_rLstB) > 0:
-                self._sf_rLstC = self._sf_rLstB[0].split('<')
-                if self._sf_rLstC[1].find(',') > -1: self._sf_rLstD = self._sf_rLstC[1].split(',')
-                else: self._sf_rLstD = [self._sf_rLstC[1]]
-                self._sf_rLstD[len(self._sf_rLstD)-1] = self._sf_rLstD[len(self._sf_rLstD)-1].replace(':','')
-                self._sf_rIntC = len(self._sf_rLstD)
-                for self._sf_rIntA in range(1, len(dir)):
-                    self._sf_rIntB = 0
-                    while self._sf_rIntB < self._sf_rIntC:
-                        if self._sf_rLstD[self._sf_rIntB] == dir[self._sf_rIntA]:
-                            return False
-                        self._sf_rIntB+=1
-                self._sf_rIntA = self._sf_sStrX.find(self._sf_rLstB[0])
-                self._sf_rIntB = self._sf_sStrX.find(f'_|:|:|{dir[0]}>')
-                self._sf_rStrB = self._sf_sStrX[self._sf_rIntA:self._sf_rIntB-1]
+            self._sf_sIntX = self.sqtpp_emb_ext_vfs_fnd_dir_in_mnt(dir)
+            if self._sf_sIntX == -1:
+                self._sf_rStrB = self.sqtpp_emb_ext_vfs_get_mnt(False, dir)
                 self._sf_rStrC = self._sf_rStrB
                 self._sf_rStrD = dir[0]
                 dir.pop(0)
@@ -3323,11 +3311,89 @@ class SqtppFncs(Sqtpp):
                     else: self._sf_rLstC.append('__|::|' + dir[self._sf_rIntA] + '<null:\nnone:|:>\n_|:|:|' + self._sf_rStrD + '>')
                 self._sf_rStrB = f'{self._sf_rStrB}{"".join(self._sf_rLstC)}'
                 self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrC + '\n_|:|:|' + self._sf_rStrD + '>', self._sf_rStrB)
-                return True
+                self._sf_sRtrn = 1
+                print(self._sf_sStrX)
             else:
-                return False
+                if self._sf_sIntX == -2: self._sf_sRtrn = -4
+                elif self._sf_sIntX == 1: self._sf_sRtrn = -5
         else:
-            self._sf_rLstB = re.findall(r'\|\:\:\|st1emb<.*?>', self._sf_sStrX)
+            self._sf_sIntX = self.sqtpp_emb_ext_vfs_fnd_mnt_in_stb(dir)
+            if self._sf_sIntX == -1:
+                if len(self._sf_rLstB) > 1: self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrB, f'|::|st1emb<{",".join(self._sf_rLstB)},{dir[0]}>')
+                else: self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrB, f'|::|st1emb<{self._sf_rLstB[0]},{dir[0]}>')
+                self._sf_sStrX = self._sf_sStrX.replace('\n_|:' + self._sf_rLstA[2] + '<' + self._sf_rLstA[3] + '>', '')
+                self._sf_rLstC = ['\n']
+                self._sf_rIntB = len(dir)
+                self._sf_rLstB = ['\n_|::|' + dir[0] + '<']
+                for self._sf_rIntA in range(1, self._sf_rIntB):
+                    if self._sf_rIntA < self._sf_rIntB-1:
+                        self._sf_rLstC.append('__|::|' + dir[self._sf_rIntA] + '<null:\nnone:|:>\n')
+                        self._sf_rLstB.append(dir[self._sf_rIntA] + ',')
+                    else:
+                        self._sf_rLstC.append('__|::|' + dir[self._sf_rIntA] + '<null:\nnone:|:>\n_|:|:|' + dir[0] + '>\n')
+                        self._sf_rLstB.append(dir[self._sf_rIntA] + ':')
+                self._sf_sStrX = f'{self._sf_sStrX}{"".join(self._sf_rLstB)}{"".join(self._sf_rLstC)}_|:{self._sf_rLstA[2]}<{self._sf_rLstA[3]}>'
+                self._sf_sRtrn = 1
+                print(self._sf_sStrX)
+            else:
+                if self._sf_sIntX == 1: self._sf_sRtrn = -6
+                elif self._sf_sIntX == -2: self._sf_sRtrn = -7
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_mvdir(self, nwMnt: bool, dir: list, dirRsv: list) -> int:
+        # >>>
+        # returns: (emb_vfs_router returns: 1, -4, -6, -7, -8, -9)
+        self._sf_sIntX = self.sqtpp_emb_ext_vfs_fnd_dir_in_mnt(dir)
+        # _sf_rLstD has the dirs names for dir[0] mnt
+        if self._sf_sIntX == 1:
+            self._sf_rStrC = self.sqtpp_emb_ext_vfs_get_mnt(False, dir)
+            self._sf_sIntX = self.sqtpp_emb_ext_vfs_fnd_mnt_in_stb(dirRsv)
+            if nwMnt:
+                if self._sf_sIntX == -1:
+                    if len(self._sf_rLstB) > 1:
+                        self._sf_rLstB = ','.join(self._sf_rLstB)
+                        self._sf_sStrX = self._sf_sStrX.replace(f'|::|st1emb<{self._sf_rLstB}>', f'|::|st1emb<{self._sf_rLstB},{dirRsv[0]}>')
+                    else: self._sf_sStrX = self._sf_sStrX.replace(f'|::|st1emb<{self._sf_rLstB[0]}>', f'|::|st1emb<{self._sf_rLstB[0]},{dirRsv[0]}>')
+                    self._sf_rStrB = self.sqtpp_emb_ext_vfs_get_dir(dir[1], self._sf_rStrC)
+                    if self._sf_rStrB != None:
+                        if len(self._sf_rLstD) > 1:
+                            self._sf_sStrX = self._sf_sStrX.replace('\n' + self._sf_rStrB, '')
+                            self._sf_rStrC = ",".join(self._sf_rLstD)
+                            if dir[1] in self._sf_rLstD: self._sf_rLstD.remove(dir[1])
+                            self._sf_sStrX = self._sf_sStrX.replace(f'_|::|{dir[0]}<{self._sf_rStrC}:', f'_|::|{dir[0]}<{",".join(self._sf_rLstD)}:')
+                        else:
+                            self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrB, '__|::|___lll<null:\nnone:|:>')
+                            self._sf_sStrX = self._sf_sStrX.replace(f'_|::|{dir[0]}<{dir[1]}:', f'_|::|{dir[0]}<___lll:')
+                        self._sf_sStrX = self._sf_sStrX.replace('\n_|:' + self._sf_rLstA[2] + '<' + self._sf_rLstA[3] + '>', '')
+                        self._sf_sStrX = self._sf_sStrX + '\n_|::|' + dirRsv[0] + '<' + dir[1] + ':\n' + self._sf_rStrB + '\n_|:|:|' + dirRsv[0] + '>\n'
+                        self._sf_sStrX = f'{self._sf_sStrX}_|:{self._sf_rLstA[2]}<{self._sf_rLstA[3]}>'
+                        self._sf_sRtrn = 1
+                        # Stohk-Tappy Stempy!!!
+                        print(self._sf_sStrX)
+                    else: self._sf_sRtrn = -9
+                else:
+                    if self._sf_sIntX == 1: self._sf_sRtrn = -6
+                    elif self._sf_sIntX == -2: self._sf_sRtrn = -7
+            else:
+                if self._sf_sIntX == 1:
+                    #TODO - move dir to a existing lego type mount dir
+                else:
+                    if self._sf_sIntX == -1: self._sf_sRtrn = -4
+                    elif self._sf_sIntX == -2: self._sf_sRtrn = -7
+        else:
+            if self._sf_sIntX == -1: self._sf_sRtrn = -8
+            elif self._sf_sIntX == -2: self._sf_sRtrn = -4
+        return self._sf_sRtrn
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_ext_vfs_fnd_mnt_in_stb(self, dir: list) -> int:
+        # >>>
+        # returns:
+        #  1=mnt found in stb main
+        # -1=mnt not found in stb main
+        # -2=dir st1emb not found
+        self._sf_rLstB = re.findall(r'\|\:\:\|st1emb<.*?>', self._sf_sStrX)
+        if len(self._sf_rLstB) > 0:
             self._sf_rStrB = self._sf_rLstB[0]
             self._sf_rLstB[0] = self._sf_rLstB[0].replace('>', '')
             self._sf_rLstC = self._sf_rLstB[0].split('<')
@@ -3337,23 +3403,58 @@ class SqtppFncs(Sqtpp):
             self._sf_rIntB = len(self._sf_rLstB)
             while self._sf_rIntA < self._sf_rIntB:
                 if self._sf_rLstB[self._sf_rIntA] == dir[0]:
-                    return False
+                    return 1
                 self._sf_rIntA+=1
-            if len(self._sf_rLstB) > 1: self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrB, f'|::|st1emb<{",".join(self._sf_rLstB)},{dir[0]}>')
-            else: self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrB, f'|::|st1emb<{self._sf_rLstB[0]},{dir[0]}>')
-            self._sf_sStrX = self._sf_sStrX.replace('\n_|:' + self._sf_rLstA[2] + '<' + self._sf_rLstA[3] + '>', '')
-            self._sf_rLstC = ['\n']
-            self._sf_rIntB = len(dir)
-            self._sf_rLstB = ['\n_|::|' + dir[0] + '<']
-            for self._sf_rIntA in range(1, self._sf_rIntB):
-                if self._sf_rIntA < self._sf_rIntB-1:
-                    self._sf_rLstC.append('__|::|' + dir[self._sf_rIntA] + '<null:\nnone:|:>\n')
-                    self._sf_rLstB.append(dir[self._sf_rIntA] + ',')
-                else:
-                    self._sf_rLstC.append('__|::|' + dir[self._sf_rIntA] + '<null:\nnone:|:>\n_|:|:|' + dir[0] + '>\n')
-                    self._sf_rLstB.append(dir[self._sf_rIntA] + ':')
-            self._sf_sStrX = f'{self._sf_sStrX}{"".join(self._sf_rLstB)}{"".join(self._sf_rLstC)}_|:{self._sf_rLstA[2]}<{self._sf_rLstA[3]}>'
-            return True
+            return -1
+        else:
+            return -2
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_ext_vfs_fnd_dir_in_mnt(self, dir: list) -> int:
+        # >>>
+        # returns:
+        #  1=dir found in mnt
+        # -1=dir not found in mnt
+        # -2=mnt not found
+        self._sf_rLstB = re.findall(r'_\|\:\:\|' + re.escape(dir[0]) + r'<.*?\:', self._sf_sStrX)
+        if len(self._sf_rLstB) > 0:
+            self._sf_rLstC = self._sf_rLstB[0].split('<')
+            if self._sf_rLstC[1].find(',') > -1: self._sf_rLstD = self._sf_rLstC[1].split(',')
+            else: self._sf_rLstD = [self._sf_rLstC[1]]
+            self._sf_rLstD[len(self._sf_rLstD)-1] = self._sf_rLstD[len(self._sf_rLstD)-1].replace(':','')
+            self._sf_rIntC = len(self._sf_rLstD)
+            for self._sf_rIntA in range(1, len(dir)):
+                self._sf_rIntB = 0
+                while self._sf_rIntB < self._sf_rIntC:
+                    if self._sf_rLstD[self._sf_rIntB] == dir[self._sf_rIntA]:
+                        return 1
+                    self._sf_rIntB+=1
+            return -1
+        else:
+            return -2
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_ext_vfs_get_mnt(self, fndMnt: bool, dir: list):
+        # >>>
+        # returns: (sliced mnt dir or None if mnt dir not found)
+        if fndMnt: self._sf_rLstB = re.findall(r'_\|\:\:\|' + re.escape(dir[0]) + r'<.*?\:', self._sf_sStrX)
+        if len(self._sf_rLstB) > 0:
+            self._sf_rIntA = self._sf_sStrX.find(self._sf_rLstB[0])
+            self._sf_rIntB = self._sf_sStrX.find(f'_|:|:|{dir[0]}')
+            return self._sf_sStrX[self._sf_rIntA:self._sf_rIntB-1]
+        else:
+            return None
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_ext_vfs_get_dir(self, dirNm: str, mntSrc: str):
+        # >>>
+        # returns: (None if dir not found or dir source if found)
+        self._sf_rIntA = mntSrc.find(f'__|::|{dirNm}<')
+        self._sf_rIntB = mntSrc.find(':|:>', self._sf_rIntA)
+        if self._sf_rIntA > -1 and self._sf_rIntA > -1:
+            return mntSrc[self._sf_rIntA:self._sf_rIntB+4]
+        else:
+            return None
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_smvt_char_seeks(self, dsg: str, src: str, pos: list):
@@ -3666,6 +3767,6 @@ def lambdavar(lambdaName: str, lambdaParams: list):
     #print(lambdalist(True))
     #appvar(['door3','bolt3'], ['@qp(1,2,3,4):','@qp(4,3,2,1):'], ['door3:lck1,lck4','bolt3:lck2,lck3'])
     #print(corevar(3, 'cor_var1', [True,True,False,False,True,True,False,False,True,True,False]))
-    #sfCls.sqtpp_rev9_vfs_router(True, False, 1, ['mnt1','dir1','dir2','dir3'], None)
+    #print(sfCls.sqtpp_emb_vfs_router(True, True, 2, ['mnt1','stgs'], ['mnt5'], None))
     #--------------------------------------------------------------------<'(((((>< 
 #test()
