@@ -1,11 +1,11 @@
-#QPython 3SE / Row4 / staqtapp.py (4,039 lines) / 5:29 Tue, Jul 23
+#QPython 3SE / Row4 / staqtapp.py (4,119 lines) / 7:13 Wed, Jul 24
 
 
 ############] This py module's authentic/original coding is secured by AHS [############
 
 
 
-#Staqtapp-v1.2.285 | Hybrid VFS ENV-VAR Library
+#Staqtapp-v1.2.288 | Hybrid VFS ENV-VAR Library
 # <<<
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -22,13 +22,9 @@
 
 
 
-# UPDATE TUE, JUL23: Function sqtpp_emb_vfs_mfile() added for embedded vfs directory
+# UPDATE WED, JUL24: Function sqtpp_emb_vfs_dfile() added for embedded vfs directory
 #                    scripts/config use. Passed all file test for rev9 integrations.
-#                    The goto get dir src function, sqtpp_emb_ext_vfs_get_dir() had
-#                    no clear scope of slicing @ a end of a mount or start of a new
-#                    dir. This problem fixed within a simple parallel find loop. If
-#                    seeking to use sqtpp_emb_vfs_router() to store files in a sqtpp
-#                    vfs file, please do not! Not of a status stable yet.
+#                    A very capable vfs directory/file system is fully in place now.
 
 
 #_______________________________________________________________________________________
@@ -625,7 +621,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.285\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.288\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1524,7 +1520,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.285\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.288\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3408,15 +3404,51 @@ class SqtppFncs(Sqtpp):
 #                 `\\-..-//'                                            `
 #               .   `\\//'              •                         .      :
 #        .            ""
+#
+# |~.~| AHS-CHKSM:
+#    /.__/  _/./__  _/./__  __/.//  /_._  _/./__  .//_/  _/./  __/.//  _//.//
+#  _././_  _././_  /.__/  .//_/  __/.//  /_._  __/._/_  _//.//  _././_  /_._
+#  _/./  /.__/  .//_/  __/._/_  __/.//  /.__/  _//.//  .//_/  __/.//  _/./
+#  __/.//  __/.//  __//._  _//.//  __//._  _//.//  __/.//  _/./__  /.__/  _././_
+#  _/./  _//.//  __/._/_  _//.//  __/.//  __//._  /.__/  __//._  __/._/_  .//_/
+#  __/._/_  .//_/  /.__/  _/./  .//_/  .//_/  __//._  /.__/  __/.//  __//._
+#  __/._/_  _/./  __/.//  __/.//  _/./__  _/./  _././_  _././_  .//_/  __//._
+#  /.__/  /.__/  _././_  __/._/_  _/./__  /_._  /_._  _//.//  .//_/  _././_
+#  __/._/_  __//._  _/./__  __/.//  __/._/_  _//.//  _././_  __/._/_  /_._
+#  _././_  _/./__  _././_  __/._/_  .//_/  .//_/  __/.//  __/._/_  /_._  _/./
+#  __/.//  __/.//  __/.//  _/./__  _//.//  _././_  _././_  __/.//  .//_/  _//.//
+#  __//._  __/._/_  __/.//  _././_  /_._  _/./  _/./__  _././_  __/._/_  __/.//
+#  __//._  _//.//  /.__/  _././_  _/./__  __/.//  /_._  __/._/_  .//_/  /.__/
+#  __/._/_  /_._  _/./__  __//._  __//._  .//_/  _/./  /_._  __/.//  __/.//
+#  __/._/_  __/._/_  /.__/  _/./  _/./  _././_  __/._/_  _././_  .//_/  _././_
+#  /.__/  _/./  __/._/_  __/._/_  .//_/  __/._/_  _././_  _//.//  __/.//  __/._/_
+#  /_._  /_._  _//.//  _/./  _//.//  /_._  /_._  /_._  .//_/  /_._  __/._/_
+#  __//._  _/./__  .//_/  __/.//  /.__/  _././_  _././_  _././_  /_._  _././_
+#  __/._/_  /_._  __/._/_  _//.//  _//.//  __/.//  __/._/_  __/.//  __/._/_  /_._
+#  _././_  _/./__  _/./  .//_/  __/._/_  /.__/  __/.//  .//_/  .//_/  /_._  _/./
+#  _//.//  _//.//  _/./  _//.//  /_._  __/.//  /.__/  _/./  __/._/_  _/./  __//._
+#  __/.//  _//.//  .//_/  /.__/  .//_/  _/./__  __/._/_  _././_  /_._  __/.//
+#  /_._  __//._  _././_  .//_/  _//.//  /.__/  _//.//  _././_  _/./__  /_._
+#  _/./__  _/./  /_._  _//.//  __/.//  _/./  _././_  .//_/  /.__/  __/.//  .//_/
+#  _/./__  /_._  .//_/  __/.//  _//.//  _/./  .//_/  __/._/_  .//_/  __/._/_
+#  _//.//  /_._  /_._  _//.//  _//.//  _/./  __/._/_  _/./__  _/./  __/.//
+#  _././_  _//.//  /_._  _/./  _//.//  _/./  .//_/  __/._/_  __/.//  .//_/  /.__/
+#  _/./  __/.//  __/._/_  .//_/  .//_/  __/.//  __//._  /_._  __/.//  .//_/
+#  .//_/  _/./__  /_._  _//.//  __//._  __//._  _/./  /_._  __/.//  __/._/_
+#  _//.//  /_._  _/./__  _//.//  _/./  __/.//  /_._  _/./__  __//._  _//.//
+#  __/.//  .//_/  __/._/_  .//_/  .//_/  _/./  _//.//  /_._  __/.//  __//._  _/./
+#  _././_  /.__/  __/.//  _//.//  _/./__  .//_/  _/./  /_._  _//.//  _/./  .//_/
+#  __/.//  __/._/_  _/./__  /_._  __/.//  _/./  /.__/  _//.//  /.__/  .//_/  _/./
+#  __/._/_  /_._  __/._/_  _/./__  _//.//  _././_  /.__/  __/.//  __/.//  __/._/_
+#  _/./  __//._  .//_/  _//.//  _././_  _/./__  _/./__  __/.//  /_._  _/./__
+#  __//._  __/.//  _././_  _//.//  __/.//  .//_/  __//._  _././_  __//._  __//._
+#  _././_  __//._  /_._  .//_/  __//._  _././_  _././_  _/./  /_._  /.__/  /.__/
+#  _/./__  _././_  _././_  _/./__  /_._  __//._  _/./__  /_._  _//.//  __/._/_
+#  _//.//  /.__/
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_router(self, rstSlt: bool, reOpn: bool, nwMnt: bool, mode: int, dir: list, dirRsv: list, src) -> int:
         # <<<
-        # Lego style divisional mount type assembly directory/file operations. Files can
-        # only be added, copied, moved or removed in one selected mount. For script runs.
-        # Prevents embedded-scripting fragmentations and stronger script loading cycles.
-        # Also allows sqtpp-rev9 features to lock-out the vfs if any uses not intended.
-        #
         # modes: (1=mk_d, 2=mv_d, 3=rm_d, 4=sd_d, 5=ad_f, 6=cp_f, 7=mv_f, 8=dl_f, 9=wrt)
         # returns:
         #   1= emb vfs directory instruction finished
@@ -3426,7 +3458,7 @@ class SqtppFncs(Sqtpp):
         #  -4=mnt not found
         #  -5=dir already exist in mnt
         #  -6=mnt already exist
-        #  -7=st1emb top dir is missing
+        #  -7=ST1EMB top dir is missing
         #  -8=dir not found in mnt
         #  -9=dir src not found in mnt src
         # -10=cannot remove mnt
@@ -3435,6 +3467,7 @@ class SqtppFncs(Sqtpp):
         # -13=file already exist in dir listing
         # -14=file src not found in dir src
         # -15=non-allowed move, only one file in dir[1]
+        # -16=mnt name not allowed: "SQTPP_MNT_STGS"
         #try:
             self._sf_sRtrn = None
             self._sf_sBoolX = False
@@ -3447,10 +3480,16 @@ class SqtppFncs(Sqtpp):
                         self._sf_rStrA = self._sf_sStrX
                         if self._sf_sStrX.find(self._sf_rLstA[2] + '>\n_|:') > -1:
                             self._sf_rLstB = self._sf_sStrX.split('\n')
-                            self._sf_sStrX = self._sf_rLstB[0] + '\n|::|st1emb<mnt1>\n_|::|mnt1<stgs:\n__|::|stgs<stgs:\n<stgs:S:\nnone:|:>\n_|:|:|mnt1>\n' + self._sf_rLstB[1]
+                            self._sf_sStrX = self._sf_rLstB[0] + '\n|::|ST1EMB<SQTPP_MNT_STGS>\n_|::|SQTPP_MNT_STGS<STGS:\n__|::|STGS<:\n<STGS:S:\nnone:|:>\n_|:|:|SQTPP_MNT_STGS>\n' + self._sf_rLstB[1]
                     else: self._sf_sRtrn = -2
                 else: self._sf_sRtrn = -1
             if self._sf_sRtrn == None:
+                if mode != 2 and mode != 9:
+                    if dir[0] == 'SQTPP_MNT_STGS':
+                        return -16
+                elif mode == 2:
+                    if dir[0] == 'SQTPP_MNT_STGS' or dirRsv[0] == 'SQTPP_MNT_STGS':
+                        return -16
                 if mode == 1: self.sqtpp_emb_vfs_mkdir(nwMnt, dir, None)
                 elif mode == 2: self.sqtpp_emb_vfs_mvdir(nwMnt, dir, dirRsv)
                 elif mode == 3: self.sqtpp_emb_vfs_rmdir(nwMnt, dir)
@@ -3459,10 +3498,8 @@ class SqtppFncs(Sqtpp):
                     pass
                 elif mode == 5: self.sqtpp_emb_vfs_afile(nwMnt, dir, src)
                 elif mode == 6: self.sqtpp_emb_vfs_cfile(dir, dirRsv)
-                elif mode == 7: self.sqtpp_emb_vfs_mfile(dir, dirRsv)
-                elif mode == 8:
-                    # del file
-                    pass
+                elif mode == 7: self.sqtpp_emb_vfs_mfile(False, dir, dirRsv)
+                elif mode == 8: self.sqtpp_emb_vfs_dfile(dir)
                 elif mode == 9:
                     self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrA, self._sf_sStrX)
                     self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
@@ -3508,8 +3545,8 @@ class SqtppFncs(Sqtpp):
         else:
             self._sf_sIntX = self.sqtpp_emb_ext_vfs_fnd_mnt_in_stb(dir)
             if self._sf_sIntX == -1:
-                if len(self._sf_rLstB) > 1: self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrB, f'|::|st1emb<{",".join(self._sf_rLstB)},{dir[0]}>')
-                else: self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrB, f'|::|st1emb<{self._sf_rLstB[0]},{dir[0]}>')
+                if len(self._sf_rLstB) > 1: self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrB, f'|::|ST1EMB<{",".join(self._sf_rLstB)},{dir[0]}>')
+                else: self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrB, f'|::|ST1EMB<{self._sf_rLstB[0]},{dir[0]}>')
                 self._sf_sStrX = self._sf_sStrX.replace('\n_|:' + self._sf_rLstA[2] + '<' + self._sf_rLstA[3] + '>', '')
                 self._sf_rLstC = ['\n']
                 self._sf_rIntB = len(dir)
@@ -3543,8 +3580,8 @@ class SqtppFncs(Sqtpp):
                 if self._sf_sIntX == -1:
                     if len(self._sf_rLstB) > 1:
                         self._sf_rLstB = ','.join(self._sf_rLstB)
-                        self._sf_sStrX = self._sf_sStrX.replace(f'|::|st1emb<{self._sf_rLstB}>', f'|::|st1emb<{self._sf_rLstB},{dirRsv[0]}>')
-                    else: self._sf_sStrX = self._sf_sStrX.replace(f'|::|st1emb<{self._sf_rLstB[0]}>', f'|::|st1emb<{self._sf_rLstB[0]},{dirRsv[0]}>')
+                        self._sf_sStrX = self._sf_sStrX.replace(f'|::|ST1EMB<{self._sf_rLstB}>', f'|::|ST1EMB<{self._sf_rLstB},{dirRsv[0]}>')
+                    else: self._sf_sStrX = self._sf_sStrX.replace(f'|::|ST1EMB<{self._sf_rLstB[0]}>', f'|::|ST1EMB<{self._sf_rLstB[0]},{dirRsv[0]}>')
                     if self.sqtpp_emb_ext_vfs_remove_dir(dir, self._sf_rLstD, self._sf_rStrC):
                         self._sf_sStrX = self._sf_sStrX.replace('\n_|:' + self._sf_rLstA[2] + '<' + self._sf_rLstA[3] + '>', '')
                         self._sf_sStrX = self._sf_sStrX + '\n_|::|' + dirRsv[0] + '<' + dir[1] + ':\n' + self._sf_rStrB + '\n_|:|:|' + dirRsv[0] + '>\n'
@@ -3591,8 +3628,8 @@ class SqtppFncs(Sqtpp):
                 if len(self._sf_rLstB) > 1:
                     self._sf_rStrB = ','.join(self._sf_rLstB)
                     self._sf_rLstB.remove(dir[0])
-                    if len(self._sf_rLstB) > 1: self._sf_sStrX = self._sf_sStrX.replace(f'|::|st1emb<{self._sf_rStrB}>', f'|::|st1emb<{",".join(self._sf_rLstB)}>')
-                    else: self._sf_sStrX = self._sf_sStrX.replace(f'|::|st1emb<{self._sf_rStrB}>', f'|::|st1emb<{self._sf_rLstB[0]}>')
+                    if len(self._sf_rLstB) > 1: self._sf_sStrX = self._sf_sStrX.replace(f'|::|ST1EMB<{self._sf_rStrB}>', f'|::|ST1EMB<{",".join(self._sf_rLstB)}>')
+                    else: self._sf_sStrX = self._sf_sStrX.replace(f'|::|ST1EMB<{self._sf_rStrB}>', f'|::|ST1EMB<{self._sf_rLstB[0]}>')
                     self._sf_rStrB = self.sqtpp_emb_ext_vfs_get_mnt(True, dir)
                     if self._sf_rStrB != None:
                         self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrB + '\n_|:|:|' + dir[0] + '>\n', '')
@@ -3717,31 +3754,53 @@ class SqtppFncs(Sqtpp):
             elif self._sf_sIntX == -2: self._sf_sRtrn = -7
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
-    def sqtpp_emb_vfs_mfile(self, dir: list, dirRsv: list):
-        # FNC_ID=ST12-52774572695655
-        # SqtppFncs slots in use: (_sf_rLstB, _sf_rLstC, _sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_rStrE, _sf_sRtrn, _sf_sStrX)
+    def sqtpp_emb_vfs_mfile(self, isDel: bool, dir: list, dirRsv: list):
+        # FNC_ID=ST12-73491366416298
+        # SqtppFncs slots in use: (_sf_rLstB, _sf_rLstC, _sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_rStrE, _sf_sRtrn)
         # returns: (emb_vfs_router returns: 1, -4, -7, -8, -9, -11, -13, -14, -15)
-        self.sqtpp_emb_vfs_cfile(dir, dirRsv)
+        if not isDel: self.sqtpp_emb_vfs_cfile(dir, dirRsv)
         if self._sf_sRtrn == 1:
-            self._sf_rStrC = self.sqtpp_emb_ext_vfs_get_dir(dir[1], self._sf_rStrB)
-            print(self._sf_rStrC + '\n')
+            if not isDel: self._sf_rStrC = self.sqtpp_emb_ext_vfs_get_dir(dir[1], self._sf_rStrB)
             self._sf_rStrE = self._sf_rStrC
-            self._sf_rLstB = re.findall(r'__\|\:\:\|' + re.escape(dir[1]) + r'<.*?\:', self._sf_rStrC)
-            self._sf_rLstB = self._sf_rLstB[0].split('<')
-            self._sf_rLstB[1] = self._sf_rLstB[1].replace(':','')
+            self.sqtpp_emb_ext_vfs_set_file_list(False, dir[1], self._sf_rStrC)
             if self._sf_rLstB[1].find(',') > -1:
                 self._sf_rLstC = self._sf_rLstB[1].split(',')
                 self._sf_rLstC.remove(dir[2])
                 if len(self._sf_rLstC) > 1: self._sf_rStrC = self._sf_rStrC.replace(f'__|::|{dir[1]}<{self._sf_rLstB[1]}:', f'__|::|{dir[1]}<{",".join(self._sf_rLstC)}:')
                 else: self._sf_rStrC = self._sf_rStrC.replace(f'__|::|{dir[1]}<{self._sf_rLstB[1]}:', f'__|::|{dir[1]}<{self._sf_rLstC[0]}:')
                 self._sf_rStrC = self._sf_rStrC.replace('\n' + self._sf_rStrD, '')
-                self._sf_rStrD = self._sf_rStrB
-                self._sf_rStrB = self._sf_rStrB.replace(self._sf_rStrE, self._sf_rStrC)
-                self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrD, self._sf_rStrB)        
+                self.sqtpp_emb_ext_vfs_remove_file()
             else:
-                self._sf_sRtrn = -15
-                return -15
+                if not isDel:
+                    self._sf_sRtrn = -15
+                    return -15
+                else:
+                    self._sf_rStrC = self._sf_rStrC.replace(self._sf_rStrD, '<null:S:\nnone:|:>')
+                    self._sf_rStrC = self._sf_rStrC.replace(f'__|::|{dir[1]}<{self._sf_rLstB[1]}:', f'__|::|{dir[1]}<___lll:')
+                    self.sqtpp_emb_ext_vfs_remove_file()
             self._sf_sRtrn = 1
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_dfile(self, dir: list):
+        # FNC_ID=ST12-32307643722029
+        # SqtppFncs slots in use: (_sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_sIntX, _sf_sRtrn)
+        # returns: (emb_vfs_router returns: 1, -4, -7, -9, -14)
+        self._sf_sIntX = self.sqtpp_emb_ext_vfs_fnd_mnt_in_stb(dir)
+        if self._sf_sIntX == 1:
+            self._sf_rStrB = self.sqtpp_emb_ext_vfs_get_mnt(True, dir)
+            if self._sf_rStrB != None:
+                self._sf_rStrC = self.sqtpp_emb_ext_vfs_get_dir(dir[1], self._sf_rStrB)
+                if self._sf_rStrC != None:
+                    self._sf_rStrD = self.sqtpp_emb_ext_vfs_get_file(dir[2], self._sf_rStrC)
+                    if self._sf_rStrD != None:
+                        self._sf_sRtrn = 1
+                        self.sqtpp_emb_vfs_mfile(True, dir, None)
+                    else: self._sf_sRtrn = -14
+                else: self._sf_sRtrn = -9
+            else: self._sf_sRtrn = -4
+        else:
+            if self._sf_sIntX == -1: self._sf_sRtrn = -4
+            elif self._sf_sIntX == -2: self._sf_sRtrn = -7
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_ext_vfs_fnd_mnt_in_stb(self, dir: list) -> int:
@@ -3750,8 +3809,8 @@ class SqtppFncs(Sqtpp):
         # returns:
         #  1=mnt found in stb main
         # -1=mnt not found in stb main
-        # -2=dir st1emb not found
-        self._sf_rLstB = re.findall(r'\|\:\:\|st1emb<.*?>', self._sf_sStrX)
+        # -2=dir ST1EMB not found
+        self._sf_rLstB = re.findall(r'\|\:\:\|ST1EMB<.*?>', self._sf_sStrX)
         if len(self._sf_rLstB) > 0:
             self._sf_rStrB = self._sf_rLstB[0]
             self._sf_rLstB[0] = self._sf_rLstB[0].replace('>', '')
@@ -3866,6 +3925,18 @@ class SqtppFncs(Sqtpp):
             return None
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_ext_vfs_set_file_list(self, isCmpltd: bool, dirNm: str, dirSrc: str):
+        # FNC_ID=ST12-41247017839558
+        # SqtppFncs slots in use: (_sf_rLstB, _sf_rLstC)
+        # returns: none
+        self._sf_rLstB = re.findall(r'__\|\:\:\|' + re.escape(dirNm) + r'<.*?\:', dirSrc)
+        self._sf_rLstB = self._sf_rLstB[0].split('<')
+        self._sf_rLstB[1] = self._sf_rLstB[1].replace(':','')
+        if isCmpltd:
+            if self._sf_rLstB[1].find(',') > -1: self._sf_rLstC = self._sf_rLstB[1].split(',')
+            else: self._sf_rLstC = [self._sf_rLstB[1]]
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_ext_vfs_remove_dir(self, dir: list, mntDirs: list, mntSrc: str) -> bool:
         # FNC_ID=ST12-36598772524882
         # SqtppFncs slots in use: (_sf_rStrB, _sf_rStrD, _sf_sStrX)
@@ -3883,6 +3954,15 @@ class SqtppFncs(Sqtpp):
             return True
         else:
             return False
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_ext_vfs_remove_file(self):
+        # FNC_ID=ST12-63897102649789
+        # SqtppFncs slots in use: (_sf_rStrB, _sf_rStrC, _sf_rStrD, _sf_rStrE, _sf_sStrX)
+        # returns: none
+        self._sf_rStrD = self._sf_rStrB
+        self._sf_rStrB = self._sf_rStrB.replace(self._sf_rStrE, self._sf_rStrC)
+        self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrD, self._sf_rStrB)
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
 
@@ -4034,6 +4114,6 @@ def lambdavar(lambdaName: str, lambdaParams: list):
     #print(lambdalist(True))
     #appvar(['door3','bolt3'], ['@qp(1,2,3,4):','@qp(4,3,2,1):'], ['door3:lck1,lck4','bolt3:lck2,lck3'])
     #print(corevar(3, 'cor_var1', [True,True,False,False,True,True,False,False,True,True,False]))
-    #print(sfCls.sqtpp_emb_vfs_router(False, True, False, 7, ['mnt2','FILES_A','file1'], ['FILES_B'], None))
+    #print(sfCls.sqtpp_emb_vfs_router(False, True, False, 8, ['mnt2','FILES_B','file2'], None, None))
     #--------------------------------------------------------------------<'(((((>< 
 #test()
