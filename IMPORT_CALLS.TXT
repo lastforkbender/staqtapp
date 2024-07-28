@@ -308,13 +308,48 @@ ________________________________________________________________________________
       full password & tor like vfs dir encryption security for this, you must have
       the Staqtapp-Koch version. The full ver is not open freeware and is the most
       secure env-var library on earth, that does not use any online third party to
-      to store any env-var data or passwords. If you are relying on a third party
-      cloud profit service, to keep your env-vars data safe or private? Their not.
-      Especially in the United States of America or the aka United Kingdom.
+      to store any env-var data or passwords.
+      
+      
+----> pojishon(mode, varData, varName, dirList), gives access to Staqtapp's vfs dir/
+      embedded file system located at the top directory of a sqtpp file. Includes --
+      28 functional calls in 6 categories: next, jump, tqpt, tpqt, watch and record.
+      Below are the functional aspects of these categories and optional parameters.
+      Argument *mode* is a str that includes the dot refrences and any optionals. Of
+      @varData and @varName can be either str or list type; @dirList the folder tree
+      path to file(s). Env-vars are as files whereof @dirList = list = [mount, dir]
+      and @varName the filename as a positional read/write file in vfs mount/dir seq.
+      *In a single mount only can a env-var/file be moved, edited, copied or removed.
+      These positional file features allow vast options with env-vars within the vfs
+      use across many vfs directories & files for any circumstances needed, making -
+      Staqtapp 1.2 the most versatile env-vars py module publicly available. Some of
+      these dot functional modes include integration with normal sqtpp env-var uses.
+      *If dot optionals have no arguments then Staqtapp auto-assigns most recent.
+      
+      Example: sqtpp.pojishon("next.omega.setfreq", src_data, src_name, ['mnt','dir'])
+      
+      NEXT:  
+        (1) ("next", required, required, required), makes new mount, new directory
+            and a new file. *Of no dot refrence instructions and has no optionals.
+        
+      
+      OPTIONALS:
+        *setfreq, removefreq, retag and quantumf CANNOT be combined optionals
+        *quantumf is a READ ONLY optional from an auto-generated slots module
+        
+        open(varDt=list, occurence=#[index]) | open(varNm=list, occurence=#[index])
+        closed(varNm=str, start=#, end=#) | closed(varNm=list, start=#, end=#)
+        compare(varDt=str, dirLst=list, freq=str) | compare(varDt=list, dirLst=list, freq=str)
+        cache(varNm=str, occurence=#) | cache(varNm=list, occurence=#[index])
+        seal(dirLst=list, match=str, freq=str, type=unlocked=0|locked=1)
+        setfreq(varNm=str, dirLst=list, occurence=#) | setfreq(varNm=list, dirLst=list, occurence=#[index])
+        removefreq(varNm=str, dirLst=list, freq=str) | removefreq(varNm=list, dirLst=list, freq=str)
+        retag(varDt=str, freq=str, span=#, removeat=#) | retag(varDt=list, freq=str, span=#[index], removeat=#[index])
+        quantumf(varNm=str, dirLst=list, span=#) | quantumf(varNm=list, dirLst=list, span=#[index])
  
  
 ----> modrev9(prmsLst), builds a complete custom env-var module. @prmsLst elements
-      for this staqtapp feature is 28 arguments. The type modules generated can be
+      for this staqtapp feature is 34 arguments. The type modules generated can be
       very difficult to understand, with obfuscation turned on or not. Some of the
       arguments need the DUN3.py random lambda generator module present. (The DUN3
       random lambda generator is still being tested and refined.) This feature is
