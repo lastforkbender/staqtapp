@@ -4,6 +4,8 @@
 _______________________________________________________________________________________
       STAQTAPP V1.2 IMPORT FUNCTIONS USAGE:
       
+      UPDATED: SUN, AUG4 2024
+      
       
       
       *Staqtapp 1.2 is a all-in-one stand alone vfs env-var module. No third-party
@@ -331,8 +333,14 @@ ________________________________________________________________________________
       NEXT:  
         (1) ("next", required, required, required), makes new mount, new directory
             and a new file. *Of no dot refrence instructions and has no optionals.
+            
+        (2) ("next.cast.", non-required, non-required, required), copies last env-
+            var(s) file added to a new directory. *dirList[0] argument string must
+            match the last mount name used or throws a mount placement exception;
+            and argument dirList[1] does not match last directory used. If new dir
+            @dirList[1] is not currently a dir in mnt then will add the new dir.
+            
         
-      
       OPTIONALS:
         *setfreq, removefreq, retag and quantumf CANNOT be combined optionals
         *quantumf is a READ ONLY optional from an auto-generated slots module
