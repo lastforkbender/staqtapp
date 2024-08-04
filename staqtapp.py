@@ -1,11 +1,11 @@
-#QPython 3SE / Row4 / staqtapp.py (4,229 lines) / 8:45 SAT, Jul 27
+#QPython 3SE / Row4 / staqtapp.py (4,314 lines) / 2:22 Sun, Aug 4
 
 
 ############] This py module's authentic/original coding is secured by AHS [############
 
 
 
-#Staqtapp-v1.2.292 | Hybrid VFS ENV-VAR Library
+#Staqtapp-v1.2.306 | Hybrid VFS ENV-VAR Library
 # <<<
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -22,7 +22,10 @@
 
 
 
-# UPDATE SAT, JUL27: More coding done for sqtpp_emb_vfs_pojishon() env-var features.
+# UPDATE SUN, AUG4: More coding done for sqtpp_emb_vfs_pojishon() env-var features.
+#                   Added 'next.cast.?' mode for pojishon next commands on vfs env-
+#                   var files uses. Pojishon features for Staqtapp 1.2 version are
+#                   of needing to be exact, bug-free and require complete testing.
 
 
 #_______________________________________________________________________________________
@@ -157,6 +160,7 @@ class Sqtpp():
             if self._sRtrn == -1: self.mcf_err_handler(48, 'pojishon')
             elif self._sRtrn == -2: self.mcf_err_handler(49, 'pojishon')
             elif self._sRtrn == -3: self.mcf_err_handler(50, 'pojishon')
+            elif self._sRtrn == -4: self.mcf_err_handler(51, 'pojishon')
             elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'pojishon')
             else:
                 return 1
@@ -569,6 +573,7 @@ class Sqtpp():
             # 48 = [pojishon] >> invalid types balance @varDt and @varNm
             # 49 = [pojishon] >> non-allowed char sequence found @varDt: ':|:>'
             # 50 = [pojishon] >> non-allowed char(s) @varNm, allowed _a-zA-Z0-9
+            # 51 = [pojishon] >> no found last added file in settings for cast
             if altErrCd == 1: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name chars; allowed -a-zA-Z')
             elif altErrCd == 2: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid directory name chars; allowed -a-zA-Z')
             elif altErrCd == 3: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name, cannot be the same as directory name')
@@ -619,6 +624,7 @@ class Sqtpp():
             elif altErrCd == 48: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] invalid types balance for @varData &| @varName, both must be str or list')
             elif altErrCd == 49: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] char sequence ":|:>" was found @varData, non-allowed is special read char-seq for end of file')
             elif altErrCd == 50: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] non-allowed char(s) @varNm, allowed _a-zA-Z0-9')
+            elif altErrCd == 51: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] no found last added file in settings for cast')
         else:
             if self._sRtrn == 'FNC-ERR': raise Exception(f'staqtapp1.2 {clnFnc}-->{self._sErr}')
             elif self._sRtrn == 'FOO-BAR': raise Exception('staqtapp1.2 io error: unable to perform basic file reads or writes')
@@ -628,7 +634,7 @@ class Sqtpp():
 
 #_______________________________________________________________________________________
 class SqtppFncs(Sqtpp):
-    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sRplc', '_sf_sQp', '_sf_sQpRplcX', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_sBoolCxv', '_sf_sLstA', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rLstE', '_sf_rLstF', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD', '_sf_rBoolE')
+    __slots__ = ('_sf_sVfs', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sRplc', '_sf_sQp', '_sf_sQpRplcX', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_sBoolCxv', '_sf_sLstA', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rLstE', '_sf_rLstF', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD', '_sf_rBoolE', '_sf_rBoolF')
     
     def __init__(self):
         self._sf_rBoolE = False
@@ -640,7 +646,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.292\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.306\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1539,7 +1545,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.292\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.306\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3366,6 +3372,7 @@ class SqtppFncs(Sqtpp):
         self._sf_rBoolC = None
         self._sf_rBoolD = None
         self._sf_rBoolE = None
+        #self._sf_rBoolF (Reserved for pojishon features)
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_slots_rcrd(self) -> bool:
@@ -3425,52 +3432,51 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#    _/./  /_._  _/./__  __/.//  /_._  _/./  /.__/  /.__/  /_._  _/./  __/.//
-#  /_._  __/._/_  _//.//  _//.//  __/.//  /_._  _/./__  _//.//  _././_  /_._
-#  _/./__  /_._  _/./  _//.//  _/./__  _//.//  __/._/_  _././_  /.__/  __/.//
-#  __/.//  _/./__  /.__/  _//.//  _/./  .//_/  _/./__  _/./  .//_/  /_._  /_._
-#  /_._  _//.//  _/./__  _/./__  _/./__  _/./__  __/.//  _//.//  _//.//  _//.//
-#  _/./  __//._  __//._  /_._  _/./__  _/./  __//._  __//._  _//.//  /_._  _/./__
-#  __//._  __/._/_  _/./  __/._/_  _/./__  __//._  /_._  __/._/_  _/./  __/.//
-#  .//_/  /.__/  _//.//  _/./  __//._  __/._/_  __/._/_  _/./__  _/./__  __//._
-#  __/.//  _././_  _/./  .//_/  __//._  _/./__  __/._/_  __/.//  /.__/  _/./
-#  /.__/  /.__/  _/./__  _/./__  _/./__  .//_/  .//_/  /_._  __/._/_  __/.//
-#  .//_/  _/./  _//.//  _//.//  /.__/  _././_  .//_/  _././_  _/./  .//_/  _/./
-#  /_._  /.__/  _././_  _././_  .//_/  /_._  _//.//  _//.//  /.__/  /_._  _//.//
-#  _/./__  __/.//  _././_  __/.//  /.__/  _/./  __//._  __/._/_  /.__/  __//._
-#  _/./  _//.//  __/.//  __//._  /_._  _././_  .//_/  _//.//  __/._/_  __/._/_
-#  __/.//  __/._/_  /_._  _/./__  /_._  _/./  __/._/_  /_._  __//._  _/./  _././_
-#  _/./__  .//_/  .//_/  _/./  _././_  _././_  __//._  /_._  _/./__  /.__/
-#  _././_  __//._  _/./  __//._  _././_  __/._/_  _//.//  /.__/  _/./__  /_._
-#  __//._  __/._/_  _/./  /_._  _././_  /_._  __/.//  __//._  _//.//  _././_
-#  _/./  /_._  /_._  .//_/  .//_/  _/./  _././_  _/./  _/./__  /.__/  _//.//
-#  __//._  _/./  _././_  _././_  /.__/  /.__/  __//._  _//.//  __/._/_  __/._/_
-#  _././_  _/./__  /_._  /.__/  __//._  __/._/_  /_._  __/.//  __/.//  _/./
-#  _././_  /.__/  _././_  _/./  /.__/  _././_  /.__/  _/./__  _//.//  /.__/
-#  __//._  /.__/  __/._/_  _//.//  /_._  _//.//  __//._  _././_  __/._/_  _//.//
-#  _//.//  .//_/  _//.//  _././_  _/./  /.__/  __/.//  __/.//  __//._  .//_/
-#  __/._/_  __//._  _//.//  _/./__  _/./  /_._  _/./  .//_/  _//.//  _/./  __/.//
-#  /.__/  __/.//  __/.//  _//.//  __//._  __/._/_  /.__/  /_._  /_._  __/._/_
-#  .//_/  /_._  /_._  _/./  /_._  _/./__  __/.//  __//._  __/._/_  /.__/  .//_/
-#  _././_  /_._  __//._  __/._/_  __//._  /_._  _/./__  _/./__  __/.//  _/./
-#  /_._  _/./  /_._  _//.//  .//_/  .//_/  _//.//  .//_/  _//.//  /.__/  _/./__
-#  __/._/_  _././_  __//._  _/./__  _//.//  __/.//  _././_  _/./__  _/./__
-#  _/./__  __//._  __/.//  _././_  __//._  _//.//  /_._  _//.//  __/.//  /_._
-#  _//.//  _././_  /.__/  /.__/  __//._  _/./__  _/./  __/._/_  __//._  /_._
-#  _//.//  __/._/_  _././_  _././_  __/.//  __/.//  _//.//  /_._  /_._  _././_
-#  __/.//  _//.//  _/./__  .//_/  __/.//  __/._/_  /.__/  /_._  _/./  __//._
-#  _/./__  _././_  _/./__  _//.//  _/./__  .//_/  .//_/  /.__/  _//.//  __/.//
-#  _/./  _/./__  __//._  __/.//  _/./__  _/./  _//.//  _/./  _/./__  _/./  _././_
-#  _/./  .//_/  .//_/  .//_/  _//.//  _//.//  _//.//
+#    /.__/  __/._/_  __//._  /_._  _//.//  /_._  __/._/_  _/./  _/./  _/./  /.__/
+#  _/./  __/.//  __/._/_  _//.//  _/./__  /.__/  _//.//  _././_  /_._  .//_/
+#  __//._  /.__/  __/._/_  /_._  __/.//  _/./  .//_/  /.__/  _././_  _/./  /.__/
+#  .//_/  _/./  .//_/  __/._/_  /_._  _/./__  __/._/_  /_._  _././_  __//._
+#  __//._  _//.//  __/._/_  __/._/_  __/.//  _/./__  .//_/  _/./  _/./__  _././_
+#  _/./__  __//._  _/./  /.__/  _//.//  /_._  _/./  _//.//  _//.//  __/.//  /_._
+#  .//_/  /_._  _/./__  _//.//  __/._/_  __//._  __//._  /_._  _//.//  _././_
+#  /.__/  /_._  _/./  __//._  .//_/  _././_  __//._  _/./__  /.__/  /.__/  .//_/
+#  .//_/  _/./  _//.//  _././_  __/._/_  /_._  _/./  _/./  .//_/  _//.//  /.__/
+#  /_._  __//._  __/._/_  __/._/_  /_._  _././_  __/._/_  __/._/_  /_._  /.__/
+#  __/.//  __//._  _//.//  _././_  _/./  .//_/  /.__/  __/.//  _//.//  _././_
+#  _//.//  /_._  _././_  /.__/  _//.//  /.__/  /_._  _././_  _././_  .//_/  /_._
+#  _/./  .//_/  __/._/_  _/./  .//_/  _//.//  _/./  __/.//  _/./  __/._/_  _/./
+#  /.__/  __//._  .//_/  /.__/  /_._  __/.//  _//.//  __//._  /.__/  __/._/_
+#  .//_/  __//._  __/._/_  __/._/_  __/._/_  /_._  /_._  __/.//  /.__/  /_._
+#  _/./  _/./  __//._  _././_  __/._/_  _/./  __/._/_  _/./__  .//_/  _/./  /.__/
+#  /.__/  _//.//  _/./__  __//._  __/._/_  .//_/  /_._  .//_/  _//.//  __//._
+#  /_._  .//_/  _././_  _/./__  /_._  __/.//  _/./  __/._/_  .//_/  .//_/  _//.//
+#  .//_/  __/.//  __/._/_  __/.//  .//_/  __//._  _/./  __/._/_  _//.//  __/._/_
+#  __/.//  _././_  _//.//  /.__/  __/._/_  _/./__  __//._  __//._  _/./__  /.__/
+#  .//_/  __/._/_  _././_  __/.//  __/.//  _//.//  __/._/_  __/.//  __//._  /_._
+#  __//._  /_._  __//._  _././_  _/./  /_._  _/./  _//.//  _//.//  .//_/  __//._
+#  __//._  _/./  _/./__  _././_  /_._  _././_  _//.//  _//.//  __//._  /_._
+#  __/._/_  __/.//  .//_/  __/._/_  _//.//  _././_  _././_  _././_  /_._  __/.//
+#  _//.//  __/._/_  __/._/_  __/.//  /.__/  .//_/  __//._  .//_/  /_._  __/._/_
+#  __//._  .//_/  /_._  _/./__  __/.//  _/./  /.__/  __/.//  _//.//  /.__/
+#  __//._  .//_/  __//._  _/./  __/.//  _././_  _/./  _//.//  __/._/_  __//._
+#  _/./  /.__/  _/./__  __//._  _/./  __//._  _/./__  .//_/  _/./__  _//.//  /_._
+#  /.__/  __/.//  /.__/  /_._  __/._/_  _/./  __/.//  _/./  __//._  __//._
+#  __/.//  __/._/_  /_._  /_._  _//.//  _//.//  _//.//  _/./__  __/._/_  _/./
+#  _/./__  _/./  _//.//  .//_/  _/./  /.__/  _/./__  /_._  __/.//  _/./__  _//.//
+#  /.__/  /_._  _/./  .//_/  _././_  .//_/  _././_  .//_/  _//.//  /_._  _/./__
+#  _././_  /_._  _././_  __/._/_  /.__/  _//.//  /_._  _././_  /.__/  /_._
+#  _././_  __/._/_  __//._  /_._  /.__/  __//._  _/./__  _././_  /.__/  /_._
+#  .//_/  _/./  /_._  .//_/  __/.//  _././_  _/./__  /.__/  __//._  .//_/  _././_
+#  _/./  __/._/_  __//._  _././_  _/./  _././_  .//_/  _//.//  .//_/  _//.//
+#  /.__/  __/._/_  _//.//  __/._/_  __/._/_  .//_/  __//._  _/./__
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon(self, mode: str, varDt, varNm, dirLst: list):
         # <<<
         # modes:
         #   NEXT:
-        #    ("next.<optional>", required, required, required)
-        #    ("next.new.<optional>", required, non-required, non-required)
-        #    ("next.cast.<optional>", required, non-required, required)
+        #    ("next", required, required, required)
+        #    ("next.cast.<optional>", non-required, non-required, required)
         #    ("next.ghost.<optional>", required, non-required, required)
         #    ("next.omega.<optional>", required, required, non-required)
         #    ("next.splice.<optional>", required, required, required)
@@ -3514,19 +3520,24 @@ class SqtppFncs(Sqtpp):
         #    retag(varDt=str, freq=str, span=#, removeat=#) | retag(varDt=list, freq=str, span=#[index], removeat=#[index])
         #    quantumf(varNm=str, dirLst=list, span=#) | quantumf(varNm=list, dirLst=list, span=#[index])
         #try:
+            self._sf_rBoolF = False
             vfsRtrn = None
-            rtrn = None
+            rtrn = 1
             if mode.find('.') > -1: self._sf_rLstF = mode.split('.')
             else: self._sf_rLstF = [mode]
             #________________________________________________________________________
             #___________________________________NEXT_________________________________
-            if self._sf_rLstF[0] == 'next':
-                if len(self._sf_rLstF) < 2:
+            if self._sf_rLstF[0] == 'next' or self._sf_rLstF[0] == 'NEXT':
+                if len(self._sf_rLstF) == 1:
                     vfsRtrn = self.sqtpp_emb_vfs_pojishon_mkfile('next', varDt, varNm, dirLst)
                     if vfsRtrn < 0: rtrn = self.sqtpp_emb_vfs_pojishon_err_rtrn('next', self._sf_rLstF[len(self._sf_rLstF)-1])
-                    else: rtrn = 1
                 else:
-                    pass
+                    if self._sf_rLstF[1] == 'cast' or self._sf_rLstF[1] == 'CAST':
+                        vfsRtrn = self.sqtpp_emb_vfs_pojishon_mkfile('next.cast', None, None, dirLst)
+                        if not self._sf_rBoolF and vfsRtrn < 0: rtrn = self.sqtpp_emb_vfs_pojishon_err_rtrn('next', vfsRtrn)
+                        elif self._sf_rBoolF and vfsRtrn < 0: self.sqtpp_emb_vfs_pojishon_err_router_rtrn(vfsRtrn)
+                    else:
+                        raise Exception(f'[sqtpp-vfs >> pojishon] - mode/next err: unknown next command, see IMPORT_CALLS.TXT for all pojishon next commands')
             return rtrn
         #except Exception as err_emb_vfs_pojishon:
             #self._sErr = f'staqtapp1.2 (emb_vfs_pojishon) error: {err_emb_vfs_pojishon}'
@@ -3540,28 +3551,68 @@ class SqtppFncs(Sqtpp):
         # -2=non-allowed char sequence found @varDt: ':|:>'
         # -3=non-allowed char(s) @varNm
         rtrn = None
-        if isinstance(varDt, str) and isinstance(varNm, str):
-            if varDt.find(':|:>') > -1: rtrn = -2
-            else:
-                if self.sqtpp_chars_check(2, varNm):
-                    if mode == 'next':
-                        rtrn = self.sqtpp_emb_vfs_pojishon_write(1, varNm, varDt, dirLst)
-                        if rtrn < 0: self.sqtpp_emb_vfs_pojishon_err_router_rtrn(rtrn)
-                else: rtrn = -3
-        elif isinstance(varDt, list) and isinstance(varNm, list):
-            pass
-        else: rtrn = -1
+        if mode.find('.') < 0:
+            if isinstance(varDt, str) and isinstance(varNm, str):
+                if varDt.find(':|:>') > -1: rtrn = -2
+                else:
+                    if self.sqtpp_chars_check(2, varNm):
+                        if mode == 'next':
+                            rtrn = self.sqtpp_emb_vfs_pojishon_write(1, varNm, varDt, dirLst)
+                            if rtrn < 0: self.sqtpp_emb_vfs_pojishon_err_router_rtrn(rtrn)
+                    else: rtrn = -3
+            elif isinstance(varDt, list) and isinstance(varNm, list):
+                pass
+        else:
+            if mode == 'next.cast':
+                rtrn = self.sqtpp_emb_vfs_pojishon_write(2, None, None, dirLst)
         return rtrn
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_read(self, dsg: int, dirLst: list):
+        # <<<
+        # returns: ()
+        rtrn = 1
+        if dsg == 1: # Reads SQTPP_MNT_STGS/STGS file, returns last used mnt/dir/*file list
+            self._sf_sVd = self.sqtpp_emb_ext_vfs_read_file(dirLst)
+            self._sf_sVd = self._sf_sVd.replace(f'<{dirLst[2]}:S:\n','').replace(':|:>','')
+            if self._sf_sVd != 'none':
+                self._sf_rLstB = re.findall(r'lfd\=.*?\;', self._sf_sVd)
+                if len(self._sf_rLstB) > 0:
+                    self._sf_rLstB = self._sf_rLstB[0].replace('lfd=','').replace(';','')
+                    rtrn = self._sf_rLstB.split('/')
+                else: rtrn -4
+            else: rtrn = -4
+        return rtrn 
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_write(self, dsg: int, varNm, varDt, dirLst: list) -> int:
         # <<<
         # returns: (returns from sqtpp_emb_vfs_router())
+        fncLst = None
         rtrn = None
         if dsg == 1: # New mount; new dir and a new env-var(s) file.
             rtrn = self.sqtpp_emb_vfs_router(False, True, True, 1, dirLst, None, None)
             if rtrn > 0: rtrn = self.sqtpp_emb_vfs_router(False, False, False, 5, dirLst, None, [varNm,varDt])
             if rtrn > 0: rtrn = self.sqtpp_emb_vfs_router(True, False, False, 9, None, None, None)
+        elif dsg == 2: # Copy env-var(s) file to new dir from last added file
+                rtrn = self.sqtpp_emb_vfs_router(False, True, False, 10, None, None, None)
+                if rtrn > 0:
+                    fncLst = self.sqtpp_emb_vfs_pojishon_read(1, ['SQTPP_MNT_STGS','STGS','STGS'])
+                    if isinstance(fncLst, int):
+                        return fncLst
+                    else:
+                        if dirLst[0] == fncLst[0]:
+                            if dirLst[1] != fncLst[1]:
+                                self._sf_rBoolF = True
+                                if self.sqtpp_emb_ext_vfs_fnd_dir_in_mnt([fncLst[0], dirLst[1]]) == -1:
+                                    rtrn = self.sqtpp_emb_vfs_router(False, False, False, 1, dirLst, None, None)
+                                if rtrn > 0: rtrn = self.sqtpp_emb_vfs_router(False, False, False, 6, fncLst, [dirLst[len(dirLst)-1]], None)
+                                if rtrn > 0: rtrn = self.sqtpp_emb_vfs_router(True, False, False, 9, None, None, None)
+                            else:
+                                raise Exception(f'[sqtpp-vfs >> pojishon] - directory placement err: directory ({dirLst[1]}) is the same directory of last used directory ({fncLst[1]}) for cast')
+                        else:
+                            raise Exception(f'[sqtpp-vfs >> pojishon] - mount placement err: mount ({dirLst[0]}) does not match last used mount ({fncLst[0]}) for cast')
+                else: self.sqtpp_emb_vfs_pojishon_err_router_rtrn(rtrn)
         return rtrn
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
@@ -3571,11 +3622,13 @@ class SqtppFncs(Sqtpp):
         # -1=invalid types balance @varDt and @varNm
         # -2=non-allowed char sequence found @varDt: ':|:>'
         # -3=non-allowed char(s) @varNm
+        # -4=no last dir/file setting found for cast
         rtrn = None
         if mode == 'next':
             if errCd == -1: rtrn = -1
             elif errCd == -2: rtrn = -2
             elif errCd == -3: rtrn = -3
+            elif errCd == -4: rtrn = -4
         return rtrn
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
@@ -3585,7 +3638,7 @@ class SqtppFncs(Sqtpp):
         vfsRtrErrMsgLst = ['invalid vfs path','main vfs directories are corrupted','a unknown vfs router error occured','mount was not found','directory already exist in mount','mount already exist','main ST1EMB directory is missing','directory not found in mount','directory source not found in mount source','cannot remove mount','mount src not found','a seed directory "___lll" was not found','file already exist in directory listing','file source not found in directory source','non-allowed move, only one file in directory','mount name not allowed, "SQTPP_MNT_STGS"']
         errCd = str(errCd)
         errCd = errCd.replace('-', '')
-        raise Exception(f'[sqtpp-vfs >> pojishon] - directory router err: {vfsRtrErrMsgLst[int(errCd)-1]}')
+        raise Exception(f'[sqtpp-vfs >> pojishon] - embedded vfs router err: {vfsRtrErrMsgLst[int(errCd)-1]}')
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_router(self, rstSlt: bool, reOpn: bool, nwMnt: bool, mode: int, dir: list, dirRsv: list, src) -> int:
@@ -3609,7 +3662,7 @@ class SqtppFncs(Sqtpp):
         # -14=file src not found in dir src
         # -15=non-allowed move, only one file in dir[1]
         # -16=mnt name not allowed: "SQTPP_MNT_STGS"
-        try:
+        #try:
             self._sf_sRtrn = None
             self._sf_sBoolX = False
             if reOpn:
@@ -3624,8 +3677,13 @@ class SqtppFncs(Sqtpp):
                             self._sf_sStrX = self._sf_rLstB[0] + '\n|::|ST1EMB<SQTPP_MNT_STGS>\n_|::|SQTPP_MNT_STGS<STGS:\n__|::|STGS<:\n<STGS:S:\nnone:|:>\n_|:|:|SQTPP_MNT_STGS>\n' + self._sf_rLstB[1]
                     else: self._sf_sRtrn = -2
                 else: self._sf_sRtrn = -1
+            if mode == 10:
+                if self._sf_sRtrn == None:
+                    return 1
+                else:
+                    return self._sf_sRtrn
             if self._sf_sRtrn == None:
-                if mode != 2 and mode != 9:
+                if mode != 2 and mode != 9 and mode != 10:
                     if dir[0] == 'SQTPP_MNT_STGS':
                         return -16
                 elif mode == 2:
@@ -3650,9 +3708,9 @@ class SqtppFncs(Sqtpp):
             if self._sf_sRtrn < 0: self._sf_sStrX = self._sf_rStrA
             if rstSlt: self.sqtpp_reset_slots(False)
             return self._sf_sRtrn
-        except Exception as err_emb_vfs_director:
-            self._sf_sRtrn = -3
-            return -3
+        #except Exception as err_emb_vfs_director:
+            #self._sf_sRtrn = -3
+            #return -3
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_mkdir(self, nwMnt: bool, dir: list, src):
@@ -4064,6 +4122,33 @@ class SqtppFncs(Sqtpp):
             return dirSrc[self._sf_rIntA:self._sf_rIntB+4]
         else:
             return None
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_ext_vfs_read_file(self, dirLst: list):
+        # <<<
+        # returns: (Returns file str source or None; or Exception)
+        self._sf_rStrB = self.sqtpp_emb_ext_vfs_get_mnt(True, [dirLst[0]])
+        if self._sf_rStrB != None:
+            self._sf_rStrC = self.sqtpp_emb_ext_vfs_get_dir(dirLst[1], self._sf_rStrB)
+            if self._sf_rStrC != None:
+                self._sf_rStrD = self.sqtpp_emb_ext_vfs_get_file(dirLst[2], self._sf_rStrC)
+                if self._sf_rStrD != None:
+                    return self._sf_rStrD
+                else:
+                    if dirLst[0] == 'SQTPP_MNT_STGS' and dirLst[1] == 'STGS' and dirLst[2] == 'STGS':
+                        raise Exception(f'[sqtpp-vfs >> pojishon] - settings file: unable to read settings file (SQTPP_MNT_STGS/STGS) a settings mnt/dir/file is crucial for several pojishon embedded vfs-dir operations!')
+                    else:
+                        pass
+            else:
+                if dirLst[0] == 'SQTPP_MNT_STGS' and dirLst[1] == 'STGS':
+                    raise Exception(f'[sqtpp-vfs >> pojishon] - settings directory: unable to read settings directory (SQTPP_MNT_STGS/STGS) a settings mnt/dir/file is crucial for several pojishon embedded vfs-dir operations!')
+                else:
+                    pass
+        else:
+            if dirLst[0] == 'SQTPP_MNT_STGS':
+                raise Exception(f'[sqtpp-vfs >> pojishon] - settings mount: unable to read settings mount (SQTPP_MNT_STGS/STGS) a settings mnt/dir/file is crucial for several pojishon embedded vfs-dir operations!')
+            else:
+                pass
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_ext_vfs_set_file_list(self, isCmpltd: bool, dirNm: str, dirSrc: str):
