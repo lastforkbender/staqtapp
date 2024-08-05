@@ -4,7 +4,7 @@
 _______________________________________________________________________________________
       STAQTAPP V1.2 IMPORT FUNCTIONS USAGE:
       
-      UPDATED: SUN, AUG4 2024
+      UPDATED: MON, AUG5 2024
       
       
       
@@ -330,11 +330,12 @@ ________________________________________________________________________________
       
       Example: sqtpp.pojishon("next.omega.setfreq", src_data, src_name, ['mnt','dir'])
       
-      NEXT:  
+      NEXT:
+      
         (1) ("next", required, required, required), makes new mount, new directory
             and a new file. *Of no dot refrence instructions and has no optionals.
             
-        (2) ("next.cast.", non-required, non-required, required), copies last env-
+        (2) ("next.cast.*", non-required, non-required, required), copies last env-
             var(s) file added to a new directory. *dirList[0] argument string must
             match the last mount name used or throws a mount placement exception;
             and argument dirList[1] does not match last directory used. If new dir
@@ -342,10 +343,28 @@ ________________________________________________________________________________
             
         
       OPTIONALS:
+      
         *setfreq, removefreq, retag and quantumf CANNOT be combined optionals
         *quantumf is a READ ONLY optional from an auto-generated slots module
         
-        open(varDt=list, occurence=#[index]) | open(varNm=list, occurence=#[index])
+        (1) .open(varDt=list, occurence=#[index]) | open(varNm=list, occurence=#[index])
+            If @varDt then requires @qp(...): normal staqtapp env-var data tagging. This
+            will cause staqtapp to search for qp tagged env-var data from @varDt and then
+            compare it to the env-var data being set in a directory. If there is a match
+            in data sequence, anywhere of the new set dir/file data compared against the
+            @varDt found in stored qp tagged env-var(s), then those qp tagged env-var(s)
+            take on any further compared/found data of a same. The same for @varNm choice
+            however the search & find method is based upon matching a naming category. If
+            this option instructed from a pojishon next command and is an omega pojishon
+            next dot command involved then occurence is ignored. Occurence argument tells
+            staqtapp of a specific super length order and must be present, as a list. The
+            index value(s) as int, whereof any search & found happens then index value is
+            max length the new data will be added to the qp tagged env-var(s). If you are
+            to bypass this argument then occurence=['*'] will do so but not the same as a
+            omega pojishon next command that auto involves certain locking properties for
+            stored qp tagged env-vars, outside the embedded mount/directory/files edits.
+            (NOT YET IMPLEMENTED)
+            
         closed(varNm=str, start=#, end=#) | closed(varNm=list, start=#, end=#)
         compare(varDt=str, dirLst=list, freq=str) | compare(varDt=list, dirLst=list, freq=str)
         cache(varNm=str, occurence=#) | cache(varNm=list, occurence=#[index])
