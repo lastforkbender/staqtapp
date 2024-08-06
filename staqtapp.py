@@ -1,11 +1,14 @@
-#QPython 3SE / Row4 / staqtapp.py (4,314 lines) / 2:22 Sun, Aug 4
-
-
-############] This py module's authentic/original coding is secured by AHS [############
+#QPython 3SE / Row4 / staqtapp.py (4,378 lines) / 9:42 Tue, Aug 6
 
 
 
-#Staqtapp-v1.2.306 | Hybrid VFS ENV-VAR Library
+
+########] This py module's authentic/original coding is secured by AHS [########
+
+
+
+
+#Staqtapp-v1.2.309 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
 # <<<
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -22,17 +25,21 @@
 
 
 
-# UPDATE SUN, AUG4: More coding done for sqtpp_emb_vfs_pojishon() env-var features.
-#                   Added 'next.cast.?' mode for pojishon next commands on vfs env-
-#                   var files uses. Pojishon features for Staqtapp 1.2 version are
-#                   of needing to be exact, bug-free and require complete testing.
+# UPDATE TUE, AUG6: More coding done for sqtpp_emb_vfs_pojishon() env-var features.
+#                   Added read & write settings functions for pojishon env-var file
+#                   uses in sequence of the type cache settings that will be done.
+#                   Very careful testing is being implemented of these updates to
+#                   avoid slots attr entaglements and other expansions needed.
 
+#                   See IMPORT_CALLS.TXT
 
 #_______________________________________________________________________________________
 # SQTPP V1.2 HYBRID VFS ENV-VAR LIBRARY DESCRIPTION:
 
 
-# ***Staqtapp 1.2 currently has 25 callable import functions. See IMPORT_CALLS.TXT***
+# ***Staqtapp 1.2 currently has 25 callable import functions. This vfs type env-var lib
+# is a powerful all in one module for env-vars. See IMPORT_CALLS.TXT before using***
+
 
 
 # A rework of the original Staqtapp env-vars library. Uses a vfs system for both tqpt,
@@ -41,6 +48,32 @@
 # set the vfs dir path to a tqpt variables file & all else handled with min param use.
 # (A vfs staqtapp 1.2 file must be created first. Auto sets the tqpt vars set path.)
 
+# . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+
+
+
+# Building a proper python operating system? You'll need this vfs env-var library!!!
+
+# Four reasons: A strong caching/removing cycles that this library provides @stalkvar
+# and it's special lockvar and keyvar integrations with @findvar_stx involved. Second
+# is a absolute need of a env-var library that has strict I/O formats for reading and
+# writing env-var data. Staqtapp applies that with unique qp data tagging throughout
+# all it's main functions related. *Needs to be slots performance for type safety and
+# other important factors. Lastly, the @pojishon() features with the custom tree type
+# env-vars this library has? Eliminates a over complex interface situation you would
+# have to do with less capable env-var libraries & prone to data manipulation errors.
+# And don't forget all this and much more for such a thing is all coded in one module.
+
+# In all, using other env-var library would be a huge mistake that would pile up fast.
+# You can absolute trust me on this one, I'm from the future. And why I'm seeking to
+# build this carefully of those exact features a person or group would need. No joke.
+# The goal now is to round off Staqtapp 1.2's pojishon features before 2025, with all
+# the pojishon env-var file based features directly related to OS layering operations
+# that can keep the vfs file(s) mnts/dirs/files safe from multi-processing mishaps.
+
+
+
+# . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 # This env-var library has features included for simulations in q-bit computing via
 # stalkvar(), joinvars(), changevar(), addtree_stx(), addbranch_stx(), getbranch_stx(),
@@ -646,7 +679,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.306\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.309\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1545,7 +1578,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.306\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.309\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3432,7 +3465,7 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#    /.__/  __/._/_  __//._  /_._  _//.//  /_._  __/._/_  _/./  _/./  _/./  /.__/
+#  /.__/  __/._/_  __//._  /_._  _//.//  /_._  __/._/_  _/./  _/./  _/./  /.__/
 #  _/./  __/.//  __/._/_  _//.//  _/./__  /.__/  _//.//  _././_  /_._  .//_/
 #  __//._  /.__/  __/._/_  /_._  __/.//  _/./  .//_/  /.__/  _././_  _/./  /.__/
 #  .//_/  _/./  .//_/  __/._/_  /_._  _/./__  __/._/_  /_._  _././_  __//._
@@ -3573,7 +3606,8 @@ class SqtppFncs(Sqtpp):
         # returns: ()
         rtrn = 1
         if dsg == 1: # Reads SQTPP_MNT_STGS/STGS file, returns last used mnt/dir/*file list
-            self._sf_sVd = self.sqtpp_emb_ext_vfs_read_file(dirLst)
+            self._sf_sVd = self.sqtpp_emb_ext_vfs_read_file(['SQTPP_MNT_STGS','STGS','STGS'])
+            self._sf_sDv = self._sf_sVd
             self._sf_sVd = self._sf_sVd.replace(f'<{dirLst[2]}:S:\n','').replace(':|:>','')
             if self._sf_sVd != 'none':
                 self._sf_rLstB = re.findall(r'lfd\=.*?\;', self._sf_sVd)
@@ -3593,11 +3627,13 @@ class SqtppFncs(Sqtpp):
         if dsg == 1: # New mount; new dir and a new env-var(s) file.
             rtrn = self.sqtpp_emb_vfs_router(False, True, True, 1, dirLst, None, None)
             if rtrn > 0: rtrn = self.sqtpp_emb_vfs_router(False, False, False, 5, dirLst, None, [varNm,varDt])
-            if rtrn > 0: rtrn = self.sqtpp_emb_vfs_router(True, False, False, 9, None, None, None)
+            if rtrn > 0:
+                self.sqtpp_emb_vfs_pojishon_write_stgs(1, [dirLst[0], dirLst[1], varNm])
+                rtrn = self.sqtpp_emb_vfs_router(True, False, False, 9, None, None, None)
         elif dsg == 2: # Copy env-var(s) file to new dir from last added file
                 rtrn = self.sqtpp_emb_vfs_router(False, True, False, 10, None, None, None)
                 if rtrn > 0:
-                    fncLst = self.sqtpp_emb_vfs_pojishon_read(1, ['SQTPP_MNT_STGS','STGS','STGS'])
+                    fncLst = self.sqtpp_emb_vfs_pojishon_read(1, None)
                     if isinstance(fncLst, int):
                         return fncLst
                     else:
@@ -3607,13 +3643,39 @@ class SqtppFncs(Sqtpp):
                                 if self.sqtpp_emb_ext_vfs_fnd_dir_in_mnt([fncLst[0], dirLst[1]]) == -1:
                                     rtrn = self.sqtpp_emb_vfs_router(False, False, False, 1, dirLst, None, None)
                                 if rtrn > 0: rtrn = self.sqtpp_emb_vfs_router(False, False, False, 6, fncLst, [dirLst[len(dirLst)-1]], None)
-                                if rtrn > 0: rtrn = self.sqtpp_emb_vfs_router(True, False, False, 9, None, None, None)
+                                if rtrn > 0:
+                                    self.sqtpp_emb_vfs_pojishon_write_stgs(1, [fncLst[0], dirLst[len(dirLst)-1], fncLst[2]])
+                                    rtrn = self.sqtpp_emb_vfs_router(True, False, False, 9, None, None, None)
                             else:
                                 raise Exception(f'[sqtpp-vfs >> pojishon] - directory placement err: directory ({dirLst[1]}) is the same directory of last used directory ({fncLst[1]}) for cast')
                         else:
                             raise Exception(f'[sqtpp-vfs >> pojishon] - mount placement err: mount ({dirLst[0]}) does not match last used mount ({fncLst[0]}) for cast')
                 else: self.sqtpp_emb_vfs_pojishon_err_router_rtrn(rtrn)
         return rtrn
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_op_open(self, varDt, varNm, ocr):
+        # <<<
+        # returns:
+        if varDt != None:
+            pass
+        else:
+            pass
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_write_stgs(self, dsg: int, dirLst: list):
+        # <<<
+        # returns: (none)
+        if dsg == 1: # Last file added path.
+            if self._sf_sDv.find('__|::|STGS<:\n<STGS:S:\nnone:|:>') > -1: self._sf_sStrX = self._sf_sStrX.replace('_|::|SQTPP_MNT_STGS<STGS:\n__|::|STGS<:\n<STGS:S:\nnone:|:>', '_|::|SQTPP_MNT_STGS<STGS:\n__|::|STGS<:\n<STGS:S:\nlfd=' + '/'.join(dirLst) + ';:|:>')
+            else:
+                self._sf_rLstB = re.findall(r'lfd=.*?;', self._sf_sDv)
+                self._sf_rStrB = self._sf_sDv
+                if len(self._sf_rLstB) > 0: self._sf_sDv = self._sf_sDv.replace(self._sf_rLstB[0], f'lfd={"/".join(dirLst)};')
+                else:
+                    self._sf_sDv = self._sf_sDv.replace(':|:>','')
+                    self._sf_sDv = self._sf_sDv + '\nlfd=' + '/'.join(dirLst) + ';:|:>'
+                self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrB, self._sf_sDv)
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_err_rtrn(self, mode: str, errCd: int) -> int:
@@ -3704,6 +3766,8 @@ class SqtppFncs(Sqtpp):
                     self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
                     self.sqtpp_reset_slots(False)
                     self._sf_sStrX = None
+                    self._sf_sVd = None
+                    self._sf_sDv = None
                     return 1
             if self._sf_sRtrn < 0: self._sf_sStrX = self._sf_rStrA
             if rstSlt: self.sqtpp_reset_slots(False)
@@ -4126,7 +4190,8 @@ class SqtppFncs(Sqtpp):
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_ext_vfs_read_file(self, dirLst: list):
         # <<<
-        # returns: (Returns file str source or None; or Exception)
+        # returns: (Returns file str source, specific mnt|dir|file error string, or a STGS Exception)
+        errStr = None
         self._sf_rStrB = self.sqtpp_emb_ext_vfs_get_mnt(True, [dirLst[0]])
         if self._sf_rStrB != None:
             self._sf_rStrC = self.sqtpp_emb_ext_vfs_get_dir(dirLst[1], self._sf_rStrB)
@@ -4137,18 +4202,17 @@ class SqtppFncs(Sqtpp):
                 else:
                     if dirLst[0] == 'SQTPP_MNT_STGS' and dirLst[1] == 'STGS' and dirLst[2] == 'STGS':
                         raise Exception(f'[sqtpp-vfs >> pojishon] - settings file: unable to read settings file (SQTPP_MNT_STGS/STGS) a settings mnt/dir/file is crucial for several pojishon embedded vfs-dir operations!')
-                    else:
-                        pass
+                    else: errStr = '!FILE_.:_:!!:_:._FILE!'
             else:
                 if dirLst[0] == 'SQTPP_MNT_STGS' and dirLst[1] == 'STGS':
                     raise Exception(f'[sqtpp-vfs >> pojishon] - settings directory: unable to read settings directory (SQTPP_MNT_STGS/STGS) a settings mnt/dir/file is crucial for several pojishon embedded vfs-dir operations!')
-                else:
-                    pass
+                else: errStr = '!DIR_.:_:!!:_:._DIR!'
         else:
             if dirLst[0] == 'SQTPP_MNT_STGS':
                 raise Exception(f'[sqtpp-vfs >> pojishon] - settings mount: unable to read settings mount (SQTPP_MNT_STGS/STGS) a settings mnt/dir/file is crucial for several pojishon embedded vfs-dir operations!')
-            else:
-                pass
+            else: errStr = '!MNT_.:_:!!:_:._MNT!'
+        if errStr != None:
+            return errStr
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_ext_vfs_set_file_list(self, isCmpltd: bool, dirNm: str, dirSrc: str):
