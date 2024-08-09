@@ -4,7 +4,7 @@
 _______________________________________________________________________________________
       STAQTAPP V1.2 IMPORT FUNCTIONS USAGE:
       
-      UPDATED: MON, AUG5 2024
+      UPDATED: THU, AUG8 2024
       
       
       
@@ -326,11 +326,9 @@ ________________________________________________________________________________
       use across many vfs directories & files for any circumstances needed, making -
       Staqtapp 1.2 the most versatile env-vars py module publicly available. Some of
       these dot functional modes include integration with normal sqtpp env-var uses.
-      *If dot optionals have no arguments then Staqtapp auto-assigns most recent.
       
-      Example: sqtpp.pojishon("next.omega.setfreq", src_data, src_name, ['mnt','dir'])
       
-      NEXT:
+      |||||||| NEXT ||||||||
       
         (1) ("next", required, required, required), makes new mount, new directory
             and a new file. *Of no dot refrence instructions and has no optionals.
@@ -342,12 +340,31 @@ ________________________________________________________________________________
             @dirList[1] is not currently a dir in mnt then will add the new dir.
             
         
-      OPTIONALS:
+      |||||||| OPTIONALS ||||||||
       
-        *setfreq, removefreq, retag and quantumf CANNOT be combined optionals
-        *quantumf is a READ ONLY optional from an auto-generated slots module
+        ***arguments separator must be ";" not "," or will result in exceptions
+           and any use of ; in a 'string' also results in exceptions, see below
         
-        (1) .open(varDt=list, occurence=#[index]) | open(varNm=list, occurence=#[index])
+        ***optional's params all string and requiring normal type declarations,
+           if list required param then list=[..., ...] with the brackets and
+           all else also string for #, str or #[index] a number list needed;
+           if is a string or string list then use of ' is needed between "
+           meaning cannot use ; or ' in a 'str', is formed by ast literals
+          
+           EXAMPLE:
+           ("next.cast.open(['@qp(flayz,ebny1X):', '@qp(flayz,thck2X):']; [4,5,6])", ...
+           
+        ***if a raised exception happens with parsing or instructions from an
+           optional, the dot commands before it already done and saved to the
+           .sqtpp vfs file; Staqtapp 1.2 does not do backups paging of those
+           .sqtpp vfs file(s) rather is placed to a programmer's own decisions
+           and is not recommended to use next.remove for repeating any undos
+           in that all pojishon os/vfs type commands multi-linked error check;
+           is a fast lego style dir/file system but such things to be avoided
+        
+        
+        (1) .open(varDt=list; occurence=#[index]) | open(varNm=list; occurence=#[index])
+        
             If @varDt then requires @qp(...): normal staqtapp env-var data tagging. This
             will cause staqtapp to search for qp tagged env-var data from @varDt and then
             compare it to the env-var data being set in a directory. If there is a match
@@ -363,16 +380,20 @@ ________________________________________________________________________________
             to bypass this argument then occurence=['*'] will do so but not the same as a
             omega pojishon next command that auto involves certain locking properties for
             stored qp tagged env-vars, outside the embedded mount/directory/files edits.
+            *This option will bypass scanning qp tagged data on a globe var, KLF__DSG var,
+            smv tree var, darkvar, st1_atlaspice var(runnable lambda str) and any corevar.
+            All six are special env-vars of Staqtapp1.2's parsing methods and are skipped.
             (NOT YET IMPLEMENTED)
+        
             
-        closed(varNm=str, start=#, end=#) | closed(varNm=list, start=#, end=#)
-        compare(varDt=str, dirLst=list, freq=str) | compare(varDt=list, dirLst=list, freq=str)
-        cache(varNm=str, occurence=#) | cache(varNm=list, occurence=#[index])
-        seal(dirLst=list, match=str, freq=str, type=unlocked=0|locked=1)
-        setfreq(varNm=str, dirLst=list, occurence=#) | setfreq(varNm=list, dirLst=list, occurence=#[index])
-        removefreq(varNm=str, dirLst=list, freq=str) | removefreq(varNm=list, dirLst=list, freq=str)
-        retag(varDt=str, freq=str, span=#, removeat=#) | retag(varDt=list, freq=str, span=#[index], removeat=#[index])
-        quantumf(varNm=str, dirLst=list, span=#) | quantumf(varNm=list, dirLst=list, span=#[index])
+        closed(varNm=str; start=#; end=#) | closed(varNm=list; start=#; end=#) --> NOT YET IMPLEMENTED
+        compare(varDt=str; dirLst=list; freq=str) | compare(varDt=list; dirLst=list; freq=str) --> NOT YET IMPLEMENTED
+        cache(varNm=str; occurence=#) | cache(varNm=list; occurence=#[index]) --> NOT YET IMPLEMENTED
+        seal(dirLst=list; match=str; freq=str; type=unlocked=0|locked=1) --> NOT YET IMPLEMENTED
+        setfreq(varNm=str; dirLst=list; occurence=#) | setfreq(varNm=list; dirLst=list; occurence=#[index]) --> NOT YET IMPLEMENTED
+        removefreq(varNm=str; dirLst=list; freq=str) | removefreq(varNm=list; dirLst=list; freq=str) --> NOT YET IMPLEMENTED
+        retag(varDt=str; freq=str; span=#; removeat=#) | retag(varDt=list; freq=str; span=#[index]; removeat=#[index]) -->  NOT YET IMPLEMENTED
+        quantumf(varNm=str; dirLst=list; span=#) | quantumf(varNm=list; dirLst=list; span=#[index]) --> NOT YET IMPLEMENTED
  
  
 ----> modrev9(prmsLst), builds a complete custom env-var module. @prmsLst elements
