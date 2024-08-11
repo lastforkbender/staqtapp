@@ -9,7 +9,7 @@
 
 
 #Staqtapp-v1.2.322 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
-# <<<
+# <<< [qc-apps@xprize.org]
 #//////////••        .                           .
 #/////////••                 .                                   •
 #////////••    .                                        •            
