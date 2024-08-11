@@ -4,7 +4,7 @@
 _______________________________________________________________________________________
       STAQTAPP V1.2 IMPORT FUNCTIONS USAGE:
       
-      UPDATED: THU, AUG8 2024
+      UPDATED: SUN, AUG11 2024
       
       
       
@@ -352,7 +352,7 @@ ________________________________________________________________________________
            meaning cannot use ; or ' in a 'str', is formed by ast literals
           
            EXAMPLE:
-           ("next.cast.open(['@qp(flayz,ebny1X):', '@qp(flayz,thck2X):']; [4,5,6])", ...
+           ("next.cast.open(['@qp(data1,1X):', '@qp(data2,2X):']; [3,4,5,6])", ...
            
         ***if a raised exception happens with parsing or instructions from an
            optional, the dot commands before it already done and saved to the
@@ -370,7 +370,12 @@ ________________________________________________________________________________
             compare it to the env-var data being set in a directory. If there is a match
             in data sequence, anywhere of the new set dir/file data compared against the
             @varDt found in stored qp tagged env-var(s), then those qp tagged env-var(s)
-            take on any further compared/found data of a same. The same for @varNm choice
+            take on any further compared/found data of a same. Will add to the qp tagged
+            env-var(s), from the file, starting at the end index of find up to a newline
+            encountered or the char scanning method finds a char set of ":|:". If there
+            is commas found from the scanning then is separated into @qp(...): taggings.
+            Char sequence ":|:" marks the end of a file and if no newline encountered is
+            an add all data until end of file. The same for @varNm choice env-var search
             however the search & find method is based upon matching a naming category. If
             this option instructed from a pojishon next command and is an omega pojishon
             next dot command involved then occurence is ignored. Occurence argument tells
