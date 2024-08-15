@@ -1,4 +1,4 @@
-#QPython 3SE / Row4 / staqtapp.py (4,549 lines) / 5:15 Tue, Aug 13
+#QPython 3SE / Row4 / staqtapp.py (4,635 lines) / 8:05 Wed, Aug 14
 
 
 
@@ -8,7 +8,7 @@
 
 
 
-#Staqtapp-v1.2.323 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
+#Staqtapp-v1.2.331 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
 # <<< [qc-apps@xprize.org]
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -25,11 +25,14 @@
 
 
 
-# UPDATE TUE, AUG13: More coding done for sqtpp_emb_vfs_pojishon() env-var features.
-#                    Spider method sqtpp_emb_vfs_pojishon_row_spdr() added for open
-#                    optional; for deep pojishon file paging request into tqpt-vars.
-#                    (Also needed for several other never before seen env-vars use,
-#                    including the quantumf optional in sync with darkvars and svm)
+# UPDATE WED, AUG14: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
+#                    Optional open with param option @varDt is completed and passed
+#                    all required testing. Allows cross insertion of file data being
+#                    added @ a vfs-dir into tqpt stack env-var(s) with matching. As
+#                    powerful os style paging dynamics done with slots performance.
+#                    Param option via @varNm match & insert not yet implemented. Is
+#                    much more involved now and clear precise testing is paramount
+#                    for these advanced mount/directory/file(s) env-var(s) features.
 
 #                    See IMPORT_CALLS.TXT
 
@@ -166,6 +169,8 @@ class Sqtpp():
         # vfs file system for custom operations. See IMPORT_CALLS.TXT for mode usage.
         sfCls = SqtppFncs()
         self._sRtrn = sfCls.sqtpp_emb_vfs_pojishon(mode, varDat, varNm, dirLst)
+        if isinstance(self._sRtrn, bool):
+            return self._sRtrn
         if isinstance(self._sRtrn, int):
             if self._sRtrn == -1: self.mcf_err_handler(48, 'pojishon')
             elif self._sRtrn == -2: self.mcf_err_handler(49, 'pojishon')
@@ -656,7 +661,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.323\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.331\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1558,7 +1563,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.323\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.331\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3446,45 +3451,45 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#  _/./__  /_._  __//._  .//_/  _//.//  _/./__  /.__/  /.__/  /.__/  _/./__
-#  _/./__  _/./  __//._  _././_  _//.//  __/.//  _/./  /.__/  _/./  _//.//  /.__/
-#  _././_  __//._  _//.//  _././_  /_._  __//._  .//_/  _././_  /_._  _././_
-#  _//.//  /.__/  __/.//  __//._  _/./  /_._  _././_  /.__/  _././_  __//._
-#  _//.//  __/.//  __/.//  __/._/_  _//.//  __/.//  /_._  _//.//  _/./__  __/.//
-#  _/./  /_._  _/./  /.__/  .//_/  _/./  /_._  __/._/_  __/.//  _/./__  /.__/
-#  /_._  _././_  _/./  _././_  _//.//  __/._/_  /_._  _/./  _././_  .//_/
-#  __/._/_  _/./  __//._  _//.//  /_._  __/.//  .//_/  _/./  _././_  __/._/_
-#  __/._/_  .//_/  .//_/  _/./  /_._  .//_/  .//_/  /_._  _//.//  __/.//  _././_
-#  _/./  _././_  __/._/_  _//.//  _//.//  __//._  __//._  /.__/  __/._/_  __/.//
-#  _././_  .//_/  _/./  __/._/_  _//.//  _/./__  .//_/  _././_  __/._/_  /.__/
-#  __/._/_  _././_  __/.//  _././_  __//._  __/._/_  /_._  __/.//  .//_/  _/./__
-#  /.__/  __/.//  __/.//  __/._/_  /_._  /.__/  /.__/  __//._  .//_/  __//._
-#  /.__/  .//_/  _//.//  _/./  _././_  _/./__  _././_  /.__/  __/.//  /_._
-#  __/.//  __/._/_  _/./__  _/./__  __/._/_  _././_  __/.//  __/.//  _//.//  /_._
-#  __//._  _././_  _/./  _/./  _/./__  _/./__  __//._  __/.//  _././_  /_._  _/./
-#  _/./  _/./__  .//_/  _././_  _/./__  _//.//  _././_  __//._  /.__/  .//_/
-#  _/./  _/./__  __//._  __/._/_  _/./  _/./  _//.//  __//._  /_._  __/._/_
-#  __//._  __//._  _././_  /.__/  _/./  __/.//  /.__/  __/.//  _/./  _/./__
-#  /.__/  __/.//  __/.//  /.__/  /_._  /_._  __//._  .//_/  __/.//  _/./  _././_
-#  __/._/_  __/.//  _././_  /.__/  __/.//  _././_  .//_/  /.__/  __/.//  _/./
-#  __//._  _/./__  /_._  _/./__  __/._/_  _././_  _//.//  __/._/_  /.__/  /.__/
-#  /.__/  _//.//  /.__/  __/._/_  _//.//  __//._  .//_/  /.__/  /.__/  _//.//
-#  /.__/  __/.//  _/./  _/./__  .//_/  _//.//  __/._/_  _/./  _/./__  _//.//
-#  __/.//  /_._  _././_  _././_  __//._  _//.//  /.__/  _//.//  _//.//  __//._
-#  /_._  __//._  _/./__  __/._/_  .//_/  .//_/  /.__/  _././_  /.__/  /_._
-#  _//.//  _././_  _/./  __/._/_  /.__/  _/./  __/.//  _//.//  _/./__  .//_/
-#  __//._  __//._  /_._  _/./  _//.//  .//_/  /_._  _/./__  _/./  __/.//  _/./__
-#  __//._  _//.//  _//.//  _/./__  /.__/  __/.//  _//.//  _//.//  _././_  /.__/
-#  _././_  /.__/  _/./  _/./__  __/.//  .//_/  /_._  _/./__  _/./__  .//_/
-#  __/._/_  __/.//  __/._/_  _//.//  __//._  _/./__  _//.//  /.__/  __/._/_
-#  .//_/  _/./__  .//_/  /.__/  /.__/  __//._  /.__/  __//._  _././_  _././_
-#  .//_/  .//_/  _/./__  /.__/  _/./__  _././_  __//._  __/.//  _/./  __/.//
-#  .//_/  __//._  _/./__  /.__/  .//_/  .//_/  __/._/_  _././_  .//_/  .//_/
-#  /_._  .//_/  __//._  _/./__  _././_  _/./__  /.__/  __/._/_  _/./__  __/.//
-#  _././_  _/./__  /_._  _/./__  __/._/_  __/.//  .//_/  _/./__  _/./  .//_/
-#  /_._  /.__/  _//.//  __/._/_  /_._  __/._/_  _/./  _/./  /_._  _/./  __/._/_
-#  _././_  _/./  _/./__  __/.//  _//.//  /.__/  __/.//  __/._/_  _//.//  __/._/_
-#  /.__/  .//_/  /_._  /.__/  __//._  _././_
+#  _/./__  /.__/  _//.//  __/.//  /_._  __/._/_  _//.//  __/._/_  _/./__
+#  __//._  /_._  /_._  __//._  /.__/  _././_  _//.//  _//.//  /.__/  /.__/
+#  __//._  __//._  _/./__  /_._  __//._  _/./  _/./__  __/.//  .//_/  /_._  .//_/
+#  /_._  /.__/  __/.//  _/./__  _/./__  __//._  _././_  /_._  _/./__  /.__/
+#  __//._  _//.//  .//_/  _/./  /_._  _/./  _/./__  /_._  __/.//  _././_  __//._
+#  /.__/  __/.//  __/._/_  __/.//  _/./  /.__/  __/.//  .//_/  _././_  _/./__
+#  __/._/_  __/._/_  _/./  _/./__  .//_/  __/._/_  _././_  __/.//  _/./  _/./
+#  /_._  _/./  /.__/  .//_/  .//_/  __/._/_  /.__/  _/./  _/./  /.__/  __//._
+#  .//_/  _/./__  /_._  _//.//  .//_/  __//._  _/./  .//_/  .//_/  __/.//  _/./
+#  __/._/_  _//.//  _/./  _/./  _/./  .//_/  _//.//  __/.//  _//.//  __/._/_
+#  _/./__  .//_/  /_._  _//.//  _//.//  __/._/_  _//.//  __//._  _././_  .//_/
+#  __/.//  _././_  /.__/  __/.//  /.__/  _././_  /.__/  __//._  _/./__  _././_
+#  __/._/_  __//._  _././_  __/.//  /_._  _//.//  __//._  __/._/_  /.__/  /_._
+#  __/._/_  __//._  _/./  __/._/_  /.__/  __/.//  _//.//  __/.//  __/._/_  __/.//
+#  _/./  _/./  __//._  _/./  _/./__  __/._/_  _/./  _././_  _/./  _//.//  __/.//
+#  _././_  _/./__  __//._  /.__/  _/./  __/._/_  _/./__  _/./  __//._  .//_/
+#  __/._/_  __//._  /_._  __//._  .//_/  _/./__  _././_  _/./__  __//._  /.__/
+#  /.__/  __/.//  _//.//  __/.//  _//.//  /.__/  _/./  _/./__  _././_  __/._/_
+#  __//._  _//.//  __/.//  .//_/  _/./  .//_/  _/./__  _//.//  __/._/_  /.__/
+#  .//_/  /.__/  __//._  __/._/_  /.__/  __//._  _//.//  __//._  .//_/  /.__/
+#  _//.//  .//_/  __/.//  __//._  /.__/  _//.//  __/.//  .//_/  _//.//  _././_
+#  /_._  .//_/  _././_  .//_/  __/.//  __/._/_  __//._  _././_  __/.//  __/.//
+#  __//._  _/./__  __/._/_  _//.//  _//.//  .//_/  .//_/  _././_  _//.//  _././_
+#  _/./  __/.//  _/./__  _././_  __//._  __//._  __/._/_  .//_/  /_._  /_._
+#  _././_  _/./  __/.//  __/.//  __/.//  .//_/  /.__/  _//.//  _././_  __/.//
+#  _././_  /.__/  __//._  __/._/_  _/./__  _//.//  _/./__  _//.//  __/._/_  _/./
+#  _/./  __//._  _//.//  __/._/_  _/./__  /_._  _././_  _././_  __//._  _/./
+#  __//._  _././_  __/.//  __//._  _//.//  _././_  _//.//  __/.//  .//_/  __/._/_
+#  _././_  __/.//  /.__/  /_._  /.__/  .//_/  .//_/  /.__/  _././_  _/./__  /_._
+#  _././_  _/./  __/._/_  _/./  __/.//  .//_/  _././_  .//_/  __//._  __//._
+#  .//_/  __//._  /_._  _/./  __//._  __/._/_  /.__/  .//_/  .//_/  __//._
+#  __/._/_  _//.//  /.__/  _/./  .//_/  __//._  _/./__  _/./  _/./__  __/._/_
+#  __/.//  .//_/  /_._  __/.//  _/./  _/./  /.__/  __/.//  _/./__  __/._/_
+#  __/._/_  _//.//  _/./  /_._  /.__/  _//.//  .//_/  _././_  /_._  /_._  /_._
+#  _././_  __/._/_  _././_  /.__/  /.__/  /.__/  /.__/  __/.//  _././_  .//_/
+#  __/._/_  __//._  /.__/  __/._/_  _././_  /_._  _/./__  /.__/  /.__/  /_._
+#  _/./__  __//._  .//_/  /_._  _/./__  __//._  __/._/_  /_._  __/._/_  /.__/
+#  __//._  __//._  __//._  __//._  .//_/  __/._/_  _//.//  _//.//  _//.//  _//.//
+#  _/./__  _././_  __//._  _././_  _././_  _//.//  /_._  .//_/
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon(self, mode: str, varDt, varNm, dirLst: list):
@@ -3560,7 +3565,8 @@ class SqtppFncs(Sqtpp):
             #______________________________OPTIONALS_________________________________
             if len(vfsEmbEfo) == 3 and optAplc and rtrn == 1:
                 self.sqtpp_emb_vfs_pojishon_set_optional_list(vfsEmbEfo[2])
-                if self._sf_rLstD[0] == 'open': self.sqtpp_emb_vfs_pojishon_opt_open()
+                if self._sf_rLstD[0] == 'open':
+                    return self.sqtpp_emb_vfs_pojishon_opt_open()
             return rtrn
         #except Exception as err_emb_vfs_pojishon:
             #self._sErr = f'staqtapp1.2 (emb_vfs_pojishon) error: {err_emb_vfs_pojishon}'
@@ -3655,9 +3661,12 @@ class SqtppFncs(Sqtpp):
         return rtrn
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
-    def sqtpp_emb_vfs_pojishon_opt_open(self):
+    def sqtpp_emb_vfs_pojishon_opt_open(self) -> bool:
         # <<<
-        # returns:
+        # No artificial here -> a very exact level 5,000 vfs env-vars library feature.
+        # returns: (True or False)
+        swVarDt = False
+        swOcrBp = False
         try:
             self._sf_rLstB = ast.literal_eval(self._sf_rLstD[1])
         except Exception as open_opt_param1_err:
@@ -3666,7 +3675,97 @@ class SqtppFncs(Sqtpp):
             self._sf_rLstC = ast.literal_eval(self._sf_rLstD[2])
         except Exception as open_opt_param2_err:
             raise Exception(f'[sqtpp-vfs >> pojishon] - open optional param2/ast conversion err: {open_opt_param2_err}, "{self._sf_rLstD[2]}"')
-        self.sqtpp_emb_vfs_pojishon_opt_tqpt_search(True, True, True, self._sf_rLstB)
+        self._sf_rIntB = len(self._sf_rLstB)
+        self._sf_rIntA = 0
+        self._sf_rIntC = 0
+        if self._sf_rIntB > 0:
+            if isinstance(self._sf_rLstB, list):
+                while self._sf_rIntA < self._sf_rIntB:
+                    if isinstance(self._sf_rLstB[self._sf_rIntA], str):
+                        if self._sf_rLstB[self._sf_rIntA].find('@qp(') > -1 and self._sf_rLstB[self._sf_rIntA].find('):') > -1: self._sf_rIntC+=1
+                    else:
+                        raise Exception('[sqtpp-vfs >> pojishon] - open optional param1 list element(s) must be all string type')
+                    self._sf_rIntA+=1
+                if self._sf_rIntC > 0:
+                    if self._sf_rIntC == self._sf_rIntB: swVarDt = True
+                    else:
+                        raise Exception('[sqtpp-vfs >> pojishon] - open optional param1 has @qp(...): tagged search list element(s) for @varDt open find & add, yet is missing proper qp-tagging for all list elements')
+            else:
+                raise Exception('[sqtpp-vfs >> pojishon] - open optional param1 is not a list type, see IMPORT_CALLS.TXT')
+        else:
+            raise Exception('[sqtpp-vfs >> pojishon] - open optional param1 has no list element(s) see IMPORT_CALLS.TXT')
+        self._sf_rIntB = len(self._sf_rLstC)
+        if self._sf_rIntB > 0:
+            if isinstance(self._sf_rLstC, list):
+                if self._sf_rIntB == 1 and isinstance(self._sf_rLstC[0], str):
+                    if self._sf_rLstC[0] == '*': swOcrBp = True
+                else:
+                    self._sf_rIntA = 0
+                    while self._sf_rIntA < self._sf_rIntB:
+                        if not isinstance(self._sf_rLstC[self._sf_rIntA], int):
+                            raise Exception('[sqtpp-vfs >> pojishon] - open optional param2 must be a list of int number(s) for any tqpt env-var data add length cutoff(s) see IMPORT_CALLS.TXT')
+                        self._sf_rIntA+=1
+            else:
+                raise Exception('[sqtpp-vfs >> pojishon] - open optional param2 is not a list type, see IMPORT_CALLS.TXT')
+        else:
+            raise Exception('[sqtpp-vfs >> pojishon] - open optional param2 has no list element(s) see IMPORT_CALLS.TXT')
+        if swVarDt: self._sf_rLstD = self.sqtpp_emb_vfs_pojishon_opt_tqpt_search(True, True, True, self._sf_rLstB)
+        else:
+            # TODO: Search & find by optional param choice @varNm.
+            raise Exception('[sqtpp-vfs >> pojishon] - search & find by optional param choice @varNm not yet implemented')
+        if len(self._sf_rLstD) > 0:
+            self._sf_rIntD = -1
+            self._sf_rStrA = self._sf_sQp
+            self._sf_rIntB = len(self._sf_rLstD)
+            for self._sf_rIntA in range(self._sf_rIntB):
+                self._sf_rLstE = self._sf_rLstD[self._sf_rIntA].split(".>:<.")
+                self._sf_rIntC = int(self._sf_rLstE[0])
+                self._sf_rBoolA = False
+                if self._sf_rLstE[1].find(',') > -1:
+                    self._sf_rLstE = self._sf_rLstE[1].split(',')
+                    self._sf_rBoolA = True
+                else: self._sf_rLstE = [self._sf_rLstE[1]]
+                if swOcrBp: self.sqtpp_emb_vfs_pojishon_opt_open_ext()
+                else:
+                    self._sf_rIntD+=1
+                    if self._sf_rIntD < len(self._sf_rLstC):
+                        if self._sf_rBoolA:
+                            self._sf_rIntF = len(self._sf_rLstE)
+                            for self._sf_rIntE in range(self._sf_rIntF):
+                                try:
+                                    self._sf_rLstE[self._sf_rIntE] = self._sf_rLstE[self._sf_rIntE][0:self._sf_rLstC[self._sf_rIntD]]
+                                    self._sf_rLstE[self._sf_rIntE] = f'@qp({self._sf_rLstE[self._sf_rIntE]}):'
+                                except Exception as opt_opn_ocr_slc_err:
+                                    raise Exception(f'[sqtpp-vfs >> pojishon] - invalid index occurence length({self._sf_rLstC[self._sf_rIntD]}) for an add tqpt env-var data sliced @ length({len(self._sf_rLstE[self._sf_rIntE])})')
+                        else:
+                            try:
+                                self._sf_rLstE[0] = self._sf_rLstE[0][0:self._sf_rLstC[self._sf_rIntD]]
+                                self._sf_rLstE[0] = f'@qp({self._sf_rLstE[0]}):'
+                            except Exception as opt_opn_ocr_slc_err:
+                                raise Exception(f'[sqtpp-vfs >> pojishon] - invalid index occurence length({self._sf_rLstC[self._sf_rIntD]}) for an add tqpt env-var data sliced @ length({len(self._sf_rLstE[0])})')
+                    else: self.sqtpp_emb_vfs_pojishon_opt_open_ext()
+                self._sf_rStrB = self._sf_sLstX[self._sf_rIntC].replace('):>','')
+                if self._sf_rBoolA: self._sf_rStrB = f'{self._sf_rStrB}):{"".join(self._sf_rLstE)}>'
+                else: self._sf_rStrB = f'{self._sf_rStrB}):{self._sf_rLstE[0]}>'
+                self._sf_sQp = self._sf_sQp.replace(self._sf_sLstX[self._sf_rIntC], self._sf_rStrB)
+            self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrA, self._sf_sQp)
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
+            self._sf_sLstX = None
+            self._sf_sSrc = None
+            self._sf_sQp = None
+            return True
+        else:
+            return False
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_opt_open_ext(self):
+        # FNC_ID=ST12-12081513214724
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rIntE, _sf_rIntF, _sf_rLstE)
+        # returns: (none)
+        if self._sf_rBoolA:
+            self._sf_rIntF = len(self._sf_rLstE)
+            for self._sf_rIntE in range(self._sf_rIntF): self._sf_rLstE[self._sf_rIntE] = f'@qp({self._sf_rLstE[self._sf_rIntE]}):'
+        else: self._sf_rLstE[0] = f'@qp{self._sf_rLstE[0]}):'
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_write_stgs(self, dsg: int, dirLst: list):
@@ -3740,97 +3839,90 @@ class SqtppFncs(Sqtpp):
             raise Exception(f'[sqtpp-vfs >> pojishon] - optional err: number of arguments for optional ({self._sf_rLstD[0]}) is invalid, see IMPORT_CALLS.TXT')
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
-    def sqtpp_emb_vfs_pojishon_opt_tqpt_search(self, qpSrch: bool, setDirs: bool, setTqpt: bool, srchLst: list):
+    def sqtpp_emb_vfs_pojishon_opt_tqpt_search(self, qpSrch: bool, setDirs: bool, setTqpt: bool, srchLst: list) -> list:
         # <<<
-        # returns:
+        # returns: (qpFncRtn, slot sf_sLstX retains tqpt env-var stack after return)
         if setDirs: self.sqtpp_emb_vfs_router(False, True, False, 10, None, None, None)
         if setTqpt: self.sqtpp_vfs_tqpt_file(True)
-        qpFncRtn = None
-        sFncIntA = None
-        sFncIntB = None
-        sFncIntC = None
-        sFncIntD = None
+        qpFncRtn = []
         try:
             self._sf_sLstX = self._sf_sQp.split('\n')
             self._sf_sLstX.pop(0)
-            sFncIntA = len(self._sf_sLstX)
-            if sFncIntA < 2:
+            self._sf_rIntI = len(self._sf_sLstX)
+            if self._sf_rIntI < 2:
                 raise Exception('[sqtpp-vfs >> pojishon] - optional err: no sufficient tqpt form/qp tagged env-var(s) data for a open comparable scan')
         except Exception as opt_qp_srch_err:
             raise Exception('[sqtpp-vfs >> pojishon] - optional err: no sufficient tqpt form/qp tagged env-var(s) data for a open comparable scan')
         self._sf_rLstF = ['~__globe__~<@qp(','__KLF__DSG__<@qp(','AbsSmvt','<@qp:...:vd(@qp(st1.2=','<@q|p(','<@q*p(']
-        qpEntVld = [True for _ in range(sFncIntA)]
-        for self._sf_rIntA in range(sFncIntA):
-            self._sf_rIntB = 0
-            while self._sf_rIntB < 6:
-                if self._sf_sLstX[self._sf_rIntA].find(self._sf_rLstF[self._sf_rIntB]) > -1: qpEntVld[self._sf_rIntA] = False
-                self._sf_rIntB+=1
-        sFncIntB = len(srchLst)
-        if sFncIntB > 0:
+        qpEntVld = [True for _ in range(self._sf_rIntI)]
+        for self._sf_rIntH in range(self._sf_rIntI):
+            self._sf_rIntC = 0
+            while self._sf_rIntC < 6:
+                if self._sf_sLstX[self._sf_rIntH].find(self._sf_rLstF[self._sf_rIntC]) > -1: qpEntVld[self._sf_rIntH] = False
+                self._sf_rIntC+=1
+        self._sf_rIntD = len(srchLst)
+        if self._sf_rIntD > 0:
             if self.sqtpp_emb_vfs_pojishon_read(2) != 1:
                 raise Exception('[sqtpp-vfs >> pojishon] - optional err: bad pojishon vfs mnt|dir|file path encountered, cannot read file for a optional search & find procedures')
             self._sf_rBoolA = True
-            for x in range(sFncIntA):
-                if qpEntVld[x]:
+            for self._sf_rIntH in range(self._sf_rIntI):
+                if qpEntVld[self._sf_rIntH]:
                     if qpSrch:
-                        self._sf_rLstF = re.findall(r'@qp.*?\):', self._sf_sLstX[x])
-                        for y in range(sFncIntB):
+                        self._sf_rLstF = re.findall(r'@qp.*?\):', self._sf_sLstX[self._sf_rIntH])
+                        for self._sf_rIntC in range(self._sf_rIntD):
                             if self._sf_rBoolA:
-                                if srchLst[y].find('@qp(') > -1 and srchLst[y].find('):') > -1: srchLst[y] = srchLst[y].replace('@qp(','').replace('):','')        
+                                if srchLst[self._sf_rIntC].find('@qp(') > -1 and srchLst[self._sf_rIntC].find('):') > -1: srchLst[self._sf_rIntC] = srchLst[self._sf_rIntC].replace('@qp(','').replace('):','')        
                                 else:
-                                    raise Exception(f'[sqtpp-vfs >> pojishon] - optional err: chosen param @varDt list, missing or invalid @qp(...): tagging @ list index({y}) <--> "{srchLst[y]}"')
-                            sFncIntC = len(self._sf_rLstF)
-                            if sFncIntC > 0:
-                                for z in range(sFncIntC):
-                                    self._sf_rLstF[z] = self._sf_rLstF[z].replace('@qp(','').replace('):','')
-                                    if self._sf_rLstF[z].find(srchLst[y]) > -1:
-                                        sFncIntD = self._sf_sVd.find(srchLst[y])
-                                        if sFncIntD > -1:
-                                            qpFncRtn = self.sqtpp_emb_vfs_pojishon_row_spdr(True, None, sFncIntD+len(srchLst[y])-1, None)
-                                            print(qpFncRtn)
+                                    raise Exception(f'[sqtpp-vfs >> pojishon] - optional err: chosen param @varDt list, missing or invalid @qp(...): tagging @ list index({self._sf_rIntC}) <--> "{srchLst[self._sf_rIntC]}"')
+                            self._sf_rIntF = len(self._sf_rLstF)
+                            if self._sf_rIntF > 0:
+                                for self._sf_rIntE in range(self._sf_rIntF):
+                                    self._sf_rLstF[self._sf_rIntE] = self._sf_rLstF[self._sf_rIntE].replace('@qp(','').replace('):','')
+                                    if self._sf_rLstF[self._sf_rIntE].find(srchLst[self._sf_rIntC]) > -1:
+                                        self._sf_rIntG = self._sf_sVd.find(srchLst[self._sf_rIntC])
+                                        if self._sf_rIntG > -1:
+                                            self._sf_sStrX = self.sqtpp_emb_vfs_pojishon_row_spdr(True, None, self._sf_rIntG+len(srchLst[self._sf_rIntC])-1, None)
+                                            if self._sf_sStrX != None: qpFncRtn.append(f'{self._sf_rIntH}.>:<.{self._sf_sStrX}')
                         if self._sf_rBoolA: self._sf_rBoolA = False
                     else:
-                        # Search & find by optional param choice @varNm
-                        pass
+                        # TODO: Search & find by optional param choice @varNm.
+                        return qpFncRtn
+            return qpFncRtn
         else:
             raise Exception('[sqtpp-vfs >> pojishon] - optional err: param @varDt list or @varNm list is missing, no string element(s) found')
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
-    def sqtpp_emb_vfs_pojishon_row_spdr(self, isEwwVd: bool, src, pos, ptrn):
+    def sqtpp_emb_vfs_pojishon_row_spdr(self, isEwwVd: bool, src, pos, ptrn) -> str:
         # <<<
         # returns:
         crVol = deque()
-        crEnd = ''
-        crSpn = 1
-        crIdx = 0
+        crLen = None
+        crChr = None
+        crSpn = 0
         crSec = 0
         if isEwwVd:
             src = f'{self._sf_sVd}:|:'
-            for crChr in src:
-                if crSpn == 1:
-                    if crIdx == pos:
-                        crIdx+=1
+            crLen = len(src)
+            while pos < crLen:
+                crChr = src[pos]
+                if crChr == '\n':
+                    if crSec > 0:
+                        crSpn = 1
+                        break
+                    else:
+                        return None
+                crVol.append(crChr)
+                if crSec < 3: crSec+=1
+                if crSec == 3 and src[pos-2] == ':' and src[pos-1] == '|' and crChr == ':':
+                    if pos-2 > 0:
                         crSpn = 2
-                    else: crIdx+=1
-                else:
-                    if crChr == '\n':
-                        if crSec > 0:
-                            crSpn = 3
-                            break
-                        else:
-                            return None
-                    crIdx+=1
-                    crVol.append(crChr)
-                    if crSec < 3: crSec+=1
-                    if crSec == 3 and src[crIdx-2] == ':' and src[crIdx-1] == '|' and src[crIdx] == ':':
-                        if crIdx-2 > 0:
-                            crSpn = 4
-                            break
-                        else:
-                            return None
-            if crSpn == 3 or crSpn == 4:
+                        break
+                    else:
+                        return None
+                pos+=1
+            if crSpn == 1 or crSpn == 2:
                 crVol = ''.join(crVol)
-                if crSpn == 4: crVol = crVol.replace(':|:','')
+                if crSpn == 1: crVol = crVol.replace(':|:','')
                 return crVol
             else:
                 return None
