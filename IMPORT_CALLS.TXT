@@ -1,10 +1,10 @@
 
 
- 
+
 _______________________________________________________________________________________
       STAQTAPP V1.2 IMPORT FUNCTIONS USAGE:
       
-      UPDATED: SUN, AUG11 2024
+      UPDATED: WED, AUG14 2024
       
       
       
@@ -342,6 +342,9 @@ ________________________________________________________________________________
         
       |||||||| OPTIONALS ||||||||
       
+        ***using a optional will be the final return, either True or False applied;
+           or for the quantumf optional, a discrete math based lambda function str
+      
         ***arguments separator must be ";" not "," or will result in exceptions
            and any use of ; in a 'string' also results in exceptions, see below
         
@@ -363,7 +366,9 @@ ________________________________________________________________________________
            is a fast lego style dir/file system but such things to be avoided
         
         
-        (1) .open(varDt=list; occurence=#[index]) | open(varNm=list; occurence=#[index])
+        (1) .open(varDt=list; occurence=#[index]) | .open(varNm=list; occurence=#[index])
+        
+            *Returns True if did add data to any tqpt stack env-var(s) else False.
         
             If @varDt then requires @qp(...): normal staqtapp env-var data tagging. This
             will cause staqtapp to search for qp tagged env-var data from @varDt and then
@@ -388,17 +393,17 @@ ________________________________________________________________________________
             *This option will bypass scanning qp tagged data on a globe var, KLF__DSG var,
             smv tree var, darkvar, st1_atlaspice var(runnable lambda str) and any corevar.
             All six are special env-vars of Staqtapp1.2's parsing methods and are skipped.
-            (NOT YET IMPLEMENTED)
+            (IMPLEMENTED BUT NOT @VARNM IMPLEMENTED)
         
             
-        closed(varNm=str; start=#; end=#) | closed(varNm=list; start=#; end=#) --> NOT YET IMPLEMENTED
-        compare(varDt=str; dirLst=list; freq=str) | compare(varDt=list; dirLst=list; freq=str) --> NOT YET IMPLEMENTED
-        cache(varNm=str; occurence=#) | cache(varNm=list; occurence=#[index]) --> NOT YET IMPLEMENTED
-        seal(dirLst=list; match=str; freq=str; type=unlocked=0|locked=1) --> NOT YET IMPLEMENTED
-        setfreq(varNm=str; dirLst=list; occurence=#) | setfreq(varNm=list; dirLst=list; occurence=#[index]) --> NOT YET IMPLEMENTED
-        removefreq(varNm=str; dirLst=list; freq=str) | removefreq(varNm=list; dirLst=list; freq=str) --> NOT YET IMPLEMENTED
-        retag(varDt=str; freq=str; span=#; removeat=#) | retag(varDt=list; freq=str; span=#[index]; removeat=#[index]) -->  NOT YET IMPLEMENTED
-        quantumf(varNm=str; dirLst=list; span=#) | quantumf(varNm=list; dirLst=list; span=#[index]) --> NOT YET IMPLEMENTED
+        .closed(varNm=str; start=#; end=#) | .closed(varNm=list; start=#; end=#) --> (NOT YET IMPLEMENTED)
+        .compare(varDt=str; dirLst=list; freq=str) | .compare(varDt=list; dirLst=list; freq=str) --> (NOT YET IMPLEMENTED)
+        .cache(varNm=str; occurence=#) | .cache(varNm=list; occurence=#[index]) --> (NOT YET IMPLEMENTED)
+        .seal(dirLst=list; match=str; freq=str; type=unlocked=0|locked=1) --> (NOT YET IMPLEMENTED)
+        .setfreq(varNm=str; dirLst=list; occurence=#) | .setfreq(varNm=list; dirLst=list; occurence=#[index]) --> (NOT YET IMPLEMENTED)
+        .removefreq(varNm=str; dirLst=list; freq=str) | .removefreq(varNm=list; dirLst=list; freq=str) --> (NOT YET IMPLEMENTED)
+        .retag(varDt=str; freq=str; span=#; removeat=#) | .retag(varDt=list; freq=str; span=#[index]; removeat=#[index]) -->  (NOT YET IMPLEMENTED)
+        .quantumf(varNm=str; dirLst=list; span=#) | .quantumf(varNm=list; dirLst=list; span=#[index]) --> (NOT YET IMPLEMENTED)
  
  
 ----> modrev9(prmsLst), builds a complete custom env-var module. @prmsLst elements
