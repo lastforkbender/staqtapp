@@ -4,7 +4,7 @@
 _______________________________________________________________________________________
       STAQTAPP V1.2 IMPORT FUNCTIONS USAGE:
       
-      UPDATED: WED, AUG14 2024
+      UPDATED: SAT, AUG17 2024
       
       
       
@@ -328,7 +328,9 @@ ________________________________________________________________________________
       these dot functional modes include integration with normal sqtpp env-var uses.
       
       
-      |||||||| NEXT ||||||||
+      |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+      |||||||| NEXT |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+      |||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
       
         (1) ("next", required, required, required), makes new mount, new directory
             and a new file. *Of no dot refrence instructions and has no optionals.
@@ -340,7 +342,9 @@ ________________________________________________________________________________
             @dirList[1] is not currently a dir in mnt then will add the new dir.
             
         
-      |||||||| OPTIONALS ||||||||
+      ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+      |||||||| OPTIONALS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||
+      ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
       
         ***using a optional will be the final return, either True or False applied;
            or for the quantumf optional, a discrete math based lambda function str
@@ -359,11 +363,7 @@ ________________________________________________________________________________
            
         ***if a raised exception happens with parsing or instructions from an
            optional, the dot commands before it already done and saved to the
-           .sqtpp vfs file; Staqtapp 1.2 does not do backups paging of those
-           .sqtpp vfs file(s) rather is placed to a programmer's own decisions
-           and is not recommended to use next.remove for repeating any undos
-           in that all pojishon os/vfs type commands multi-linked error check;
-           is a fast lego style dir/file system but such things to be avoided
+           .sqtpp vfs file
         
         
         (1) .open(varDt=list; occurence=#[index]) | .open(varNm=list; occurence=#[index])
@@ -380,9 +380,25 @@ ________________________________________________________________________________
             encountered or the char scanning method finds a char set of ":|:". If there
             is commas found from the scanning then is separated into @qp(...): taggings.
             Char sequence ":|:" marks the end of a file and if no newline encountered is
-            an add all data until end of file. The same for @varNm choice env-var search
-            however the search & find method is based upon matching a naming category. If
-            this option instructed from a pojishon next command and is an omega pojishon
+            an add all data until end of file. See third paragraph for occurence detail.
+            
+            The same for @varNm choice env-var search, however the search & find method is
+            based upon matching a naming category: Is first a find env-var name match from
+            @varNm element, then on a first match of a data sequence comparing that is of
+            a length matching @occurence element, of comparison between the newly added
+            file data and the tqpt env-var data then/when the new data from file's data is
+            added to the env-var; @occurence parmeter is of a same for @varNm param choice
+            though doubles as a scan find & scan cut. If lack of a pairing occurence index
+            value for matching, a raised exception. With @varDt use, a single element str
+            of "*" for that list ignores @occurence length cut-offs. Works a same for this
+            param choice yet a add all data only from newly added file; if scans data with
+            newlines or commas, splits the data into separate added qp(...): taggings. The
+            param choice @varNm tricky since @occurence elements are both length scan for
+            a match and the length cut-offs after match. You'll need to balance your file
+            type data being added before this open optional request, specific of where the
+            newlines arrange the data or adv char sequence ":|:" cuts from an counts list.
+            
+            This option instructed from a pojishon next command and is an omega pojishon
             next dot command involved then occurence is ignored. Occurence argument tells
             staqtapp of a specific super length order and must be present, as a list. The
             index value(s) as int, whereof any search & found happens then index value is
@@ -393,7 +409,6 @@ ________________________________________________________________________________
             *This option will bypass scanning qp tagged data on a globe var, KLF__DSG var,
             smv tree var, darkvar, st1_atlaspice var(runnable lambda str) and any corevar.
             All six are special env-vars of Staqtapp1.2's parsing methods and are skipped.
-            (IMPLEMENTED BUT NOT @VARNM IMPLEMENTED)
         
             
         .closed(varNm=str; start=#; end=#) | .closed(varNm=list; start=#; end=#) --> (NOT YET IMPLEMENTED)
