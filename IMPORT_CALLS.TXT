@@ -4,7 +4,7 @@ https://github.com/lastforkbender/staqtapp
 _______________________________________________________________________________________
       STAQTAPP V1.2 IMPORT FUNCTIONS USAGE:
       
-      UPDATED: MON, AUG19 2024; added pojishon optional closed description & usage
+      UPDATED: FRI, AUG23 2024, edit of pojishon optional closed description & usage
       
       
       
@@ -421,7 +421,7 @@ ________________________________________________________________________________
             if a match is found from the env-var's data.
             
             EXAMPLE:
-            (...'varNmA=64:133::varNmB=85:456'; *no needed int s & e indices ratio
+            ("next.cast.closed('varNmA=64:133::varNmB=85:456'; None; None)", ...
             
             This optional quantum like between the file being compared with the env-var.
             If any match found between the s & e indices in the file, the observation is
@@ -429,9 +429,9 @@ ________________________________________________________________________________
             or qp(...): tagged data, individual is the comparison check of the s & e str.
             If is a dual observation match, meaning the entire length of the qp tagged
             data matches the entire length in chars of s & e from the file, both will be
-            removed and Staqtapp will save a entry to the emb-vfs settings directory of
-            where it happened, the s & e with a set type of chars that were there. Only
-            the match is removed either way; not entire s & e--->unless is a full length
+            removed.
+            
+            The match is removed either way; not entire s & e--->unless is a full length
             environment match both ways met, a completed dual identical length matching.
             The closed optional works with optionals cache, seal, setfreq and removefreq
             of a similiar instructions bounded to env-vars' names and env-vars' datas in
@@ -440,11 +440,15 @@ ________________________________________________________________________________
             any possible for a vfs env-var integration with any file and the advanced AI
             of a virtual environment vars type stimulation repeats a boring awareness of
             stuck var types created, same variable type edits in interactions with file.
+            
+            
+        (3) .cache(varNm=str; occurence=#) | .cache(varNm=list; occurence=#[index])
             (NOT YET IMPLEMENTED)
         
+        (4) .seal(dirLst=list; match=str; freq=str; type=unlocked=0|locked=1)
+            (NOT YET IMPLEMENTED)
         
-        .cache(varNm=str; occurence=#) | .cache(varNm=list; occurence=#[index]) --> (NOT YET IMPLEMENTED)
-        .seal(dirLst=list; match=str; freq=str; type=unlocked=0|locked=1) --> (NOT YET IMPLEMENTED)
+
         .setfreq(varNm=str; dirLst=list; occurence=#) | .setfreq(varNm=list; dirLst=list; occurence=#[index]) --> (NOT YET IMPLEMENTED)
         .removefreq(varNm=str; dirLst=list; freq=str) | .removefreq(varNm=list; dirLst=list; freq=str) --> (NOT YET IMPLEMENTED)
         .retag(varDt=str; freq=str; span=#; removeat=#) | .retag(varDt=list; freq=str; span=#[index]; removeat=#[index]) -->  (NOT YET IMPLEMENTED)
