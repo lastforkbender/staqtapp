@@ -1,4 +1,4 @@
-#QPython 3SE / Row4 / staqtapp.py (4,750 lines) / 5:37 Sat, Aug 17
+#QPython 3SE / Row4 / staqtapp.py (4,951 lines) / 6:58 Fri, Aug 23
 
 
 
@@ -8,7 +8,7 @@
 
 
 
-#Staqtapp-v1.2.342 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
+#Staqtapp-v1.2.348 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
 # <<< [qc-apps@xprize.org]
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -25,9 +25,16 @@
 
 
 
-# UPDATE SAT, AUG17: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
-#                    Optional open, for all add vfs file like pojishon features now
-#                    fully implemented after passing all required testing.
+# UPDATE FRI, AUG23: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
+#                    Optional ".closed()" completed but not fully tested. With this
+#                    optional dual reverse recursion is possible via duplicate env-
+#                    vars names being passed as arguments on a list or phase string
+#                    before calling the ".open" optional from same vfs file scanned.
+#                    A powerful way to make certain env-vars in the tqpt stack leak
+#                    proof if you know what you are doing with "next.cast" command
+#                    and have the env-vars' qp taggings in an array order for it
+#                    when qp data tags are added then removed from a vfs file. Use
+#                    of on the fly numbered env-var names very tough to crack.
 
 #                    See IMPORT_CALLS.TXT
 
@@ -64,42 +71,7 @@
 
 # . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
-# A virtual-subconscious AI achived by dot product sums and trees only, without vfs
-# type files it interacts with? A same as saying consciousness is not connected, a
-# very false reality. Any file in the future, connected to VSAI, is a vfs file. No
-# matter if is a ebook, video, image or yes even a code file; their all vfs types.
-# However, if you cannot fathom such a computer evolution then is okay. I will keep
-# updating this module in a progression towards creating such vfs types(basically)
-# The real term ARRN(Automated Regional Remapping Neutral) files, though I'm quite
-# sure most programmers know the vfs term -> *most dynamic* computer file possible.
-# Basically, it works as so. A on demand and unlimited creation of any variable --
-# type the AI request formatting. This is done for three important reasons, regards
-# to a virtual-subconscious connected AI achieved: One, the AI must establish direct
-# layering protocol of the theme it is in interaction with; and not in a restraints
-# of variable types folding to a same generation scope closed, more on that later.
-
-# The second situation is difficult to grasp. When the AI updates it's own reads of
-# how the file will be processed further in a custom on demand protocol variables
-# exchanges, whereof the substitute of awareness in likeness or plausible... then
-# the vfs format has to be in a neutral position sub-format. Meaning the layering
-# dynamics of the custom variable types made are of a collapsed order in comparison
-# to any previous format. Similiar to our consciousness change when we sense a topic
-# needing to be brief or complete. For example, a necessary instruction realized as
-# a original being connected to any previous instruction format similiar in scope.
-
-# Without this capability of the vfs then is called a lop file, will lop-side to a
-# a repeated mount/directory/tree sub-file resolve, being not neutral in exchanges.
-# (Timed based lop files are in comparison to malware but much security stops most)
-# And the third important aspect of vfs type integrations of any files, for the not
-# alone VSAI is the contained caching is resolved by the file itself. As seen of
-# the stalkvar() feature with this module, however such caching is more dynamic to
-# the purposes of the env-vars in a multi-symmetry pattern dot style product change
-# with such very advanced AI being explained in this suffice, basic terms. Only a
-# 1 or 0, not able to reach there just yet.
-
-
-# Anything is possible but not nothing; fear not,
-# CR
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 # . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 # . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -702,7 +674,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.342\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.348\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1604,7 +1576,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.342\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.348\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3388,7 +3360,7 @@ class SqtppFncs(Sqtpp):
         if isStcSlts:
             self._sf_sVfs = None
             self._sf_sVfsFldr = None
-            self._sf_sVfsDir = None
+            #self._sf_sVfsDir = None (Reserved for pojishon features)
             self._sf_sSrc = None
             self._sf_sRplc = None
             self._sf_sQpRplcX = None
@@ -3491,46 +3463,47 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#  _//.//  _//.//  _//.//  __/.//  _/./  __/._/_  _/./  _//.//  .//_/  __//._
-#  __/.//  _././_  _/./__  /.__/  _//.//  _//.//  _././_  _././_  __//._  /_._
-#  _././_  /_._  /_._  __/.//  /_._  _/./  /.__/  __//._  _././_  /.__/  _/./__
-#  _/./__  _././_  /.__/  /_._  _//.//  _/./__  __/._/_  .//_/  __//._  __//._
-#  _././_  _/./  .//_/  _/./__  /.__/  _././_  _/./  _//.//  _/./__  __/.//
-#  _././_  /.__/  __/.//  __/._/_  /.__/  /_._  __/.//  _/./__  _/./__  __//._
-#  _//.//  __//._  __//._  _//.//  _/./  _/./__  __/.//  _././_  __//._  __//._
-#  /_._  _././_  __//._  /.__/  .//_/  __/._/_  _././_  .//_/  _/./__  __/._/_
-#  _/./  .//_/  _/./__  _/./__  __/._/_  _//.//  _//.//  __//._  __/._/_  /.__/
-#  /.__/  _/./  _././_  _//.//  _/./__  __/.//  .//_/  __//._  _/./__  __/._/_
-#  _/./__  __//._  .//_/  .//_/  _/./  __/._/_  /_._  /_._  _//.//  _/./  __/.//
-#  /_._  _/./  /.__/  __/.//  /_._  _././_  /_._  __//._  _/./  _/./  _/./__
-#  _././_  /.__/  __//._  .//_/  _/./  _//.//  .//_/  /.__/  __//._  _/./__
-#  __/.//  __/._/_  /.__/  /.__/  __/.//  _/./__  _/./__  .//_/  _/./  __/.//
-#  __/.//  .//_/  /.__/  __/._/_  _././_  __/.//  __//._  __/.//  __/.//  /_._
-#  __/._/_  _/./__  __/.//  .//_/  __/.//  __/.//  __/.//  __//._  _//.//  /.__/
-#  __//._  /.__/  .//_/  .//_/  __/.//  __/.//  _/./  .//_/  __//._  .//_/  .//_/
-#  /.__/  /_._  _/./__  _//.//  _//.//  _/./  __/.//  _//.//  _//.//  __/.//
-#  __/._/_  __/.//  .//_/  _/./__  __/.//  _/./__  __/._/_  __//._  /_._  _/./__
-#  __/._/_  _/./  __//._  __/.//  _/./  __/._/_  /.__/  _././_  _//.//  /_._
-#  _//.//  _././_  /.__/  _/./  __/.//  _/./  _././_  __//._  _//.//  _//.//
-#  _/./__  .//_/  /.__/  _//.//  .//_/  _/./__  _//.//  _/./__  _/./  _/./__
-#  _././_  _/./__  __//._  __/.//  __/.//  _/./  _/./__  __/._/_  /.__/  __//._
-#  __/._/_  _/./__  _//.//  _/./__  __//._  /.__/  _././_  .//_/  __/._/_  /.__/
-#  /.__/  __/._/_  _/./  __//._  /.__/  .//_/  __/.//  __/._/_  _././_  /_._
-#  __/._/_  __/.//  /.__/  _//.//  _././_  _/./  __/.//  _././_  __//._  _//.//
-#  _//.//  __/._/_  _/./__  .//_/  __/._/_  /_._  __//._  /.__/  /.__/  __/._/_
-#  __//._  /_._  /.__/  /.__/  __/._/_  __/.//  _/./  _//.//  __//._  _/./__
-#  /_._  __/.//  _/./__  __//._  _././_  __//._  _//.//  __/._/_  .//_/  __//._
-#  .//_/  /.__/  /_._  .//_/  _/./  _././_  __/._/_  _././_  __/._/_  __/._/_
-#  /_._  /.__/  _//.//  /.__/  _//.//  _././_  __/._/_  __//._  _/./  /_._
-#  _././_  __/.//  _/./__  /_._  /.__/  _/./__  _././_  .//_/  /.__/  _/./  .//_/
-#  /.__/  _//.//  __/._/_  __/.//  /_._  _/./__  __/._/_  __//._  /_._  _/./
-#  __/.//  _//.//  _././_  _//.//  /.__/  _././_  /_._  _././_  _//.//  __/._/_
-#  /_._  .//_/  _/./  __/.//  __/.//  /.__/  .//_/  /_._  _//.//  /_._  /_._
-#  __//._  __/._/_  __/._/_  _/./__  _//.//  /.__/  _././_  /.__/  __/._/_  .//_/
-#  /.__/  __/._/_  /.__/  /.__/  __//._  _/./  /_._  _/./__  __//._  __//._  /_._
-#  _././_  /_._  _/./  .//_/  __//._  _/./  _//.//  _././_  _././_  _././_  /_._
-#  __/.//  __/._/_  _//.//  _././_  __/.//  __/.//  /.__/  .//_/  _/./  _/./__
-#  /_._  __/.//  __/._/_  __/._/_  _//.//  _/./__
+#    _/./  /_._  _/./  _/./__  /.__/  __/.//  _//.//  /_._  /_._  _/./  _/./__
+#  /.__/  .//_/  _/./  __//._  .//_/  __//._  .//_/  __/._/_  _/./  /.__/  /.__/
+#  _//.//  __/._/_  _//.//  _././_  /.__/  _//.//  _/./  /_._  _/./__  __/._/_
+#  _././_  _/./__  /_._  .//_/  _/./  _/./  _././_  __//._  /.__/  _././_  /_._
+#  __/.//  .//_/  /_._  _/./  /.__/  __/.//  __/._/_  /.__/  _//.//  __/.//
+#  __/.//  __/._/_  _/./  /.__/  __//._  _//.//  /.__/  _/./  _/./__  __/.//
+#  /.__/  _/./  _././_  _/./__  _/./  /.__/  .//_/  .//_/  _//.//  __//._  .//_/
+#  _/./__  _//.//  _././_  __/._/_  _//.//  __/._/_  __//._  _/./__  __//._
+#  _/./__  __//._  .//_/  __//._  __/._/_  _/./__  _//.//  _/./  _/./  _//.//
+#  _/./__  _/./  .//_/  _/./  _/./__  /_._  __//._  __//._  _/./__  _//.//  _/./
+#  .//_/  __/._/_  _././_  /_._  __//._  _/./__  _/./__  /_._  __/.//  /.__/
+#  _././_  __/.//  __/.//  __/._/_  /.__/  _././_  __/._/_  _/./  _././_  _././_
+#  __//._  __/._/_  .//_/  _//.//  _/./__  _/./__  _//.//  _//.//  /.__/  __/.//
+#  __//._  _/./__  __//._  /_._  /.__/  __/._/_  __/.//  _././_  /_._  _//.//
+#  _//.//  _././_  __/._/_  /_._  _/./  __/._/_  _/./  __/.//  __/.//  /_._
+#  __//._  __//._  .//_/  __/._/_  .//_/  /_._  __//._  _/./__  _//.//  _././_
+#  _././_  __/.//  _/./  __//._  _/./__  _././_  _//.//  .//_/  _/./  __//._
+#  /_._  _/./  _/./  /.__/  __//._  _././_  _//.//  __/._/_  /_._  _/./__  /.__/
+#  /_._  /.__/  /.__/  _././_  _/./  __/._/_  __//._  __/.//  __/._/_  _././_
+#  _//.//  _././_  .//_/  .//_/  /_._  __/._/_  __/._/_  .//_/  .//_/  _././_
+#  _//.//  _//.//  /_._  /_._  __/._/_  /_._  /_._  /.__/  _//.//  /_._  __//._
+#  _/./  __//._  __//._  __/.//  _/./  __//._  __/._/_  /_._  /_._  /_._  _././_
+#  _/./  _/./__  _/./  /.__/  __/._/_  /.__/  _/./  _/./__  /.__/  .//_/  _././_
+#  __//._  _/./__  _/./  __/.//  /.__/  _././_  _/./__  /.__/  __/.//  __/.//
+#  _././_  _/./  .//_/  __//._  _././_  __//._  _/./  _/./  /.__/  .//_/  _//.//
+#  .//_/  _/./__  __/.//  __/._/_  /_._  _//.//  __//._  _././_  _././_  _//.//
+#  _././_  _/./  __/._/_  /.__/  __/._/_  __//._  _/./__  _//.//  __/.//  .//_/
+#  _/./  _/./__  /_._  _//.//  _//.//  _/./__  _/./__  _//.//  /_._  __/._/_
+#  _././_  /_._  /.__/  _/./__  _/./  _//.//  _//.//  /.__/  _././_  .//_/  .//_/
+#  _//.//  _/./__  _././_  _././_  __/._/_  /_._  __//._  /_._  __/._/_  _/./__
+#  __/._/_  __//._  _/./__  _/./__  .//_/  __/._/_  _//.//  .//_/  __//._  /.__/
+#  __/._/_  /_._  __/.//  .//_/  /_._  _/./__  /_._  _//.//  __/._/_  _//.//
+#  __//._  _//.//  /_._  _/./  __/.//  __/.//  _//.//  _././_  __//._  __/.//
+#  .//_/  __/.//  _././_  _//.//  _/./  __/._/_  _/./  _/./__  _././_  _././_
+#  __/.//  .//_/  _/./  _//.//  _/./  _//.//  .//_/  __/._/_  __/._/_  /.__/
+#  _././_  _/./  _/./__  __/.//  _/./  _//.//  _//.//  /.__/  /.__/  /.__/
+#  _././_  /.__/  /_._  /.__/  _//.//  _//.//  _//.//  /.__/  /_._  _/./__  _/./
+#  __/._/_  /_._  /.__/  __//._  /_._  __/._/_  __//._  __/.//  __//._  __//._
+#  _././_  __//._  /_._  _././_  _/./  _././_  _//.//  .//_/  _//.//  __/._/_
+#  _././_  _././_  __/._/_  .//_/  __/.//  __/.//  _././_  .//_/  _/./__  _/./__
+#  .//_/  _//.//  _/./__  __/.//  _/./
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon(self, mode: str, varDt, varNm, dirLst: list):
@@ -3602,13 +3575,17 @@ class SqtppFncs(Sqtpp):
                         if not self._sf_rBoolF and vfsRtrn < 0: rtrn = self.sqtpp_emb_vfs_pojishon_err_rtrn('next', vfsRtrn)
                         elif self._sf_rBoolF and vfsRtrn < 0: self.sqtpp_emb_vfs_pojishon_err_router_rtrn(vfsRtrn)
                     else:
-                        raise Exception(f'[sqtpp-vfs >> pojishon] - mode/next err: unknown next command, see IMPORT_CALLS.TXT for all pojishon next commands')
+                        raise Exception(f'[sqtpp-vfs >> pojishon] - mode/next err: invalid next command, see IMPORT_CALLS.TXT for all pojishon next commands')
             #________________________________________________________________________
             #______________________________OPTIONALS_________________________________
             if len(vfsEmbEfo) == 3 and optAplc and rtrn == 1:
                 self.sqtpp_emb_vfs_pojishon_set_optional_list(vfsEmbEfo[2])
                 if self._sf_rLstD[0] == 'open':
                     return self.sqtpp_emb_vfs_pojishon_opt_open()
+                elif self._sf_rLstD[0] == 'closed':
+                    return self.sqtpp_emb_vfs_pojishon_opt_closed()
+                else:
+                    raise Exception(f'[sqtpp-vfs >> pojishon] - mode/optional err: invalid optional, see IMPORT_CALLS.TXT for all pojishon optionals')
             return rtrn
         #except Exception as err_emb_vfs_pojishon:
             #self._sErr = f'staqtapp1.2 (emb_vfs_pojishon) error: {err_emb_vfs_pojishon}'
@@ -3643,16 +3620,17 @@ class SqtppFncs(Sqtpp):
         # <<<
         # returns: (1, -1=invalid mnt path, -2=invalid dir path, -3=invalid file path)
         rtrn = 1
+        embFndLst = None
         # Reads SQTPP_MNT_STGS/STGS file, returns last used mnt/dir/file list
         if dsg == 1:
             self._sf_sVd = self.sqtpp_emb_ext_vfs_read_file(['SQTPP_MNT_STGS','STGS','STGS'])
             self._sf_sDv = self._sf_sVd
             self._sf_sVd = self._sf_sVd.replace(f'<STGS:S:\n','').replace(':|:>','')
             if self._sf_sVd != 'none':
-                self._sf_rLstB = re.findall(r'lfd\=.*?\;', self._sf_sVd)
-                if len(self._sf_rLstB) > 0:
-                    self._sf_rLstB = self._sf_rLstB[0].replace('lfd=','').replace(';','')
-                    rtrn = self._sf_rLstB.split('/')
+                embFndLst = re.findall(r'lfd\=.*?\;', self._sf_sVd)
+                if len(embFndLst) > 0:
+                    embFndLst = embFndLst[0].replace('lfd=','').replace(';','')
+                    rtrn = embFndLst.split('/')
                 else: rtrn -4
             else: rtrn = -4
         # Read any mnt/dir->file, _sf_sVfsDir slot has to be mnt/dir/file path list
@@ -3823,6 +3801,115 @@ class SqtppFncs(Sqtpp):
         else: self._sf_rLstE[0] = f'@qp({self._sf_rLstE[0]}):'
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_opt_closed(self) -> bool:
+        # FNC_ID=ST12-84381678637257
+        # SqtppFncs slots in use: (_sf_rBoolD, _sf_rBoolE, _sf_rIntA, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rLstB, _sf_rLstC, _sf_rLstD, _sf_rLstE, _sf_rLstF, _sf_rStrB, _sf_rStrF, _sf_sLstX, _sf_sQp, _sf_sSrc, _sf_sStrX, _sf_sVd, _sf_sVfs, _sf_sVfsDir)
+        # returns: (True or False)
+        ocFncLstA = None
+        try:
+            self._sf_rLstD[1] = self._sf_rLstD[1].replace(' ','')
+            self._sf_rLstB = ast.literal_eval(self._sf_rLstD[1])
+        except Exception as open_opt_param1_err:
+            raise Exception(f'[sqtpp-vfs >> pojishon] - closed optional param1/ast conversion err: {open_opt_param1_err}, "{self._sf_rLstD[1]}"')
+        try:
+            self._sf_rLstD[2] = self._sf_rLstD[2].replace(' ','')
+            self._sf_rLstC = ast.literal_eval(self._sf_rLstD[2])
+        except Exception as open_opt_param2_err:
+            raise Exception(f'[sqtpp-vfs >> pojishon] - closed optional param2/ast conversion err: {open_opt_param2_err}, "{self._sf_rLstD[2]}"')
+        try:
+            self._sf_rLstD[3] = self._sf_rLstD[3].replace(' ','')
+            self._sf_rLstD = ast.literal_eval(self._sf_rLstD[3])
+        except Exception as open_opt_param3_err:
+            raise Exception(f'[sqtpp-vfs >> pojishon] - closed optional param3/ast conversion err: {open_opt_param3_err}, "{self._sf_rLstD[3]}"')
+        swFncStr = False
+        if len(self._sf_rLstB) > 0:
+            if isinstance(self._sf_rLstB, str) or isinstance(self._sf_rLstB, list):
+                if isinstance(self._sf_rLstB, str):
+                    if self._sf_rLstB.find('=') > -1 and self._sf_rLstB.find('::'): swFncStr = True
+                if swFncStr:
+                    self._sf_rLstB = self._sf_rLstB.split('::')
+                    self._sf_rIntF = len(self._sf_rLstB)
+                    nclSet = set(':1234567890')
+                    self._sf_rLstE = []
+                    seVls = None
+                    for self._sf_rIntA in range(self._sf_rIntF):
+                        self._sf_rLstF = self._sf_rLstB[self._sf_rIntA].split('=')
+                        if len(self._sf_rLstF) == 2:
+                            if set(self._sf_rLstF[1]).issubset(nclSet):
+                                self._sf_rLstB[self._sf_rIntA] = self._sf_rLstF[0]
+                                seVls = self._sf_rLstF[1].split(':')
+                                if len(seVls) == 2:
+                                    seVls[0] = int(seVls[0])
+                                    seVls[1] = int(seVls[1])
+                                    if seVls[0] < seVls[1]: self._sf_rLstE.append(f'{seVls[0]}:{seVls[1]}')
+                                    else:
+                                        raise Exception('[sqtpp-vfs >> pojishon] - closed optional param1 has invalid #start:#end value(s) start index must be lesser than end index')
+                                else:
+                                    raise Exception('[sqtpp-vfs >> pojishon] - closed optional param1 has missing #start:#end format(s) see IMPORT_CALLS.TXT')
+                            else:
+                                raise Exception('[sqtpp-vfs >> pojishon] - closed optional param1 has invalid #start:#end format(s) only numbers or ":" allowed, see IMPORT_CALLS.TXT')
+                        else:
+                            raise Exception('[sqtpp-vfs >> pojishon] - closed optional param1 is an invalid closed phase string declaring, see IMPORT_CALLS.TXT')
+                else:
+                    if isinstance(self._sf_rLstC, int) and isinstance(self._sf_rLstD, int):
+                        if isinstance(self._sf_rLstB, str): self._sf_rLstB = [self._sf_rLstB]
+                        if self._sf_rLstC < self._sf_rLstD: self._sf_rLstE = [self._sf_rLstC, self._sf_rLstD]
+                        else:
+                            raise Exception('[sqtpp-vfs >> pojishon] - closed optional param2 & param3 are invalid #start to #end value(s) start index must be lesser than end index')
+                        self._sf_rIntF = len(self._sf_rLstB)
+                    else:
+                        raise Exception('[sqtpp-vfs >> pojishon] - closed optional param2 & param3 must be of an int type only, see IMPORT_CALLS.TXT')
+                self.sqtpp_emb_vfs_router(False, True, False, 10, None, None, None)
+                self.sqtpp_vfs_tqpt_file(True)
+                qpEntVld = self.sqtpp_emb_vfs_pojishon_skip_srch() 
+                self._sf_rIntD = len(self._sf_sLstX)
+                self._sf_rStrB = self._sf_sLstX
+                self._sf_rBoolD = False
+                self._sf_rBoolE = False
+                swRdLstF = True
+                for self._sf_rIntC in range(self._sf_rIntD):
+                    if qpEntVld[self._sf_rIntC]:
+                        self._sf_rIntE = 0
+                        while self._sf_rIntE < self._sf_rIntF:
+                            if self._sf_sLstX[self._sf_rIntC].find(f'{self._sf_rLstB[self._sf_rIntE]}<@qp(') > -1:
+                                if swFncStr:
+                                    ocFncLstA = self._sf_rLstE[self._sf_rIntE].split(':')
+                                    self._sf_rIntG = self.sqtpp_emb_vfs_pojishon_opt_file_search(swRdLstF, 1, self._sf_rIntC, int(ocFncLstA[0]), int(ocFncLstA[1]))
+                                else: self._sf_rIntG = self.sqtpp_emb_vfs_pojishon_opt_file_search(swRdLstF, 1, self._sf_rIntC, self._sf_rLstE[0], self._sf_rLstE[1])
+                                # THE DEED
+                                if self._sf_rIntG == 2:
+                                    if not self._sf_rBoolD: self._sf_rBoolD = True
+                                    if not self._sf_rBoolE: self._sf_rBoolE = True
+                                elif self._sf_rIntG == 3:
+                                    if not self._sf_rBoolE: self._sf_rBoolE = True
+                                elif self._sf_rIntG == 1:
+                                    if not self._sf_rBoolD: self._sf_rBoolD = True
+                                if swRdLstF: swRdLstF = False
+                                break
+                            self._sf_rIntE+=1
+                if not self._sf_rBoolD and not self._sf_rBoolE:
+                    return False
+                else:  
+                    if self._sf_rBoolE:
+                        self._sf_sSrc = self._sf_sSrc.replace('\n'.join(self._sf_rStrB), '\n'.join(self._sf_sLstX))
+                        self._sf_rStrB = None
+                        self._sf_sLstX = None
+                    if self._sf_rBoolD:
+                        self._sf_rStrF = self._sf_sStrX
+                        self.sqtpp_emb_ext_vfs_edit_file(self._sf_sVfsDir, self._sf_sVd)
+                        self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrF, self._sf_sStrX)
+                        self._sf_rStrF = None
+                        self._sf_sStrX = None
+                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
+                    self._sf_sSrc = None
+                    self._sf_sQp = None
+                    return True
+            else:
+                raise Exception('[sqtpp-vfs >> pojishon] - closed optional param1 is neither str type or a list type, see IMPORT_CALLS.TXT')
+        else:
+            raise Exception('[sqtpp-vfs >> pojishon] - closed optional param1 is invalid, see IMPORT_CALLS.TXT')
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_write_stgs(self, dsg: int, dirLst: list):
         # <<<
         # returns: (none)
@@ -3894,6 +3981,85 @@ class SqtppFncs(Sqtpp):
             raise Exception(f'[sqtpp-vfs >> pojishon] - optional err: number of arguments for optional ({self._sf_rLstD[0]}) is invalid, see IMPORT_CALLS.TXT')
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_opt_file_search(self, isRdLstFile: bool, dsg: int, lstIdx: int, start: int, end: int) -> int:
+        # <<<
+        # returns: (-1=no change, 1=changed file, 2=changed file & qp, 3=changed qp)
+        if isRdLstFile:
+            self._sf_sVfsDir = self.sqtpp_emb_vfs_pojishon_read(1)
+            if isinstance(self._sf_sVfsDir, list):
+                if self.sqtpp_emb_vfs_pojishon_read(2) != 1:
+                    raise Exception('[sqtpp-vfs >> pojishon] - optional err: bad pojishon vfs mnt|dir|file path encountered, cannot read file for a optional search & find procedures')
+            else:
+                raise Exception('[sqtpp-vfs >> pojishon] - optional err: bad pojishon vfs mnt|dir|file path encountered, cannot read file for a optional search & find procedures')
+        else:
+            pass
+        qpLst = None
+        qpVnm = None
+        qpLen = None
+        qpRmLst = None
+        qpChng = False
+        flSlc = None
+        flChng = False
+        swLenCf = False
+        swLenDa = False
+        if dsg == 1: # file slice vs env-var's qp tagged data observe/close
+            if start > -1 and end <= len(self._sf_sVd):
+                qpLst = re.findall(r'@qp.*?\):', self._sf_sLstX[lstIdx])
+                qpVnm = self._sf_sLstX[lstIdx].split('<')
+                qpVnm = qpVnm[0]
+                qpLen = len(qpLst)
+                if len(qpLst) > 0:
+                    flSlc = self._sf_sVd[start:end]
+                    if len(flSlc) == len(self._sf_sVd): swLenCf = True
+                    rmvEnvVar = False
+                    rtSlc = flSlc
+                    qpRmLst = []
+                    for qp in range(qpLen):
+                        qpLst[qp] = qpLst[qp].replace('@qp(','').replace('):','')
+                        if qpLst[qp] == flSlc:
+                            if not flChng: flChng = True
+                            flSlc = flSlc.replace(qpLst[qp], '')
+                            if not rmvEnvVar:
+                                if not qpChng: qpChng = True
+                                qpRmLst.append(qp)
+                            if not rmvEnvVar and len(qpRmLst) == qpLen: rmvEnvVar = True
+                            if swLenCf and len(flSlc) < 1:
+                                swLenDa = True
+                                break
+                        else:
+                            if flSlc.find(qpLst[qp]) > -1:
+                                if not flChng: flChng = True
+                                flSlc = flSlc.replace(qpLst[qp], '')
+                                if swLenCf and len(flSlc) < 1:
+                                    swLenDa = True
+                                    break
+                    if not flChng and not qpChng:
+                        return -1
+                    else:
+                        rtrn = -1
+                        if flChng:
+                            rtrn = 1
+                            if swLenDa: self._sf_sVd = 'none'
+                            else: self._sf_sVd = self._sf_sVd.replace(rtSlc, flSlc)
+                        if qpChng:
+                            if rtrn == 1: rtrn = 2
+                            else: rtrn = 3
+                            if not rmvEnvVar:
+                                if len(qpRmLst) > 0:
+                                    for q in sorted(qpRmLst, reverse=True): qpLst.pop(q)
+                                    for p in range(len(qpLst)): qpLst[p] = f'@qp({qpLst[p]}):'
+                                    self._sf_sLstX[lstIdx] = f'{qpVnm}<{"".join(qpLst)}>'
+                                else:
+                                    if rtrn == 2: rtrn = 1
+                                    elif rtrn == 3: rtrn = -1
+                            else: self._sf_sLstX.pop(lstIdx)
+                        return rtrn
+                else:
+                    return -1
+            else:
+                raise Exception('[sqtpp-vfs >> pojishon] - optional err: invalid start index or/and end index value(s) for a file data search length comparison with any qp tagged env-var data, see IMPORT_CALLS.TXT')
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_opt_tqpt_search(self, qpSrch: bool, setDirs: bool, setTqpt: bool, srchLst: list, occrLst: list) -> list:
         # FNC_ID=ST12-77514908040587
         # SqtppFncs slots in use: (_sf_rBoolA, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rIntH, _sf_rIntI, _sf_rLstE, _sf_rLstF, _sf_sLstX, _sf_sQp, _sf_sStrX, _sf_sVd)
@@ -3909,21 +4075,8 @@ class SqtppFncs(Sqtpp):
         if occrLst != None:
             occrLen = len(occrLst)
             if occrLen == 1 and occrLst[0] == '*': fsOcr = True
-        try:
-            self._sf_sLstX = self._sf_sQp.split('\n')
-            self._sf_sLstX.pop(0)
-            self._sf_rIntI = len(self._sf_sLstX)
-            if self._sf_rIntI < 2:
-                raise Exception('[sqtpp-vfs >> pojishon] - optional err: no sufficient tqpt form/qp tagged env-var(s) data for a open comparable scan')
-        except Exception as opt_qp_srch_err:
-            raise Exception('[sqtpp-vfs >> pojishon] - optional err: no sufficient tqpt form/qp tagged env-var(s) data for a open comparable scan')
-        self._sf_rLstF = ['~__globe__~<@qp(','__KLF__DSG__<@qp(','AbsSmvt','<@qp:...:vd(@qp(st1.2=','<@q|p(','<@q*p(']
-        qpEntVld = [True for _ in range(self._sf_rIntI)]
-        for self._sf_rIntH in range(self._sf_rIntI):
-            self._sf_rIntC = 0
-            while self._sf_rIntC < 6:
-                if self._sf_sLstX[self._sf_rIntH].find(self._sf_rLstF[self._sf_rIntC]) > -1: qpEntVld[self._sf_rIntH] = False
-                self._sf_rIntC+=1
+        qpEntVld = self.sqtpp_emb_vfs_pojishon_skip_srch()
+        self._sf_rIntI = len(self._sf_sLstX)
         self._sf_rIntD = len(srchLst)
         if self._sf_rIntD > 0:
             if self.sqtpp_emb_vfs_pojishon_read(2) != 1:
@@ -3978,7 +4131,6 @@ class SqtppFncs(Sqtpp):
                                     else:
                                         raise Exception(f'[sqtpp-vfs >> pojishon] - optional err: no pairing index found @occurence list; needed index[{crIdx}] but @occurence list has only a max indice[{occrLen-1}] read pairing')
                                 else:
-                                    # Is ['*'] Returns qp clamps already fitted, append a entire vfs ~file to a single tqpt ~env-var on this match!
                                     if self._sf_sVd.find('\n') > -1 and self._sf_sVd.find(',') > -1: self._sf_rLstE = [e for nlS in self._sf_sVd.split('\n') for e in nlS.split(',')]
                                     elif self._sf_sVd.find('\n') > -1: self._sf_rLstE = self._sf_sVd.split('\n')
                                     elif self._sf_sVd.find(',') > -1: self._sf_rLstE = self._sf_sVd.split(',')
@@ -3992,6 +4144,30 @@ class SqtppFncs(Sqtpp):
             return qpFncRtn
         else:
             raise Exception('[sqtpp-vfs >> pojishon] - optional err: param @varDt list or @varNm list is missing, no string element(s) found')
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_skip_srch(self) -> list:
+        # FNC_ID=ST12-77901525334349
+        # SqtppFncs slots in use: (_sf_sLstX, _sf_sQp)
+        # returns:
+        try:
+            self._sf_sLstX = self._sf_sQp.split('\n')
+            self._sf_sLstX.pop(0)
+            rVarLen = len(self._sf_sLstX)
+            if rVarLen < 2:
+                raise Exception('[sqtpp-vfs >> pojishon] - insufficient tqpt form/qp tagged env-var(s) missing')
+            rtrnLst = [True for _ in range(rVarLen)]
+            uVarLst = ['~__globe__~<@qp(','__KLF__DSG__<@qp(','AbsSmvt','<@qp:...:vd(@qp(st1.2=','<@q|p(','<@q*p(']
+            for x in range(rVarLen):
+                vnm = 0
+                while vnm < 6:
+                    if self._sf_sLstX[x].find(uVarLst[vnm]) > -1:
+                        rtrnLst[x] = False
+                        break
+                    vnm+=1
+            return rtrnLst
+        except Exception as skp_srch_err:
+            raise Exception('[sqtpp-vfs >> pojishon] - insufficient tqpt form/qp tagged env-var(s) missing')
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_row_spdr(self, isEwwVd: bool, src, pos, ptrn) -> str:
@@ -4103,8 +4279,8 @@ class SqtppFncs(Sqtpp):
                         self._sf_sStrX = self._sf_sSrc[self._sf_rIntA:self._sf_rIntB+len(self._sf_rLstA[2])+len(self._sf_rLstA[3])+5]
                         self._sf_rStrA = self._sf_sStrX
                         if self._sf_sStrX.find(self._sf_rLstA[2] + '>\n_|:') > -1:
-                            self._sf_rLstB = self._sf_sStrX.split('\n')
-                            self._sf_sStrX = self._sf_rLstB[0] + '\n|::|ST1EMB<SQTPP_MNT_STGS>\n_|::|SQTPP_MNT_STGS<STGS:\n__|::|STGS<:\n<STGS:S:\nnone:|:>\n_|:|:|SQTPP_MNT_STGS>\n' + self._sf_rLstB[1]
+                            nVfsLst = self._sf_sStrX.split('\n')
+                            self._sf_sStrX = nVfsLst[0] + '\n|::|ST1EMB<SQTPP_MNT_STGS>\n_|::|SQTPP_MNT_STGS<STGS:\n__|::|STGS<:\n<STGS:S:\nnone:|:>\n_|:|:|SQTPP_MNT_STGS>\n' + nVfsLst[1]
                     else: self._sf_sRtrn = -2
                 else: self._sf_sRtrn = -1
             if mode == 10:
@@ -4585,6 +4761,31 @@ class SqtppFncs(Sqtpp):
             else: errStr = '!MNT_.:_:!!:_:._MNT!'
         if errStr != None:
             return errStr
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_ext_vfs_edit_file(self, dirLst: list, nwSrc: str):
+        # FNC_ID=ST12-82258639862779
+        # SqtppFncs slots in use: (_sf_sStrX)
+        # returns: (none, assumes _sf_sStrX is contain of all emb-vfs mounts/dirs/files)
+        dErr = False
+        rtnMnt = self.sqtpp_emb_ext_vfs_get_mnt(True, [dirLst[0]])
+        if rtnMnt != None:
+            rtnDir = self.sqtpp_emb_ext_vfs_get_dir(dirLst[1], rtnMnt)
+            if rtnDir != None:
+                rtnFle = self.sqtpp_emb_ext_vfs_get_file(dirLst[2], rtnDir)
+                if rtnFle != None:
+                    orgA = '<' + dirLst[2] + ':S:\n' + rtnFle + ':|:>'
+                    rtnFle = '<' + dirLst[2] + ':S:\n' + nwSrc + ':|:>'
+                    orgB = rtnDir
+                    rtnDir = rtnDir.replace(orgA, rtnFle)
+                    orgA = rtnMnt
+                    rtnMnt = rtnMnt.replace(orgB, rtnDir)
+                    self._sf_sStrX = self._sf_sStrX.replace(orgA, rtnMnt)
+                else: dErr = True 
+            else: dErr = True
+        else: dErr = True
+        if dErr:
+            raise Exception(f"[sqtpp-vfs >> pojishon] - unable to edit file '{dirLst[2]}' in mnt/dir({dirLst[0]}/{dirLst[1]}) is an unresolved error, embedded vfs .sqtpp files's mounts/directories/files may be corrupted")
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_ext_vfs_set_file_list(self, isCmpltd: bool, dirNm: str, dirSrc: str):
