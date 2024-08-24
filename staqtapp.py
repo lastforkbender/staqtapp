@@ -1,4 +1,4 @@
-#QPython 3SE / Row4 / staqtapp.py (4,943 lines) / 8:48 Fri, Aug 23
+#QPython 3SE / Row4 / staqtapp.py (4,953 lines) / 4:15 Sat, Aug 24
 
 
 
@@ -8,7 +8,7 @@
 
 
 
-#Staqtapp-v1.2.351 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
+#Staqtapp-v1.2.353 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
 # <<< [qc-apps@xprize.org]
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -25,9 +25,17 @@
 
 
 
-# UPDATE FRI, AUG23: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
-#                    Fixed some issues with optional closed, still needs to be fully
-#                    tested before moving on to other optionals added.
+# UPDATE SAT, AUG24: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
+#                    Fixed more issues with optional closed, still needs to be fully
+#                    tested before moving on to other optionals added. Now properly
+#                    allows single use(one s & e) in a phase string; and file search
+#                    function, called from the closed optional properly trims the qp
+#                    taggings before comparisons happen with added vfs file. Was ---
+#                    insert double nested @qp(...): taggings of qp tags not effected
+#                    for any tqpt env-var name(s) in a match/file comparison s & e.
+#                    Break instruction commented out there also to allow duplicate
+#                    tqpt env-var names in a phase string or list, allowing multi-
+#                    recursion both reverse or normal with vfs file(s) added.
 
 #                    See IMPORT_CALLS.TXT
 
@@ -667,7 +675,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.351\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.353\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1569,7 +1577,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.351\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.353\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3456,47 +3464,48 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#    _/./  .//_/  _././_  _/./  _/./__  __/.//  _././_  __//._  .//_/  __//._
-#  _/./__  _././_  __//._  .//_/  __/._/_  _//.//  __/.//  .//_/  __/._/_  /.__/
-#  _././_  _/./  _//.//  __//._  _././_  _././_  _/./__  __/.//  __/._/_  __/.//
-#  /_._  _/./  __//._  _/./  _/./  .//_/  _/./  .//_/  __/._/_  _/./__  _//.//
-#  __/._/_  _/./  __//._  __//._  __//._  _/./__  /_._  /.__/  _//.//  _/./__
-#  /_._  __/.//  _/./__  _././_  __//._  __//._  /.__/  _././_  .//_/  .//_/
-#  .//_/  /.__/  /.__/  _/./  /.__/  __/._/_  /_._  .//_/  _//.//  __/.//  _/./__
-#  __/.//  _/./__  __/.//  __/.//  __/.//  __/.//  __/._/_  .//_/  __/._/_
-#  __/._/_  _/./__  .//_/  __//._  __/.//  __/.//  _././_  __//._  __/._/_
-#  _//.//  __/._/_  .//_/  /.__/  __/._/_  __//._  _././_  _/./  __/._/_  __/._/_
-#  __/._/_  _/./__  _/./  .//_/  __//._  _/./__  __//._  _/./__  _/./  _././_
-#  _././_  .//_/  .//_/  __/._/_  /.__/  /.__/  .//_/  /_._  /.__/  __/._/_
-#  __//._  __//._  /.__/  _/./  __/._/_  _/./__  __//._  _//.//  /.__/  _/./
-#  __/._/_  _/./__  __/.//  .//_/  _././_  .//_/  __/._/_  _/./__  __/._/_
-#  __/.//  _././_  __//._  _././_  __//._  _//.//  /.__/  __/._/_  __/._/_
-#  __//._  __//._  _//.//  .//_/  _/./  __/.//  .//_/  /_._  __//._  _/./  __/.//
-#  __/.//  .//_/  __/.//  _/./__  __/.//  _//.//  /_._  _//.//  /.__/  /.__/
-#  /.__/  _/./__  _/./  _././_  __/._/_  /.__/  /_._  _././_  _././_  /_._
-#  _/./__  _/./__  _/./__  __/.//  _././_  _/./  .//_/  /.__/  __//._  __//._
-#  _//.//  __/._/_  /_._  _/./__  .//_/  .//_/  /.__/  _/./__  _././_  /_._  _/./
-#  _././_  _/./  /.__/  /.__/  __/._/_  /.__/  _././_  __//._  _././_  .//_/
-#  .//_/  _//.//  _//.//  _/./  _/./  /_._  .//_/  _././_  _/./  _/./__  _././_
-#  __/.//  /.__/  _././_  __/._/_  _././_  /_._  __/.//  _/./__  .//_/  _/./__
-#  _/./  _/./__  /_._  __//._  .//_/  /.__/  _././_  _//.//  /_._  .//_/  __/._/_
-#  __/._/_  .//_/  /.__/  /.__/  __/._/_  _//.//  __/._/_  _././_  __/.//  .//_/
-#  __//._  __/.//  __//._  __/._/_  /.__/  /.__/  /_._  _././_  _././_  __/._/_
-#  _/./__  _//.//  __//._  .//_/  __//._  __/.//  __/._/_  /_._  .//_/  _/./__
-#  _/./  __/.//  _//.//  __//._  _././_  /_._  _/./  /.__/  /_._  _//.//  __/._/_
-#  /.__/  __/._/_  .//_/  __/.//  .//_/  _././_  .//_/  _/./  __//._  .//_/
-#  _//.//  /_._  /_._  _/./  _././_  /_._  __//._  _//.//  _//.//  _/./  _/./__
-#  _././_  _/./__  _/./  _//.//  /.__/  /.__/  /.__/  __/.//  _//.//  /.__/  /_._
-#  __//._  __//._  __/.//  _/./  /_._  __/.//  _/./__  _//.//  __/._/_  _/./
-#  __/._/_  __//._  __/._/_  /.__/  _/./__  _././_  __/.//  __/.//  __/._/_  _/./
-#  __//._  _././_  /.__/  _/./  __//._  _/./  _/./__  __/._/_  .//_/  _//.//
-#  _/./__  _//.//  /.__/  /_._  .//_/  _//.//  _/./  __//._  _//.//  .//_/
-#  __/._/_  /.__/  _/./__  .//_/  _/./  _/./  /_._  /_._  /.__/  __/._/_  /.__/
-#  .//_/  __/._/_  _/./__  _././_  __/._/_  _././_  __//._  __//._  _/./__  /_._
-#  __/._/_  _././_  _//.//  /.__/  _././_  __/._/_  _././_  .//_/  __/.//  .//_/
-#  __/.//  __/.//  _/./__  /_._  _/./__  _././_  __//._  _//.//  /_._  __//._
-#  /_._  __//._  __//._  _//.//  _/./  __//._  .//_/  _././_  __/._/_  __/._/_
-#  _/./__  _//.//  .//_/  _/./  /_._  _/./  /.__/  /_._
+#    __//._  _//.//  __/._/_  __/.//  _././_  _/./__  .//_/  _/./  __//._  __/.//
+#  __//._  _/./__  __/._/_  __/.//  .//_/  __/.//  __/.//  _././_  /.__/  __//._
+#  _/./  __/.//  /.__/  _././_  __/._/_  _/./  /.__/  _/./__  _././_  _/./__
+#  /_._  _/./__  .//_/  __//._  _/./__  _././_  .//_/  _//.//  _././_  _/./
+#  _/./__  _/./  _//.//  __/.//  __/._/_  __//._  .//_/  __/._/_  _//.//  __/.//
+#  _/./  _/./__  .//_/  _/./  /_._  __/.//  _/./  __/._/_  /_._  __/._/_  .//_/
+#  .//_/  _././_  _/./__  _/./  __/.//  __/.//  .//_/  __/._/_  __/.//  _//.//
+#  __//._  _/./__  /.__/  __//._  _/./  .//_/  __/.//  _/./__  _//.//  __/.//
+#  .//_/  _//.//  __//._  __/.//  .//_/  __//._  /.__/  _././_  _//.//  _//.//
+#  __/._/_  __/.//  __/.//  _//.//  _//.//  _/./  _/./__  _././_  /.__/  _/./
+#  _././_  __//._  _/./  _/./  __//._  _././_  _././_  _/./  __/._/_  _//.//
+#  _//.//  .//_/  __/.//  .//_/  _//.//  /_._  __/.//  __//._  /_._  /.__/
+#  _././_  __/.//  .//_/  /_._  _././_  _//.//  __/.//  _/./  _//.//  _/./__
+#  /_._  _/./  _//.//  .//_/  /_._  /_._  _/./  /_._  _././_  /.__/  .//_/
+#  _/./__  .//_/  _/./  _././_  __/._/_  __//._  _././_  _/./  __//._  _/./__
+#  .//_/  .//_/  _/./__  __/._/_  _././_  _/./__  .//_/  __//._  _/./  _//.//
+#  _//.//  _//.//  _././_  _././_  /_._  _/./  .//_/  .//_/  __//._  __/._/_
+#  _/./  /.__/  /_._  __/.//  _/./__  __/.//  _//.//  /_._  __/._/_  __/.//
+#  _././_  _/./  _././_  .//_/  __/.//  __/._/_  /_._  _/./__  _//.//  _/./__
+#  __/._/_  /_._  _//.//  _/./  .//_/  _/./__  _/./  _././_  _/./__  __/._/_
+#  _././_  _/./__  __/._/_  __/.//  /_._  /.__/  .//_/  __/._/_  __/._/_  _/./
+#  __/._/_  .//_/  _/./  _//.//  /.__/  _/./__  __/._/_  _//.//  _/./__  __/._/_
+#  /.__/  _//.//  _/./__  .//_/  _//.//  _/./__  .//_/  _//.//  _././_  __/._/_
+#  _/./__  __/.//  .//_/  __/.//  _//.//  _//.//  _//.//  /.__/  __//._  _/./
+#  __//._  /.__/  /_._  __/.//  _//.//  _//.//  _/./__  __//._  _/./  _/./  /.__/
+#  _/./  _/./__  __/.//  _//.//  /.__/  /.__/  _/./__  __//._  _/./  _/./  __//._
+#  __//._  _/./__  .//_/  _/./  __/.//  __/.//  __//._  _././_  /_._  _/./
+#  _/./__  __/.//  .//_/  /.__/  /_._  __//._  /.__/  __/._/_  __//._  /.__/
+#  .//_/  __//._  /.__/  _/./  _/./  __/._/_  __/.//  _././_  __//._  _/./
+#  __//._  .//_/  __/.//  __/._/_  _/./  __/.//  .//_/  __/.//  _/./__  /_._
+#  _/./__  _/./__  __/._/_  _/./  /_._  __//._  __/._/_  _/./__  __/._/_  __/._/_
+#  _//.//  /_._  _././_  _././_  __/._/_  __//._  _././_  /.__/  /_._  _//.//
+#  /.__/  _/./__  __//._  _/./__  /.__/  __/._/_  _/./__  _//.//  __/.//  /_._
+#  __/.//  _//.//  /_._  __/._/_  __/._/_  /.__/  _././_  _//.//  .//_/  __/.//
+#  _././_  _././_  .//_/  /.__/  /.__/  /.__/  .//_/  __/._/_  __/.//  _././_
+#  __/.//  __/.//  .//_/  /.__/  .//_/  __/.//  __/.//  _/./  .//_/  /.__/
+#  __//._  /_._  /.__/  __//._  _././_  _././_  _/./  __/._/_  _//.//  _/./__
+#  /_._  __/._/_  .//_/  /.__/  __/._/_  _/./__  /_._  _/./__  /.__/  _//.//
+#  __//._  .//_/  __//._  /_._  .//_/  __/.//  _//.//  __/._/_  _/./__  .//_/
+#  /_._  /_._  _././_  .//_/  _/./  __/._/_  .//_/  /_._  .//_/  /.__/  /.__/
+#  _././_  /_._  /_._  __/.//  _/./  _/./  _././_  /_._  /_._  _//.//  __//._
+#  _//.//
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon(self, mode: str, varDt, varNm, dirLst: list):
@@ -3820,7 +3829,8 @@ class SqtppFncs(Sqtpp):
                 if isinstance(self._sf_rLstB, str):
                     if self._sf_rLstB.find('=') > -1 and self._sf_rLstB.find(':') > -1: swFncStr = True
                 if swFncStr:
-                    self._sf_rLstB = self._sf_rLstB.split('::')
+                    if self._sf_rLstB.find('::') > -1: self._sf_rLstB = self._sf_rLstB.split('::')
+                    else: self._sf_rLstB = [self._sf_rLstB]
                     self._sf_rIntF = len(self._sf_rLstB)
                     nclSet = set(':1234567890')
                     self._sf_rLstE = []
@@ -3877,7 +3887,7 @@ class SqtppFncs(Sqtpp):
                                 elif self._sf_rIntG == 1:
                                     if not self._sf_rBoolD: self._sf_rBoolD = True
                                 if swRdLstF: swRdLstF = False
-                                break
+                                #break --> disabled, allows reversed multi-recursions with duplicate env-var names used in a list or in a phase string @varNm
                             self._sf_rIntE+=1
                 if not self._sf_rBoolD and not self._sf_rBoolE:
                     return False
@@ -3995,7 +4005,7 @@ class SqtppFncs(Sqtpp):
         swLenCf = False
         swLenDa = False
         if dsg == 1: # file slice vs env-var's qp tagged data observe/close
-            if start > -1 and end <= len(self._sf_sVd):
+            if start > -1 and end > start and end <= len(self._sf_sVd):
                 qpLst = re.findall(r'@qp.*?\):', self._sf_sLstX[lstIdx])
                 qpVnm = self._sf_sLstX[lstIdx].split('<')
                 qpVnm = qpVnm[0]
@@ -4006,8 +4016,8 @@ class SqtppFncs(Sqtpp):
                     rmvEnvVar = False
                     rtSlc = flSlc
                     qpRmLst = []
+                    for re in range(qpLen): qpLst[re] = qpLst[re].replace('@qp(','').replace('):','')
                     for qp in range(qpLen):
-                        qpLst[qp] = qpLst[qp].replace('@qp(','').replace('):','')
                         if qpLst[qp] == flSlc:
                             if not flChng: flChng = True
                             flSlc = flSlc.replace(qpLst[qp], '')
