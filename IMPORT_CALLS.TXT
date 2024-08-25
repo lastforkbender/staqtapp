@@ -4,7 +4,9 @@ https://github.com/lastforkbender/staqtapp
 _______________________________________________________________________________________
       STAQTAPP V1.2 IMPORT FUNCTIONS USAGE:
       
-      UPDATED: FRI, AUG23 2024, edit of pojishon optional closed description & usage
+      
+
+      UPDATED: SUN, AUG25 2024, added "next.ghost" pojishon command description & usage
       
       
       
@@ -340,6 +342,25 @@ ________________________________________________________________________________
             match the last mount name used or throws a mount placement exception;
             and argument dirList[1] does not match last directory used. If new dir
             @dirList[1] is not currently a dir in mnt then will add the new dir.
+            
+        (3) ("next.ghost.*", required, non-required, required), from the last file
+            added compares it's data to any file @dirList path. If a entire line in
+            the most recent added file matches a entire line in @dirList file, then
+            an add all matching lines to a new file in same directory of @dirList[1]
+            whereof index[0] is mount; index[1] is directory. The @varName parameter
+            is ignored and the new file's name is of a number of lines #. Is a 1rst
+            match basis on any file then scans the same file for more line matches.
+            
+            EXAMPLE: lastfileaddedname_#numberoflines
+            
+            As example above takes on last added file name and number of lines that
+            will be a number, not #numberoflines. If at any time this action repeat
+            and the naming above matches for a new file to added in same directory,
+            the file is replaced. Has to complete match. Will not overwrite a file
+            having a different number of lines. In other words the original *host*
+            file of this add file feature is a unknown in Staqtapp's procedures --
+            when next.refill or next.remove is used on that same mount/directory.
+            (NOT YET IMPLEMENTED)
             
         
       ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
