@@ -6,7 +6,7 @@ ________________________________________________________________________________
       
       
 
-      UPDATED: SUN, AUG25 2024, added "next.ghost" pojishon command description & usage
+      UPDATED: TUE, AUG27 2024, "next.ghost.*" pojishon command description updated
       
       
       
@@ -343,7 +343,7 @@ ________________________________________________________________________________
             and argument dirList[1] does not match last directory used. If new dir
             @dirList[1] is not currently a dir in mnt then will add the new dir.
             
-        (3) ("next.ghost.*", required, non-required, required), from the last file
+        (3) ("next.ghost.*", non-required, non-required, required), from last file
             added compares it's data to any file @dirList path. If a entire line in
             the most recent added file matches a entire line in @dirList file, then
             an add all matching lines to a new file in same directory of @dirList[1]
@@ -360,7 +360,13 @@ ________________________________________________________________________________
             having a different number of lines. In other words the original *host*
             file of this add file feature is a unknown in Staqtapp's procedures --
             when next.refill or next.remove is used on that same mount/directory.
-            (NOT YET IMPLEMENTED)
+            (The setting for the last file added in vfs settings is not updated to
+            the mnt/dir/file of the new match lines file just added, is ghost file)
+            One to be careful with. If the @dirLst is pointing to directory where
+            there is a file of a same naming, however not a lines match file then
+            gets over written just a same anyway. Also to remember the last added
+            file in the vfs settings is not there for this type file added. Any
+            optionals used after this command sees same unchanged m/d/f setting.
             
         
       ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
