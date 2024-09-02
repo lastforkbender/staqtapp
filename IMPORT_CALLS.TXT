@@ -6,7 +6,7 @@ ________________________________________________________________________________
       
       
 
-      UPDATED: TUE, AUG27 2024, "next.ghost.*" pojishon command description updated
+      UPDATED: MON, SEP2 2024, added registry() features description
       
       
       
@@ -315,6 +315,15 @@ ________________________________________________________________________________
       to store any env-var data or passwords.
       
       
+----> registry(isRead, keyName, keyData, harpSchemaPath), stores registry keys in the
+      auto-generated slots performance module sqtpp1_2_REG.py for integrated lambda
+      function use for registry value(s) normalizations. It does this by a schema of
+      custom coding, that has a nested validator for lambda returns in connect of --
+      types, items, inherits and any kept order of the main category types assigned.
+      The more advanced pojishon optionals use this type lambda-registry extensive.
+      (NOT YET IMPLEMENTED)
+      
+      
 ----> pojishon(mode, varData, varName, dirList), gives access to Staqtapp's vfs dir/
       embedded file system located at the top directory of a sqtpp file. Includes --
       28 functional calls in 6 categories: next, jump, tqpt, tpqt, watch and record.
@@ -463,10 +472,6 @@ ________________________________________________________________________________
             The closed optional works with optionals cache, seal, setfreq and removefreq
             of a similiar instructions bounded to env-vars' names and env-vars' datas in
             a dynamic observe, pass, collect, merge or remove context search further.
-            Without this optional, ARRN(Automated Regional Remapping Neutral) is not of
-            any possible for a vfs env-var integration with any file and the advanced AI
-            of a virtual environment vars type stimulation repeats a boring awareness of
-            stuck var types created, same variable type edits in interactions with file.
             
             
         (3) .cache(varNm=str; occurence=#) | .cache(varNm=list; occurence=#[index])
