@@ -1,4 +1,4 @@
-#QPython 3SE / Row4 / staqtapp.py (5,115 lines) / 5:01 Mon, Sep 2
+#QPython 3SE / Row4 / staqtapp.py (5,147 lines) / 5:10 Tue, Sep 3
 
 
 
@@ -8,7 +8,7 @@
 
 
 
-#Staqtapp-v1.2.359 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
+#Staqtapp-v1.2.364 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
 # <<< [qc-apps@xprize.org]
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -25,10 +25,10 @@
 
 
 
-# UPDATE MON, SEP2: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
-#                   Began working on the special registry integration for more adv
-#                   pojishon optionals and as a accessable feature of Staqtapp 1.2,
-#                   .registry(isRead, keyName, keyData, harpSchemaPath)
+# UPDATE TUE, SEP3: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
+#                   Registry function sqtpp_registry_homer_add_key() for sqtpp1_2_
+#                   REG.py module done. Handles adding of keys or edit of existing
+#                   registry keys inline of the registry parsing routines silently.
 
 #                   See IMPORT_CALLS.TXT
 
@@ -77,6 +77,7 @@
 #_______________________________________________________________________________________
 # github.com/lastforkbender/staqtapp
 
+from datetime import datetime
 from decimal import Decimal as dcml
 from collections import deque, Counter
 
@@ -120,9 +121,14 @@ class Sqtpp():
     def __init__(self):
         pass
 #_______________________________________________________________________________________
+    def mcf_lll_registry(self, isRd: bool, kyNm: str, kyDt, schm: str):
+        # Is access to sqtpp-registry system sqtpp1_2_REG.py
+        sfCls = SqtppFncs()
+        self._sRtrn = sfCls.sqtpp_registry_homer(isRd, kyNm, kyDt, schm)
+        return self._sRtrn
+#_______________________________________________________________________________________
     def mcf_makevfs(self, vfsNm: str, dirNm: str, fldrNm: str):
         # Creates .sqtpp vfs file in the current working module dir .../staqtapp1_2/
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if vfsNm.find(':') < 0:
             if dirNm != fldrNm:
@@ -137,7 +143,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_setpath(self, vfsFlNm: str, vfsDirNm: str, vfsFldrNm: str):
         # Sets a direct virtual path to a tqpt file/env-var @qp(): stack.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if vfsFlNm.find(':') < 0:
             if vfsDirNm != vfsFldrNm:
@@ -157,7 +162,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_corevar(self, mode: int, varNm: str, blLst: list):
         # See corevar description. @mode 1=write, 2=normal return, 3=delta RLE return
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, varNm):
             self._sRtrn = sfCls.sqtpp_byte_vars(mode, varNm, blLst)
@@ -193,7 +197,6 @@ class Sqtpp():
         # Adds variables to the set path vfs tqpt file. If finds the word 'lambda' in
         # varDat will bypass a normal addvar() in exchange for storing a runnable var.
         # In that special case, the parameter @varNm is ignored for writing to tqpt.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         sfCls._sf_rBoolE = False
         if varDat.find('lambda') > -1: sfCls._sf_rBoolE = True
@@ -215,7 +218,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_appvar(self, varNms: list, varDts: list, varLks):
         # Adds env-var(s) by lists, including a lock name list for keyvar() coherency.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if isinstance(varNms, list) and isinstance(varDts, list):
             self._rIntA = 0
@@ -242,7 +244,6 @@ class Sqtpp():
     def mcf_renamevar_stx(self, varNm: str, newVarNm):
         # Returns 1 if renamed var, 2 if renamed spawned vars with one left spawned
         # var or 3 if renamed spawned vars and more than one left from stalked var.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, varNm):
             self._sRtrn = sfCls.sqtpp_vars_rename_stx(varNm, newVarNm)
@@ -259,7 +260,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_removevar(self, varNm: str):
         # Deletes a env-var from vfs tqpt source and tpqt lockvar block if any.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, varNm):
             self._sRtrn = sfCls.sqtpp_vars_remove(varNm)
@@ -272,7 +272,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_listvars(self) -> list:
         # Returns listed names of all env-vars in vfs tqpt source.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         self._sRtrn = sfCls.sqtpp_vars_list()
         if self._sRtrn == -1: self.mcf_err_handler(6, 'listvars')
@@ -283,7 +282,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_lambdalist(self, asComplete: bool):
         # Returns list type of special tagged @q|p(...): lambda functions in tqpt stack.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         self._sRtrn = sfCls.sqtpp_list_lambda(asComplete)
         if self._sRtrn == -1: self.mcf_err_handler(6, 'lambdalist')
@@ -295,7 +293,6 @@ class Sqtpp():
     def mcf_joinvars(self, newVarNm: str, varNms: list):
         # Joins a list of @varNms into a newly merged env-var in vfs tqpt source or
         # joins list of spawned env-vars data to @newVarNm if @newVarNm is stalked.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, newVarNm):
             self._sRtrn = sfCls.sqtpp_vars_join(newVarNm, varNms)
@@ -307,7 +304,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_changevar(self, varNm: str, newVarDt: str):
         # See changevar at top of this module for description of this linked method.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, varNm):
             self._sRtrn = sfCls.sqtpp_vars_change(varNm, newVarDt)
@@ -326,7 +322,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_addtree_stx(self, trNm: str, initPthLst: list):
         # Adds a spahk-mv type initial path keys built dict tree to vfs tqpt source.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, trNm):
             self._sRtrn = sfCls.sqtpp_spok_mv_tree(trNm, initPthLst)
@@ -340,7 +335,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_addbranch_stx(self, trNm: str, smvBrnchId, newSmvBrnchId, newSmvBrnchVl):
         # See addbranch_stx() descriptions and examples @ top of this module.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, trNm):
             self._sRtrn = sfCls.sqtpp_spok_mv_tree_add_branch(trNm, smvBrnchId, newSmvBrnchId, newSmvBrnchVl)
@@ -354,7 +348,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_getbranch_stx(self, isAlf: bool, trNm: str, smvBrnchId):
         # Returns a found value pairing or None for a mv-tree type branch id reads.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, trNm):
             self._sRtrn = sfCls.sqtpp_spok_mv_tree_get_branch(isAlf, trNm, smvBrnchId)
@@ -369,7 +362,6 @@ class Sqtpp():
     def mcf_loadvar(self, isAllNmbrs: bool, varNm: str, mode: str):
         # Returns valid stored env-var data from @varNm; from set vfs tqpt path source.
         # ('mode=d' deque), ('mode=s' str)
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, varNm):
             mode = mode.replace(' ','')
@@ -390,7 +382,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_lockvar(self, varNm: str, fncNm):
         # Adds entries to set vfs path tpqt file for restraint of env-var access.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, varNm):
             self._sRtrn = sfCls.sqtpp_limit_var_domain(varNm, fncNm)
@@ -401,7 +392,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_locklist(self, varNm: str):
         # Returns list type for listed fnc/etc. names in use from lockvar use @varNm.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, varNm):
             self._sRtrn = sfCls.sqtpp_list_lock(varNm)
@@ -413,7 +403,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_lockdel(self, isDelAll: bool, varNm: str, fncNm):
         # Removes tpqt lock entries @fncNm for a env-var @varNm tagged blocks.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, varNm):
             self._sRtrn = sfCls.sqtpp_del_locks(isDelAll, varNm, fncNm)
@@ -425,7 +414,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_keyvar(self, varNm: str, fncNm: str) -> bool:
         # Returns False if @fncNm is not a listed key name for any @varNm edits.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, varNm):
             self._sRtrn = sfCls.sqtpp_var_key(varNm, fncNm)
@@ -444,7 +432,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_revar(self, isNewSetPth: bool, newVfsFlNm: str, newVfsDirNm: str, newVfsFldrNm: str):
         # Respawns a new .sqtpp vfs file via tpqt lockvar tagged env-vars only content.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if newVfsFlNm.find(':') < 0:
             if newVfsDirNm != newVfsFldrNm:
@@ -464,7 +451,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_findvar(self, varNm: str):
         # Searches for @varNm in listed vars of set path vfs tqpt file contents.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, varNm):
             self._sRtrn = sfCls.sqtpp_locate_var(True, varNm)
@@ -477,7 +463,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_findvar_stx(self, varNmLst: list, stlkVarNm: str):
         # Searches a list of vars to be found, with stalked variable option. See stx function description above.
-        # __slots__ in use: (_sRtrn, _rIntA, _rIntB)
         sfCls = SqtppFncs()
         self._rIntB = len(varNmLst)
         for self._rIntA in range(self._rIntB):
@@ -495,7 +480,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_vardata_stx(self, isRegex: bool, varNmLst: list, srch):
         # Search & find @varNmLst data from srch string option @srch. Returns name list.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         self._sRtrn = sfCls.sqtpp_locate_var_data(isRegex, varNmLst, srch)
         if self._sRtrn == -1: self.mcf_err_handler(6, 'vardata_stx')
@@ -506,7 +490,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_stalkvar(self, varNm: str, varDat: str):
         # Performs incremental @varNm mirroring collapse for @varDat conditions.
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, varNm):
             self._sRtrn = sfCls.sqtpp_vars_add(True, varNm, varDat)
@@ -524,7 +507,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_lambdavar(self, lmbNm: str, lmbPrms: list):
         # Runs a stored & found env-var in tqpt vfs source as @lambda function return(s).
-        # __slots__ in use: (_sRtrn)
         sfCls = SqtppFncs()
         if sfCls.sqtpp_chars_check(2, lmbNm):
             self._sRtrn = sfCls.sqtpp_vars_run_lambda(lmbNm, lmbPrms)
@@ -542,7 +524,6 @@ class Sqtpp():
 #_______________________________________________________________________________________
     def mcf_err_handler(self, altErrCd: int, clnFnc: str):
         # Handles error returns for mcf mid check functions.
-        # __slots__ in use: (_sRtrn)
         if altErrCd > 0:
             # Alt Error Int Codes:
             # 1 = invalid folder name chars
@@ -656,7 +637,7 @@ class Sqtpp():
 
 #_______________________________________________________________________________________
 class SqtppFncs(Sqtpp):
-    __slots__ = ('_sf_sVfs', '_sf_sVfsDir', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sRplc', '_sf_sQp', '_sf_sQpRplcX', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_sBoolCxv', '_sf_sLstA', '_rg_rLstA', '_rg_rIntA', '_rg_rIntB', '_rg_rBoolA', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rLstE', '_sf_rLstF', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD', '_sf_rBoolE', '_sf_rBoolF')
+    __slots__ = ('_sf_sVfs', '_sf_sVfsDir', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sRplc', '_sf_sQp', '_sf_sQpRplcX', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_sBoolCxv', '_sf_sLstA', '_rg_rStrA', '_rg_rStrB', '_rg_rStrC', '_rg_rStrD', '_rg_rLstA', '_rg_rLstB', '_rg_rLstC', '_rg_rIntA', '_rg_rIntB', '_rg_rBoolA', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rLstE', '_sf_rLstF', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD', '_sf_rBoolE', '_sf_rBoolF')
     
     def __init__(self):
         self._sf_rBoolE = False
@@ -668,7 +649,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.359\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.364\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1570,7 +1551,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.359\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.364\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3372,9 +3353,16 @@ class SqtppFncs(Sqtpp):
             self._sf_sBoolCxv = None
             self._sf_sLstA = None
         if self._rg_rBoolA:
+            self._rg_rStrA = None
+            self._rg_rStrB = None
+            self._rg_rStrC = None
+            self._rg_rStrD = None
             self._rg_rLstA = None
+            self._rg_rLstB = None
+            self._rg_rLstC = None
             self._rg_rIntA = None
             self._rg_rIntB = None
+            self._rg_rBoolA = None
         self._sf_rStrA = None
         self._sf_rStrB = None
         self._sf_rStrC = None
@@ -3461,48 +3449,48 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#  _/./__  /_._  __//._  /.__/  _//.//  _/./__  __/.//  _/./__  __/.//  _././_
-#  _//.//  .//_/  .//_/  .//_/  __//._  _//.//  /_._  .//_/  _/./  _././_  _/./
-#  /_._  _//.//  _././_  __//._  __/.//  /_._  _/./__  __/._/_  _././_  __/.//
-#  __/._/_  _//.//  _//.//  .//_/  _/./__  .//_/  __//._  /_._  _/./  .//_/
-#  _//.//  _/./  _/./__  __/.//  _././_  /_._  _//.//  _/./__  _/./__  _/./__
-#  .//_/  _/./  _/./__  __//._  /.__/  _/./__  /_._  __/.//  __//._  __/._/_
-#  _/./  /.__/  /_._  _././_  __//._  _/./  _/./__  _/./  /.__/  __/.//  _././_
-#  /_._  _/./  .//_/  __/.//  /.__/  _//.//  .//_/  __//._  /.__/  _././_  /_._
-#  _/./  _/./  __//._  _//.//  .//_/  _//.//  _././_  _//.//  .//_/  /_._  __//._
-#  _/./  /_._  /.__/  _././_  __//._  .//_/  _././_  .//_/  __//._  __/.//
-#  _//.//  _/./__  __/.//  /_._  __//._  .//_/  /.__/  .//_/  _/./__  __//._
-#  __//._  .//_/  __//._  /_._  __/.//  __//._  _//.//  _././_  /_._  /.__/
-#  __//._  __/._/_  _//.//  _/./__  .//_/  _/./__  __//._  /.__/  .//_/  __//._
-#  _//.//  .//_/  __/.//  __/.//  __//._  __/.//  __/.//  _/./  __//._  _././_
-#  _/./  /.__/  /.__/  /.__/  /.__/  _//.//  _/./__  __/.//  _././_  .//_/
-#  __/.//  _/./  __/._/_  _/./__  /.__/  __/._/_  _/./  _././_  _././_  _././_
-#  _//.//  .//_/  _//.//  _././_  _/./  __/.//  _//.//  /.__/  /.__/  .//_/
-#  _//.//  __//._  _././_  .//_/  __/._/_  __//._  _/./__  /.__/  _././_  /_._
-#  /_._  __/._/_  .//_/  .//_/  _././_  _/./__  _/./  __/._/_  /_._  __//._
-#  /.__/  __/._/_  __//._  __/._/_  /.__/  _//.//  _/./__  __/._/_  _/./  /_._
-#  _/./__  __/.//  __/._/_  __//._  .//_/  __/._/_  /_._  __/.//  _/./__  /_._
-#  /_._  /_._  /_._  __//._  .//_/  _//.//  _././_  _././_  __//._  _/./__
-#  __/.//  _././_  __/._/_  .//_/  __/.//  /.__/  _././_  /.__/  /_._  _//.//
-#  _/./__  .//_/  /_._  _/./  /_._  /_._  _/./  _/./__  _/./__  /_._  __/._/_
-#  _/./__  /_._  __//._  /.__/  __/._/_  /.__/  .//_/  _/./  .//_/  /_._  _/./
-#  __/.//  _/./  _/./__  _/./  _/./__  _././_  __/.//  __/._/_  _././_  __/._/_
-#  __//._  _././_  _././_  _//.//  __/.//  /_._  __/.//  .//_/  __/.//  _/./
-#  __/.//  _././_  _/./  /.__/  .//_/  __/._/_  .//_/  __//._  _//.//  _/./__
-#  /.__/  _/./  __//._  _/./  _//.//  /_._  _././_  __//._  _/./__  _/./__  .//_/
-#  /_._  __//._  _/./  .//_/  .//_/  _//.//  __/._/_  /_._  _/./__  __/.//  _/./
-#  _/./__  __//._  _//.//  _/./  _//.//  __/.//  /_._  _/./  __//._  __//._
-#  __/.//  _././_  __//._  _/./  _././_  .//_/  /_._  _/./__  _//.//  _//.//
-#  _/./__  .//_/  .//_/  /_._  _/./__  _././_  .//_/  __/.//  __//._  _/./__
-#  /_._  _././_  __/.//  .//_/  _././_  .//_/  /_._  _/./__  __/.//  _/./__
-#  __/._/_  _/./__  _/./__  .//_/  __//._  _././_  /.__/  __/._/_  __//._  /_._
-#  _/./__  __/.//  _//.//  /.__/  _/./__  __/.//  _/./  __/.//  __/._/_  _/./__
-#  __/._/_  /_._  _././_  _/./__  .//_/  _//.//  _././_  __/._/_  _././_  /_._
-#  _//.//  _/./__  _././_  /_._  .//_/  .//_/  /.__/  /_._  __/._/_  _//.//
-#  _/./__  __/.//  _//.//  __/._/_  _//.//  __//._  __/.//  /_._  _/./  __/.//
-#  /_._  __/.//  _/./  _//.//  .//_/  _//.//  _././_  /.__/  _././_  __/._/_
-#  _/./__  _/./__  /_._  __//._  _//.//  _//.//  _/./  .//_/  __/.//  _/./__
-#  __/._/_  __//._  _/./  _././_  _/./__
+#  __//._  .//_/  .//_/  __/._/_  _././_  _/./__  _/./  _//.//  __/.//  _/./__
+#  .//_/  _/./  _/./__  /.__/  _/./  __//._  _/./  /.__/  _/./  _././_  __/._/_
+#  _//.//  /_._  __//._  _././_  .//_/  __//._  _././_  __//._  __/._/_  _././_
+#  __/.//  _././_  _././_  _././_  _/./__  _//.//  /.__/  __/.//  _/./__  __//._
+#  .//_/  _././_  /_._  _././_  /_._  _/./  _././_  .//_/  __/.//  /.__/  _/./__
+#  /.__/  /.__/  .//_/  __/._/_  .//_/  __//._  _././_  _/./__  /_._  _././_
+#  __/._/_  _/./  /_._  _/./__  _//.//  __//._  .//_/  _/./  __/._/_  .//_/
+#  .//_/  /_._  _/./__  _/./  _/./  /.__/  _/./  _/./  /_._  __/._/_  _././_
+#  _/./  __//._  __//._  _/./  _/./__  __/._/_  __/._/_  _././_  __/._/_  /_._
+#  /.__/  _././_  _././_  _././_  __/._/_  __/.//  _/./__  _/./  __//._  _/./
+#  _//.//  __/._/_  .//_/  /_._  .//_/  _//.//  .//_/  _/./  /.__/  _/./__
+#  _././_  _//.//  _././_  _././_  __/._/_  /_._  _/./  __//._  .//_/  /_._
+#  __/.//  _/./  _//.//  __/.//  _/./  _././_  /.__/  /_._  /.__/  _././_  /.__/
+#  __/.//  /.__/  /.__/  _//.//  .//_/  __/.//  /_._  __/.//  /_._  _/./  _././_
+#  __/.//  _././_  /.__/  _/./  __/.//  __/._/_  _/./  __//._  _/./__  /_._
+#  __/._/_  _/./__  _/./__  /_._  __/.//  _/./__  __/.//  __/.//  /.__/  _././_
+#  _//.//  /.__/  _//.//  __//._  __//._  /.__/  _././_  /_._  __/.//  _/./
+#  _/./__  __//._  /.__/  __/._/_  __/.//  _/./  _/./  __/._/_  /_._  /_._  /.__/
+#  _//.//  _/./  _././_  __/._/_  .//_/  _/./  /_._  .//_/  __//._  /_._  /.__/
+#  _././_  __/._/_  __//._  /.__/  .//_/  _././_  __//._  _././_  __//._  _/./
+#  _././_  _/./  _//.//  __/.//  _././_  _././_  /.__/  /_._  __/._/_  _././_
+#  .//_/  __//._  _//.//  _/./  _/./__  __//._  __//._  __/.//  __/._/_  __/._/_
+#  _/./  __/.//  /_._  _/./__  __//._  _//.//  __/.//  _/./  __/._/_  _/./  /_._
+#  /_._  _././_  /_._  __/.//  _././_  __/.//  /.__/  .//_/  _//.//  .//_/
+#  _/./__  __/.//  _/./__  /_._  __/._/_  __/._/_  _././_  __/.//  /.__/  __//._
+#  __/._/_  __/.//  __//._  /.__/  /_._  _././_  __/.//  __//._  _/./  _//.//
+#  _/./__  _/./  _//.//  __/.//  _//.//  /.__/  __//._  /.__/  .//_/  .//_/
+#  _././_  _././_  .//_/  _././_  /_._  _//.//  __//._  _/./  __/.//  _././_
+#  _/./  __/.//  __/.//  _//.//  .//_/  __//._  _//.//  /.__/  .//_/  .//_/
+#  __/._/_  /_._  .//_/  _././_  __/._/_  _/./__  /.__/  __/._/_  __/.//  /.__/
+#  __/._/_  .//_/  __/.//  /_._  __//._  __/._/_  __/._/_  .//_/  /_._  /.__/
+#  /.__/  /.__/  __/.//  /.__/  /.__/  _/./__  __/.//  _././_  __/._/_  _/./
+#  _//.//  _././_  /.__/  __/._/_  .//_/  _/./  /.__/  /.__/  _././_  __//._
+#  _//.//  _/./  _//.//  __//._  _/./__  _//.//  __/._/_  __/._/_  _././_  _././_
+#  _/./  .//_/  __/.//  .//_/  __//._  _/./  _/./__  __/.//  .//_/  __/._/_
+#  _/./__  _././_  __//._  __//._  __/._/_  _/./__  _//.//  __/.//  _//.//  _/./
+#  .//_/  __/.//  /_._  _//.//  __/.//  .//_/  __//._  .//_/  /_._  __//._
+#  __//._  __/.//  __//._  _/./  __//._  _././_  _/./  _/./  /_._  _././_  .//_/
+#  /_._  __//._  _//.//  _././_  /.__/  _././_  /_._  _././_  _/./  __/._/_
+#  __/.//  __/._/_  _././_  _/./__  __/.//  /_._  _/./__  _/./__  _/./__  /.__/
+#  .//_/  __//._  __/._/_  __/.//  __/._/_  _/./__  /.__/  __//._  __//._  __/.//
+#  _/./  _//.//  .//_/  __/.//  __//._
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon(self, mode: str, varDt, varNm, dirLst: list):
@@ -4922,6 +4910,18 @@ class SqtppFncs(Sqtpp):
 #                                                                                      
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_registry_homer(self, regKyRd: bool, regKyNm: str, regKyDt, schm: str):
+        # <<<
+        # returns:
+        if not regKyRd:
+            if schm.find('/') > -1:
+                pass
+            else:
+                return self.sqtpp_registry_homer_build(True, regKyNm, regKyDt, schm, None)
+        else:
+            pass
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_registry_homer_build(self, addRegKy: bool, regKyNm: str, regKyDt, schNm: str, schCd):
         # <<<
         # returns:
@@ -4929,27 +4929,33 @@ class SqtppFncs(Sqtpp):
             with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_REG.py', 'r') as flObjReg: self._rg_rStrA = flObjReg.read()
         else:
             # build the /sqtpp1_2_REG.py module
+            #
+            # .........some *corpotards* have a tongue for more than just one pair of
+            # pants on fire in these modern days, that's not a savant----neither love
             pass
         if addRegKy:
-            #self.sqtpp_registry_homer_add_key(regKyNm, regKyDt, schNm)
+            return self.sqtpp_registry_homer_add_key(regKyNm, regKyDt, schNm)
         else:
             pass
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_registry_homer_add_key(self, regKyNm: str, regKyDt, schNm: str):
-        # <<<
-        # returns: (all added registry keys must have an assigned harp-schema)
-        # -1=invalid chars for registry key name
+        # FNC_ID=ST12-84526041600390
+        # SqtppFncs slots in use: (hidden)
+        # returns: (all added registry keys must have an assigned harp-schema name)
+        # -1=invalid chars @ key name or/and schema name
         # -2=unsupported nested list registry key value
         # -3=unsupported bytes or bytearray type...
         # -4=unsupported registry value type, unknown
         # -5=unsupported " char(s) to a string value
         try:
             self._rg_rLstA = set('_1234567890abcdefghijklmnopqurstvwxyzABCDEFGHIJKLMNOPQURSTVWXYZ')
-            if set(regKyNm).issubset(self._rg_rLstA):
+            if set(regKyNm).issubset(self._rg_rLstA) and set(schNm).issubset(self._rg_rLstA):
                 rtrn = 1
+                self._rg_rBoolA = False
                 if isinstance(regKyDt, list):
                     self._rg_rLstA = []
+                    self._rg_rBoolA = True
                     self._rg_rIntB = len(regKyDt)
                     for self._rg_rIntA in range(self._rg_rIntB):
                         if isinstance(regKyDt[self._rg_rIntA], str):
@@ -4968,6 +4974,7 @@ class SqtppFncs(Sqtpp):
                             return -3
                         else:
                             return -4
+                    self._rg_rStrB = str(len(self._rg_rLstA))
                     self._rg_rLstA = f'=[{",".join(self._rg_rLstA)}]:|.||.|:'
                 elif isinstance(regKyDt, str):
                     if regKyDt.find('"') > -1:
@@ -4981,7 +4988,32 @@ class SqtppFncs(Sqtpp):
                 elif isinstance(regKyDt, (int,float,complex)): self._rg_rLstA = f'={regKyDt}:|.||.|:'
             else:
                 return -1
-            # Build the key; dsg number, lmt number, date, sqtpp-koch idxr numbers, key name, schema name and value(s)
+            dttm = datetime.now()
+            if not self._rg_rBoolA: self._rg_rStrB = "NAL"
+            self._rg_rIntA = self._rg_rStrA.find('self._lll_sThemas = deque([')
+            self._rg_rIntB = self._rg_rStrA.find('#|:>|<:|')
+            self._rg_rStrB = self._rg_rStrA[self._rg_rIntA:self._rg_rIntB-12]
+            self._rg_rStrC = self._rg_rStrB
+            if self._rg_rStrB.find(f':9S8:{regKyNm}') > -1:
+                self._rg_rLstB = re.findall(r'SQTPP_REG_KEY\:.*?\:9\S8\:' + re.escape(regKyNm) + r'\:.*?\:\|\.\|\|\.\|\:', self._rg_rStrB)
+                self._rg_rStrD = self._rg_rLstB[0]
+                self._rg_rLstC = re.findall(r'=.*?:\|\.\|\|\.\|:', self._rg_rStrD)
+                self._rg_rStrD = self._rg_rStrD.replace(self._rg_rLstC[0], self._rg_rLstA)
+                self._rg_rLstC = self._rg_rStrD.split(':')
+                self._rg_rStrD = self._rg_rStrD.replace(self._rg_rLstC[3], dttm.strftime("%m|%d|%Y|%I|%M|%S|%p"))
+                self._rg_rStrB = self._rg_rStrB.replace(self._rg_rLstB[0], self._rg_rStrD)
+                self._rg_rLstC = None
+                self._rg_rStrD = None
+            else:
+                self._rg_rLstA = f'SQTPP_REG_KEY:{random.randint(1000000000,9999999999)}:{self._rg_rStrB}:{dttm.strftime("%m|%d|%Y|%I|%M|%S|%p")}:{random.randint(1000,9999)}:{random.randint(1000,9999)}:9S8:{regKyNm}:{schNm}{self._rg_rLstA}'
+                self._rg_rStrB = self._rg_rStrB + ',\n            ' + "'" + self._rg_rLstA + "'"
+            self._rg_rStrA = self._rg_rStrA.replace(self._rg_rStrC, self._rg_rStrB)
+            self._rg_rStrB = None
+            self._rg_rStrC = None
+            with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_REG.py', 'w') as flObjRegWrt: flObjRegWrt.write(self._rg_rStrA)
+            self._rg_rLstA = None
+            self._rg_rStrA = None
+            return 1
         except Exception as sqtpp_reg_mod_add_key_err:
             raise Exception(f'[sqtpp-reg >> registry] - (sqtpp_registry_homer_add_key) direct exception: {sqtpp_reg_mod_add_key_err}')
 #___________________________________________AHS/////////////////////////////////////////
@@ -5101,6 +5133,12 @@ def stalkvar(varName: str, varData: str):
 def lambdavar(lambdaName: str, lambdaParams: list):
     sqtppCls = Sqtpp()
     return sqtppCls.mcf_lambdavar(lambdaName, lambdaParams)
+#_______________________________________________________________________________________
+def registry(isRead: bool, keyName: str, keyData, harpSchema: str):
+    sqtppCls = Sqtpp()
+    # @keyData can be string, list, bool, int, float or complex but not a nested list
+    # @harpSchema string only, is either a schema .../dir/file path or schema's name
+    return sqtppCls.mcf_lll_registry(isRead, keyName, keyData, harpSchema)
 #_______________________________________________________________________________________
 def pojishon(mode: str, varData, varName, dirList: list):
     sqtppCls = Sqtpp()
