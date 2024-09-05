@@ -1,4 +1,4 @@
-#QPython 3SE / Row4 / staqtapp.py (5,147 lines) / 5:10 Tue, Sep 3
+#QPython 3SE / Row4 / staqtapp.py (5,179 lines) / 8:33 Thu, Sep 5
 
 
 
@@ -8,7 +8,7 @@
 
 
 
-#Staqtapp-v1.2.364 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
+#Staqtapp-v1.2.369 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
 # <<< [qc-apps@xprize.org]
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -25,10 +25,11 @@
 
 
 
-# UPDATE TUE, SEP3: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
-#                   Registry function sqtpp_registry_homer_add_key() for sqtpp1_2_
-#                   REG.py module done. Handles adding of keys or edit of existing
-#                   registry keys inline of the registry parsing routines silently.
+# UPDATE THU, SEP5: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
+#                   Function sqtpp_registry_homer() reworked to take on what it --
+#                   needs to and function sqtpp_registry_homer_add_key() parsing
+#                   issues fixed after complete re-testing met. The registry keys
+#                   now having unique header data to/from sqtpp1_2_REG.py module.
 
 #                   See IMPORT_CALLS.TXT
 
@@ -124,7 +125,13 @@ class Sqtpp():
     def mcf_lll_registry(self, isRd: bool, kyNm: str, kyDt, schm: str):
         # Is access to sqtpp-registry system sqtpp1_2_REG.py
         sfCls = SqtppFncs()
-        self._sRtrn = sfCls.sqtpp_registry_homer(isRd, kyNm, kyDt, schm)
+        if kyNm != '____SQTPP_REG_STGS_KEY____':
+            if schm != '____SQTPP_REG_STGS_SCHM____':
+                self._sRtrn = sfCls.sqtpp_registry_homer(isRd, kyNm, kyDt, schm)
+            else:
+                raise Exception(f'[sqtpp-reg >> registry] - !! exception warning, harp-schema name is not allowed "____SQTPP_REG_STGS_SCHM____" !!')
+        else:
+            raise Exception(f'[sqtpp-reg >> registry] - !! exception warning, registry key name is not allowed "____SQTPP_REG_STGS_KEY____" !!')
         return self._sRtrn
 #_______________________________________________________________________________________
     def mcf_makevfs(self, vfsNm: str, dirNm: str, fldrNm: str):
@@ -649,7 +656,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.364\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.369\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1551,7 +1558,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.364\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.369\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3449,48 +3456,48 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#  __//._  .//_/  .//_/  __/._/_  _././_  _/./__  _/./  _//.//  __/.//  _/./__
-#  .//_/  _/./  _/./__  /.__/  _/./  __//._  _/./  /.__/  _/./  _././_  __/._/_
-#  _//.//  /_._  __//._  _././_  .//_/  __//._  _././_  __//._  __/._/_  _././_
-#  __/.//  _././_  _././_  _././_  _/./__  _//.//  /.__/  __/.//  _/./__  __//._
-#  .//_/  _././_  /_._  _././_  /_._  _/./  _././_  .//_/  __/.//  /.__/  _/./__
-#  /.__/  /.__/  .//_/  __/._/_  .//_/  __//._  _././_  _/./__  /_._  _././_
-#  __/._/_  _/./  /_._  _/./__  _//.//  __//._  .//_/  _/./  __/._/_  .//_/
-#  .//_/  /_._  _/./__  _/./  _/./  /.__/  _/./  _/./  /_._  __/._/_  _././_
-#  _/./  __//._  __//._  _/./  _/./__  __/._/_  __/._/_  _././_  __/._/_  /_._
-#  /.__/  _././_  _././_  _././_  __/._/_  __/.//  _/./__  _/./  __//._  _/./
-#  _//.//  __/._/_  .//_/  /_._  .//_/  _//.//  .//_/  _/./  /.__/  _/./__
-#  _././_  _//.//  _././_  _././_  __/._/_  /_._  _/./  __//._  .//_/  /_._
-#  __/.//  _/./  _//.//  __/.//  _/./  _././_  /.__/  /_._  /.__/  _././_  /.__/
-#  __/.//  /.__/  /.__/  _//.//  .//_/  __/.//  /_._  __/.//  /_._  _/./  _././_
-#  __/.//  _././_  /.__/  _/./  __/.//  __/._/_  _/./  __//._  _/./__  /_._
-#  __/._/_  _/./__  _/./__  /_._  __/.//  _/./__  __/.//  __/.//  /.__/  _././_
-#  _//.//  /.__/  _//.//  __//._  __//._  /.__/  _././_  /_._  __/.//  _/./
-#  _/./__  __//._  /.__/  __/._/_  __/.//  _/./  _/./  __/._/_  /_._  /_._  /.__/
-#  _//.//  _/./  _././_  __/._/_  .//_/  _/./  /_._  .//_/  __//._  /_._  /.__/
-#  _././_  __/._/_  __//._  /.__/  .//_/  _././_  __//._  _././_  __//._  _/./
-#  _././_  _/./  _//.//  __/.//  _././_  _././_  /.__/  /_._  __/._/_  _././_
-#  .//_/  __//._  _//.//  _/./  _/./__  __//._  __//._  __/.//  __/._/_  __/._/_
-#  _/./  __/.//  /_._  _/./__  __//._  _//.//  __/.//  _/./  __/._/_  _/./  /_._
-#  /_._  _././_  /_._  __/.//  _././_  __/.//  /.__/  .//_/  _//.//  .//_/
-#  _/./__  __/.//  _/./__  /_._  __/._/_  __/._/_  _././_  __/.//  /.__/  __//._
-#  __/._/_  __/.//  __//._  /.__/  /_._  _././_  __/.//  __//._  _/./  _//.//
-#  _/./__  _/./  _//.//  __/.//  _//.//  /.__/  __//._  /.__/  .//_/  .//_/
-#  _././_  _././_  .//_/  _././_  /_._  _//.//  __//._  _/./  __/.//  _././_
-#  _/./  __/.//  __/.//  _//.//  .//_/  __//._  _//.//  /.__/  .//_/  .//_/
-#  __/._/_  /_._  .//_/  _././_  __/._/_  _/./__  /.__/  __/._/_  __/.//  /.__/
-#  __/._/_  .//_/  __/.//  /_._  __//._  __/._/_  __/._/_  .//_/  /_._  /.__/
-#  /.__/  /.__/  __/.//  /.__/  /.__/  _/./__  __/.//  _././_  __/._/_  _/./
-#  _//.//  _././_  /.__/  __/._/_  .//_/  _/./  /.__/  /.__/  _././_  __//._
-#  _//.//  _/./  _//.//  __//._  _/./__  _//.//  __/._/_  __/._/_  _././_  _././_
-#  _/./  .//_/  __/.//  .//_/  __//._  _/./  _/./__  __/.//  .//_/  __/._/_
-#  _/./__  _././_  __//._  __//._  __/._/_  _/./__  _//.//  __/.//  _//.//  _/./
-#  .//_/  __/.//  /_._  _//.//  __/.//  .//_/  __//._  .//_/  /_._  __//._
-#  __//._  __/.//  __//._  _/./  __//._  _././_  _/./  _/./  /_._  _././_  .//_/
-#  /_._  __//._  _//.//  _././_  /.__/  _././_  /_._  _././_  _/./  __/._/_
-#  __/.//  __/._/_  _././_  _/./__  __/.//  /_._  _/./__  _/./__  _/./__  /.__/
-#  .//_/  __//._  __/._/_  __/.//  __/._/_  _/./__  /.__/  __//._  __//._  __/.//
-#  _/./  _//.//  .//_/  __/.//  __//._
+#  _././_  _././_  _/./__  _/./__  .//_/  _././_  /.__/  .//_/  _/./__  __/.//
+#  .//_/  __/._/_  __/._/_  __/.//  __/._/_  /_._  __//._  /_._  /.__/  _././_
+#  .//_/  __/.//  .//_/  __/.//  __/.//  /.__/  /.__/  __/._/_  _//.//  /_._
+#  __//._  /.__/  __/._/_  /.__/  __//._  _/./  _/./  _././_  /_._  _//.//  .//_/
+#  _/./__  __//._  _/./__  /.__/  /.__/  .//_/  .//_/  __/.//  _/./  __/.//
+#  __/.//  _//.//  /_._  .//_/  _//.//  /.__/  /_._  _/./__  _/./__  /.__/  /_._
+#  .//_/  _/./  _/./  _//.//  _/./__  _././_  __/.//  _//.//  __/.//  _././_
+#  .//_/  _././_  _/./  /.__/  /_._  _/./  _././_  __/.//  __/.//  _/./__  _././_
+#  /.__/  /_._  __//._  _/./  /_._  _././_  _//.//  _/./__  __/._/_  __//._
+#  __/._/_  _//.//  _././_  _/./__  __/._/_  /.__/  _/./__  __/._/_  __/._/_
+#  .//_/  _//.//  /_._  /_._  _/./__  __/._/_  .//_/  /.__/  _/./__  __//._
+#  _././_  /_._  _/./  /_._  .//_/  __//._  /_._  _/./  _/./  _/./  _././_
+#  __/._/_  _/./__  /.__/  .//_/  _././_  _././_  __//._  __//._  _././_  __/._/_
+#  .//_/  __/._/_  /_._  __/.//  _/./  /_._  .//_/  .//_/  _//.//  _/./__  _/./
+#  .//_/  _/./  _././_  _//.//  __/._/_  _././_  __//._  _/./  __/._/_  __//._
+#  _././_  _/./  _//.//  /.__/  _/./  __/._/_  __/.//  __/.//  _/./  __/._/_
+#  _/./__  .//_/  _//.//  /.__/  __//._  .//_/  __//._  __//._  __//._  _././_
+#  .//_/  __//._  /_._  __/._/_  _//.//  /_._  __//._  _/./__  __//._  _././_
+#  __/.//  .//_/  __/.//  /.__/  /_._  /.__/  __/._/_  _/./__  /.__/  .//_/
+#  __/._/_  _././_  _//.//  _//.//  __//._  _//.//  __/.//  /.__/  _//.//  .//_/
+#  /_._  _//.//  _//.//  _././_  _/./  __//._  /.__/  /_._  _././_  .//_/  __/.//
+#  __/.//  __/._/_  _././_  /.__/  /_._  _/./__  /_._  .//_/  __/.//  __//._
+#  _//.//  _/./__  __/._/_  _././_  __//._  /.__/  __/._/_  /.__/  _//.//
+#  __/._/_  /_._  __/.//  __/._/_  /.__/  __//._  _/./  _././_  __/._/_  _././_
+#  _/./__  _/./__  _././_  __//._  _././_  _/./  _/./__  __/.//  /.__/  .//_/
+#  _././_  _/./__  /.__/  _/./  _//.//  .//_/  _././_  __/.//  /_._  /.__/
+#  __/.//  _/./  __/.//  __/.//  /.__/  _/./  _//.//  __/.//  __/._/_  _/./
+#  .//_/  _/./  _/./__  _././_  __/.//  __/._/_  /_._  __/._/_  __/._/_  _//.//
+#  _././_  __/.//  __/.//  __//._  /_._  /_._  /_._  __/._/_  .//_/  _/./__
+#  _//.//  __/.//  __/._/_  __//._  _/./  __//._  /.__/  __//._  __/.//  _././_
+#  __//._  .//_/  __//._  _//.//  __/.//  _//.//  _/./  _//.//  /_._  .//_/
+#  /.__/  _/./  __/.//  _/./  __/._/_  __/.//  _//.//  __//._  /_._  .//_/  _/./
+#  _././_  .//_/  __//._  _/./__  .//_/  __//._  __/.//  /_._  .//_/  __/._/_
+#  _//.//  __/.//  _/./  __/.//  /_._  __/._/_  _/./  _/./__  .//_/  _././_
+#  _././_  __/.//  _/./__  _/./  /.__/  _/./__  /.__/  .//_/  /.__/  _././_
+#  /.__/  _/./__  __/.//  _/./  _/./__  /.__/  _//.//  /.__/  __//._  _././_
+#  _/./__  _././_  _/./__  __//._  /_._  _/./__  __/._/_  _//.//  __//._  _/./__
+#  /.__/  /.__/  __/._/_  __/.//  _././_  __/._/_  _/./__  /.__/  _././_  _././_
+#  _/./__  __/.//  __/._/_  _././_  .//_/  _././_  __/.//  __//._  .//_/  __/._/_
+#  _//.//  __/.//  /_._  _//.//  /_._  /.__/  __//._  __/._/_  _/./  __/.//
+#  _/./__  .//_/  __/._/_  /.__/  __//._  _/./  __/.//  _././_  /.__/  .//_/
+#  _/./__  .//_/  _/./__  _//.//  /_._  /.__/  /_._  _/./  __/._/_  .//_/
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon(self, mode: str, varDt, varNm, dirLst: list):
@@ -4913,34 +4920,57 @@ class SqtppFncs(Sqtpp):
     def sqtpp_registry_homer(self, regKyRd: bool, regKyNm: str, regKyDt, schm: str):
         # <<<
         # returns:
+        rtrn = None
         if not regKyRd:
-            if schm.find('/') > -1:
-                pass
+            if schm != None:
+                if isinstance(schm, str):
+                    if schm.find('/') > -1:
+                        rtrn = self.sqtpp_registry_homer_build(False, None, None, schm)
+                    else:
+                        if isinstance(regKyNm, str):
+                            if regKyDt != None:
+                                rtrn = self.sqtpp_registry_homer_build(True, regKyNm, regKyDt, schm)
+                                if rtrn == 1:
+                                    return True
+                                else:
+                                    if rtrn == -1:
+                                        raise Exception('[sqtpp-reg >> registry] (add registry key) - invalid chars @keyName or/and @harpSchema as a schema name, valid chars: _ a-z A-Z 0-9')
+                                    elif rtrn == -2:
+                                        raise Exception('[sqtpp-reg >> registry] (add registry key) - @keyData cannot be a nested list, currently unsupported')
+                                    elif rtrn == -3:
+                                        raise Exception('[sqtpp-reg >> registry] (add registry key) - @keyData cannot be bytes or a bytearray type, currently unsupported')
+                                    elif rtrn == -4:
+                                        raise Exception('[sqtpp-reg >> registry] (add registry key) - @keyData is an invalid type, unknown or unsupported type')
+                                    elif rtrn == -5:
+                                        raise Exception('[sqtpp-reg >> registry] (add registry key) - @keyData has found use of char " in string(s) declarings, not supported')
+                            else:
+                                raise Exception('[sqtpp-reg >> registry] (add registry key) - @keyData cannot be None for add/edit of a registry key, not supported')
+                        else:
+                            raise Exception('[sqtpp-reg >> registry] (add registry key) - @keyName must a str type for add or edit of a registry key')
+                else:
+                    raise Exception('[sqtpp-reg >> registry] - @harpSchema must be a str type if @isRead=False, either a file path to a schema file or a schema name if adding a registry key')
             else:
-                return self.sqtpp_registry_homer_build(True, regKyNm, regKyDt, schm, None)
+                raise Exception('[sqtpp-reg >> registry] - @harpSchema is None, must be either a file path or a schema name if @isRead=False')
         else:
             pass
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
-    def sqtpp_registry_homer_build(self, addRegKy: bool, regKyNm: str, regKyDt, schNm: str, schCd):
+    def sqtpp_registry_homer_build(self, addRegKy: bool, regKyNm: str, regKyDt, schm: str):
         # <<<
         # returns:
         if os.path.isfile(f'{SQTPP_MDL_DIR}/sqtpp1_2_REG.py'):
             with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_REG.py', 'r') as flObjReg: self._rg_rStrA = flObjReg.read()
         else:
             # build the /sqtpp1_2_REG.py module
-            #
-            # .........some *corpotards* have a tongue for more than just one pair of
-            # pants on fire in these modern days, that's not a savant----neither love
             pass
         if addRegKy:
-            return self.sqtpp_registry_homer_add_key(regKyNm, regKyDt, schNm)
+            return self.sqtpp_registry_homer_add_key(regKyNm, regKyDt, schm)
         else:
-            pass
+            return self.sqtpp_registry_homer_add_schema(schm)
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_registry_homer_add_key(self, regKyNm: str, regKyDt, schNm: str):
-        # FNC_ID=ST12-84526041600390
+        # FNC_ID=ST12-84090941116842
         # SqtppFncs slots in use: (hidden)
         # returns: (all added registry keys must have an assigned harp-schema name)
         # -1=invalid chars @ key name or/and schema name
@@ -4949,10 +4979,11 @@ class SqtppFncs(Sqtpp):
         # -4=unsupported registry value type, unknown
         # -5=unsupported " char(s) to a string value
         try:
+            rtrn = 1
+            lstL = None
+            self._rg_rBoolA = False
             self._rg_rLstA = set('_1234567890abcdefghijklmnopqurstvwxyzABCDEFGHIJKLMNOPQURSTVWXYZ')
             if set(regKyNm).issubset(self._rg_rLstA) and set(schNm).issubset(self._rg_rLstA):
-                rtrn = 1
-                self._rg_rBoolA = False
                 if isinstance(regKyDt, list):
                     self._rg_rLstA = []
                     self._rg_rBoolA = True
@@ -4974,7 +5005,7 @@ class SqtppFncs(Sqtpp):
                             return -3
                         else:
                             return -4
-                    self._rg_rStrB = str(len(self._rg_rLstA))
+                    lstL = f'__LTLKV={len(self._rg_rLstA)}'
                     self._rg_rLstA = f'=[{",".join(self._rg_rLstA)}]:|.||.|:'
                 elif isinstance(regKyDt, str):
                     if regKyDt.find('"') > -1:
@@ -4989,33 +5020,34 @@ class SqtppFncs(Sqtpp):
             else:
                 return -1
             dttm = datetime.now()
-            if not self._rg_rBoolA: self._rg_rStrB = "NAL"
-            self._rg_rIntA = self._rg_rStrA.find('self._lll_sThemas = deque([')
-            self._rg_rIntB = self._rg_rStrA.find('#|:>|<:|')
-            self._rg_rStrB = self._rg_rStrA[self._rg_rIntA:self._rg_rIntB-12]
-            self._rg_rStrC = self._rg_rStrB
-            if self._rg_rStrB.find(f':9S8:{regKyNm}') > -1:
-                self._rg_rLstB = re.findall(r'SQTPP_REG_KEY\:.*?\:9\S8\:' + re.escape(regKyNm) + r'\:.*?\:\|\.\|\|\.\|\:', self._rg_rStrB)
-                self._rg_rStrD = self._rg_rLstB[0]
-                self._rg_rLstC = re.findall(r'=.*?:\|\.\|\|\.\|:', self._rg_rStrD)
-                self._rg_rStrD = self._rg_rStrD.replace(self._rg_rLstC[0], self._rg_rLstA)
-                self._rg_rLstC = self._rg_rStrD.split(':')
-                self._rg_rStrD = self._rg_rStrD.replace(self._rg_rLstC[3], dttm.strftime("%m|%d|%Y|%I|%M|%S|%p"))
-                self._rg_rStrB = self._rg_rStrB.replace(self._rg_rLstB[0], self._rg_rStrD)
-                self._rg_rLstC = None
-                self._rg_rStrD = None
+            if not self._rg_rBoolA: lstL = "__LTLKV=NAL"
+            if self._rg_rStrA.find(f':9S8:{regKyNm}') > -1:
+                self._rg_rLstB = re.findall(r'SQTPP_REG_KEY\:.*?\:9\S8\:' + re.escape(regKyNm) + r'\:.*?\:\|\.\|\|\.\|\:', self._rg_rStrA)
+                self._rg_rLstC = self._rg_rLstB[0].split(':')
+                self._rg_rStrC = f'SQTPP_REG_KEY:{self._rg_rLstC[1]}:{lstL}:{dttm.strftime("%m||%d||%Y||%I||%M||%S||%p")}:{self._rg_rLstC[4]}:{self._rg_rLstC[5]}:9S8:{self._rg_rLstC[7]}:{schNm}{self._rg_rLstA}'
+                self._rg_rStrA = self._rg_rStrA.replace(self._rg_rLstB[0], self._rg_rStrC)
             else:
-                self._rg_rLstA = f'SQTPP_REG_KEY:{random.randint(1000000000,9999999999)}:{self._rg_rStrB}:{dttm.strftime("%m|%d|%Y|%I|%M|%S|%p")}:{random.randint(1000,9999)}:{random.randint(1000,9999)}:9S8:{regKyNm}:{schNm}{self._rg_rLstA}'
-                self._rg_rStrB = self._rg_rStrB + ',\n            ' + "'" + self._rg_rLstA + "'"
-            self._rg_rStrA = self._rg_rStrA.replace(self._rg_rStrC, self._rg_rStrB)
+                self._rg_rIntA = self._rg_rStrA.find('self._lll_sThemas = deque([')
+                self._rg_rIntB = self._rg_rStrA.find('#|:>|<:|')
+                self._rg_rStrB = self._rg_rStrA[self._rg_rIntA:self._rg_rIntB-12]
+                self._rg_rStrC = self._rg_rStrB
+                self._rg_rLstA = f'SQTPP_REG_KEY:{random.randint(1000000000,9999999999)}:{lstL}:{dttm.strftime("%m||%d||%Y||%I||%M||%S||%p")}:{random.randint(1000,9999)}:{random.randint(1000,9999)}:9S8:{regKyNm}:{schNm}{self._rg_rLstA}'
+                self._rg_rStrD = '\n'
+                self._rg_rStrB = f"{self._rg_rStrB},{self._rg_rStrD}            '{self._rg_rLstA}'"
+                self._rg_rStrA = self._rg_rStrA.replace(self._rg_rStrC, self._rg_rStrB)
             self._rg_rStrB = None
             self._rg_rStrC = None
             with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_REG.py', 'w') as flObjRegWrt: flObjRegWrt.write(self._rg_rStrA)
-            self._rg_rLstA = None
             self._rg_rStrA = None
             return 1
-        except Exception as sqtpp_reg_mod_add_key_err:
-            raise Exception(f'[sqtpp-reg >> registry] - (sqtpp_registry_homer_add_key) direct exception: {sqtpp_reg_mod_add_key_err}')
+        except Exception as sqtpp_registry_homer_add_key_err:
+            raise Exception(f'[sqtpp-reg >> registry] - (sqtpp_registry_homer_add_key) direct exception: {sqtpp_registry_homer_add_key_err}')
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_registry_homer_add_schema(self, schmPth: str):
+        # <<<
+        # returns:
+        pass
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
 
