@@ -1,4 +1,4 @@
-#QPython 3SE / Row4 / staqtapp.py (5,179 lines) / 8:33 Thu, Sep 5
+#QPython 3SE / Row4 / staqtapp.py (5,398 lines) / 8:50 Sat, Sep 7
 
 
 
@@ -8,7 +8,7 @@
 
 
 
-#Staqtapp-v1.2.369 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
+#Staqtapp-v1.2.388 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
 # <<< [qc-apps@xprize.org]
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -25,11 +25,10 @@
 
 
 
-# UPDATE THU, SEP5: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
-#                   Function sqtpp_registry_homer() reworked to take on what it --
-#                   needs to and function sqtpp_registry_homer_add_key() parsing
-#                   issues fixed after complete re-testing met. The registry keys
-#                   now having unique header data to/from sqtpp1_2_REG.py module.
+# UPDATE SAT, SEP7: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
+#                   Function sqtpp_registry_homer_schema_spdr() completed and every
+#                   test passed, a reliable registry harp-schema checker before any
+#                   schema is added to the sqtpp1_2_REG.py registry module.
 
 #                   See IMPORT_CALLS.TXT
 
@@ -644,7 +643,7 @@ class Sqtpp():
 
 #_______________________________________________________________________________________
 class SqtppFncs(Sqtpp):
-    __slots__ = ('_sf_sVfs', '_sf_sVfsDir', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sRplc', '_sf_sQp', '_sf_sQpRplcX', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_sBoolCxv', '_sf_sLstA', '_rg_rStrA', '_rg_rStrB', '_rg_rStrC', '_rg_rStrD', '_rg_rLstA', '_rg_rLstB', '_rg_rLstC', '_rg_rIntA', '_rg_rIntB', '_rg_rBoolA', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rLstE', '_sf_rLstF', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD', '_sf_rBoolE', '_sf_rBoolF')
+    __slots__ = ('_sf_sVfs', '_sf_sVfsDir', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sRplc', '_sf_sQp', '_sf_sQpRplcX', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_sBoolCxv', '_sf_sLstA', '_rg_sSchm', '_rg_rStrA', '_rg_rStrB', '_rg_rStrC', '_rg_rStrD', '_rg_rLstA', '_rg_rLstB', '_rg_rLstC', '_rg_rIntA', '_rg_rIntB', '_rg_rIntC', '_rg_rIntD', '_rg_rIntE', '_rg_rIntF', '_rg_rBoolA', '_rg_rBoolB', '_rg_rBoolC', '_rg_rBoolD', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rLstE', '_sf_rLstF', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD', '_sf_rBoolE', '_sf_rBoolF')
     
     def __init__(self):
         self._sf_rBoolE = False
@@ -656,7 +655,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.369\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.388\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1558,7 +1557,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.369\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.388\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3369,7 +3368,12 @@ class SqtppFncs(Sqtpp):
             self._rg_rLstC = None
             self._rg_rIntA = None
             self._rg_rIntB = None
+            self._rg_rIntC = None
+            self._rg_rIntD = None
             self._rg_rBoolA = None
+            self._rg_rBoolB = None
+            self._rg_rBoolC = None
+            self._rg_rBoolD = None
         self._sf_rStrA = None
         self._sf_rStrB = None
         self._sf_rStrC = None
@@ -3456,48 +3460,50 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#  _././_  _././_  _/./__  _/./__  .//_/  _././_  /.__/  .//_/  _/./__  __/.//
-#  .//_/  __/._/_  __/._/_  __/.//  __/._/_  /_._  __//._  /_._  /.__/  _././_
-#  .//_/  __/.//  .//_/  __/.//  __/.//  /.__/  /.__/  __/._/_  _//.//  /_._
-#  __//._  /.__/  __/._/_  /.__/  __//._  _/./  _/./  _././_  /_._  _//.//  .//_/
-#  _/./__  __//._  _/./__  /.__/  /.__/  .//_/  .//_/  __/.//  _/./  __/.//
-#  __/.//  _//.//  /_._  .//_/  _//.//  /.__/  /_._  _/./__  _/./__  /.__/  /_._
-#  .//_/  _/./  _/./  _//.//  _/./__  _././_  __/.//  _//.//  __/.//  _././_
-#  .//_/  _././_  _/./  /.__/  /_._  _/./  _././_  __/.//  __/.//  _/./__  _././_
-#  /.__/  /_._  __//._  _/./  /_._  _././_  _//.//  _/./__  __/._/_  __//._
-#  __/._/_  _//.//  _././_  _/./__  __/._/_  /.__/  _/./__  __/._/_  __/._/_
-#  .//_/  _//.//  /_._  /_._  _/./__  __/._/_  .//_/  /.__/  _/./__  __//._
-#  _././_  /_._  _/./  /_._  .//_/  __//._  /_._  _/./  _/./  _/./  _././_
-#  __/._/_  _/./__  /.__/  .//_/  _././_  _././_  __//._  __//._  _././_  __/._/_
-#  .//_/  __/._/_  /_._  __/.//  _/./  /_._  .//_/  .//_/  _//.//  _/./__  _/./
-#  .//_/  _/./  _././_  _//.//  __/._/_  _././_  __//._  _/./  __/._/_  __//._
-#  _././_  _/./  _//.//  /.__/  _/./  __/._/_  __/.//  __/.//  _/./  __/._/_
-#  _/./__  .//_/  _//.//  /.__/  __//._  .//_/  __//._  __//._  __//._  _././_
-#  .//_/  __//._  /_._  __/._/_  _//.//  /_._  __//._  _/./__  __//._  _././_
-#  __/.//  .//_/  __/.//  /.__/  /_._  /.__/  __/._/_  _/./__  /.__/  .//_/
-#  __/._/_  _././_  _//.//  _//.//  __//._  _//.//  __/.//  /.__/  _//.//  .//_/
-#  /_._  _//.//  _//.//  _././_  _/./  __//._  /.__/  /_._  _././_  .//_/  __/.//
-#  __/.//  __/._/_  _././_  /.__/  /_._  _/./__  /_._  .//_/  __/.//  __//._
-#  _//.//  _/./__  __/._/_  _././_  __//._  /.__/  __/._/_  /.__/  _//.//
-#  __/._/_  /_._  __/.//  __/._/_  /.__/  __//._  _/./  _././_  __/._/_  _././_
-#  _/./__  _/./__  _././_  __//._  _././_  _/./  _/./__  __/.//  /.__/  .//_/
-#  _././_  _/./__  /.__/  _/./  _//.//  .//_/  _././_  __/.//  /_._  /.__/
-#  __/.//  _/./  __/.//  __/.//  /.__/  _/./  _//.//  __/.//  __/._/_  _/./
-#  .//_/  _/./  _/./__  _././_  __/.//  __/._/_  /_._  __/._/_  __/._/_  _//.//
-#  _././_  __/.//  __/.//  __//._  /_._  /_._  /_._  __/._/_  .//_/  _/./__
-#  _//.//  __/.//  __/._/_  __//._  _/./  __//._  /.__/  __//._  __/.//  _././_
-#  __//._  .//_/  __//._  _//.//  __/.//  _//.//  _/./  _//.//  /_._  .//_/
-#  /.__/  _/./  __/.//  _/./  __/._/_  __/.//  _//.//  __//._  /_._  .//_/  _/./
-#  _././_  .//_/  __//._  _/./__  .//_/  __//._  __/.//  /_._  .//_/  __/._/_
-#  _//.//  __/.//  _/./  __/.//  /_._  __/._/_  _/./  _/./__  .//_/  _././_
-#  _././_  __/.//  _/./__  _/./  /.__/  _/./__  /.__/  .//_/  /.__/  _././_
-#  /.__/  _/./__  __/.//  _/./  _/./__  /.__/  _//.//  /.__/  __//._  _././_
-#  _/./__  _././_  _/./__  __//._  /_._  _/./__  __/._/_  _//.//  __//._  _/./__
-#  /.__/  /.__/  __/._/_  __/.//  _././_  __/._/_  _/./__  /.__/  _././_  _././_
-#  _/./__  __/.//  __/._/_  _././_  .//_/  _././_  __/.//  __//._  .//_/  __/._/_
-#  _//.//  __/.//  /_._  _//.//  /_._  /.__/  __//._  __/._/_  _/./  __/.//
-#  _/./__  .//_/  __/._/_  /.__/  __//._  _/./  __/.//  _././_  /.__/  .//_/
-#  _/./__  .//_/  _/./__  _//.//  /_._  /.__/  /_._  _/./  __/._/_  .//_/
+#  __/.//  _//.//  __/._/_  __//._  _././_  /_._  __/.//  _//.//  _././_
+#  _././_  /.__/  /.__/  __/.//  _/./  __//._  /_._  __/._/_  __/._/_  __//._
+#  __/.//  __/.//  .//_/  /_._  .//_/  _/./__  _/./  _././_  _//.//  _././_
+#  __//._  /.__/  __/._/_  _././_  /_._  /.__/  _././_  .//_/  _/./  __/.//  _/./
+#  /.__/  _././_  .//_/  __//._  _/./__  _/./__  _//.//  _././_  _././_  _././_
+#  _//.//  __/._/_  .//_/  __/._/_  .//_/  __/.//  /_._  __/.//  /_._  _././_
+#  _/./__  .//_/  _/./__  _/./  .//_/  _/./__  _././_  __//._  __/.//  /.__/
+#  .//_/  __//._  __/.//  _././_  __//._  _/./  _//.//  _/./__  __/.//  _//.//
+#  _././_  _//.//  _././_  /.__/  /.__/  __/.//  _/./__  __/._/_  /.__/  _//.//
+#  _././_  /.__/  _././_  __/._/_  /.__/  _//.//  /.__/  _/./  _/./__  __/.//
+#  /.__/  __//._  /.__/  __//._  __/.//  __/._/_  _/./__  _/./__  __/._/_  __/.//
+#  __/.//  .//_/  _//.//  _//.//  _//.//  __/.//  .//_/  _//.//  _/./__  /.__/
+#  _/./__  _//.//  .//_/  _././_  _/./  /_._  __/.//  _././_  _/./__  __/.//
+#  .//_/  _/./  _//.//  __//._  _././_  __//._  _/./  _/./__  _././_  /.__/
+#  __/._/_  _././_  __//._  _/./  /_._  _././_  _././_  _/./__  _//.//  __/._/_
+#  _././_  _//.//  __/.//  __/.//  _/./__  _/./__  /.__/  _././_  __//._  __//._
+#  _//.//  .//_/  /.__/  _//.//  /_._  /_._  .//_/  __/._/_  _/./  .//_/  /.__/
+#  _/./__  __/._/_  __/._/_  __/.//  _././_  _/./  __//._  _/./__  __/.//  _//.//
+#  _//.//  _//.//  __//._  _//.//  _/./__  .//_/  __/._/_  __/._/_  /.__/  __/.//
+#  __/.//  /.__/  /.__/  _/./  _././_  __/.//  _/./__  __/._/_  _././_  _//.//
+#  /.__/  __/.//  __/.//  __/.//  .//_/  _//.//  __/._/_  _././_  _././_  _//.//
+#  __/._/_  __/.//  _//.//  __/._/_  /_._  _././_  _/./__  __/._/_  .//_/  _//.//
+#  _//.//  _/./  __/._/_  __/.//  __/._/_  .//_/  __//._  __//._  _/./__  /_._
+#  _/./  __/.//  _/./  /_._  /_._  __/.//  _//.//  _//.//  _/./  _/./  __/.//
+#  _././_  __//._  __/.//  /.__/  /.__/  /_._  /.__/  .//_/  __//._  __/._/_
+#  __/._/_  __//._  __/.//  /_._  /_._  __//._  __/.//  /_._  _//.//  /_._  /_._
+#  __//._  _//.//  _/./__  __//._  _././_  __//._  _/./__  _/./__  _././_  _/./__
+#  _/./__  .//_/  __/.//  /.__/  _././_  _/./  __//._  .//_/  _/./__  /.__/
+#  _//.//  /.__/  /_._  _//.//  /_._  __/.//  /.__/  _/./__  __/.//  __/._/_
+#  /.__/  __/.//  /_._  _/./  /_._  /_._  .//_/  /_._  /_._  _././_  _././_
+#  .//_/  /_._  /.__/  __//._  _/./  _/./  _//.//  _/./  __//._  _/./__  /_._
+#  __/._/_  __//._  __//._  _//.//  _././_  .//_/  /_._  /.__/  _/./  __//._
+#  /.__/  __/.//  .//_/  __//._  __//._  _/./__  __/._/_  __/._/_  __/.//  _/./
+#  __//._  _//.//  .//_/  /.__/  __/.//  /.__/  __/.//  _//.//  _././_  _/./
+#  _././_  __//._  .//_/  __//._  /_._  _//.//  __/._/_  __/._/_  __/._/_
+#  __/._/_  _//.//  _//.//  __/._/_  /.__/  _/./  __/._/_  __/._/_  __/._/_  _/./
+#  _/./  __/.//  _//.//  _//.//  __//._  _/./  __/._/_  __//._  _././_  __/.//
+#  _././_  _././_  _//.//  _././_  .//_/  _././_  _/./  /.__/  _//.//  _/./__
+#  _/./  /_._  __//._  /.__/  __/._/_  /.__/  _/./  _//.//  __/.//  /.__/  __//._
+#  __/.//  _././_  __/._/_  __/.//  /_._  _././_  /.__/  /_._  _//.//  __/.//
+#  _/./  _/./  _/./__  _//.//  __//._  _//.//  /_._  __/.//  /_._  __/.//  _//.//
+#  __/._/_  _/./__  __/.//  __/.//  _/./__  _//.//  _././_  __/.//  _/./__  _/./
+#  _/./__  _/./  /_._  __/._/_  __/.//  /.__/  __//._  _././_  __//._  /.__/
+#  __/._/_
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon(self, mode: str, varDt, varNm, dirLst: list):
@@ -5047,7 +5053,220 @@ class SqtppFncs(Sqtpp):
     def sqtpp_registry_homer_add_schema(self, schmPth: str):
         # <<<
         # returns:
-        pass
+        #try:
+            if os.path.isfile(schmPth):
+                with open(schmPth, 'r') as flObjRegSchm: self._rg_rStrB = flObjRegSchm.read()
+                rtrnDcs = None
+                schmNm = schmPth.split('/')
+                schmNm = schmNm[len(schmNm)-1]
+                schmNm = schmNm.split('.')
+                schmNm = schmNm[0]
+                rtrn = self.sqtpp_registry_homer_schema_spdr(schmNm)
+                if rtrn[0] == '!':
+                    rtrn = rtrn.split('÷')
+                    if rtrn[2].find(':') > -1:
+                        rtrnDcs = rtrn[2].split(':')
+                        if rtrnDcs[0] == '3':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - invalid type declaration "{rtrnDcs[1]}", line ({rtrn[1]}) in "{schmPth}"')
+                        elif rtrnDcs[0] == '4':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - registry schema name "{rtrnDcs[1]}" does not match filename "{schmNm}", line ({rtrn[1]}) in "{schmPth}"')
+                        elif rtrnDcs[0] == '5':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - registry schema name "{rtrnDcs[1]}" has invalid chars; valid chars _ a-z A-Z 0-9, line ({rtrn[1]}) in "{schmPth}"')
+                        elif rtrnDcs[0] == '7':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - category type name "{rtrnDcs[1]}" has invalid chars; valid chars _ a-z A-Z 0-9, line ({rtrn[1]}) in "{schmPth}"')
+                        elif rtrnDcs[0] == '14':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - category type "{rtrnDcs[1]}" not present in registry schema or is not already visible for an inherit assignment, line ({rtrn[1]}) in "{schmPth}"')
+                    else:
+                        if rtrn[2] == '1':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - missing type declaration, line ({rtrn[1]}) in "{schmPth}"')
+                        elif rtrn[2] == '2':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - missing EOL comma for type declaration(s), line ({rtrn[1]}) in "{schmPth}"')
+                        elif rtrn[2] == '6':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - expected a category type naming declaration, line ({rtrn[1]}) in "{schmPth}"')
+                        elif rtrn[2] == '8':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - no category type naming set for any type(s) validation, line ({rtrn[1]}) in "{schmPth}"')
+                        elif rtrn[2] == '9':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - lambda function for validator sequence is not well defined, line ({rtrn[1]}) in "{schmPth}"')
+                        elif rtrn[2] == '10':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - unexpected "]" end of a lambda validator sequence before any lambda function(s) added, line ({rtrn[1]}) in "{schmPth}"')
+                        elif rtrn[2] == '11':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - dual use of single & double quotes found in a lambda function, not supported, line ({rtrn[1]}) in "{schmPth}"')
+                        elif rtrn[2] == '12':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - no found inherit assignment after a item declaration or not a proper item declaration, line ({rtrn[1]}) in "{schmPth}"')
+                        elif rtrn[2] == '13':
+                            raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - no found category type for assignment with a inherit category type, line ({rtrn[1]}) in "{schmPth}"')
+                elif rtrn == '@1':
+                    print(self._rg_sSchm)
+                    return 1
+            else:
+                raise Exception(f'[sqtpp-reg >> registry] (add registry schema) - directory path "{schmPth}" is not a valid file path, registry harp-schema code file not found')
+        #except Exception as sqtpp_registry_homer_add_schema_err:
+            #raise Exception(f'[sqtpp-reg >> registry] - (sqtpp_registry_homer_add_schema) direct exception: {sqtpp_registry_homer_add_schema_err}')
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_registry_homer_schema_spdr(self, schmNm: str):
+        # FNC_ID=ST12-59489320092516
+        # SqtppFncs slots in use: (hidden)
+        # returns:
+        # !÷line#÷1=type declaration(s), missing any type declaration
+        # !÷line#÷2=type declaration(s), missing proper comma for EOL
+        # !÷line#÷3:wrong type=type declaration not a valid one
+        # !÷line#÷4:wrong schema name=schema name does not match the filename
+        # !÷line#÷5:invalid chars schema name=schema name has invalid chars
+        # !÷line#÷6=expected a type category name declaration...
+        # !÷line#÷7:invalid chars category name type=category name type has invalid chars
+        # !÷line#÷8=no category type name assigned for any type validations
+        # !÷line#÷9=lambda function is not well defined
+        # !÷line#÷10=unexpected end of a lambda validator seq before any lambda added...
+        # !÷line#÷11=lambda function has dual use of string declarations ' & "
+        # !÷line#÷12=no found inherit assignment after an item declaration
+        # !÷line#÷13=no found category type for assignment with a inherit category type
+        # !÷line#÷14:invalid category type=category type for inherit assignment not found
+        setV = set('_1234567890abcdefghijklmnopqurstvwxyzABCDEFGHIJKLMNOPQURSTVWXYZ')
+        lstA = ['bool','byte','complex','float','integer','list','string','*']
+        self._rg_rLstA = self._rg_rStrB.split('\n')
+        self._rg_rLstA[:] = [l for l in self._rg_rLstA if '#' not in l and not l.isspace()]
+        self._rg_rLstA = list(filter(None, self._rg_rLstA))
+        self._rg_rIntB = len(self._rg_rLstA)
+        self._rg_rBoolA = True
+        vldLm = False
+        typSw = False
+        typAg = False
+        typAd = False
+        typEt = False
+        typIn = 0
+        typTrk = []
+        self._rg_sSchm = []
+        rtrn = '@1'
+        for self._rg_rIntA in range(self._rg_rIntB):
+            self._rg_rBoolB = False
+            if self._rg_rLstA[self._rg_rIntA].find(']') > -1:
+                if vldLm:
+                    vldLm = False
+                    self._rg_sSchm.append(']')
+                else:
+                    return f'!÷{self._rg_rIntA+1}÷10'
+            self._rg_rLstB = re.findall(r'lambd.*?\:', self._rg_rLstA[self._rg_rIntA])
+            if len(self._rg_rLstB) > 0: self._rg_rBoolB = True
+            else: self._rg_rLstA[self._rg_rIntA] = self._rg_rLstA[self._rg_rIntA].replace(' ','')
+            if self._rg_rBoolA:
+                self._rg_rBoolA = False
+                self._rg_rLstA[self._rg_rIntA] = self._rg_rLstA[self._rg_rIntA].replace('=(','')
+                if not set(self._rg_rLstA[self._rg_rIntA]).issubset(setV):
+                    return f'!÷{self._rg_rIntA+1}÷5:{self._rg_rLstA[self._rg_rIntA]}'
+                if self._rg_rLstA[self._rg_rIntA] == schmNm: self._rg_sSchm.append(f'{self._rg_rLstA[self._rg_rIntA]}=(')
+                else:
+                    return f'!÷{self._rg_rIntA+1}÷4:{self._rg_rLstA[self._rg_rIntA]}'
+                typSw = True
+            else:
+                if self._rg_rLstA[self._rg_rIntA] == 'item:(':
+                    self._rg_rLstB = re.findall(r'inherit\=.*?\,', self._rg_rLstA[self._rg_rIntA+1])
+                    if len(self._rg_rLstB) > 0:
+                        self._rg_sSchm.append('item:(')
+                        if len(typTrk) > 0:
+                            self._rg_rLstB = self._rg_rLstB[0].split('=')
+                            self._rg_rLstB = self._rg_rLstB[1].replace(',','')
+                            self._rg_rIntC = 0
+                            self._rg_rBoolC = False
+                            self._rg_rIntD = len(typTrk)
+                            while self._rg_rIntC < self._rg_rIntD:
+                                if typTrk[self._rg_rIntC] == self._rg_rLstB:
+                                    self._rg_rBoolC = True
+                                    break
+                                self._rg_rIntC+=1
+                            if self._rg_rBoolC:
+                                typIn = self._rg_rIntA+2
+                                self._rg_sSchm.append(f'%inherit={self._rg_rLstB}')
+                            else:
+                                return f'!÷{self._rg_rIntA+2}÷14:{self._rg_rLstB}'
+                        else:
+                            return f'!÷{self._rg_rIntA+2}÷13'
+                    else:
+                        return f'!÷{self._rg_rIntA+2}÷12'
+                # ____________________________________________________________
+                if self._rg_rLstA[self._rg_rIntA] != '),':
+                    if not self._rg_rBoolB and not typSw:
+                        if not typAd:
+                            if typAg:
+                                #______________type:(__________________________________________
+                                if self._rg_rLstA[self._rg_rIntA].find('type:(') > -1 and self._rg_rLstA[self._rg_rIntA].find(',') > -1:
+                                    self._rg_rLstA[self._rg_rIntA] = self._rg_rLstA[self._rg_rIntA].replace('type:(','')
+                                    self._rg_rLstB = self._rg_rLstA[self._rg_rIntA].split(',')
+                                    if len(self._rg_rLstB) > 1:
+                                        if self._rg_rLstB[len(self._rg_rLstB)-1] == '':
+                                            self._rg_rLstB.pop(len(self._rg_rLstB)-1)
+                                            self._rg_rIntD = len(self._rg_rLstB)
+                                            self._rg_rIntF = len(lstA)
+                                            for self._rg_rIntC in range(self._rg_rIntD):
+                                                self._rg_rIntE = 0
+                                                self._rg_rBoolC = False
+                                                while self._rg_rIntE < self._rg_rIntF:
+                                                    if self._rg_rLstB[self._rg_rIntC] == lstA[self._rg_rIntE]:
+                                                        self._rg_rBoolC = True
+                                                        break
+                                                    self._rg_rIntE+=1
+                                                if not self._rg_rBoolC:
+                                                    return f'!÷{self._rg_rIntA+1}÷3:{self._rg_rLstB[self._rg_rIntC]}'
+                                            if typIn == self._rg_rIntA: typIn = '%type:('
+                                            else: typIn = 'type:('
+                                            if len(self._rg_rLstB) > 1: self._rg_sSchm.append(f'{typIn}{",".join(self._rg_rLstB)}')
+                                            else: self._rg_sSchm.append(f'{typIn}{self._rg_rLstB[0]}')
+                                        else:
+                                            return f'!÷{self._rg_rIntA+1}÷2'
+                                    else:
+                                        return f'!÷{self._rg_rIntA+1}÷1'
+                                    typAd = True
+                            else:
+                                if not typEt:
+                                    return f'!÷{self._rg_rIntA+1}÷8'
+                                else:
+                                    return f'!÷{self._rg_rIntA}÷8'
+                        else:
+                            #______________________________________________________________
+                            # Lambda Sequence Validator?
+                            typAd = False
+                            if self._rg_rLstA[self._rg_rIntA] == 'validator[': self._rg_sSchm.append('validator[')
+                            #______________________________________________________________
+                    else:
+                        #______________lambda_lambda_lambda________________________________
+                        if self._rg_rBoolB:
+                            self._rg_rLstB = re.findall(r'lambda(?:\s*[a-zA-Z_][a-zA-Z_0-9]*(?:\s*,\s*[a-zA-Z_][a-zA-Z_0-9]*)*)?\s*:\s*.+', self._rg_rLstA[self._rg_rIntA])
+                            if len(self._rg_rLstB) > 0:
+                                vldLm = True
+                                self._rg_rLstB = self._rg_rLstB[0]
+                                if self._rg_rLstB.find("'") > -1 and self._rg_rLstB.find('"') > -1:
+                                    return f'!÷{self._rg_rIntA}÷11'
+                                else:
+                                    if self._rg_rLstB.find("'") > -1: self._rg_rLstB = self._rg_rLstB.replace("'", '~||/')
+                                    if self._rg_rLstB.find('"') > -1: self._rg_rLstB = self._rg_rLstB.replace('"', '~||/')
+                                if self._rg_rLstB[len(self._rg_rLstB)-1] == ',':
+                                    self._rg_rLstB = self._rg_rLstB[0:len(self._rg_rLstB)-1]
+                                self._rg_sSchm.append(self._rg_rLstB)
+                            else:
+                                return f'!÷{self._rg_rIntA}÷9'
+                        #______________________________________________________________
+                        # Category Type Name Assigned...
+                        else:
+                            typSw = False
+                            if self._rg_rLstA[self._rg_rIntA].find(':(') > -1:
+                                self._rg_rLstB = self._rg_rLstA[self._rg_rIntA].split(':(')
+                                self._rg_rLstA[self._rg_rIntA] = self._rg_rLstA[self._rg_rIntA].replace(':(','')
+                                if self._rg_rLstB[0] == 'type' or self._rg_rLstB[0] == 'item':
+                                    typAg = False
+                                    typEt = True
+                                else: typAg = True
+                                if typAg:
+                                    if not set(self._rg_rLstA[self._rg_rIntA]).issubset(setV):
+                                        return f'!÷{self._rg_rIntA+1}÷7:{self._rg_rLstA[self._rg_rIntA]}'
+                                    else:
+                                        typTrk.append(self._rg_rLstA[self._rg_rIntA])
+                                        self._rg_sSchm.append(f'{self._rg_rLstA[self._rg_rIntA]}:(')
+                            else:
+                                return f'!÷{self._rg_rIntA+1}÷6'
+                else:
+                    typSw = True
+                    self._rg_sSchm.append('.|.//^.')
+        return rtrn
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
 
