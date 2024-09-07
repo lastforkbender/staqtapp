@@ -1,0 +1,100 @@
+# _______________________________________________________________________
+# _______________________________________________________________________
+# _______________________________________________________________________
+#
+# Example Sqtpp v1.2 Schema for Sqtpp-Registry Key/Env-Var Normalizations
+# _______________________________________________________________________
+# _______________________________________________________________________
+# _______________________________________________________________________
+# https://github.com/lastforkbender/staqtapp
+#
+#
+#
+#
+# (Sqtpp-Registry py module does not edit keys and run @ same instance.
+#  Is locked to either edit of keys thru direct edit of the registry
+#  module itself or called to run from the staqtapp module only)
+#
+#
+#
+# *All schemas for sqtpp-reg key normalizations use lambda functions as
+#  validator sequence(s)
+#
+#
+# *Staqtapp harp-schema files can be .txt or any other like extensions.
+#
+#
+# All 10 key words for registry harp-schema files:
+#
+#  (1)    type
+#  (2)    item
+#  (3)    validator
+#  (4)    inherit
+#  (5)    string
+#  (6)    list
+#  (7)    integer
+#  (8)    float
+#  (9)    complex
+#  (10)   byte
+#  (11)   bool
+#
+#
+# Use of '*' with type is specific to a default key load if has a LMT.
+
+
+
+
+# ________________________
+# ________________________
+# Registry Schema Example:
+# ________________________
+# ________________________
+
+
+
+
+    # harp-schema comments # as allowed only
+    
+
+
+    sqtpp_reg_schema = (
+        string_type_1: (
+            #|| Only one type can be assigned to a initial category type, ||
+            #|| if there is more than one...staqtapp only uses the first; ||
+            #|| the ending comma must be present to end the intial type.  ||
+            #|| Also true for inherit and any type included of inherit.   ||
+            type: ( string,
+            validator [
+                #|| The lambda functions for registry key normilizations ||
+                #|| do not need commas at end, however is recommended.   ||
+                #|| Only one parameter of the lambda functions, the key. ||
+                lambda x: len(x) > 0,
+                lambda x: x.isalpha()
+            #|| End of a validator sequence ']' is necessary, must be on  ||
+            #|| a separate line just after lambda function(s) are listed. ||
+            ]
+            #|| Any use of ')' is not necessary, however is recommended. ||
+            )
+        #|| Use of '),'  is necessary if declaring more than one ||
+        #|| type category assignment of a required validator seq ||
+        #|| **must be on separate line directly above category** ||
+        ),
+        list_type_1: (
+            type: ( list,
+            #|| Only one user cat-type can be assigned to a item & must ||
+            #|| include the inherit declaration when so. Use of further ||
+            #|| types as seen here are all quantum like when parsing of ||
+            #|| the registry key. The '*' char for list pass thrus. If  ||
+            #|| not using the pojishon optionals then a type:( after a  ||
+            #|| inherit category type assignment is not used.           ||
+            item: (
+                inherit=string_type1,
+                type: ( string, list, integer, bool, *,
+            validator [
+                lambda x: x != 'monkey'
+            ]
+            )
+            )
+            )
+        )
+    )
