@@ -6,7 +6,7 @@ ________________________________________________________________________________
       
       
 
-      UPDATED: MON, SEP2 2024, added registry() features description
+      UPDATED: SUN, SEP8 2024, updated registry() description with all example uses
       
       
       
@@ -315,12 +315,39 @@ ________________________________________________________________________________
       to store any env-var data or passwords.
       
       
-----> registry(isRead, keyName, keyData, harpSchemaPath), stores registry keys in the
+----> registry(isRead, keyName, keyData, harpSchema), stores registry keys in the
       auto-generated slots performance module sqtpp1_2_REG.py for integrated lambda
-      function use for registry value(s) normalizations. It does this by a schema of
-      custom coding, that has a nested validator for lambda returns in connect of --
-      types, items, inherits and any kept order of the main category types assigned.
-      The more advanced pojishon optionals use this type lambda-registry extensive.
+      functions use on registry value(s) normalizations. It does this by a schema of
+      custom coding, see REGISTRY_CALLS.TXT for full examples on writing harp-schema.
+      All registry keys added or changed must have a assigned schema, that is already
+      stored in the registry:
+      
+        EXAMPLE ---> Adding or edit of a registry schema:
+         sqtpp.registry(False, None, None, '.../my_files/my_reg_schema.txt')
+        
+        EXAMPLE ---> Adding or edit of a registry key:
+         sqtpp.registry(False, my_reg_key, [1,'212',434,'11.1'], 'my_reg_schema')
+         
+      As such staqtapp first checks @harpSchema is a path, having '/' chars or not.
+      If adding of a registry schema or key then returns True, else an exception.
+      The registry schema is fully checked before added to the module registry. Of
+      this type registry system the schema is in control of how the registry key's
+      data will be returned when @isRead=True, meaning the registry key can be made
+      to take on a more analog occurence when compared to static file data or other.
+      
+        EXAMPLE ---> Return of a registry key's data:
+         key_return = sqtpp.registry(True, my_reg_key, None, None)
+         
+        ---OR---
+        
+        EXAMPLE ---> Return of a registry key's state:
+         key_state = sqtpp.registry(True, my_reg_key, my_data, None)
+       
+      Of the later example, a direct comparison check on the outcome state of the key
+      in match of @my_data. If match returns True else False. This option on read of
+      a registry key is of staqtapp's pojishon quantum env mv-tree state features and
+      heavily used of some pojishon optionals, when called on with a stored vfs file.
+      
       (NOT YET IMPLEMENTED)
       
       
@@ -487,7 +514,7 @@ ________________________________________________________________________________
         .quantumf(varNm=str; dirLst=list; span=#) | .quantumf(varNm=list; dirLst=list; span=#[index]) --> (NOT YET IMPLEMENTED)
  
  
-----> modrev9(prmsLst), builds a complete custom env-var module. @prmsLst elements
+----> modrev7(prmsLst), builds a complete custom env-var module. @prmsLst elements
       for this staqtapp feature is 34 arguments. The type modules generated can be
       very difficult to understand, with obfuscation turned on or not. Some of the
       arguments need the DUN3.py random lambda generator module present. (The DUN3
