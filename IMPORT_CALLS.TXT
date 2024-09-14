@@ -6,7 +6,9 @@ ________________________________________________________________________________
       
       
 
-      UPDATED: SUN, SEP8 2024, updated registry() description with all example uses
+      UPDATED: FRI, SEP13 2024, updated registry() call description, how it works
+      
+      
       
       
       
@@ -328,6 +330,22 @@ ________________________________________________________________________________
         EXAMPLE ---> Adding or edit of a registry key:
          sqtpp.registry(False, my_reg_key, [1,'212',434,'11.1'], 'my_reg_schema')
          
+      *@keyData can be of list, str, int, float, complex, set and bool but no nested
+       list are supported with this type registry system or bytes/bytearray
+      
+      
+      Staqtapp's registry system is quantum like. When a registry key is called on
+      to be read and return a value; the static stored value of that registry key,
+      processed inline down the schema it is assigned to. If a lambda function that
+      is currently being applied to the now current value of the registry key is not
+      applicable to the current value, errors or is non-observed then the previous
+      now state of the registry key is not changed. Is filtered thru the harp-schema
+      that may not change the registry key's value at all, however of the more adv
+      pojishon optional features, this doesn't conclude is a same identical. Because
+      the harp-schema observed the registry key and of that now schema is changed
+      to reflect the current expansion of any new observe of the registry key. (Only
+      specific pojishon optionals do this, normal use of registry will bypass this)
+         
       As such staqtapp first checks @harpSchema is a path, having '/' chars or not.
       If adding of a registry schema or key then returns True, else an exception.
       The registry schema is fully checked before added to the module registry. Of
@@ -348,7 +366,16 @@ ________________________________________________________________________________
       a registry key is of staqtapp's pojishon quantum env mv-tree state features and
       heavily used of some pojishon optionals, when called on with a stored vfs file.
       
-      (NOT YET IMPLEMENTED)
+      
+      *In use of adding a registry key as a set() or complex() declare as a string to
+       avoid certain issues of these types. The registry module sqtpp1_2_REG.py will
+       recognize & process those to a proper conversion type without any ast problems.
+       As a 'set()' for convert does not support complex elements in the conversion
+       and no string quote declaring for text elements in a wrapped string as shown:
+       
+         EXAMPLE ---> 'set(5.4, True, 8, txt)' ---or--- 'complex(3.141592653, 8)'
+         
+       (NOT YET IMPLEMENTED)
       
       
 ----> pojishon(mode, varData, varName, dirList), gives access to Staqtapp's vfs dir/
