@@ -1,4 +1,4 @@
-#QPython 3SE / Row4 / staqtapp.py (5,516 lines) / 5:25 Tue, Sep 10
+#QPython 3SE / Row4 / staqtapp.py (5,648 lines) / 5:01 Mon, Sep 16
 
 
 
@@ -8,7 +8,7 @@
 
 
 
-#Staqtapp-v1.2.396 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
+#Staqtapp-v1.2.422 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
 # <<< [qc-apps@xprize.org]
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -25,13 +25,17 @@
 
 
 
-# UPDATE TUE, SEP10: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
+# UPDATE MON, SEP16: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
 #
-#                    Several issues fixed with registry integrations to this module.
-#                    Began fit of the auto-generated registry module sqtpp1_2_REG.py
-#                    and overall scope in read of a registry key or a compare state
-#                    for the more advanced vfs files/env-var pojishon optional calls
-#                    that need this type lambda seq normalizations schema registry.
+#                    Staqtapp's harp-schema based normilization registry is a callable
+#                    feature now. From the auto-generated sqtpp1_2_REG registry module,
+#                    conversions of list, set, str, float, complex, int and bool are
+#                    all embedded conversions to each other on read of a registry key,
+#                    from assigned schema at each change of a property type instructed.
+#                    (The item declaration for inherit types of a category type or any
+#                    sub-types declared for first find conversions kept to pojishon -
+#                    optionals only and is not currently applied to key reader runs.)
+
 
 #                    See IMPORT_CALLS.TXT or REGISTRY_CALLS.TXT
 
@@ -660,7 +664,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.396\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.422\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1562,7 +1566,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.396\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.422\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3467,50 +3471,51 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#  _/./  _././_  _/./__  __/._/_  .//_/  _//.//  _//.//  _/./__  /.__/  /.__/
-#  __/._/_  /.__/  _//.//  _././_  _/./  /_._  _/./  __/.//  /.__/  _././_  /.__/
-#  __//._  /_._  /.__/  _//.//  _//.//  __//._  _/./  _/./__  _/./__  __/._/_
-#  /.__/  _././_  __/._/_  _/./__  __//._  __/.//  __//._  _//.//  /_._  .//_/
-#  __//._  _//.//  __//._  __/.//  _/./__  .//_/  _//.//  __/.//  _//.//  __/._/_
-#  /.__/  .//_/  _/./  __/.//  _//.//  __//._  /_._  /.__/  _/./__  _/./  _/./
-#  __/._/_  _/./__  .//_/  _/./__  _//.//  _//.//  _/./  _//.//  /.__/  _/./
-#  /.__/  _/./__  _/./  _/./__  __//._  __/._/_  .//_/  __/.//  /.__/  .//_/
-#  /_._  __//._  .//_/  .//_/  .//_/  __/.//  /_._  __//._  /.__/  /_._  /_._
-#  __/._/_  .//_/  _/./  .//_/  _/./__  __/._/_  .//_/  __//._  _//.//  /.__/
-#  __/.//  __/._/_  _/./  _././_  _//.//  /.__/  _/./__  __/._/_  __/._/_  _/./
-#  _././_  /_._  _/./__  _/./  /.__/  .//_/  _/./  _/./  __//._  __/._/_  _././_
-#  /_._  _././_  _/./__  __/._/_  /.__/  /_._  .//_/  /_._  _//.//  /.__/  /.__/
-#  _//.//  _././_  _//.//  _/./  __/._/_  /.__/  __/.//  _././_  _/./__  .//_/
-#  /_._  _/./  __//._  /.__/  __/._/_  _/./  /.__/  __//._  __//._  _/./__  .//_/
-#  _//.//  _/./  _/./__  _/./  _/./  .//_/  _//.//  .//_/  _/./__  _././_  _././_
-#  _//.//  _//.//  _/./  /.__/  /_._  /.__/  _/./  __//._  __/.//  _/./  /_._
-#  __/._/_  _/./  _//.//  _//.//  __//._  __/._/_  _/./  __/._/_  _././_  /_._
-#  __/.//  __//._  /_._  __/.//  /_._  __/.//  _/./__  __/._/_  __/.//  __/._/_
-#  _//.//  _././_  _/./__  _/./  __/.//  __/._/_  __//._  _/./  .//_/  __/.//
-#  /_._  /_._  __/.//  __//._  _/./  _//.//  __/.//  __//._  .//_/  /_._  /_._
-#  _//.//  __/.//  .//_/  __/.//  _/./  __/.//  __//._  __/._/_  .//_/  _//.//
-#  _/./__  /_._  _/./  __//._  _/./__  _/./__  __/._/_  _/./  .//_/  _/./__
-#  _//.//  /.__/  __//._  /.__/  _/./__  __/._/_  _/./__  __/._/_  __/._/_
-#  __//._  _././_  __/._/_  __//._  __/._/_  _//.//  /.__/  _//.//  /_._  _//.//
-#  _//.//  _././_  __//._  _/./  __/._/_  __//._  /_._  __/.//  _././_  __/._/_
-#  _././_  _././_  __/._/_  _/./  _//.//  __/.//  __/.//  _/./  __/.//  /.__/
-#  /_._  __//._  .//_/  .//_/  __/.//  __//._  __//._  __/._/_  __/._/_  __/.//
-#  _/./__  .//_/  _././_  _././_  /_._  _/./__  _././_  __/._/_  _/./__  __/.//
-#  _/./__  __//._  _././_  _//.//  __//._  _././_  _/./__  _//.//  __/._/_  _/./
-#  _/./__  _/./  _/./__  __/.//  __//._  __/._/_  .//_/  _/./  __/._/_  __/.//
-#  /_._  /.__/  __//._  _/./  .//_/  _././_  __/._/_  _/./  __//._  .//_/  __//._
-#  __/.//  __/._/_  /.__/  _//.//  __/._/_  _/./  .//_/  /.__/  /_._  __/._/_
-#  __/.//  _/./  .//_/  __/.//  /.__/  /.__/  _//.//  /_._  /_._  _/./  .//_/
-#  _././_  /.__/  __/.//  _/./__  /.__/  _/./  .//_/  _/./  __//._  /_._  _//.//
-#  _././_  __/._/_  _././_  __/._/_  __//._  .//_/  .//_/  /_._  _././_  /_._
-#  __//._  _/./  /_._  /_._  _././_  /.__/  /_._  /_._  _/./__  /.__/  __//._
-#  _//.//  _././_  /.__/  __/.//  /_._  .//_/  _/./__  _././_  /.__/  _/./
-#  __/.//  /.__/  _././_  /.__/  /.__/  _././_  _././_  .//_/  _/./  /_._  _/./__
-#  /_._  _//.//  /.__/  .//_/  __//._  _//.//  __//._  __//._  _//.//  .//_/
-#  _/./__  __/.//  _/./__  __//._  /_._  _/./  /.__/  _//.//  _/./  /.__/  _/./
-#  _././_  _/./  _/./__  __/.//  _././_  __/.//  _/./  __/._/_  __/._/_  .//_/
-#  /_._  .//_/  /.__/  _//.//  _//.//  _/./__  _././_  /.__/  /.__/  _//.//
-#  _//.//  _././_  __/._/_  /_._  /_._
+#  _/./__  _/./__  /_._  /.__/  .//_/  __/.//  _/./__  __/.//  .//_/  .//_/
+#  __//._  __/._/_  __/._/_  __/._/_  __/.//  __//._  _././_  _//.//  /.__/
+#  _/./__  __/.//  _/./  .//_/  __//._  /.__/  _//.//  /_._  _/./__  _//.//
+#  _././_  _/./__  _././_  _/./__  __/.//  _/./  /.__/  .//_/  _/./__  __/._/_
+#  _/./__  __//._  _/./__  __/._/_  _/./  .//_/  /.__/  .//_/  /.__/  __/._/_
+#  _././_  _././_  _//.//  __/._/_  /_._  /_._  .//_/  __/.//  /_._  _//.//
+#  _././_  _/./__  _././_  _/./__  __/.//  _././_  __/.//  /.__/  __//._  _//.//
+#  .//_/  _//.//  /.__/  _././_  .//_/  .//_/  .//_/  /.__/  /_._  /.__/  _/./
+#  __/.//  __/._/_  _//.//  _/./  /_._  __//._  _/./__  _././_  __/._/_  /_._
+#  _/./  /_._  __/.//  __//._  __/._/_  .//_/  .//_/  __//._  __/._/_  .//_/
+#  .//_/  _/./  _/./__  /_._  _././_  __/.//  .//_/  _/./__  _/./__  .//_/
+#  __//._  _/./__  _/./  _/./__  .//_/  /.__/  __//._  .//_/  _/./__  /.__/
+#  /.__/  _././_  __/._/_  _/./__  /.__/  .//_/  /_._  __/.//  _/./__  __/.//
+#  _/./__  .//_/  _/./  __/._/_  _././_  __/._/_  .//_/  __/._/_  __/.//  __/._/_
+#  _././_  _/./__  _././_  _././_  _//.//  .//_/  /.__/  _/./__  _//.//  _/./__
+#  __//._  /.__/  __//._  __/.//  __/.//  _././_  __/.//  _/./__  _/./  .//_/
+#  _/./  _././_  _/./  __/._/_  .//_/  .//_/  __//._  /.__/  __//._  /.__/
+#  __/._/_  /.__/  .//_/  _/./__  __/._/_  /_._  _././_  __/._/_  __/._/_  _//.//
+#  /_._  _/./__  /.__/  _/./  _/./  /_._  _//.//  __//._  __//._  /_._  /.__/
+#  _././_  __//._  __/._/_  __//._  /.__/  _/./  __/._/_  _././_  .//_/  __/.//
+#  __/.//  _//.//  __/.//  _/./  __/.//  _//.//  /_._  __//._  __/._/_  _/./
+#  _//.//  .//_/  __/.//  .//_/  _/./__  /.__/  .//_/  __//._  .//_/  .//_/  /_._
+#  /_._  __/._/_  /.__/  __/._/_  __/._/_  __//._  _//.//  __//._  _/./  _/./__
+#  _/./__  _//.//  __/._/_  __/._/_  .//_/  _/./  .//_/  _././_  _/./__  .//_/
+#  _/./__  __/._/_  /.__/  _/./__  __/._/_  __/.//  _//.//  _/./  /_._  _/./
+#  __//._  __/._/_  /_._  _/./__  _//.//  __/._/_  _/./__  /_._  __/.//  __/.//
+#  .//_/  .//_/  __/.//  _/./  _././_  __//._  /_._  _//.//  __/._/_  __/.//
+#  _//.//  _/./__  .//_/  .//_/  .//_/  _/./  _/./  _//.//  _././_  __/.//
+#  _././_  _././_  _/./  __/.//  _././_  _//.//  /_._  _/./  __/._/_  .//_/
+#  __//._  /_._  /.__/  _/./  __/._/_  __//._  /.__/  __/.//  _././_  __/._/_
+#  _/./  _/./  /_._  __/.//  _/./  /.__/  /.__/  _././_  /.__/  __//._  __//._
+#  __/._/_  _/./__  _/./  /.__/  /_._  /_._  .//_/  /.__/  _././_  __/.//
+#  __/._/_  /.__/  /.__/  __/._/_  _/./  /_._  __/._/_  /_._  /_._  _/./__
+#  _//.//  /_._  _././_  _/./  __/._/_  __/._/_  /_._  __/.//  .//_/  _/./__
+#  /.__/  _/./__  _//.//  __/.//  _//.//  .//_/  /.__/  .//_/  _/./__  _/./__
+#  /.__/  /.__/  _/./__  _/./  _//.//  _././_  /.__/  _/./__  _/./__  __/._/_
+#  /.__/  /_._  __/._/_  __/.//  _/./  /.__/  /.__/  __/._/_  __/._/_  .//_/
+#  /.__/  _/./__  .//_/  _/./  _//.//  /.__/  /.__/  /_._  __//._  .//_/  _/./
+#  __//._  _././_  _/./  _/./__  /_._  .//_/  _/./  _//.//  /_._  _././_  __//._
+#  .//_/  _/./__  .//_/  _//.//  __/._/_  _/./__  _//.//  /_._  __/.//  /.__/
+#  __/._/_  _//.//  /.__/  /.__/  _/./__  /.__/  _//.//  __/._/_  .//_/  _//.//
+#  _././_  /.__/  _././_  __/._/_  __//._  _././_  _././_  __//._  __/._/_
+#  __/._/_  /.__/  _//.//  _//.//  .//_/  __/._/_  _/./  __/.//  _/./  _././_
+#  /_._  _//.//  __/._/_  _/./__  _././_  .//_/  _//.//  .//_/  _/./  _/./__
+#  _/./__  /.__/  __//._  __/._/_  __/.//  /.__/  __/._/_  .//_/  _/./  /_._
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon(self, mode: str, varDt, varNm, dirLst: list):
@@ -4931,7 +4936,8 @@ class SqtppFncs(Sqtpp):
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_registry_homer(self, regKyRd: bool, regKyNm: str, regKyDt, schm: str):
-        # <<<
+        # FNC_ID=ST12-65969257620713
+        # SqtppFncs slots in use: (hidden)
         # returns:
         rtrn = None
         if not regKyRd:
@@ -4971,16 +4977,40 @@ class SqtppFncs(Sqtpp):
         else:
             if isinstance(regKyNm, str):
                 if regKyDt != None:
-                    if len(regKyDt) > 0: self.sqtpp_registry_homer_read(regKyNm, regKyDt)
+                    if len(regKyDt) > 0:
+                        rtrn = self.sqtpp_registry_homer_read(regKyNm, regKyDt)
                     else:
                         raise Exception('[sqtpp-reg >> registry] (read registry key) - @keyData use for a comparison key on read state must have a length')
-                else: self.sqtpp_registry_homer_read(regKyNm, None)
+                else:
+                    rtrn = self.sqtpp_registry_homer_read(regKyNm, None)
+                if isinstance(rtrn, str):
+                    if rtrn.find('(.>>!:!<<.)') > -1:
+                        rtrn = rtrn.split('=')
+                        rtrn = int(rtrn[1])
+                        if rtrn == 1:
+                            raise Exception(f'[sqtpp-reg >> registry] (read registry key) - registry key "{regKyNm}" was not found')
+                        elif rtrn == 2:
+                            raise Exception('[sqtpp-reg >> registry] (read registry key) - invalid registry key header declaring discovered')
+                        elif rtrn == 3:
+                            raise Exception('[sqtpp-reg >> registry] (read registry key) - invalid registry key data declaring discovered')
+                        elif rtrn == 4:
+                            raise Exception(f'[sqtpp-reg >> registry] (read registry key) - registry key "{regKyNm}" assigned harp-schema was not found')
+                        elif rtrn == 5:
+                            raise Exception('[sqtpp-reg >> registry] (read registry key) - invalid harp-schema header declaring')
+                        elif rtrn == 6:
+                            raise Exception('[sqtpp-reg >> registry] (read registry key) - invalid harp-schema data declaring')
+                        elif rtrn == 7:
+                            raise Exception(f'[sqtpp-reg >> registry] (read registry key) - ast conversion error of registry key "{regKyNm}" value')
+                    else:
+                        return rtrn
+                return rtrn
             else:
                 raise Exception('[sqtpp-reg >> registry] (read registry key) - @keyName must be a str type for return read of a registry key')
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_registry_homer_read(self, kyNm: str, kyDt):
-        # <<<
+        # FNC_ID=ST12-52552189378799
+        # SqtppFncs slots in use: (hidden)
         # returns: (reloads sqtpp1_2_REG.py if changed, properly and from here only)
         if not self._rg_sMdlTrg:
             self._rg_sMdlTrg = True
@@ -4996,82 +5026,184 @@ class SqtppFncs(Sqtpp):
                 self._rg_sMdlEdt = False
                 import sqtpp1_2_REG
         if set(kyNm).issubset(SQTPP_SET_VARS):
-            rtrn = sqtpp1_2_REG.sqtpp_reg_lll_run(kyNm, kyDt)
+            return sqtpp1_2_REG.sqtpp_reg_lll_run(kyNm, kyDt)
         else:
             raise Exception('[sqtpp-reg >> registry] (read registry key) - @keyName is not a valid staqtapp registry key name, has invalid char(s) valid chars: _ a-z A-Z 0-9')
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_registry_homer_build(self, addRegKy: bool, regKyNm: str, regKyDt, schm: str):
-        # <<<
-        # returns:
+        # FNC_ID=ST12-65481399143891
+        # SqtppFncs slots in use: (hidden)
+        # returns: (none)
         if os.path.isfile(f'{SQTPP_MDL_DIR}/sqtpp1_2_REG.py'):
             with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_REG.py', 'r') as flObjReg: self._rg_rStrA = flObjReg.read()
         else:
-            # Build sqtpp1_2_REG.py registry module.
-            raise Exception('Registry Module not yet implemented!')
+            self._rg_rLstA = []
             self._rg_rStrA = '\n'
-            self._rg_rLstA = deque()
             self._rg_rLstA.append(f"# This py-module is auto-generated by the Staqtapp1.2 vfs env-var library for registry functions use. Edit at your own risk.{self._rg_rStrA}")
             self._rg_rLstA.append(f"{self._rg_rStrA}from collections import deque{self._rg_rStrA}{self._rg_rStrA}import math{self._rg_rStrA}import ast{self._rg_rStrA}import re{self._rg_rStrA}")
-            self._rg_rLstA.append(f"{self._rg_rStrA}class SqtppRegLLL():{self._rg_rStrA}    {self._rg_rStrA}    __slots__ = (){self._rg_rStrA}    {self._rg_rStrA}    def __init__(self):{self._rg_rStrA}")
-            self._rg_rLstA.append(f"        pass{self._rg_rStrA}{self._rg_rStrA}{self._rg_rStrA}class SqtppRegLLL_Fncs(SqtppRegLLL):{self._rg_rStrA}{self._rg_rStrA}    __slots__ = ('_lll_sRdrRtrn','_lll_sSpdrRtrn','_lll_sThemas','_lll_sTharpe','_lll_sKyHdr','_lll_sKyDat', '_lll_sKyStDat', '_lll_sHarpErr','_lll_sPrsErr','_lll_sPrsRtrn','_lll_sLstA','_lll_rStrA','_lll_rLstA','_lll_rLstB','_lll_rLstC','_lll_rLstD','_lll_rLstE','_lll_rLstF','_lll_rIntA','_lll_rIntB','_lll_rBoolA','_lll_rBoolB','_lll_rBoolC','_lll_rBoolD'){self._rg_rStrA}")
-            self._rg_rLstA.append(f"{self._rg_rStrA}    def __init__(self):{self._rg_rStrA}{self._rg_rStrA}        self._lll_sThemas = deque([{self._rg_rStrA}            'SQTPP_REG_KEY:8888888888:__LTLKV1:88||88||8888||88||88||88||AM:8888:8888:9S8:____SQTPP_REG_STGS_KEY____:____SQTPP_REG_STGS_SCHM____=[~||/LRK:default~||/]:|.||.|:',{self._rg_rStrA}")
-            self._rg_rLstA.append(f"            'SQTPP_REG_KEY:8667648008:__LTLKV5:09||03||2024||05||07||59||AM:8875:1900:9S8:reg_key_1:sqtpp_reg_schema=[99,999,9999,~||/some text things~||/,5445]:|.||.|:'{self._rg_rStrA}")
+            self._rg_rLstA.append(f"{self._rg_rStrA}class SqtppRegLLL():{self._rg_rStrA}{self._rg_rStrA}    __slots__ = (){self._rg_rStrA}{self._rg_rStrA}    def __init__(self):{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        pass{self._rg_rStrA}{self._rg_rStrA}{self._rg_rStrA}class SqtppRegLLL_Fncs(SqtppRegLLL):{self._rg_rStrA}{self._rg_rStrA}    __slots__ = ('_lll_sRdrRtrn', '_lll_sSpdrRtrn', '_lll_sThemas', '_lll_sTharpe', '_lll_sKyHdr', '_lll_sKyDat', '_lll_sKyStDat', '_lll_sKyBln', '_lll_sKyCmx', '_lll_sKySet', '_lll_sHarpErr', '_lll_sPrsErr', '_lll_sPrsRtrn', '_lll_sTyp1', '_lll_sNmId', '_lll_sLmb', '_lll_sLstA', '_lll_sBlnSw', '_lll_rStrA', '_lll_rStrB', '_lll_rStrC', '_lll_rStrD', '_lll_rLstA', '_lll_rLstB', '_lll_rLstC', '_lll_rLstD', '_lll_rLstE', '_lll_rLstF', '_lll_rIntA', '_lll_rIntB', '_lll_rIntC', '_lll_rIntD', '_lll_rIntE', '_lll_rBoolA', '_lll_rBoolB', '_lll_rBoolC', '_lll_rBoolD'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"{self._rg_rStrA}    def __init__(self):{self._rg_rStrA}{self._rg_rStrA}        self._lll_sThemas = deque([{self._rg_rStrA}            'SQTPP_REG_KEY:8888888888:__LTLKV1:88||88||8888||88||88||88||AM:8888:8888:9S8:____SQTPP_REG_STGS_KEY____:____SQTPP_REG_STGS_SCHM____=[~||/LRK:default~||/]:|.||.|:'{self._rg_rStrA}")
             self._rg_rLstA.append(f"        ]){self._rg_rStrA}#|:>|<:|_______________________________________________________________________________{self._rg_rStrA}        self._lll_sTharpe = deque([{self._rg_rStrA}")
-            self._rg_rLstA.append(f"            'SQTPP_REG_HARP_SCHEMA:88||88||8888||88||88||88||AM:4911832712:008S9:schema_test_001=schema_test_001=(|./^.string_type_1:(|./^.type:(string|./^.validator[|./^.lambda x: len(x) > 0|./^.lambda x: x.isalpha()|./^.]|./^.)|./^..|.//^.|./^.list_type_1:(|./^.type:(list|./^.item:(|./^.%inherit=string_type1|./^.%type:(string,list,integer,bool,*|./^.validator[|./^.lambda x: x != ~||/monkey~||/|./^.]|./^.)|./^.)|./^.)|./^.)|./^.):|.||.|:',{self._rg_rStrA}")
-            self._rg_rLstA.append(f"            'SQTPP_REG_HARP_SCHEMA:09||09||2024||12||50||23||AM:5819891358:008S9:sqtpp_reg_schema=sqtpp_reg_schema=(|./^.string_type_1:(|./^.type:(string|./^.validator[|./^.lambda x: len(x) > 0|./^.lambda x: x.isalpha()|./^.]|./^..|.//^.|./^.list_type_1:(|./^.type:(list|./^.item:(|./^.%inherit=string_type_1|./^.%type:(string,list,integer,bool,*|./^.validator[|./^.lambda x: x != ~||/monkey~||/|./^.]:|.||.|:'{self._rg_rStrA}")
-            self._rg_rLstA.append(f"        ]){self._rg_rStrA}#|.<:>.|_______________________________________________________________________________{self._rg_rStrA}    def sqtpp_reg_key_rdr(self, keyNm: str, keyDt):{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            'SQTPP_REG_HARP_SCHEMA:88||88||8888||88||88||88||AM:8888888888:008S9:____SQTPP_REG_STGS_SCHM____=>!<:|.||.|:'{self._rg_rStrA}        ]){self._rg_rStrA}")
+            self._rg_rLstA.append(f"#|.<:>.|_______________________________________________________________________________{self._rg_rStrA}    def sqtpp_reg_key_rdr(self, keyNm: str, keyDt):{self._rg_rStrA}")
             self._rg_rLstA.append(f"        try:{self._rg_rStrA}            if keyDt != None: self._lll_sKyStDat = keyDt{self._rg_rStrA}            else: self._lll_sKyStDat = None{self._rg_rStrA}")
-            self._rg_rLstA.append(f"            self._lll_rIntA = 0{self._rg_rStrA}            self._lll_rBoolA = False{self._rg_rStrA}            self._lll_sRdrRtrn = None{self._rg_rStrA}")
-            self._rg_rLstA.append(f"            self._lll_rStrA = f':9S8:{keyNm}:'{self._rg_rStrA}            self._lll_rIntB = len(self._lll_sThemas){self._rg_rStrA}            while self._lll_rIntA < self._lll_rIntB:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            self._lll_rIntA = 0{self._rg_rStrA}            self._lll_sKyBln = False{self._rg_rStrA}            self._lll_sKyCmx = False{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            self._lll_sKySet = False{self._rg_rStrA}            self._lll_rBoolA = False{self._rg_rStrA}            self._lll_sRdrRtrn = None{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            self._lll_rStrA = ':9S8:' + keyNm  + ':'{self._rg_rStrA}            self._lll_rIntB = len(self._lll_sThemas){self._rg_rStrA}            while self._lll_rIntA < self._lll_rIntB:{self._rg_rStrA}")
             self._rg_rLstA.append(f"                if self._lll_sThemas[self._lll_rIntA].find(self._lll_rStrA) > -1:{self._rg_rStrA}                    self._lll_rBoolA = True{self._rg_rStrA}")
-            self._rg_rLstA.append(f"                    break{self._rg_rStrA}                self._lll_rIntA+=1{self._rg_rStrA}            if self._lll_rBoolA:{self._rg_rStrA}                self._lll_sKyHdr = re.findall(r'SQTPP_REG_KEY\:.*?\:9S8\:' + re.escape(keyNm) + '.*?=',self._lll_sThemas[self._lll_rIntA]){self._rg_rStrA}")
-            self._rg_rLstA.append(f"                if len(self._lll_sKyHdr) > 0:{self._rg_rStrA}                    self._lll_sKyHdr[0] = self._lll_sKyHdr[0].replace('=',''){self._rg_rStrA}")
-            self._rg_rLstA.append(f"                    self._lll_sKyHdr = self._lll_sKyHdr[0].split(':'){self._rg_rStrA}                    self._lll_sKyHdr.pop(0){self._rg_rStrA}                    self._lll_sKyDat = re.findall(r'=.*?:\|\.\|\|\.\|:',self._lll_sThemas[self._lll_rIntA]){self._rg_rStrA}")
-            self._rg_rLstA.append(f"                    if len(self._lll_sKyDat) > 0:{self._rg_rStrA}                        self._lll_sKyDat = self._lll_sKyDat[0].replace(':|.||.|:',''){self._rg_rStrA}")
-            self._rg_rLstA.append(f"                        self._lll_sKyDat = self._lll_sKyDat[1:len(self._lll_sKyDat)]{self._rg_rStrA}                        self._lll_sRdrRtrn = self.sqtpp_reg_harp_key(){self._rg_rStrA}")
-            self._rg_rLstA.append(f"                        if self._lll_sHarpErr:{self._rg_rStrA}                            if self._lll_sRdrRtrn == -1: self._lll_sRdrRtrn = '(.>>!:!<<.)=4'{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    break{self._rg_rStrA}                self._lll_rIntA+=1{self._rg_rStrA}            if self._lll_rBoolA:{self._rg_rStrA}                self._lll_sKyHdr = re.findall(r'SQTPP_REG_KEY\:.*?\:9S8\:' + re.escape(keyNm) + '.*?=', self._lll_sThemas[self._lll_rIntA]){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                if len(self._lll_sKyHdr) > 0:{self._rg_rStrA}                    self._lll_sKyHdr[0] = self._lll_sKyHdr[0].replace('=', ''){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    self._lll_sKyHdr = self._lll_sKyHdr[0].split(':'){self._rg_rStrA}                    self._lll_sKyHdr.pop(0){self._rg_rStrA}                    self._lll_sKyDat = re.findall(r'=.*?:\|\.\|\|\.\|:', self._lll_sThemas[self._lll_rIntA]){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    if len(self._lll_sKyDat) > 0:{self._rg_rStrA}                        self._lll_sKyDat = self._lll_sKyDat[0].replace(':|.||.|:', ''){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                        self._lll_sKyDat = self._lll_sKyDat[1:len(self._lll_sKyDat)]{self._rg_rStrA}                        if self._lll_sKyDat.lower() == 'false' or self._lll_sKyDat.lower() == 'true': self._lll_sKyBln = True{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                        if self._lll_sKyDat.find('complex(') > -1: self._lll_sKyCmx = True{self._rg_rStrA}                        if self._lll_sKyDat.find('set(') > -1: self._lll_sKySet = True{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                        self._lll_sRdrRtrn = self.sqtpp_reg_harp_key(){self._rg_rStrA}                        if self._lll_sHarpErr:{self._rg_rStrA}                            if self._lll_sRdrRtrn == -1: self._lll_sRdrRtrn = '(.>>!:!<<.)=4'{self._rg_rStrA}")
             self._rg_rLstA.append(f"                            elif self._lll_sRdrRtrn == -2: self._lll_sRdrRtrn = '(.>>!:!<<.)=5'{self._rg_rStrA}                            elif self._lll_sRdrRtrn == -3: self._lll_sRdrRtrn = '(.>>!:!<<.)=6'{self._rg_rStrA}")
             self._rg_rLstA.append(f"                            elif self._lll_sRdrRtrn == -4: self._lll_sRdrRtrn = '(.>>!:!<<.)=7'{self._rg_rStrA}                        else:{self._rg_rStrA}")
-            self._rg_rLstA.append(f"                            self.sqtpp_reg_harp_prc(){self._rg_rStrA}                    else: self._lll_sRdrRtrn = '(.>>!:!<<.)=3'{self._rg_rStrA}                else: self._lll_sRdrRtrn = '(.>>!:!<<.)=2'{self._rg_rStrA}")
-            self._rg_rLstA.append(f"            else: self._lll_sRdrRtrn = '(.>>!:!<<.)=1'{self._rg_rStrA}            return self._lll_sRdrRtrn{self._rg_rStrA}        except Exception as err_reg_key_rdr:{self._rg_rStrA}")
-            self._rg_rLstA.append(f"            raise Exception(f'[sqtpp-reg >> registry] - key read entry function ~ direct .../sqtpp1_2_REG.py exception: {err_reg_key_rdr}'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                            self.sqtpp_reg_harp_prc(){self._rg_rStrA}                            if self._lll_sKyStDat != None:{self._rg_rStrA}                                try:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                                    if self._lll_sKyDat == self._lll_sKyStDat:{self._rg_rStrA}                                        return True{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                                    else:{self._rg_rStrA}                                        return False{self._rg_rStrA}                                except Exception as reg_typ_cmp_err:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                                    return False{self._rg_rStrA}                            else:{self._rg_rStrA}                                return self._lll_sKyDat{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    else: self._lll_sRdrRtrn = '(.>>!:!<<.)=3'{self._rg_rStrA}                else: self._lll_sRdrRtrn = '(.>>!:!<<.)=2'{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            else: self._lll_sRdrRtrn = '(.>>!:!<<.)=1'{self._rg_rStrA}            return self._lll_sRdrRtrn{self._rg_rStrA}        except Exception as sqtpp_registry_err:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            raise Exception('[sqtpp-reg >> registry] direct registry module key reader exception ~sqtpp1_2_REG.py~ ' + sqtpp_registry_err){self._rg_rStrA}")
             self._rg_rLstA.append(f"#|______________________________________________________________________________________{self._rg_rStrA}    def sqtpp_reg_harp_key(self):{self._rg_rStrA}")
             self._rg_rLstA.append(f"        self._lll_rIntA = 0{self._rg_rStrA}        self._lll_sSpdrRtrn = 1{self._rg_rStrA}        self._lll_rBoolA = False{self._rg_rStrA}        self._lll_sHarpErr = False{self._rg_rStrA}")
-            self._rg_rLstA.append(f"        self._lll_rIntB = len(self._lll_sTharpe){self._rg_rStrA}        self._lll_rStrA = f':008S9:{self._lll_sKyHdr[7]}='{self._rg_rStrA}        while self._lll_rIntA < self._lll_rIntB:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        self._lll_rIntB = len(self._lll_sTharpe){self._rg_rStrA}        self._lll_rStrA = ':008S9:' + self._lll_sKyHdr[7] + '='{self._rg_rStrA}        while self._lll_rIntA < self._lll_rIntB:{self._rg_rStrA}")
             self._rg_rLstA.append(f"            if self._lll_sTharpe[self._lll_rIntA].find(self._lll_rStrA) > -1:{self._rg_rStrA}                self._lll_rBoolA = True{self._rg_rStrA}                break{self._rg_rStrA}")
             self._rg_rLstA.append(f"            self._lll_rIntA+=1{self._rg_rStrA}        if self._lll_rBoolA:{self._rg_rStrA}            self._lll_rLstA = re.findall(r'SQTPP_REG_HARP_SCHEMA\:.*?\:008S9\:' + re.escape(self._lll_sKyHdr[7]) + '.*?=', self._lll_sTharpe[self._lll_rIntA]){self._rg_rStrA}")
-            self._rg_rLstA.append(f"            if len(self._lll_rLstA) > 0:{self._rg_rStrA}                self._lll_rLstA[0] = self._lll_rLstA[0].replace('=',''){self._rg_rStrA}                self._lll_rLstA = self._lll_rLstA[0].split(':'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"            if len(self._lll_rLstA) > 0:{self._rg_rStrA}                self._lll_rLstA[0] = self._lll_rLstA[0].replace('=', ''){self._rg_rStrA}                self._lll_rLstA = self._lll_rLstA[0].split(':'){self._rg_rStrA}")
             self._rg_rLstA.append(f"                self._lll_rLstA.pop(0){self._rg_rStrA}                self._lll_rLstB = re.findall(r'=.*?:\|\.\|\|\.\|:', self._lll_sTharpe[self._lll_rIntA]){self._rg_rStrA}")
-            self._rg_rLstA.append(f"                if len(self._lll_rLstB) > 0:{self._rg_rStrA}                    self._lll_rLstB = self._lll_rLstB[0].replace(':|.||.|:',''){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                if len(self._lll_rLstB) > 0:{self._rg_rStrA}                    self._lll_rLstB = self._lll_rLstB[0].replace(':|.||.|:', ''){self._rg_rStrA}")
             self._rg_rLstA.append(f"                    self._lll_rLstB = self._lll_rLstB[1:len(self._lll_rLstB)]{self._rg_rStrA}                    self._lll_sSpdrRtrn = self.sqtpp_reg_harp_pre_prc(){self._rg_rStrA}")
             self._rg_rLstA.append(f"                    if not self._lll_sPrsErr:{self._rg_rStrA}                        return self._lll_sSpdrRtrn{self._rg_rStrA}                    else:{self._rg_rStrA}")
             self._rg_rLstA.append(f"                        if self._lll_sSpdrRtrn == -1:{self._rg_rStrA}                            self._lll_sHarpErr = True{self._rg_rStrA}                            self._lll_sSpdrRtrn = -4{self._rg_rStrA}")
             self._rg_rLstA.append(f"                else:{self._rg_rStrA}                    self._lll_sHarpErr = True{self._rg_rStrA}                    self._lll_sSpdrRtrn = -3{self._rg_rStrA}")
             self._rg_rLstA.append(f"            else:{self._rg_rStrA}                self._lll_sHarpErr = True{self._rg_rStrA}                self._lll_sSpdrRtrn = -2{self._rg_rStrA}        else:{self._rg_rStrA}")
             self._rg_rLstA.append(f"            self._lll_sHarpErr = True{self._rg_rStrA}            self._lll_sSpdrRtrn = -1{self._rg_rStrA}#|______________________________________________________________________________________{self._rg_rStrA}")
-            self._rg_rLstA.append(f"    def sqtpp_reg_harp_pre_prc(self):{self._rg_rStrA}        self._lll_sPrsErr = False{self._rg_rStrA}        self._lll_rStrA = '\u0027'{self._rg_rStrA}")
-            self._rg_rLstA.append(f"        self._lll_sKyDat = self._lll_sKyDat.replace('~||/',self._lll_rStrA){self._rg_rStrA}        try:{self._rg_rStrA}            self._lll_sKyDat = ast.literal_eval(self._lll_sKyDat)   {self._rg_rStrA}")
-            self._rg_rLstA.append(f"        except Exception as err_key_data_ast:{self._rg_rStrA}            self._lll_sPrsErr = True{self._rg_rStrA}            return -1{self._rg_rStrA}        self._lll_rLstB = self._lll_rLstB.split('|./^.'){self._rg_rStrA}")
-            self._rg_rLstA.append(f"        self._lll_sLstA = [')']{self._rg_rStrA}        self._lll_rLstB = [_ for _ in self._lll_rLstB if _ not in self._lll_sLstA]{self._rg_rStrA}        self._lll_rLstD = []{self._rg_rStrA}")
-            self._rg_rLstA.append(f"        self._lll_rLstE = []{self._rg_rStrA}        self._lll_rLstF = []{self._rg_rStrA}        self._lll_rIntB = len(self._lll_rLstB){self._rg_rStrA}        self._lll_rBoolA = True{self._rg_rStrA}")
-            self._rg_rLstA.append(f"        self._lll_rBoolB = False{self._rg_rStrA}        self._lll_rBoolC = False{self._rg_rStrA}        self._lll_rBoolD = False{self._rg_rStrA}        for self._lll_rIntA in range(1, self._lll_rIntB):{self._rg_rStrA}")
-            self._rg_rLstA.append(f"            self._lll_rStrA = self._lll_rLstB[self._lll_rIntA]{self._rg_rStrA}            if self._lll_rBoolA:{self._rg_rStrA}                self._lll_rBoolA = False{self._rg_rStrA}")
-            self._rg_rLstA.append(f"                self._lll_rLstC = [self._lll_rStrA.replace(':(','')]{self._rg_rStrA}            else:{self._rg_rStrA}                if self._lll_rBoolB or self._lll_rStrA == '.|.//^.':{self._rg_rStrA}")
-            self._rg_rLstA.append(f"                    if not self._lll_rBoolB: self._lll_rBoolB = True{self._rg_rStrA}                    else:{self._rg_rStrA}                        self._lll_rBoolB = False{self._rg_rStrA}")
-            self._rg_rLstA.append(f"                        self._lll_rLstC.append(self._lll_rStrA.replace(':(','')){self._rg_rStrA}                elif not self._lll_rBoolC and self._lll_rStrA.find('type:(') > -1:{self._rg_rStrA}")
-            self._rg_rLstA.append(f"                    self._lll_rLstD.append(self._lll_rStrA.replace('type:(','')){self._rg_rStrA}                elif self._lll_rBoolC or self._lll_rStrA == 'item:(':{self._rg_rStrA}")
-            self._rg_rLstA.append(f"                    if not self._lll_rBoolC: self._lll_rBoolC = True{self._rg_rStrA}                    else:{self._rg_rStrA}                        if self._lll_rStrA.find('%inherit=') > -1:{self._rg_rStrA}")
-            self._rg_rLstA.append(f"                            self._lll_sLstA = self._lll_rStrA.split('='){self._rg_rStrA}                            self._lll_rLstE.append(f'>>{self._lll_rLstC[len(self._lll_rLstC)-1]}:{self._lll_sLstA[1]}'){self._rg_rStrA}")
-            self._rg_rLstA.append(f"                        if self._lll_rStrA.find('%type:(') > -1:{self._rg_rStrA}                            self._lll_rStrA = self._lll_rStrA.replace('%type:(',''){self._rg_rStrA}")
-            self._rg_rLstA.append(f"                            self._lll_rLstE[len(self._lll_rLstE)-1] = f'{self._lll_rLstE[len(self._lll_rLstE)-1]}:{self._lll_rStrA}'{self._rg_rStrA}                        if self._lll_rLstB[self._lll_rIntA+1][0] != '%': self._lll_rBoolC = False{self._rg_rStrA}")
-            self._rg_rLstA.append(f"                elif self._lll_rBoolD or self._lll_rStrA.find('validator[') > -1:{self._rg_rStrA}                    if not self._lll_rBoolD: self._lll_rBoolD = True{self._rg_rStrA}")
-            self._rg_rLstA.append(f"                    else:{self._rg_rStrA}                        if self._lll_rStrA == ']': self._lll_rBoolD = False{self._rg_rStrA}                        else:{self._rg_rStrA}")
-            self._rg_rLstA.append(f"                            self._lll_rStrA = self._lll_rStrA.replace('~||/',''){self._rg_rStrA}                            self._lll_rLstF.append(f'{self._lll_rLstC[len(self._lll_rLstC)-1]}<{self._lll_rStrA}:|/>'){self._rg_rStrA}")
-            self._rg_rLstA.append(f"        return 1{self._rg_rStrA}#|______________________________________________________________________________________{self._rg_rStrA}#|______________________________________________________________________________________{self._rg_rStrA}")
-            self._rg_rLstA.append(f"#| 'WAR!!! WHAT IS IT GOOD FOR? ABSOLUTELY ----> NOTHING!' - EDWIN STARR{self._rg_rStrA}    {self._rg_rStrA}def sqtpp_reg_lll_run(lName: str, lData):{self._rg_rStrA}")
-            self._rg_rLstA.append(f"    lllCls = SqtppRegLLL_Fncs(){self._rg_rStrA}    lllCls.sqtpp_reg_key_rdr(lName, lData){self._rg_rStrA}")
-            # ]]] Converted module code lines made by sqtpp1_ahs_converters.py [[[
+            self._rg_rLstA.append(f"    def sqtpp_reg_harp_pre_prc(self):{self._rg_rStrA}        self._lll_sPrsErr = False{self._rg_rStrA}        self._lll_sKyDat = self._lll_sKyDat.replace('~||/', '\u0027'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"        if not self._lll_sKyCmx and not self._lll_sKySet:{self._rg_rStrA}            try:{self._rg_rStrA}                self._lll_sKyDat = ast.literal_eval(self._lll_sKyDat)   {self._rg_rStrA}")
+            self._rg_rLstA.append(f"            except Exception as err_key_data_ast:{self._rg_rStrA}                self._lll_sPrsErr = True{self._rg_rStrA}                return -1{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        else:{self._rg_rStrA}            if self._lll_sKyCmx:{self._rg_rStrA}                self._lll_rLstA = self._lll_sKyDat.split('('){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                self._lll_rLstA[1] = self._lll_rLstA[1].replace(' ', '').replace(')', ''){self._rg_rStrA}                self._lll_rLstA = self._lll_rLstA[1].split(','){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                if self._lll_rLstA[0].find('.') > -1: self._lll_rIntA = float(self._lll_rLstA[0]){self._rg_rStrA}                else: self._lll_rIntA = int(self._lll_rLstA[0]){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                if self._lll_rLstA[1].find('.') > -1: self._lll_rIntB = float(self._lll_rLstA[1]){self._rg_rStrA}                else: self._lll_rIntB = int(self._lll_rLstA[1]){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                self._lll_sKyDat = complex(self._lll_rIntA, self._lll_rIntB){self._rg_rStrA}            else:{self._rg_rStrA}                self._lll_rLstA = self._lll_sKyDat.split('('){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                self._lll_rLstA[1] = self._lll_rLstA[1].replace(' ', '').replace(')', ''){self._rg_rStrA}                if self._lll_rLstA[1].find(',') > -1: self._lll_rLstA = self._lll_rLstA[1].split(','){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                else: self._lll_rLstA = [self._lll_rLstA[1]]{self._rg_rStrA}                self._lll_rLstD = []{self._rg_rStrA}                self._lll_sNmId = set('.1234567890'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                self._lll_rIntB = len(self._lll_rLstA){self._rg_rStrA}                for self._lll_rIntA in range(self._lll_rIntB):{self._rg_rStrA}                    if set(self._lll_rLstA[self._lll_rIntA]).issubset(self._lll_sNmId) > 1:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                        if self._lll_rLstA[self._lll_rIntA].find('.') > -1: self._lll_rLstD.append(float(self._lll_rLstA[self._lll_rIntA])){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                        else: self._lll_rLstD.append(int(self._lll_rLstA[self._lll_rIntA])){self._rg_rStrA}                    elif self._lll_rLstA[self._lll_rIntA].lower() == 'true': self._lll_rLstD.append(bool(1)){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    elif self._lll_rLstA[self._lll_rIntA].lower() == 'false': self._lll_rLstD.append(bool(0)){self._rg_rStrA}                    else: self._lll_rLstD.append(self._lll_rLstA[self._lll_rIntA]){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    self._lll_sKyDat = set(self._lll_rLstD){self._rg_rStrA}        if any(isinstance(_, list) for _ in self._lll_sKyDat):{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            raise Exception('[sqtpp-reg >> registry] - registry key cannot be evaluated, has nested list from non-supported edit of module sqtpp1_2_REG.py'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"        self._lll_rLstB = self._lll_rLstB.split('|./^.'){self._rg_rStrA}        self._lll_sLstA = [')']{self._rg_rStrA}        self._lll_rLstB = [_ for _ in self._lll_rLstB if _ not in self._lll_sLstA]{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        self._lll_rLstD = []{self._rg_rStrA}        self._lll_rLstE = []{self._rg_rStrA}        self._lll_rLstF = []{self._rg_rStrA}        self._lll_rIntB = len(self._lll_rLstB){self._rg_rStrA}")
+            self._rg_rLstA.append(f"        self._lll_rBoolA = True{self._rg_rStrA}        self._lll_rBoolB = False{self._rg_rStrA}        self._lll_rBoolC = False{self._rg_rStrA}        self._lll_rBoolD = False{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        for self._lll_rIntA in range(1, self._lll_rIntB):{self._rg_rStrA}            self._lll_rStrA = self._lll_rLstB[self._lll_rIntA]{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            if self._lll_rBoolA:{self._rg_rStrA}                self._lll_rBoolA = False{self._rg_rStrA}                self._lll_rLstC = [self._lll_rStrA.replace(':(', '')]{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            else:{self._rg_rStrA}                if self._lll_rBoolB or self._lll_rStrA == '.|.//^.':{self._rg_rStrA}                    if not self._lll_rBoolB: self._lll_rBoolB = True{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    else:{self._rg_rStrA}                        self._lll_rBoolB = False{self._rg_rStrA}                        self._lll_rLstC.append(self._lll_rStrA.replace(':(', '')){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                elif not self._lll_rBoolC and self._lll_rStrA.find('type:(') > -1: self._lll_rLstD.append(self._lll_rStrA.replace('type:(', '')){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                elif self._lll_rBoolC or self._lll_rStrA == 'item:(':{self._rg_rStrA}                    if not self._lll_rBoolC: self._lll_rBoolC = True{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    else:{self._rg_rStrA}                        if self._lll_rStrA.find('%inherit=') > -1:{self._rg_rStrA}                            self._lll_sLstA = self._lll_rStrA.split('='){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                            self._lll_rLstE.append('>>' + self._lll_rLstC[len(self._lll_rLstC)-1] + ':' + self._lll_sLstA[1]){self._rg_rStrA}                        if self._lll_rStrA.find('%type:(') > -1:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                            self._lll_rStrA = self._lll_rStrA.replace('%type:(', ''){self._rg_rStrA}                            self._lll_rLstE[len(self._lll_rLstE)-1] = self._lll_rLstE[len(self._lll_rLstE)-1] + ':' + self._lll_rStrA{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                        if self._lll_rLstB[self._lll_rIntA+1][0] != '%': self._lll_rBoolC = False{self._rg_rStrA}                elif self._lll_rBoolD or self._lll_rStrA.find('validator[') > -1:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    if not self._lll_rBoolD: self._lll_rBoolD = True{self._rg_rStrA}                    else:{self._rg_rStrA}                        if self._lll_rStrA == ']': self._lll_rBoolD = False{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                        else:{self._rg_rStrA}                            self._lll_rStrA = self._lll_rStrA.replace('~||/', '\u0027'){self._rg_rStrA}                            self._lll_rLstF.append(self._lll_rLstC[len(self._lll_rLstC)-1] + ':' + self._lll_rLstD[len(self._lll_rLstD)-1] + '<' + self._lll_rStrA + ':|/>'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"        return 1{self._rg_rStrA}#|______________________________________________________________________________________{self._rg_rStrA}    def sqtpp_reg_harp_prc(self):{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        try:{self._rg_rStrA}            self._lll_rBoolA = True{self._rg_rStrA}            self._lll_sBlnSw = False{self._rg_rStrA}            self._lll_rIntB = len(self._lll_rLstF){self._rg_rStrA}")
+            self._rg_rLstA.append(f"            for self._lll_rIntA in range(self._lll_rIntB):{self._rg_rStrA}                self._lll_rBoolB = False{self._rg_rStrA}                self._lll_rLstA = re.findall(r'.*?<', self._lll_rLstF[self._lll_rIntA]){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                if not self._lll_rBoolA:{self._rg_rStrA}                    if self._lll_rStrA == self._lll_rLstA[0]: self.sqtpp_reg_harp_prc_profile(True){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    else: self.sqtpp_reg_harp_prc_profile(self._lll_rBoolA)     {self._rg_rStrA}                else:{self._rg_rStrA}                    self._lll_rBoolA = False{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    self.sqtpp_reg_harp_prc_profile(self._lll_rBoolA){self._rg_rStrA}        except Exception as sqtpp_registry_key_validator_prc_err:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            raise Exception('[sqtpp-reg >> registry] direct registry module key validator process exception ~sqtpp1_2_REG.py~ ' + sqtpp_registry_key_validator_prc_err){self._rg_rStrA}")
+            self._rg_rLstA.append(f"#|______________________________________________________________________________________{self._rg_rStrA}    def sqtpp_reg_harp_prc_profile(self, bypAsgn: bool):{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        if not bypAsgn:{self._rg_rStrA}            self._lll_rBoolB = True{self._rg_rStrA}            self._lll_rStrA = self._lll_rLstA[0]{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        self._lll_rStrB = self._lll_rLstF[self._lll_rIntA].split('<'){self._rg_rStrA}        self._lll_rStrC = self._lll_rStrB[0].replace('<', ''){self._rg_rStrA}")
+            self._rg_rLstA.append(f"        self._lll_rStrC = self._lll_rStrC.split(':'){self._rg_rStrA}        self._lll_rStrB = self._lll_rStrB[1].replace(':|/>', ''){self._rg_rStrA}        self._lll_rLstB = re.findall(r'lambda.*?\:', self._lll_rStrB){self._rg_rStrA}")
+            self._rg_rLstA.append(f"        if self._lll_rLstB[0].find(',') < 0:{self._rg_rStrA}            if not self._lll_sBlnSw and self._lll_sKyBln:{self._rg_rStrA}                self._lll_sBlnSw = True{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                self.sqtpp_reg_harp_prc_core('b'){self._rg_rStrA}            elif isinstance(self._lll_sKyDat, bool): self.sqtpp_reg_harp_prc_core('b'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"            elif isinstance(self._lll_sKyDat, list): self.sqtpp_reg_harp_prc_core('l'){self._rg_rStrA}            elif isinstance(self._lll_sKyDat, str): self.sqtpp_reg_harp_prc_core('sr'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"            elif isinstance(self._lll_sKyDat, int): self.sqtpp_reg_harp_prc_core('i'){self._rg_rStrA}            elif isinstance(self._lll_sKyDat, float): self.sqtpp_reg_harp_prc_core('f'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"            elif isinstance(self._lll_sKyDat, complex): self.sqtpp_reg_harp_prc_core('c'){self._rg_rStrA}            elif isinstance(self._lll_sKyDat, set): self.sqtpp_reg_harp_prc_core('st'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"            else:{self._rg_rStrA}                raise Exception('[sqtpp-reg >> registry] - registry key (' + self._lll_sKyHdr[6] + ') is a unknown/non-supported type for a registry key value, see REGISTRY_CALLS.TXT'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"        else:{self._rg_rStrA}            raise Exception('[sqtpp-reg >> registry] - registry schema (' + self._lll_sKyHdr[7] + ') has lambda function(s) with more than one parameter, see REGISTRY_CALLS.TXT'){self._rg_rStrA}")
+            self._rg_rLstA.append(f"#|______________________________________________________________________________________{self._rg_rStrA}    def sqtpp_reg_harp_prc_core(self, typDsg: str):{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        crProcTyp = None{self._rg_rStrA}        crProcTypLst = False{self._rg_rStrA}        crProcTypSet = False{self._rg_rStrA}        crProcTypStr = False{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        try:{self._rg_rStrA}            self._lll_rBoolC = True{self._rg_rStrA}            if not isinstance(self._lll_sKyDat, self.sqtpp_reg_harp_prc_core_cnvrt_styp_to_ctyp()):{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                if typDsg == 'l': crProcTypLst = True{self._rg_rStrA}                if not crProcTypLst and typDsg == 'st': crProcTypSet = True{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                if not crProcTypLst and not crProcTypSet and typDsg == 'sr': crProcTypStr = True{self._rg_rStrA}                if self._lll_sTyp1 == 'list':{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    if not crProcTypSet:{self._rg_rStrA}                        if not crProcTypStr: self._lll_sKyDat = [self._lll_sKyDat]{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                        else: self.sqtpp_reg_harp_prc_core_cnvrt_str_to_lst(){self._rg_rStrA}                    else: self._lll_sKyDat = list(self._lll_sKyDat){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                elif self._lll_sTyp1 == 'string':{self._rg_rStrA}                    if not crProcTypSet:{self._rg_rStrA}                        if not crProcTypLst:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                            if typDsg == 'f': self._lll_sKyDat = str(self._lll_sKyDat){self._rg_rStrA}                            elif typDsg == 'c': self._lll_sKyDat = str(self._lll_sKyDat.real){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                            else: self._lll_sKyDat = str(self._lll_sKyDat){self._rg_rStrA}                        else: self.sqtpp_reg_harp_prc_core_cnvrt_lst_to_str(){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    else:{self._rg_rStrA}                        self._lll_sKyDat = list(self._lll_sKyDat){self._rg_rStrA}                        self.sqtpp_reg_harp_prc_core_cnvrt_lst_to_str(){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                elif self._lll_sTyp1 == 'integer': self. sqtpp_reg_harp_prc_core_int_flt_map(typDsg, True, crProcTypSet, crProcTypLst, crProcTypStr){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                elif self._lll_sTyp1 == 'float': self.sqtpp_reg_harp_prc_core_int_flt_map(typDsg, False, crProcTypSet, crProcTypLst, crProcTypStr){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                elif self._lll_sTyp1 == 'complex':{self._rg_rStrA}                    if not crProcTypSet:{self._rg_rStrA}                        if not crProcTypLst:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                            if not crProcTypStr:{self._rg_rStrA}                                if typDsg == 'f' or typDsg == 'i': self._lll_sKyDat = complex(self._lll_sKyDat, 0){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                                elif typDsg == 'b':{self._rg_rStrA}                                    if self._lll_sKyDat: self._lll_sKyDat = complex(1, 0){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                                    else: self._lll_sKyDat = complex(0, 0){self._rg_rStrA}                            else:{self._rg_rStrA}                                self.sqtpp_reg_harp_prc_core_cnvrt_str_to_lst(){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                                self.sqtpp_reg_harp_prc_core_cnvrt_lst_set_to_cmx(False){self._rg_rStrA}                        else: self.sqtpp_reg_harp_prc_core_cnvrt_lst_set_to_cmx(False){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    else: self.sqtpp_reg_harp_prc_core_cnvrt_lst_set_to_cmx(True){self._rg_rStrA}                elif self._lll_sTyp1 == 'boolean':{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    if not crProcTypSet:{self._rg_rStrA}                        if not crProcTypLst:{self._rg_rStrA}                            if not crProcTypStr:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                                if typDsg == 'f': self._lll_sKyDat = bool(int(self._lll_sKyDat)){self._rg_rStrA}                                elif typDsg == 'i': self._lll_sKyDat = bool(self._lll_sKyDat){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                                elif typDsg == 'c': self._lll_sKyDat = bool(int(self._lll_sKyDat.real)){self._rg_rStrA}                            else:{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                                self._lll_sKyDat = self._lll_sKyDat.lower(){self._rg_rStrA}                                if self._lll_sKyDat == 'true': self._lll_sKyDat = bool(1){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                                else: self._lll_sKyDat = bool(0){self._rg_rStrA}                        else:{self._rg_rStrA}                            self.sqtpp_reg_harp_prc_core_cnvrt_lst_to_num(True){self._rg_rStrA}")
+            self._rg_rLstA.append("                            self._lll_sKyDat = {bool(self._lll_sKyDat)}\n                    else:\n                        self._lll_sKyDat = list(self._lll_sKyDat)\n")
+            self._rg_rLstA.append("                        self.sqtpp_reg_harp_prc_core_cnvrt_lst_to_num(True)\n                        self._lll_sKyDat = {bool(self._lll_sKyDat)}\n")
+            self._rg_rLstA.append("                elif self._lll_sTyp1 == 'set':\n                    if not crProcTypLst:\n                        if not crProcTypStr: self._lll_sKyDat = {self._lll_sKyDat}\n")
+            self._rg_rLstA.append(f"                        else:{self._rg_rStrA}                            self.sqtpp_reg_harp_prc_core_cnvrt_str_to_lst(){self._rg_rStrA}                            self._lll_sKyDat = list(self._lll_sKyDat){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    else: self._lll_sKyDat = list(self._lll_sKyDat){self._rg_rStrA}        except Exception as converter_prc_core_err:{self._rg_rStrA}            self._lll_rBoolC = False{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        if self._lll_rBoolC:{self._rg_rStrA}            try:{self._rg_rStrA}                self._lll_rStrD = eval(self._lll_rStrB){self._rg_rStrA}                self._lll_sLmb = self._lll_rStrD(self._lll_sKyDat){self._rg_rStrA}")
+            self._rg_rLstA.append(f"            except Exception as validator_prc_core_err:{self._rg_rStrA}                self._lll_rBoolC = False{self._rg_rStrA}            if self._lll_rBoolC: self._lll_sKyDat = self._lll_sLmb{self._rg_rStrA}")
+            self._rg_rLstA.append(f"#|______________________________________________________________________________________{self._rg_rStrA}    def sqtpp_reg_harp_prc_core_int_flt_map(self, typDsg: str, isInt: bool, pSet: bool, pLst: bool, pStr: bool):{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        if not pSet:{self._rg_rStrA}            if not pLst:{self._rg_rStrA}                if not pStr:{self._rg_rStrA}                    if isInt and typDsg == 'f': self._lll_sKyDat = math.floor(self._lll_sKyDat){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    elif not isInt and typDsg == 'i': self._lll_sKyDat = float(self._lll_sKyDat){self._rg_rStrA}                    elif typDsg == 'c':{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                        if isInt: self._lll_sKyDat = math.floor(self._lll_sKyDat.real){self._rg_rStrA}                        else: self._lll_sKyDat = self._lll_sKyDat.real{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    elif typDsg == 'b':{self._rg_rStrA}                        if isInt:{self._rg_rStrA}                            if self._lll_sKyDat: self._lll_sKyDat = 1{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                            else: self._lll_sKyDat = 0{self._rg_rStrA}                        else:{self._rg_rStrA}                            if self._lll_sKyDat: self._lll_sKyDat = float(1){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                            else: self._lll_sKyDat = float(0){self._rg_rStrA}                else:{self._rg_rStrA}                    self.sqtpp_reg_harp_prc_core_cnvrt_str_to_lst(){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                    self.sqtpp_reg_harp_prc_core_cnvrt_lst_to_num(isInt){self._rg_rStrA}            else: self.sqtpp_reg_harp_prc_core_cnvrt_lst_to_num(isInt){self._rg_rStrA}")
+            self._rg_rLstA.append(f"        else:{self._rg_rStrA}            self._lll_sKyDat = list(self._lll_sKyDat){self._rg_rStrA}            self.sqtpp_reg_harp_prc_core_cnvrt_lst_to_num(isInt){self._rg_rStrA}")
+            self._rg_rLstA.append(f"#|______________________________________________________________________________________{self._rg_rStrA}    def sqtpp_reg_harp_prc_core_cnvrt_lst_elm(self):{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        self._lll_rIntD = len(self._lll_sKyDat){self._rg_rStrA}        for self._lll_rIntC in range(self._lll_rIntD):{self._rg_rStrA}            if set(self._lll_sKyDat[self._lll_rIntC]).issubset(self._lll_sNmId):{self._rg_rStrA}")
+            self._rg_rLstA.append(f"                if self._lll_sKyDat[self._lll_rIntC].find('.') > -1: self._lll_sKyDat[self._lll_rIntC] = float(self._lll_sKyDat[self._lll_rIntC]){self._rg_rStrA}")
+            self._rg_rLstA.append(f"                else: self._lll_sKyDat[self._lll_rIntC] = int(self._lll_sKyDat[self._lll_rIntC]){self._rg_rStrA}#|______________________________________________________________________________________{self._rg_rStrA}")
+            self._rg_rLstA.append(f"    def sqtpp_reg_harp_prc_core_cnvrt_lst_to_str(self):{self._rg_rStrA}        self._lll_rIntD = len(self._lll_sKyDat){self._rg_rStrA}        for self._lll_rIntC in range(self._lll_rIntD):{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            if not isinstance(self._lll_sKyDat[self._lll_rIntC], str): self._lll_sKyDat[self._lll_rIntC] = str(self._lll_sKyDat[self._lll_rIntC]){self._rg_rStrA}")
+            self._rg_rLstA.append(f"        if len(self._lll_sKyDat) > 1: self._lll_sKyDat = ','.join(self._lll_sKyDat){self._rg_rStrA}        else: self._lll_sKyDat = self._lll_sKyDat[0]{self._rg_rStrA}")
+            self._rg_rLstA.append(f"#|______________________________________________________________________________________{self._rg_rStrA}    def sqtpp_reg_harp_prc_core_cnvrt_str_to_lst(self):{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        if self._lll_sKyDat.find(',') > -1: self._lll_sKyDat = self._lll_sKyDat.split(','){self._rg_rStrA}        else: self._lll_sKyDat = [self._lll_sKyDat]{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        self.sqtpp_reg_harp_prc_core_cnvrt_lst_elm(){self._rg_rStrA}#|______________________________________________________________________________________{self._rg_rStrA}")
+            self._rg_rLstA.append(f"    def sqtpp_reg_harp_prc_core_cnvrt_lst_set_to_cmx(self, isLstCnvr: bool):{self._rg_rStrA}        if isLstCnvr: self._lll_sKyDat = list(self._lll_sKyDat){self._rg_rStrA}")
+            self._rg_rLstA.append(f"        self.sqtpp_reg_harp_prc_core_cnvrt_lst_to_num(False){self._rg_rStrA}        self._lll_sKyDat = complex(self._lll_sKyDat, 0){self._rg_rStrA}#|______________________________________________________________________________________{self._rg_rStrA}")
+            self._rg_rLstA.append(f"    def sqtpp_reg_harp_prc_core_cnvrt_lst_to_num(self, isInt: bool):{self._rg_rStrA}        self._lll_rIntE = 0{self._rg_rStrA}        self._lll_rIntD = len(self._lll_sKyDat){self._rg_rStrA}")
+            self._rg_rLstA.append(f"        for self._lll_rIntC in range(self._lll_rIntD):{self._rg_rStrA}            if isinstance(self._lll_sKyDat[self._lll_rIntC], int) or isinstance(self._lll_sKyDat[self._lll_rIntC], float): self._lll_rIntE = self._lll_rIntE + self._lll_sKyDat[self._lll_rIntC]{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            elif isinstance(self._lll_sKyDat[self._lll_rIntC], complex): self._lll_rIntE = self._lll_rIntE + self._lll_sKyDat[self._lll_rIntC].real{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            elif isinstance(self._lll_sKyDat[self._lll_rIntC], bool):{self._rg_rStrA}                if self._lll_sKyDat[self._lll_rIntC]: self._lll_rIntE+=1{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        if isInt: self._lll_sKyDat = math.floor(self._lll_rIntE){self._rg_rStrA}        else: self._lll_sKyDat = self._lll_rIntE{self._rg_rStrA}#|______________________________________________________________________________________{self._rg_rStrA}")
+            self._rg_rLstA.append(f"    def sqtpp_reg_harp_prc_core_cnvrt_styp_to_ctyp(self):{self._rg_rStrA}        if self._lll_sTyp1 == 'string':{self._rg_rStrA}            return str{self._rg_rStrA}")
+            self._rg_rLstA.append(f"        elif self._lll_sTyp1 == 'integer':{self._rg_rStrA}            return int{self._rg_rStrA}        elif self._lll_sTyp1 == 'boolean':{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            return bool{self._rg_rStrA}        elif self._lll_sTyp1 == 'complex':{self._rg_rStrA}            return complex{self._rg_rStrA}        elif self._lll_sTyp1 == 'set':{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            return set{self._rg_rStrA}        elif self._lll_sTyp1 == 'float':{self._rg_rStrA}            return float{self._rg_rStrA}        elif self._lll_sTyp1 == 'list':{self._rg_rStrA}")
+            self._rg_rLstA.append(f"            return list{self._rg_rStrA}#|______________________________________________________________________________________{self._rg_rStrA}#| 'WAR!!! WHAT IS IT GOOD FOR? ABSOLUTELY ----> NOTHING!' - EDWIN STARR{self._rg_rStrA}")
+            self._rg_rLstA.append(f"{self._rg_rStrA}def sqtpp_reg_lll_run(lName: str, lData):{self._rg_rStrA}    lllCls = SqtppRegLLL_Fncs(){self._rg_rStrA}    return lllCls.sqtpp_reg_key_rdr(lName, lData)")
+            self._rg_rLstA = ''.join(self._rg_rLstA)
+            self._rg_rLstA = self._rg_rLstA.replace(".replace('~||/', '\u0027')", ".replace('~||/', '\\u0027')")
+            with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_REG.py', 'w') as flObjRegWrt: flObjRegWrt.write(self._rg_rLstA)
+            self._rg_rStrA = None
+            self._rg_rLstA = None
+            if os.path.isfile(f'{SQTPP_MDL_DIR}/sqtpp1_2_REG.py'):
+                with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_REG.py', 'r') as flObjReg: self._rg_rStrA = flObjReg.read()
+            else:
+                raise Exception("[sqtpp-reg >> registry] - could not write the registry module sqtpp1_2_REG.py to Staqtapp's current working directory '{SQTPP_MDL_DIR}'")
         if addRegKy:
             return self.sqtpp_registry_homer_add_key(regKyNm, regKyDt, schm)
         else:
@@ -5220,7 +5352,7 @@ class SqtppFncs(Sqtpp):
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_registry_homer_apnd_deq_ext(self, sFnd: str, eFnd: str, apnd: str):
         # FNC_ID=ST12-74601895900751
-        # SqtppFncs slots in use: (non-local)
+        # SqtppFncs slots in use: (hidden)
         # returns: (none)
         self._rg_rIntA = self._rg_rStrA.find(sFnd)
         self._rg_rIntB = self._rg_rStrA.find(eFnd)
@@ -5249,7 +5381,7 @@ class SqtppFncs(Sqtpp):
         # !÷line#÷12=no found inherit assignment after an item declaration
         # !÷line#÷13=no found category type for assignment with a inherit category type
         # !÷line#÷14:invalid category type=category type for inherit assignment not found
-        lstA = ['bool','byte','complex','float','integer','list','string','*']
+        lstA = ['bool','complex','float','integer','set','list','string','*']
         self._rg_rLstA = self._rg_rStrB.split('\n')
         self._rg_rLstA[:] = [l for l in self._rg_rLstA if '#' not in l and not l.isspace()]
         self._rg_rLstA = list(filter(None, self._rg_rLstA))
