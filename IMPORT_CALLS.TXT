@@ -374,8 +374,6 @@ ________________________________________________________________________________
        and no string quote declaring for text elements in a wrapped string as shown:
        
          EXAMPLE ---> 'set(5.4, True, 8, txt)' ---or--- 'complex(3.141592653, 8)'
-         
-       (NOT YET IMPLEMENTED)
       
       
 ----> pojishon(mode, varData, varName, dirList), gives access to Staqtapp's vfs dir/
