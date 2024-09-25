@@ -6,7 +6,7 @@ ________________________________________________________________________________
       
       
 
-      UPDATED: FRI, SEP13 2024, updated registry() call description, how it works
+      UPDATED: TUE, SEP24 2024, updated pojishon() call description, next.omega.* call
       
       
       
@@ -428,6 +428,58 @@ ________________________________________________________________________________
             gets over written just a same anyway. Also to remember the last added
             file in the vfs settings is not there for this type file added. Any
             optionals used after this command sees same unchanged m/d/f setting.
+            
+        (4) ("next.omega.*", required, required, non-required), from a last dir use
+            this pojishon next call works. It's main emphasis is a category pack or
+            "catpack" built to staqtapp's registry, from a parsing of the files in
+            the last directory used. The @varData argument is used in a time append
+            parsing when compared with the files in the dir. Here is list of special 
+            character sequences that can be used with @varData:
+            
+                1. {...] read as a forward scanned data group for comparisons
+                2. [...} read as a reverse scanned data group for comparisons
+                3. }...{ read as a neutral scanned data group for comparisons
+                4. |:{:  read as special numerical block assign for reg-key(s)
+                5. |:[:  read as special numerical lists assign for reg-key(s)
+                6. }#{   read as a skip next # of times for any scanned data
+                7. ]#[   read as a reverse next # of times for any sequence(s)
+                
+                *neutral scanned data groups are added first, forward next and if
+                 any reverse scans then added behind a last forward. If there is
+                 no forward scan group added yet then acts as a forward, or limbo
+                 registry key element which will begin with char-seq '^;^'
+                
+            The pojishon omega call will write a new env-var to the tqpt stack and
+            create any necessary registry key(s) in process of scanning the file(s).
+            Type registry keys take on the same name @varName used for assignment @
+            the env-var added. If multiple registry keys(catpack keys) are stored
+            in the registry module then @varName is followed by _catType then an _#
+            of order to which added. @varName's env-var added to tqpt stack is the
+            same for @varData, it's value not changed. When this next call is done
+            it changes the last file used setting, in the last used directory, to
+            the file it last found matching and made a registry key. The schema of
+            each registry key(s) added are include of this generic harp-schema:
+            
+                __sqtpp__default__omega__key__ = (
+                    __dok__type: (
+                    type: ( list,
+                    validator [
+                        lambda x: if len(x) > 0
+                    ]
+                    )
+                    )
+                )
+                
+            As you can see is very generic with only one lambda validator, checking
+            if list is of any length. The registry key(s), if any added by this next
+            call are all list basis via scans for comma separations. Meaning with of
+            above char sequences uses, in comparisons of each file in the directory,
+            if any comma uses found in between brackets then is a separate element
+            added to the registry key's value. This pojishon next feature is geared
+            toward embedded positional traversing a file read or write with other
+            registry involved pojishon features like watch and record, however is
+            of other important uses similiar to time crucial added/edited reg-keys
+            in parallel to a env-var that added it there from a set mnt/dir/...
             
         
       ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
