@@ -6,7 +6,7 @@ ________________________________________________________________________________
       
       
 
-      UPDATED: TUE, SEP24 2024, updated pojishon() call description, next.omega.* call
+      UPDATED: SAT, SEP28 2024, updated 'next.omega.*' call for pojishon pro features
       
       
       
@@ -433,8 +433,13 @@ ________________________________________________________________________________
             this pojishon next call works. It's main emphasis is a category pack or
             "catpack" built to staqtapp's registry, from a parsing of the files in
             the last directory used. The @varData argument is used in a time append
-            parsing when compared with the files in the dir. Here is list of special 
-            character sequences that can be used with @varData:
+            parsing when compared with the files in the dir. Below a list of special 
+            character sequences that are used with @varData, a str or list str type.
+            If using as a list then list will be joined together for file searches.
+            Should be noted when Staqtapp processes the search tokens for @varData,
+            any mistypes/errors are ignored, continues to assemble an searching seq.
+            Searches can be as complex as you need it, however if is complex search
+            use a list approach for your matches and it will be less error prone.
             
                 1. {...] read as a forward scanned data group for comparisons
                 2. [...} read as a reverse scanned data group for comparisons
@@ -444,7 +449,14 @@ ________________________________________________________________________________
                 6. }#{   read as a skip next # of times for any scanned data
                 7. ]#[   read as a reverse next # of times for any sequence(s)
                 
-                *neutral scanned data groups are added first, forward next and if
+                EXAMPLE: {find txt]0[find txt, add rev}|:{:12]1[34 is txt}1{skip txt]
+                
+                *{, [, |:{: and |:[: are as key symbols when @varData is recorded
+                 into a list for matching against all files in last used dir; when
+                 any of these begin bracket uses encountered then expects and end
+                 of ] or } for closing the search parameter wether txt | numbers
+                
+                *neutral scan/found data groups are added first, forward next and
                  any reverse scans then added behind a last forward. If there is
                  no forward scan group added yet then acts as a forward, or limbo
                  registry key element which will begin with char-seq '^;^'
@@ -470,6 +482,12 @@ ________________________________________________________________________________
                     )
                 )
                 
+                *this harp-schema can be edited, see registry() & REGISTRY_CALLS.TXT;
+                 the name of this schema will be '__sqtpp__default__omega__key__' and
+                 if Staqtapp doesn't find it, stores the same schema as above on read
+                 of any pojishon omega search category keys it finds in registry mdl
+                 when it's executing a omega call with optionals or other later calls
+                
             As you can see is very generic with only one lambda validator, checking
             if list is of any length. The registry key(s), if any added by this next
             call are all list basis via scans for comma separations. Meaning with of
@@ -480,6 +498,8 @@ ________________________________________________________________________________
             registry involved pojishon features like watch and record, however is
             of other important uses similiar to time crucial added/edited reg-keys
             in parallel to a env-var that added it there from a set mnt/dir/...
+            
+            (NOT YET IMPLEMENTED)
             
         
       ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
