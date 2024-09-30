@@ -1,4 +1,4 @@
-#QPython 3SE / Row4 / staqtapp.py (5,789 lines) / 7:43 Sun, Sep 29
+#QPython 3SE / Row4 / staqtapp.py (5,845 lines) / 11:11 Mon, Sep 30
 
 
 
@@ -8,7 +8,7 @@
 
 
 
-#Staqtapp-v1.2.435 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
+#Staqtapp-v1.2.442 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
 # <<< [qc-apps@xprize.org]
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -25,9 +25,10 @@
 
 
 
-# UPDATE SUN, SEP29: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
+# UPDATE MON, SEP30: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
 #
-#                    Began work on pojishon() 'next.omega.*' vfs/registry actions:
+#                    More work on pojishon() 'next.omega.*' vfs/registry actions to
+#                    have it more precise than the documentation can handle itself:
 #                       sqtpp_emb_vfs_pojishon_omega_ctpk()
 #                       sqtpp_emb_vfs_pojishon_omega_ctpk_scnr()
 #                       sqtpp_emb_vfs_pojishon_omega_ctpk_spdr()
@@ -660,7 +661,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.435\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.442\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1562,7 +1563,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.435\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.442\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3467,52 +3468,52 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#  __//._  .//_/  /.__/  __/.//  _././_  __//._  _/./  __/._/_  __/._/_  .//_/
-#  .//_/  /.__/  /_._  _//.//  _/./  /_._  /_._  __/.//  __//._  _/./  /_._  _/./
-#  /.__/  _//.//  _././_  _//.//  _/./  __/.//  _/./  /_._  _././_  /_._  _/./
-#  __/._/_  _././_  __/._/_  __/.//  _/./__  _/./  /.__/  __//._  _/./  __//._
-#  /.__/  _././_  _././_  .//_/  _//.//  _//.//  .//_/  /_._  _././_  _/./
-#  __/.//  _././_  .//_/  /.__/  _/./  __/.//  _//.//  _././_  __/._/_  _/./
-#  _/./  __/.//  /.__/  __/.//  _././_  .//_/  _/./  _././_  /.__/  _//.//  /_._
-#  _././_  _/./  .//_/  _/./__  __/._/_  _//.//  __/.//  __//._  _//.//  __//._
-#  _/./  /_._  __/._/_  _/./  /_._  /.__/  __/._/_  _/./  .//_/  __/.//  _//.//
-#  __/._/_  __//._  _/./__  _././_  _/./  /.__/  /.__/  __/._/_  _/./__  _/./__
-#  _/./  __//._  _/./  _//.//  .//_/  /_._  _././_  __/._/_  _././_  _//.//
-#  _././_  _/./__  _/./__  _/./  /_._  /.__/  _/./  _//.//  .//_/  _/./__  .//_/
-#  _/./  __//._  __/.//  __/.//  __//._  __/.//  __/.//  _/./  __//._  __/.//
-#  _/./  /.__/  __//._  _/./__  __/.//  _././_  _././_  __/._/_  __//._  __/.//
-#  /_._  /_._  __/._/_  __/._/_  _/./__  __/.//  /_._  __/.//  /.__/  __//._
-#  __/.//  __/._/_  _././_  _//.//  .//_/  _//.//  /.__/  /.__/  __/.//  __//._
-#  __/.//  .//_/  .//_/  _././_  __//._  _/./__  _/./__  /.__/  _/./  /.__/
-#  _/./__  _//.//  _/./__  _/./__  _/./__  __/._/_  _/./  /.__/  _././_  __/._/_
-#  .//_/  _././_  /_._  _//.//  /.__/  __/.//  _/./__  __//._  __/._/_  /_._
-#  .//_/  .//_/  __/.//  __/._/_  _/./  _././_  __/.//  /_._  /_._  /.__/  _/./
-#  _//.//  __/.//  /_._  /_._  __/.//  /_._  _/./  _//.//  _/./__  /.__/  __/._/_
-#  _/./__  __/.//  _/./__  __/.//  _/./  _././_  /.__/  /_._  _/./__  __/.//
-#  __//._  /_._  _/./__  .//_/  _/./  _//.//  _/./__  /.__/  /.__/  __//._
-#  _//.//  .//_/  __//._  __/._/_  __/.//  __//._  .//_/  __/.//  _//.//  _././_
-#  _/./__  _/./  __/._/_  .//_/  __/.//  _././_  __/._/_  _/./__  __/.//  _//.//
-#  _././_  _//.//  _//.//  _/./__  _././_  __//._  _/./__  _//.//  _//.//  __/.//
-#  _/./  _././_  __/._/_  /_._  _/./__  _././_  /_._  _/./  /_._  __/.//  _././_
-#  /_._  _/./  __//._  .//_/  __/.//  _././_  __/._/_  _/./  /_._  _././_  _././_
-#  _/./  .//_/  __/.//  _././_  /_._  /.__/  /.__/  .//_/  __//._  .//_/  /.__/
-#  _././_  _/./  __/.//  /_._  .//_/  _/./__  __/._/_  __/._/_  /_._  _//.//
-#  .//_/  /_._  _//.//  _//.//  _/./  __/._/_  _/./__  /.__/  __/._/_  _/./__
-#  /.__/  _/./  __/._/_  /.__/  _././_  _././_  __/._/_  _/./  _//.//  _/./__
-#  _././_  /.__/  /.__/  /.__/  _/./__  /_._  .//_/  _././_  /.__/  __//._  /.__/
-#  __/._/_  __/._/_  _//.//  /.__/  _././_  __/._/_  _/./  __//._  .//_/  __/._/_
-#  _//.//  __//._  __/._/_  __/._/_  _/./__  __/._/_  __//._  _/./__  _././_
-#  __//._  __/.//  _././_  /_._  .//_/  _//.//  _././_  __//._  .//_/  _/./
-#  __/._/_  __/._/_  _././_  _././_  /.__/  /_._  .//_/  _././_  __/._/_  /_._
-#  /.__/  _/./__  __/.//  _//.//  _././_  _/./__  _/./__  __//._  .//_/  __/._/_
-#  _/./  _/./__  _/./__  __//._  /.__/  _/./  /_._  _/./__  _/./__  /.__/
-#  __/._/_  _/./__  _/./__  _/./  _/./  __/._/_  _././_  __/._/_  __/._/_  _/./
-#  __//._  __/._/_  _././_  _//.//  _/./__  __/.//  __//._  /.__/  /.__/  _././_
-#  _././_  .//_/  __/._/_  _/./__  _/./__  /_._  _././_  /_._  /.__/  _//.//
-#  /_._  __//._  _//.//  /.__/  __/._/_  _/./  _//.//  __/._/_  _//.//  .//_/
-#  .//_/  __/._/_  _//.//  __//._  __/.//  /_._  __//._  _/./  .//_/  /.__/
-#  _/./__  .//_/  __//._  __//._  __/._/_  .//_/  .//_/  /.__/  __//._  _/./__
-#  _//.//  /_._
+#  /.__/  __/.//  __/._/_  /_._  _/./__  __//._  __/.//  .//_/  _././_  _/./
+#  __/._/_  _/./__  __/._/_  __/.//  /_._  _/./  /.__/  __//._  __/.//  _././_
+#  __/._/_  _/./__  /.__/  _././_  /_._  _/./  /.__/  .//_/  _/./__  __//._
+#  /.__/  /.__/  __/.//  /_._  /_._  /_._  __/._/_  __//._  __/._/_  __//._
+#  __/._/_  .//_/  __/.//  _/./__  __//._  .//_/  _//.//  __//._  _//.//  _/./
+#  .//_/  _//.//  __//._  __/._/_  /_._  .//_/  __/._/_  __/._/_  __//._  /_._
+#  /.__/  __/._/_  _//.//  _././_  _/./  /.__/  /_._  __/._/_  __//._  __/.//
+#  /.__/  _/./  /.__/  /_._  __//._  .//_/  /.__/  __/._/_  _/./  __//._  _/./__
+#  __/._/_  /_._  .//_/  __/._/_  _/./__  __/.//  _/./__  __/.//  __//._  __/._/_
+#  _/./__  __//._  __/.//  _/./  __/._/_  _././_  /_._  __/._/_  __/._/_  /.__/
+#  .//_/  /.__/  /.__/  /_._  /.__/  __/.//  _/./  _//.//  __/.//  .//_/  __/._/_
+#  _/./__  .//_/  /_._  /_._  __/.//  _//.//  __/.//  _//.//  _././_  /_._
+#  _//.//  __//._  _././_  /.__/  /_._  /_._  /.__/  __/._/_  _/./  _//.//
+#  _././_  _/./  __/.//  /.__/  _/./__  .//_/  __//._  _/./__  .//_/  _/./  _/./
+#  _././_  _././_  _//.//  _././_  _/./  /_._  .//_/  /.__/  _//.//  _/./  .//_/
+#  __/.//  _//.//  _././_  __/._/_  /_._  /.__/  __//._  _/./  _././_  /_._
+#  _//.//  _/./  _/./__  /.__/  _/./__  _/./__  __/._/_  .//_/  __/._/_  __/.//
+#  _/./__  __/._/_  _/./  _././_  __/.//  /_._  _././_  _//.//  /_._  /.__/
+#  __/.//  _/./__  .//_/  _//.//  __/._/_  __//._  _././_  __/._/_  _//.//
+#  __/.//  /.__/  __/.//  /_._  _/./  .//_/  /.__/  __/._/_  _//.//  __//._
+#  __/._/_  __/.//  /.__/  _././_  _//.//  .//_/  __/._/_  __/.//  _././_  _/./__
+#  _././_  _././_  /.__/  .//_/  _/./__  __/._/_  .//_/  __/._/_  /.__/  __//._
+#  __/._/_  .//_/  __//._  _/./  /_._  /_._  /_._  .//_/  /_._  __/.//  _//.//
+#  _/./  __/.//  __//._  _/./  _/./  __//._  /.__/  /.__/  _/./  .//_/  /.__/
+#  __/._/_  _//.//  _/./  _/./  /_._  _././_  _/./  __//._  __/.//  _././_  /.__/
+#  __/._/_  /_._  /.__/  .//_/  _/./__  _././_  __/.//  _//.//  /.__/  .//_/
+#  __/._/_  _././_  _//.//  .//_/  _//.//  /_._  .//_/  _././_  _//.//  _/./
+#  /_._  _/./  _//.//  _/./  /_._  /_._  .//_/  _././_  __/.//  /_._  /.__/  /_._
+#  _././_  __//._  __/.//  __/.//  __//._  _/./  _//.//  /.__/  __/.//  .//_/
+#  __/.//  _././_  __/._/_  __/.//  __/.//  .//_/  _/./  /.__/  __/.//  __/._/_
+#  __/._/_  __/.//  _././_  _/./__  .//_/  /_._  __//._  _././_  _/./  _//.//
+#  __//._  /_._  __/._/_  _/./  _/./__  __/.//  /.__/  /.__/  _/./  /_._  _/./__
+#  .//_/  __/._/_  _/./__  __//._  /_._  _//.//  _/./__  _././_  .//_/  _//.//
+#  _././_  /_._  /_._  .//_/  _//.//  _/./  /_._  .//_/  /.__/  /_._  .//_/  /_._
+#  /_._  __/._/_  __//._  _/./  __//._  /.__/  __/.//  __//._  __//._  /.__/
+#  .//_/  __//._  __//._  __/.//  __//._  _/./__  .//_/  __/._/_  /_._  __//._
+#  .//_/  __/._/_  _//.//  /_._  _/./__  _/./  __//._  /.__/  __/._/_  _/./  _/./
+#  _././_  __/.//  _././_  .//_/  __//._  _/./__  /_._  __//._  _/./  _././_
+#  __/.//  _//.//  __/._/_  _/./  __/.//  _/./  /_._  __/._/_  __/._/_  /.__/
+#  _/./  _/./__  _/./__  __//._  _//.//  __//._  _/./  _/./__  .//_/  .//_/
+#  __/._/_  /_._  __/.//  .//_/  /_._  /_._  __/.//  /.__/  /_._  .//_/  /.__/
+#  _/./  _//.//  /.__/  _/./__  __/._/_  _/./  __/._/_  __/.//  _//.//  /.__/
+#  _/./__  __//._  _/./__  /.__/  _/./  _././_  .//_/  _././_  .//_/  /.__/
+#  .//_/  /.__/  __/.//  /.__/  __//._  __/.//  __//._  __/._/_  __/._/_  /.__/
+#  /_._  __/.//  _/./  __/.//  .//_/  _/./__  .//_/  __/.//  .//_/  /.__/
+#  __/._/_  _//.//  __//._  __/._/_  /.__/  __//._  __//._  _/./
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon(self, mode: str, varDt, varNm, dirLst: list):
@@ -3734,6 +3735,7 @@ class SqtppFncs(Sqtpp):
         # -3=variable name is of invalid chars
         # -4=variable data is not a string or list
         # -5=variable data missing proper search pairing brackets
+        # -6=empty search data string pattern
         rtrn = 1
         self._sf_rStrE = self.sqtpp_emb_ext_vfs_get_mnt(True, [luf[0]])
         if self._sf_rStrE != None:
@@ -3744,7 +3746,9 @@ class SqtppFncs(Sqtpp):
                         if isinstance(vrDt, list): vrDt = ''.join(vrDt)
                         if vrDt.find('{') > -1 or vrDt.find('}') > -1:
                             if vrDt.find('[') > -1 or vrDt.find(']') > -1:
-                                self.sqtpp_emb_vfs_pojishon_omega_ctpk_scnr(luf, vrNm, vrDt)
+                                rtrn = self.sqtpp_emb_vfs_pojishon_omega_ctpk_scnr(luf, vrNm, vrDt)
+                                if rtrn < 0:
+                                    if rtrn == -1: rtrn = -6
                             else: rtrn = -5
                     else: rtrn = -4
                 else: rtrn = -3
@@ -3755,63 +3759,102 @@ class SqtppFncs(Sqtpp):
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_omega_ctpk_scnr(self, luf: list, vrNm: str, vrDt):
         # <<<
-        # returns:
+        # returns: #]}tIM:3|trAv:3|[{
+        # -1=empty search data string pattern
+        rtrn = 1
         self.sqtpp_emb_ext_vfs_set_file_list(True, luf[1], self._sf_rStrF)
         self._sf_rIntD = len(self._sf_rLstC)
         self._sf_rLstF = []
         for self._sf_rIntC in range(self._sf_rIntD): self._sf_rLstF.append(self.sqtpp_emb_ext_vfs_get_file(self._sf_rLstC[self._sf_rIntC], self._sf_rStrF).replace(f'<{self._sf_rLstC[self._sf_rIntC]}:S:\n','').replace(':|:>',''))
         self.sqtpp_emb_vfs_pojishon_omega_ctpk_spdr(vrDt)
-        print(self._sf_rStrD)
-        self._sf_rIntD = len(self._sf_rLstF)
-        for self._sf_rIntC in range(self._sf_rIntD):
-            self._sf_rStrF = self._sf_rLstF[self._sf_rIntC].replace('\n', '')
-            # TODO
-            pass
+        if len(self._sf_rStrD) > 0:
+            self._sf_rLstE = [':FWD=', ':REV=', ':NTC=', ':NTL=', ':NAB=', ':NAL=']
+            self._sf_rIntF = sum(self._sf_rStrD.count(qp) for qp in self._sf_rLstE)
+            self._sf_rStrD = f'~{self._sf_rStrD}:'
+            self._sf_rIntD = len(self._sf_rLstF)
+            self._sf_rBoolD = [False]
+            for self._sf_rIntC in range(self._sf_rIntD):
+                self._sf_rStrF = self._sf_rLstF[self._sf_rIntC].replace('\n','')
+                self._sf_rLstB, self._sf_rLstC, self._sf_rLstD = [-1],[-1],[-1]
+                self._rg_rLstA, self._rg_rLstB, self._rg_rLstC = [-1],[-1],[-1]
+                for self._sf_rIntE in range(self._sf_rIntF):
+                    self._sf_rBoolD[0] = False
+                    self._sf_rIntG = self._sf_rStrD.find(':NTC=', self._sf_rLstD[len(self._sf_rLstD)-1]+1)
+                    if not self._sf_rIntG in self._sf_rLstD: self.sqtpp_emb_vfs_pojishon_omega_ctpk_scnr_ext_srch(1)
+                    if not self._sf_rBoolD[0]:
+                        self._sf_rIntG = self._sf_rStrD.find(':NTL=', self._rg_rLstA[len(self._rg_rLstA)-1]+1)
+                        if not self._sf_rIntG in self._rg_rLstA: self.sqtpp_emb_vfs_pojishon_omega_ctpk_scnr_ext_srch(2)
+                        if not self._sf_rBoolD[0]:
+                            self._sf_rIntG = self._sf_rStrD.find(':FWD=', self._sf_rLstB[len(self._sf_rLstB)-1]+1)
+                            if not self._sf_rIntG in self._sf_rLstB: self.sqtpp_emb_vfs_pojishon_omega_ctpk_scnr_ext_srch(3)
+                            if not self._sf_rBoolD[0]:
+                                self._sf_rIntG = self._sf_rStrD.find(':NAB=', self._rg_rLstB[len(self._rg_rLstB)-1]+1)
+                                if not self._sf_rIntG in self._rg_rLstB: self.sqtpp_emb_vfs_pojishon_omega_ctpk_scnr_ext_srch(4)
+                                if not self._sf_rBoolD[0]:
+                                    self._sf_rIntG = self._sf_rStrD.find(':REV=', self._sf_rLstC[len(self._sf_rLstC)-1]+1)
+                                    if not self._sf_rIntG in self._sf_rLstC: self.sqtpp_emb_vfs_pojishon_omega_ctpk_scnr_ext_srch(5)
+                                    if not self._sf_rBoolD[0]:
+                                        self._sf_rIntG = self._sf_rStrD.find(':NAL=', self._rg_rLstC[len(self._rg_rLstC)-1]+1)
+                                        if not self._sf_rIntG in self._rg_rLstC: self.sqtpp_emb_vfs_pojishon_omega_ctpk_scnr_ext_srch(6)
+        else: rtrn = -1
+        return rtrn 
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_omega_ctpk_scnr_ext_srch(self, dsg: int):
+        # <<<
+        # returns:
+        self._sf_rBoolD[0] = True
+        if dsg == 1: # :NTC=
+            self._sf_rLstD.append(self._sf_rIntG)
+            print('NTC')
+        elif dsg == 2: # :NTL=
+            self._rg_rLstA.append(self._sf_rIntG)
+            print('NTL')
+        elif dsg == 3: # :FWD=
+            self._sf_rLstB.append(self._sf_rIntG)
+            print('FWD')
+        elif dsg == 4: # :NAB=
+            self._rg_rLstB.append(self._sf_rIntG)
+            print('NAB')
+        elif dsg == 5: # :REV=
+            self._sf_rLstC.append(self._sf_rIntG)
+            print('REV')
+        elif dsg == 6: # :NAL=
+            self._rg_rLstC.append(self._sf_rIntG)
+            print('NAL')
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_omega_ctpk_spdr(self, vrDt):
-        # FNC_ID=ST12-68740843715755
+        # FNC_ID=ST12-60713982092346
         # SqtppFncs slots in use: (_sf_rBoolC, _sf_rBoolD, _sf_rIntC, _sf_rIntD, _sf_rStrD, _sf_rStrE, _sf_sLstX)
         # returns:  _sf_rStrD=
-        #           (FWD=forwad txt search, REV=reverse txt search, NTC=neutral curly
-        #           brackets search, NTL=neutral line brackets search[numbers apply],
-        #           NAB=numerical block search, NAL=numerical list ordered search)
+        #           (FWD=forward txt search, REV=reverse txt search, NTC=neutral curly
+        #            brackets search, NTL=neutral line brackets search[numbers apply],
+        #            NAB=numerical block search, NAL=numerical list ordered search)
         self._sf_rIntC = -1
         self._sf_rStrD = ''
         self._sf_rIntD = None
         self._sf_rBoolC = False
-        self._sf_rBoolD = [False]*7
+        self._sf_rBoolD = [False]*6
         for self._sf_rStrE in vrDt:
             self._sf_rIntC+=1
             if self._sf_rBoolD[2]: self._sf_rBoolD[2] = False
             if self._sf_rBoolD[3] or self._sf_rBoolD[4]:
                 if self._sf_rIntC > self._sf_rIntD:
-                    if self._sf_rBoolD[3]:
-                        if self._sf_rStrE == ']':
-                            self._sf_rIntD = 2
-                            self._sf_rBoolD[5] = True
-                            self._sf_rBoolD[3] = False
-                            self._sf_rStrD = f'{self._sf_rStrD}{"".join(self._sf_sLstX)}'
-                        else: self._sf_sLstX.append(self._sf_rStrE)
-                    else:
-                        if self._sf_rStrE == '}':
-                            self._sf_rIntD = 1
-                            self._sf_rBoolD[5] = True
-                            self._sf_rBoolD[4] = False
-                            self._sf_rStrD = f'{self._sf_rStrD}{"".join(self._sf_sLstX)}'
-                        else: self._sf_sLstX.append(self._sf_rStrE)
+                    if self._sf_rBoolD[3]: self.sqtpp_emb_vfs_pojishon_omega_ctpk_spdr_ext_clb_end(']')
+                    else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_spdr_ext_clb_end('}')
             else:
                 if not self._sf_rBoolC and not self._sf_rBoolD[0] and not self._sf_rBoolD[1] and self._sf_rStrE == '|':
                     try:
                         if vrDt[self._sf_rIntC+1] == ':' and vrDt[self._sf_rIntC+2] == '{' and vrDt[self._sf_rIntC+3] == ':':
-                            self._sf_sLstX = []
                             self._sf_rBoolD[3] = True
                             self._sf_rStrD = f'{self._sf_rStrD}:NAB='
-                        if vrDt[self._sf_rIntC+1] == ':' and vrDt[self._sf_rIntC+2] == '[' and vrDt[self._sf_rIntC+3] == ':':
-                            self._sf_sLstX = []
+                        elif vrDt[self._sf_rIntC+1] == ':' and vrDt[self._sf_rIntC+2] == '[' and vrDt[self._sf_rIntC+3] == ':':
                             self._sf_rBoolD[4] = True
                             self._sf_rStrD = f'{self._sf_rStrD}:NAL='
-                        if self._sf_rBoolD[3] or self._sf_rBoolD[4]: self._sf_rIntD = self._sf_rIntC+3
+                        if self._sf_rBoolD[3] or self._sf_rBoolD[4]:
+                            self._sf_sLstX = []
+                            self._sf_rIntD = self._sf_rIntC+3
                     except Exception as err_lte:
                         self._sf_rBoolC = True
             if not self._sf_rBoolD[3] and not self._sf_rBoolD[4]:
@@ -3840,20 +3883,33 @@ class SqtppFncs(Sqtpp):
                     else: self._sf_sLstX.append(self._sf_rStrE)
             if self._sf_rBoolD[5]:
                 self._sf_rBoolD[5] = False
-                self._sf_rBoolD[6] = False
-                if self._sf_rIntD == 1:
-                    self._sf_sLstX = re.search(r'\}.*?\{', vrDt[self._sf_rIntC:], re.IGNORECASE)
-                    if self._sf_sLstX:
-                        self._sf_rBoolD[6] = True
-                        self._sf_sLstX = self._sf_sLstX.group().replace('}','').replace('{','')
-                        self._sf_rStrD = f'{self._sf_rStrD}:NTC={self._sf_sLstX}'
-                else:
-                    self._sf_sLstX = re.search(r'\].*?\[', vrDt[self._sf_rIntC:], re.IGNORECASE)
-                    if self._sf_sLstX:
-                        self._sf_rBoolD[6] = True
-                        self._sf_sLstX = self._sf_sLstX.group().replace(']','').replace('[','')
-                        self._sf_rStrD = f'{self._sf_rStrD}:NTL={self._sf_sLstX}'
-                if self._sf_rBoolD[6]: self._sf_rStrD = self._sf_rStrD.replace(':NTC=|:','').replace(':NTL=|:','')
+                if self._sf_rIntD == 1: self.sqtpp_emb_vfs_pojishon_omega_ctpk_spdr_ext_ntc_ntl(vrDt, 'NTC', r'\}.*?\{')
+                else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_spdr_ext_ntc_ntl(vrDt, 'NTL', r'\].*?\[')
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_omega_ctpk_spdr_ext_clb_end(self, dsgBrkt: str):
+        # FNC_ID=ST12-79377023287442
+        # SqtppFncs slots in use: (_sf_rBoolD, _sf_rIntD, _sf_rStrD, _sf_rStrE, _sf_sLstX)
+        # returns: (None)
+        if self._sf_rStrE == dsgBrkt:
+            if dsgBrkt == '}': self._sf_rIntD = 1
+            else: self._sf_rIntD = 2
+            self._sf_rBoolD[5] = True
+            if self._sf_rIntD == 1: self._sf_rBoolD[4] = False
+            else: self._sf_rBoolD[3] = False
+            self._sf_rStrD = f'{self._sf_rStrD}{"".join(self._sf_sLstX)}'
+        else: self._sf_sLstX.append(self._sf_rStrE)
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_omega_ctpk_spdr_ext_ntc_ntl(self, vrDt: str, dsg: str, ptrn: str):
+        # FNC_ID=ST12-30635542493592
+        # SqtppFncs slots in use: (_sf_rIntC, _sf_rStrD, _sf_sLstX)
+        # returns: (None)
+        self._sf_sLstX = re.search(ptrn, vrDt[self._sf_rIntC:], re.IGNORECASE)
+        if self._sf_sLstX:
+            self._sf_sLstX = self._sf_sLstX.group().replace(f'{ptrn[1]}','').replace(f'{ptrn[6]}','')
+            self._sf_rStrD = f'{self._sf_rStrD}:{dsg}={self._sf_sLstX}'
+            self._sf_rStrD = self._sf_rStrD.replace(':NTC=|:','').replace(':NTL=|:','')
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_opt_open(self) -> bool:
@@ -5110,7 +5166,7 @@ class SqtppFncs(Sqtpp):
                             else:
                                 raise Exception('[sqtpp-reg >> registry] (add registry key) - @keyData cannot be None for add/edit of a registry key, not supported')
                         else:
-                            raise Exception('[sqtpp-reg >> registry] (add registry key) - @keyName must a str type for add or edit of a registry key')
+                            raise Exception('[sqtpp-reg >> registry] (add registry key) - @keyName must be a str type for add or edit of a registry key')
                 else:
                     raise Exception('[sqtpp-reg >> registry] - @harpSchema must be a str type if @isRead=False, either a file path to a schema file or a schema name if adding a registry key')
             else:
@@ -5344,7 +5400,7 @@ class SqtppFncs(Sqtpp):
             if os.path.isfile(f'{SQTPP_MDL_DIR}/sqtpp1_2_REG.py'):
                 with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_REG.py', 'r') as flObjReg: self._rg_rStrA = flObjReg.read()
             else:
-                raise Exception("[sqtpp-reg >> registry] - could not write the registry module sqtpp1_2_REG.py to Staqtapp's current working directory '{SQTPP_MDL_DIR}'")
+                raise Exception(f"[sqtpp-reg >> registry] - could not write the registry module sqtpp1_2_REG.py to Staqtapp's current working directory '{SQTPP_MDL_DIR}'")
         if addRegKy:
             return self.sqtpp_registry_homer_add_key(regKyNm, regKyDt, schm)
         else:
