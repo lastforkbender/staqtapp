@@ -6,7 +6,7 @@ ________________________________________________________________________________
       
       
 
-      UPDATED: SAT, SEP28 2024, updated 'next.omega.*' call for pojishon pro features
+      UPDATED: THU, OCT3 2024, updated 'next.omega.*' ctpk-span bracket search details
       
       
       
@@ -441,13 +441,43 @@ ________________________________________________________________________________
             Searches can be as complex as you need it, however if is complex search
             use a list approach for your matches and it will be less error prone.
             
+                SQTPP CTPK-SPAN SEARCH BRACKETING:
+            
                 1. {...] read as a forward scanned data group for comparisons
                 2. [...} read as a reverse scanned data group for comparisons
                 3. }...{ read as a neutral scanned data group for comparisons
-                4. |:{:  read as special numerical block assign for reg-key(s)
-                5. |:[:  read as special numerical lists assign for reg-key(s)
-                6. }#{   read as a skip next # of times for any scanned data
-                7. ]#[   read as a reverse next # of times for any sequence(s)
+                
+                4. ]...[ read as a neutral scanned data group for comparisons
+                         *use of this now/neutral matching is numerical seeks
+                          and ignores all other chars besides digits/numbers,
+                          is not the same as number 8. ]#[ of these char uses
+                          the added number(s) are as string to a list element
+                          
+                5. |:{:  read as special numerical block assign for reg-key(s)
+                         *can/will assign float point number if passes format
+                          otherwise assigns int as a list element to reg-key
+                          
+                6. |:[:  read as special numerical lists assign for reg-key(s)
+                         *numbers can be separated from (...) of when searched
+                          meaning data in an file has such formatting applied
+                          and as long as the found number is in each set (...)
+                          at the begin then comma use as example (match,#,#,#)
+                          as same above, can assign floating point numberings
+                          and will be added to the registry as a separate key
+                          with it's key value a list type converted from a set
+                          
+                         *if no found (...) set format then ignores the find
+                          altogether, found number not added to any reg-key
+                          
+                7. }#{   read as a skip next # of times for any scanned data
+                         *not a gray area, is simply mirrored back to number 3
+                          of these char uses if is other chars besides numbers
+                          
+                8. ]#[   read as a reverse next # of times for any sequence(s)
+                         *is gray area, if other chars besides numbers then is
+                          number 4. of these listed chars uses | is vice versa
+                          in between from specific optionals that use darkvars
+                          | has merged more than one stalkvar to an locked key
                 
                 EXAMPLE: {find txt]0[find txt, add rev}|:{:12]1[34 is txt}1{skip txt]
                 
