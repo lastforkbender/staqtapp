@@ -2,10 +2,6 @@
 
 ● Staqtapp 1.2
 
-One of a slots kind env-var library module. Includes all needed env-var uses and exotic ones only found of Staqtapp.
+Staqtapp is a hybrid vfs env-var library, with several unique features central only to Staqtapp. Is a all-in-one module that requires no third party libraries to use, neither any other modules it auto-generates for other features involved like lambdavar or registry uses. Some of the features are comolex vfs/file/env-var operations. See IMPORT_CALLS.TXT | IMPORT_CALLS.PDF & REGISTRY_CALLS.TXT
 
-Staqtapp 1.2 uses a vfs system exclusive for env-var keeps and functional interactions.
-
-*This version includes the rev9 feature central to Staqtapp 1, that builds it's own custom env-var libaries with bluetooth integrations of communication for other builds.
-
-(The library is a work in progress and differs greatly from the Koch version of Staqtapp, which is the most secure env-vars library in the world. That version and it's updates are no longer posted for public content.)
+Staqtapp v1.2 has no current release date to the py network. Will only be released whwn is fully completed and fully tested.
