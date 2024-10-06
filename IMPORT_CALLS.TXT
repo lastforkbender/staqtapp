@@ -6,7 +6,7 @@ ________________________________________________________________________________
       
       
 
-      UPDATED: THU, OCT3 2024, updated 'next.omega.*' ctpk-span bracket search details
+      UPDATED: SUN, OCT6 2024, added pojishon 'next.splice.*' details and examples
       
       
       
@@ -454,7 +454,7 @@ ________________________________________________________________________________
                           the added number(s) are as string to a list element
                           
                 5. |:{:  read as special numerical block assign for reg-key(s)
-                         *can/will assign float point number if passes format
+                         *can/will assign float point numbers if passes format
                           otherwise assigns int as a list element to reg-key
                           
                 6. |:[:  read as special numerical lists assign for reg-key(s)
@@ -472,14 +472,16 @@ ________________________________________________________________________________
                 7. }#{   read as a skip next # of times for any scanned data
                          *not a gray area, is simply mirrored back to number 3
                           of these char uses if is other chars besides numbers
+                          (NOT FULLY IMPLEMENTED)
                           
                 8. ]#[   read as a reverse next # of times for any sequence(s)
                          *is gray area, if other chars besides numbers then is
                           number 4. of these listed chars uses | is vice versa
                           in between from specific optionals that use darkvars
                           | has merged more than one stalkvar to an locked key
+                          (NOT FULLY IMPLEMENTED)
                 
-                EXAMPLE: {find txt]0[find txt, add rev}|:{:12]1[34 is txt}1{skip txt]
+              EXAMPLE: {find txt]0[find txt, add rev}|:{:12]1[34 is txt}1{skip txt]
                 
                 *{, [, |:{: and |:[: are as key symbols when @varData is recorded
                  into a list for matching against all files in last used dir; when
@@ -529,8 +531,47 @@ ________________________________________________________________________________
             of other important uses similiar to time crucial added/edited reg-keys
             in parallel to a env-var that added it there from a set mnt/dir/...
             
-            (NOT YET IMPLEMENTED)
+        (5) ("next.splice.*", required, required, required), will make a new mount,
+            directory and the spliced files from a last used mount/directory/file.
+            With @dirList param being a current mnt/dir or a to be new made mnt/dir
+            @varName the added filename(s) to that dir. If @varName is a list of
+            filenames to use, in result of the spliced files added then list length
+            determines the size of the spliced files from last used file. This is
+            not true if @varData has file patterns for custom splicing. If using
+            a general size splicing for files then @varData needs to be None, else
+            @varData needs to be a list, having keywords or patterns to which the
+            last used file will be spliced:
             
+            EXAMPLE (general splicing):
+            sqtpp.pojishon("next.splice", None, ['splc_1','splc_2'], ['mnt','dir'])
+            
+            EXAMPLE (pattern splicing):
+            sqtpp.pojishon("next.splice", ['<set1','<set2'], 'f_name' ['mnt','dir'])
+            
+            
+            With selected pattern splicing then is required @varName be a str type
+            only. Pattern splicing has a few tricks: One, you can use '*>' or '*<'
+            list element @varData and Staqtapp will determine how to splice from a
+            search and find via numbers, which number has a greater occurence or a
+            lesser occurence will set the splicing. Secondly, if also use a single
+            element string you can use '*>pttrn' | '*<pttrn' which will do a alike
+            splicing directed in contrast to that pattern occurence. Lastly, you
+            can use numbers for a list elements. Staqtapp will search for them and
+            on a first number find in the last used file then is the pivot for the
+            resulting spliced files. The occurence of that found number determines
+            how many spliced files are added. Durability of splicing with this is
+            constraint to int type | float type as list elements only.
+            
+            *Use of ['*>pttrn'] or ['*<pttrn'] splicing options requires a pattern
+             that does not have double use quote chars or any regex patterns.
+             
+            "next.splice" will return True if spliced and added files, else False.
+            When use of specific pattern splicing, resulting filenames added to a
+            dir are in format of @varName_lastuseddir_# whereof # is incremented
+            from 1 as then +1 further of all other added/total files from splice.
+            
+            (NOT YET IMPLEMENTED)
+                 
         
       ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
       |||||||| OPTIONALS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||
