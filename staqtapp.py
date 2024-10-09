@@ -1,4 +1,4 @@
-#QPython 3SE / Row4 / staqtapp.py (6,090 lines) / 9:15 Sat, Oct 5
+#QPython 3SE / Row4 / staqtapp.py (6,299 lines) / 9:43 Tue, Oct 8
 
 
 
@@ -8,7 +8,7 @@
 
 
 
-#Staqtapp-v1.2.504 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
+#Staqtapp-v1.2.538 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
 # <<< [qc-apps@xprize.org]
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -25,13 +25,11 @@
 
 
 
-# UPDATE SAT, OCT5: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
+# UPDATE TUE, OCT8: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
 #
-#                    "next.omega.*" pojishon() call was not properly changing the
-#                     last used mnt/dir/file used vfs setting when matches found
-#                     in a file of that last used dir. Now edits that to a proper
-#                     last file used in the mnt/dir/ setting to any last matching
-#                     done, where was add registry key element(s) from that file.
+#                    Started writing code for "next.splice.*" pojishon command and
+#                    added auto-write code for sqtpp1_2_NTR.py module for features
+#                    related to "next.splice.*" and others.
 #
 #                    See IMPORT_CALLS.TXT | IMPORT_CALLS.PDF & REGISTRY_CALLS.TXT
 
@@ -196,6 +194,12 @@ class Sqtpp():
             elif self._sRtrn == -2: self.mcf_err_handler(49, 'pojishon')
             elif self._sRtrn == -3: self.mcf_err_handler(50, 'pojishon')
             elif self._sRtrn == -4: self.mcf_err_handler(51, 'pojishon')
+            elif self._sRtrn == -5: self.mcf_err_handler(52, 'pojishon')
+            elif self._sRtrn == -6: self.mcf_err_handler(53, 'pojishon')
+            elif self._sRtrn == -7: self.mcf_err_handler(54, 'pojishon')
+            elif self._sRtrn == -8: self.mcf_err_handler(55, 'pojishon')
+            elif self._sRtrn == -9: self.mcf_err_handler(56, 'pojishon')
+            elif self._sRtrn == -10: self.mcf_err_handler(57, 'pojishon')
             elif self._sRtrn == 'FNC-ERR' or self._sRtrn == 'FOO-BAR': self.mcf_err_handler(-1, 'pojishon')
             else:
                 return 1
@@ -586,6 +590,12 @@ class Sqtpp():
             # 49 = [pojishon] >> non-allowed char sequence found @varDt: ':|:>'
             # 50 = [pojishon] >> non-allowed char(s) @varNm, allowed _a-zA-Z0-9
             # 51 = [pojishon] >> no found last added file in settings for cast
+            # 52 = [pojishon] >> unable to read/get required vfs mounts source
+            # 53 = [pojishon] >> invalid parameters combination for next.splice
+            # 54 = [pojishon] >> invalid chars @dirList
+            # 55 = [pojishon] >> last used mount in vfs settings was not found
+            # 56 = [pojishon] >> last used mount/directory in vfs settings was not found
+            # 57 = [pojishon] >> last used mount/directory/file in vfs settings was not found
             if altErrCd == 1: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name chars; allowed -a-zA-Z')
             elif altErrCd == 2: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid directory name chars; allowed -a-zA-Z')
             elif altErrCd == 3: raise Exception(f'staqtapp1.2 ({clnFnc}) error: invalid folder name, cannot be the same as directory name')
@@ -636,7 +646,13 @@ class Sqtpp():
             elif altErrCd == 48: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] invalid types balance for @varData &| @varName, both must be str or list')
             elif altErrCd == 49: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] char sequence ":|:>" was found @varData, non-allowed is special read char-seq for end of file')
             elif altErrCd == 50: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] non-allowed char(s) @varNm, allowed _a-zA-Z0-9')
-            elif altErrCd == 51: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] no found last added file in settings for cast')
+            elif altErrCd == 51: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] no found last added file in vfs settings...')
+            elif altErrCd == 52: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] unable to read/get required vfs mounts/dirs sources!')
+            elif altErrCd == 53: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] invalid arguments settings for "next.splice", see IMPORT_CALLS.TXT')
+            elif altErrCd == 54: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] invalid chars found @dirList, valid chars: _ a-z A-Z 0-9')
+            elif altErrCd == 55: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] last used mount in vfs settings was not found')
+            elif altErrCd == 56: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] last used mount/directory in vfs settings was not found')
+            elif altErrCd == 57: raise Exception(f'staqtapp1.2 ({clnFnc}) error: [sqtpp-vfs >> pojishon] last used mount/directory/file in vfs settings was not found')
         else:
             if self._sRtrn == 'FNC-ERR': raise Exception(f'staqtapp1.2 {clnFnc}-->{self._sErr}')
             elif self._sRtrn == 'FOO-BAR': raise Exception('staqtapp1.2 io error: unable to perform basic file reads or writes')
@@ -660,7 +676,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.504\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.538\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1562,7 +1578,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.504\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.538\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3473,55 +3489,65 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#  _/./  __/._/_  __/._/_  _//.//  _././_  __/.//  _/./__  _/./__  /.__/
-#  _././_  /_._  __//._  __/.//  __/.//  _//.//  __/.//  /_._  _//.//  _//.//
-#  __//._  __/.//  _//.//  /.__/  /_._  _//.//  .//_/  __//._  /_._  _//.//
-#  __/._/_  __/._/_  _//.//  _//.//  _/./__  __/._/_  _././_  _/./__  __/.//
-#  _//.//  /.__/  _/./__  _././_  __/.//  _//.//  _/./  _/./  __/.//  __//._
-#  _/./  __/.//  _//.//  .//_/  _././_  _././_  _//.//  _/./  _././_  _././_
-#  _//.//  __//._  _/./  /_._  .//_/  __/.//  _/./__  _/./__  /.__/  __//._
-#  _//.//  __/._/_  _/./  __/._/_  /_._  _//.//  .//_/  __/._/_  __//._  _//.//
-#  _././_  .//_/  /_._  _//.//  __/.//  /.__/  __/._/_  __//._  __/._/_  __/._/_
-#  _/./  /_._  __/.//  /_._  __//._  _/./  /_._  __/._/_  .//_/  /_._  __//._
-#  _/./  _/./__  _//.//  _/./  __/.//  __/._/_  _/./  _././_  _/./  __/._/_  /_._
-#  _/./  _//.//  __/.//  __/._/_  __/._/_  __/._/_  _/./__  /.__/  /_._  /_._
-#  _//.//  _/./__  _././_  /_._  _//.//  __/.//  __//._  .//_/  _//.//  _//.//
-#  _//.//  __/._/_  __/._/_  .//_/  /_._  __/._/_  __//._  /_._  _/./  _/./__
-#  .//_/  /_._  .//_/  _/./__  /_._  _././_  __/._/_  __/.//  __//._  __/._/_
-#  _/./__  .//_/  /.__/  _/./  __/._/_  /_._  /.__/  _/./__  /_._  __//._  _/./__
-#  _/./__  _//.//  _/./  _/./  .//_/  _//.//  _././_  __/._/_  .//_/  __//._
-#  __/.//  .//_/  /.__/  __//._  /.__/  _/./__  _//.//  _/./__  /_._  _././_
-#  .//_/  _/./__  /.__/  .//_/  __/.//  _/./__  __/.//  /_._  _././_  /.__/
-#  .//_/  _/./  _/./  _/./  _//.//  __/._/_  _././_  __/.//  .//_/  __/.//  /_._
-#  _././_  __/.//  /.__/  __//._  /_._  /.__/  /_._  _././_  _//.//  /_._  /.__/
-#  __/._/_  _././_  __/._/_  _/./__  /_._  __//._  __/.//  __/._/_  _/./__
-#  __/._/_  __/.//  /.__/  _/./  _/./__  .//_/  _././_  /.__/  /.__/  _//.//
-#  _/./  __/.//  /_._  __//._  _././_  .//_/  _//.//  _/./__  /.__/  _/./__  /_._
-#  _//.//  __//._  .//_/  __//._  _././_  _/./__  __//._  __/.//  /.__/  .//_/
-#  _/./  __/._/_  _././_  /_._  __//._  __/.//  __/.//  /.__/  _//.//  _/./
-#  /.__/  _/./  __/._/_  /.__/  _//.//  /_._  _//.//  _//.//  _/./__  _/./
-#  _/./__  __/.//  __/.//  .//_/  _././_  _//.//  .//_/  /.__/  __/._/_  _//.//
-#  _/./  __//._  _/./__  __//._  _/./__  __//._  /_._  __/.//  _/./  _/./  _/./
-#  /.__/  /.__/  __/.//  _//.//  __/._/_  .//_/  /_._  _././_  __/.//  __/.//
-#  /_._  .//_/  /_._  __/.//  __/.//  _//.//  __//._  _/./__  __/._/_  __/._/_
-#  _/./__  /.__/  __/._/_  .//_/  __//._  __/._/_  /_._  __/._/_  _/./  __//._
-#  __/._/_  /.__/  _/./__  _././_  /.__/  _//.//  .//_/  _././_  _././_  /.__/
-#  .//_/  .//_/  _/./  __/.//  _././_  /_._  _//.//  __//._  _/./__  __//._  _/./
-#  _/./__  _././_  /_._  /.__/  _/./__  .//_/  _/./__  __//._  __/._/_  .//_/
-#  _//.//  __/._/_  __/._/_  /_._  _/./__  /.__/  _/./__  __/._/_  .//_/  _//.//
-#  __/._/_  _/./  __/._/_  .//_/  __/._/_  /.__/  __/._/_  _//.//  __/.//  /_._
-#  /.__/  __/.//  /.__/  _/./  .//_/  _././_  _/./  __/.//  /.__/  _././_
-#  __/._/_  __//._  .//_/  __/._/_  .//_/  /_._  _//.//  __//._  _/./  _//.//
-#  _/./  __/.//  _/./  .//_/  /_._  /_._  _//.//  __/.//  _/./__  __/._/_  /_._
-#  /.__/  __//._  _/./__  __/.//  /.__/  .//_/  /.__/  _/./__  __/.//  __/.//
-#  _/./  __/.//  __//._  /_._  .//_/  __//._  /.__/  _/./  _/./  _/./  _/./
-#  __/._/_  __/.//  __/._/_  .//_/  __/._/_  _/./  _././_  /_._  __/.//  _/./
-#  .//_/  /_._  /_._  __/._/_  .//_/  .//_/  __//._  __//._  _/./  _//.//  _/./
-#  _/./  _//.//  _/./__  __/._/_  _//.//  __/.//  .//_/  __/.//  _././_  _././_
-#  /.__/  _//.//  __//._  _/./  __//._  /.__/  __/._/_  _././_  __/._/_  _/./
-#  _/./  _/./  _//.//  /_._  _//.//  _././_  _/./__  _././_  .//_/  __/.//
-#  _//.//  __//._  __/._/_  /.__/  __//._  .//_/  __/.//  __/.//  _//.//  .//_/
-#  __/.//  /_._  _././_  .//_/  /.__/  _//.//  /.__/
+#  /.__/  /_._  _/./__  _/./__  _././_  /.__/  _././_  _//.//  _././_  _/./
+#  _/./  _/./  _/./__  __/.//  __/.//  _/./__  __/.//  /.__/  /.__/  __/._/_
+#  _/./  /_._  /_._  .//_/  _././_  _//.//  _//.//  __/._/_  __/._/_  __/.//
+#  _/./__  .//_/  __/._/_  _//.//  /.__/  _././_  __/.//  _/./__  _././_  .//_/
+#  _/./  __//._  __//._  /.__/  _././_  __//._  /_._  /.__/  _././_  __/.//
+#  .//_/  _././_  .//_/  __/._/_  /_._  __/._/_  __/.//  /.__/  .//_/  _././_
+#  _//.//  _//.//  /_._  _/./  /_._  _././_  .//_/  __/._/_  _/./__  _//.//
+#  __/._/_  __//._  __/.//  /_._  /.__/  __//._  /_._  _/./  /.__/  /_._  _././_
+#  _././_  /.__/  _././_  /_._  __/._/_  __/._/_  __/.//  /_._  _//.//  _/./__
+#  _/./  __//._  _/./  __//._  /_._  _/./  _/./  /.__/  _/./  __//._  __/.//
+#  _././_  _././_  _././_  __/._/_  .//_/  __//._  __/._/_  __//._  /.__/  /.__/
+#  _//.//  __/._/_  __//._  _//.//  _/./__  __//._  _//.//  _././_  _/./  _/./
+#  _././_  .//_/  __//._  _././_  /.__/  .//_/  _/./  _././_  /.__/  _/./  .//_/
+#  /.__/  /_._  __/.//  _/./  _//.//  /_._  __/.//  /_._  __/._/_  _/./__  _/./__
+#  _././_  /.__/  .//_/  _//.//  _/./  _//.//  __/.//  _//.//  __/.//  /_._
+#  __/._/_  _././_  /_._  __/.//  __/.//  __/.//  __/._/_  __/._/_  _././_  .//_/
+#  _/./  .//_/  _././_  /.__/  /_._  .//_/  /.__/  __/._/_  /_._  /_._  _/./__
+#  /_._  __//._  __//._  _././_  __//._  _/./  .//_/  __/._/_  /_._  /.__/
+#  __/.//  __/._/_  _././_  /_._  _//.//  __/._/_  .//_/  _././_  /.__/  __//._
+#  _././_  _/./__  .//_/  _/./__  _/./  __/.//  __/._/_  _/./  __//._  /_._
+#  /.__/  __/._/_  __/._/_  _//.//  _././_  __/._/_  /.__/  .//_/  _/./__  __/.//
+#  _/./  /_._  __//._  __/._/_  _//.//  _././_  /_._  _/./__  _/./__  _/./
+#  _//.//  _/./__  __//._  /_._  /.__/  _././_  __//._  _././_  __/._/_  _/./__
+#  __//._  _/./  .//_/  .//_/  _//.//  __//._  /.__/  .//_/  /.__/  /.__/
+#  __/._/_  /.__/  .//_/  .//_/  .//_/  .//_/  _././_  /_._  _/./__  /_._
+#  __/._/_  _././_  _/./  __/._/_  _/./  /_._  _././_  /.__/  __/._/_  __/.//
+#  /_._  _/./__  /.__/  __/.//  __/.//  /.__/  .//_/  _/./  .//_/  /_._  /.__/
+#  /.__/  __/.//  __//._  __//._  __//._  _/./  __/.//  __//._  _/./__  _/./
+#  _././_  .//_/  __/.//  _//.//  /_._  _/./  __/._/_  __/.//  _//.//  __/._/_
+#  __/.//  _/./  /_._  __//._  /.__/  _././_  __/.//  .//_/  .//_/  /_._  __/.//
+#  _//.//  __/._/_  /_._  _/./__  _././_  _/./  __/.//  __/._/_  __/._/_  _//.//
+#  _././_  __/._/_  _././_  _//.//  __/.//  _/./  /_._  __/.//  __/._/_  __//._
+#  _/./  _/./__  /.__/  __//._  _//.//  _/./__  _/./__  .//_/  _/./  __/.//  _/./
+#  _/./__  __/._/_  _/./  /_._  _/./  _/./__  /.__/  .//_/  __//._  _//.//
+#  _././_  /.__/  __/._/_  .//_/  _//.//  __/.//  _//.//  __/.//  _././_  _/./
+#  __/._/_  /.__/  __//._  __/._/_  __/.//  .//_/  _/./  __/._/_  _/./  _//.//
+#  _/./__  __/.//  __/.//  __/.//  __//._  _././_  /_._  /.__/  _//.//  __//._
+#  _/./  _././_  /_._  /_._  _/./  _././_  /.__/  __//._  _/./__  /_._  /.__/
+#  _/./  __//._  __/._/_  _/./__  __//._  __/.//  .//_/  /_._  __/.//  _//.//
+#  _././_  __/._/_  _/./__  _/./__  /_._  /.__/  /.__/  /_._  /.__/  /_._
+#  __/._/_  _//.//  .//_/  _//.//  __//._  /_._  _/./__  /.__/  _/./__  __//._
+#  __//._  _/./__  __/.//  _././_  .//_/  __//._  __//._  _//.//  .//_/  __//._
+#  _/./  __//._  _././_  __/.//  /.__/  .//_/  .//_/  __//._  __/._/_  _//.//
+#  _//.//  _././_  __/._/_  _././_  __/._/_  _/./__  _//.//  __/.//  __/._/_
+#  _/./__  _././_  __/._/_  _/./  __/._/_  _//.//  __/.//  __/._/_  .//_/  __/.//
+#  __/._/_  _//.//  /_._  _/./  .//_/  _/./__  _//.//  _/./  _/./  /.__/  _/./
+#  /.__/  __//._  __//._  _/./__  .//_/  _/./__  _/./  __/.//  __/.//  _././_
+#  __/.//  .//_/  _/./__  __/._/_  .//_/  __/.//  _/./__  __//._  __/.//  _/./__
+#  __/._/_  /_._  __/._/_  _/./__  /_._  _/./  .//_/  __//._  _/./  _//.//
+#  __/.//  /_._  __//._  _/./  _/./__  __//._  .//_/  _/./  _/./__  /.__/  _/./__
+#  _/./  __/.//  __/._/_  .//_/  _/./  _/./  /.__/  _/./  _././_  /_._  _././_
+#  /_._  _//.//  __//._  __/.//  _/./  .//_/  _//.//  _/./  _././_  __/._/_
+#  .//_/  __//._  /_._  __/.//  _/./  _/./  /.__/  /_._  _/./__  _//.//  __/.//
+#  __/.//  /.__/  _/./__  /.__/  /_._  /_._  __/._/_  /_._  __/._/_  _//.//
+#  _/./__  _././_  /.__/  __/.//  /.__/  __//._  /.__/  _/./  _././_  /.__/
+#  _//.//  _//.//  _//.//  _././_  .//_/  /.__/  _././_  /_._  _/./  /_._  __/.//
+#  _/./  __//._  _/./  __//._  __//._  __/._/_  __/.//  /.__/  __/.//  _/./__
+#  _././_  _/./__  __/._/_  /.__/  _/./  _/./  _/./__  __/._/_  .//_/  _/./
+#  _././_  _/./__  _/./  __//._  __/._/_  _/./__  _/./  _/./__  _/./
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon(self, mode: str, varDt, varNm, dirLst: list):
@@ -3599,15 +3625,19 @@ class SqtppFncs(Sqtpp):
                     elif vfsEmbEfo[1] == 'omega' or vfsEmbEfo[1] == 'OMEGA':
                         vfsRtrn = self.sqtpp_emb_vfs_pojishon_mkfile('next.omega', varDt, varNm, None)
                         if vfsRtrn < 0: rtrn = self.sqtpp_emb_vfs_pojishon_err_rtrn('next', vfsRtrn)
+                    elif vfsEmbEfo[1] == 'splice' or vfsEmbEfo[1] == 'SPLICE':
+                        vfsRtrn = self.sqtpp_emb_vfs_pojishon_mkfile('next.splice', varDt, varNm, dirLst)
+                        if vfsRtrn < 0: rtrn = self.sqtpp_emb_vfs_pojishon_err_rtrn('splice', vfsRtrn)
+                        else: rtrn = 1
                     else:
                         raise Exception(f'[sqtpp-vfs >> pojishon] - mode/next err: invalid next command, see IMPORT_CALLS.TXT for all pojishon next commands')
             #________________________________________________________________________
             #______________________________OPTIONALS_________________________________
             if len(vfsEmbEfo) == 3 and optAplc and rtrn == 1:
                 self.sqtpp_emb_vfs_pojishon_set_optional_list(vfsEmbEfo[2])
-                if self._sf_rLstD[0] == 'open':
+                if self._sf_rLstD[0] == 'open' or self._sf_rLstD[0] == 'OPEN':
                     return self.sqtpp_emb_vfs_pojishon_opt_open()
-                elif self._sf_rLstD[0] == 'closed':
+                elif self._sf_rLstD[0] == 'closed' or self._sf_rLstD[0] == 'CLOSED':
                     return self.sqtpp_emb_vfs_pojishon_opt_closed()
                 else:
                     raise Exception(f'[sqtpp-vfs >> pojishon] - mode/optional err: invalid optional, see IMPORT_CALLS.TXT for all pojishon optionals')
@@ -3639,6 +3669,7 @@ class SqtppFncs(Sqtpp):
             if mode == 'next.cast': rtrn = self.sqtpp_emb_vfs_pojishon_write(2, None, None, dirLst)
             elif mode == 'next.ghost': rtrn = self.sqtpp_emb_vfs_pojishon_write(3, None, None, dirLst)
             elif mode == 'next.omega': rtrn = self.sqtpp_emb_vfs_pojishon_write(4, varNm, varDt, None)
+            elif mode == 'next.splice': rtrn = self.sqtpp_emb_vfs_pojishon_write(5, varNm, varDt, dirLst)
         return rtrn
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
@@ -3720,7 +3751,6 @@ class SqtppFncs(Sqtpp):
                 rtrn = 1
             else: rtrn = -1
         elif dsg == 4:
-            rtrn = 1
             rtrn = self.sqtpp_emb_vfs_router(False, True, False, 10, None, None, None)
             if rtrn > 0:
                 fncLst = self.sqtpp_emb_vfs_pojishon_read(1)
@@ -3728,6 +3758,54 @@ class SqtppFncs(Sqtpp):
                     return fncLst
                 else: self.sqtpp_emb_vfs_pojishon_omega_ctpk(fncLst, varNm, varDt)
             else: rtrn = -1
+        elif dsg == 5:
+            rtrn = self.sqtpp_emb_vfs_router(False, True, False, 10, None, None, None)
+            if rtrn > 0:
+                rtrn = self.sqtpp_emb_vfs_pojishon_omega_slice(varNm, varDt, dirLst)
+            else: rtrn -1
+        return rtrn
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_omega_slice(self, varNm, varDt, dirLst: list):
+        # <<<
+        # returns:
+        # -2=invalid parameter settings for next.splice
+        # -3=invalid chars @dirLst[]
+        # -4=no last mnt/dir/file used vfs setting
+        # -5=last used mount in vfs settings not found
+        # -6=last used mount/directory in vfs settings not found
+        # -7=last used mount/directory/file in vfs settings not found
+        self._sf_sBoolX = True
+        self.sqtpp_ntr_tree_context(False)
+        rtrn = 1
+        if isinstance(varNm, list) and isinstance(dirLst, list): self._sf_rBoolA = False
+        if isinstance(varDt, list) and isinstance(varNm, str) and isinstance(dirLst, list): self._sf_rBoolA = True
+        else:
+            return -2
+        if len(dirLst) > 1:
+            if set(dirLst[0]).issubset(SQTPP_SET_VARS) and set(dirLst[1]).issubset(SQTPP_SET_VARS):
+                if self.sqtpp_emb_ext_vfs_fnd_mnt_in_stb(dirLst[0]): self._sf_rBoolB = True
+                else: self._sf_rBoolB = False
+                if self.sqtpp_emb_ext_vfs_fnd_dir_in_mnt(dirLst): self._sf_rBoolC = True
+                else: self._sf_rBoolC = False
+                self._sf_sLstX = self.sqtpp_emb_vfs_pojishon_read(1)
+                if isinstance(self._sf_sLstX, int): rtrn = -4  
+                else:
+                    self._sf_rStrF = self.sqtpp_emb_ext_vfs_get_mnt(True, [self._sf_sLstX[0]])
+                    if self._sf_rStrF != None:
+                        self._sf_rStrE = self.sqtpp_emb_ext_vfs_get_dir(self._sf_sLstX[1], self._sf_rStrF)
+                        if self._sf_rStrE != None:
+                            self._sf_rStrD = self.sqtpp_emb_ext_vfs_get_file(self._sf_sLstX[2], self._sf_rStrE)
+                            if self._sf_rStrD != None:
+                                if not self._sf_rBoolA:
+                                    pass
+                                else:
+                                    pass
+                            else: rtrn = -7
+                        else: rtrn = -6
+                    else: rtrn = -5
+            else: rtrn = -3
+        else: rtrn = -2
         return rtrn
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
@@ -3735,48 +3813,51 @@ class SqtppFncs(Sqtpp):
         # FNC_ID=ST12-90267412427944
         # SqtppFncs slots in use: (_sf_rBoolA, _sf_rLstC, _sf_rLstG, _sf_rStrA, _sf_rStrB, _sf_rStrE, _sf_rStrF, _sf_sIntX, _sf_sLstX, _sf_sQp, _sf_sRplc, _sf_sSrc, _sf_sVfs)
         # returns: (none)
-        self._sf_rStrE = self.sqtpp_emb_ext_vfs_get_mnt(True, [luf[0]])
-        if self._sf_rStrE != None:
-            self._sf_rStrF = self.sqtpp_emb_ext_vfs_get_dir(luf[1], self._sf_rStrE)
-            if self._sf_rStrF != None:
-                if set(vrNm).issubset(SQTPP_SET_VARS):
-                    if isinstance(vrDt, str) or isinstance(vrDt, list):
-                        if isinstance(vrDt, list): vrDt = ''.join(vrDt)
-                        if vrDt.find('{') > -1 or vrDt.find('}') > -1:
-                            if vrDt.find('[') > -1 or vrDt.find(']') > -1:
-                                if not os.path.isfile(f'{SQTPP_MDL_DIR}/__sqtpp__default__omega__key__.txt'):
-                                    self._sf_rLstC = ['__sqtpp__default__omega__key__ = (','    __dok__type: (','    type: ( list,','    validator [','        lambda x: if len(x) > 0','    ]','    )','    )',')']
-                                    with open(f'{SQTPP_MDL_DIR}/__sqtpp__default__omega__key__.txt', 'w') as fObjWrtSchm: fObjWrtSchm.write('\n'.join(self._sf_rLstC))
-                                    self.sqtpp_registry_homer(False, None, None, f'{SQTPP_MDL_DIR}/__sqtpp__default__omega__key__.txt')
-                                rtrn = self.sqtpp_emb_vfs_pojishon_omega_ctpk_scnr(luf, vrNm, vrDt)
-                                if rtrn < 0: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(6)
-                                else:
-                                    if len(self._sf_sLstX) > 0:
-                                        self._sf_rBoolA = True
-                                        self.sqtpp_reset_slots(False)
-                                        if self.sqtpp_set_vfs_file() == 1:
-                                            if self.sqtpp_vfs_tqpt_file(True) != -1:
-                                                self._sf_rStrA = '\n'
-                                                self._sf_rStrB = self._sf_sQp
-                                                if self._sf_sQp.find(f'{vrNm}<@qp(') == -1:
-                                                    self._sf_rLstC = [str(_) for _ in self._sf_sLstX]
-                                                    self._sf_sQp = f'{self._sf_sQp}{self._sf_rStrA}{vrNm}<@qp({")@ctpk!(".join(self._sf_rLstC)}):>'
-                                                    self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrB, self._sf_sQp)
-                                                    if self._sf_sIntX > -1: self._sf_sSrc = self._sf_sSrc.replace(f'lfd={luf[0]}/{luf[1]}/{luf[2]};:|:>', f'lfd={luf[0]}/{luf[1]}/{self._sf_sRplc[self._sf_sIntX]};:|:>')
-                                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
-                                                    self._sf_rStrB = None
-                                                    self._sf_rLstC = None
-                                                    self._sf_sQp = None
-                                                    self.sqtpp_emb_vfs_pojishon_omega_ctpk_genesis()
-                                                    self.sqtpp_registry_homer(False, f'{vrNm}_ctpk_O', self._sf_rLstG, '__sqtpp__default__omega__key__')
-                                                else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(9)
-                                            else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(8)
-                                        else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(7)
-                            else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(5)
-                    else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(4)
-                else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(3)
-            else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(2)
-        else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(1)
+        try:
+            self._sf_rStrE = self.sqtpp_emb_ext_vfs_get_mnt(True, [luf[0]])
+            if self._sf_rStrE != None:
+                self._sf_rStrF = self.sqtpp_emb_ext_vfs_get_dir(luf[1], self._sf_rStrE)
+                if self._sf_rStrF != None:
+                    if set(vrNm).issubset(SQTPP_SET_VARS):
+                        if isinstance(vrDt, str) or isinstance(vrDt, list):
+                            if isinstance(vrDt, list): vrDt = ''.join(vrDt)
+                            if vrDt.find('{') > -1 or vrDt.find('}') > -1:
+                                if vrDt.find('[') > -1 or vrDt.find(']') > -1:
+                                    if not os.path.isfile(f'{SQTPP_MDL_DIR}/__sqtpp__default__omega__key__.txt'):
+                                        self._sf_rLstC = ['__sqtpp__default__omega__key__ = (','    __dok__type: (','    type: ( list,','    validator [','        lambda x: if len(x) > 0','    ]','    )','    )',')']
+                                        with open(f'{SQTPP_MDL_DIR}/__sqtpp__default__omega__key__.txt', 'w') as fObjWrtSchm: fObjWrtSchm.write('\n'.join(self._sf_rLstC))
+                                        self.sqtpp_registry_homer(False, None, None, f'{SQTPP_MDL_DIR}/__sqtpp__default__omega__key__.txt')
+                                    rtrn = self.sqtpp_emb_vfs_pojishon_omega_ctpk_scnr(luf, vrNm, vrDt)
+                                    if rtrn < 0: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(6)
+                                    else:
+                                        if len(self._sf_sLstX) > 0:
+                                            self._sf_rBoolA = True
+                                            self.sqtpp_reset_slots(False)
+                                            if self.sqtpp_set_vfs_file() == 1:
+                                                if self.sqtpp_vfs_tqpt_file(True) != -1:
+                                                    self._sf_rStrA = '\n'
+                                                    self._sf_rStrB = self._sf_sQp
+                                                    if self._sf_sQp.find(f'{vrNm}<@qp(') == -1:
+                                                        self._sf_rLstC = [str(_) for _ in self._sf_sLstX]
+                                                        self._sf_sQp = f'{self._sf_sQp}{self._sf_rStrA}{vrNm}<@qp({")@ctpk!(".join(self._sf_rLstC)}):>'
+                                                        self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrB, self._sf_sQp)
+                                                        if self._sf_sIntX > -1: self._sf_sSrc = self._sf_sSrc.replace(f'lfd={"/".join(luf)};:|:>', f'lfd={luf[0]}/{luf[1]}/{self._sf_sRplc[self._sf_sIntX]};:|:>')
+                                                        self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
+                                                        self._sf_rStrB = None
+                                                        self._sf_rLstC = None
+                                                        self._sf_sQp = None
+                                                        self.sqtpp_emb_vfs_pojishon_omega_ctpk_genesis()
+                                                        self.sqtpp_registry_homer(False, f'{vrNm}_ctpk_O', self._sf_rLstG, '__sqtpp__default__omega__key__')
+                                                    else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(9)
+                                                else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(8)
+                                            else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(7)
+                                else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(5)
+                        else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(4)
+                    else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(3)
+                else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(2)
+            else: self.sqtpp_emb_vfs_pojishon_omega_ctpk_err(1)
+        except Exception as err_sqtpp_emb_vfs_pojishon_omega_ctpk:
+            raise Exception(f'[sqtpp-vfs >> pojishon] - next.omega, unexpected exception/direct function err: {err_sqtpp_emb_vfs_pojishon_omega_ctpk}')
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_omega_ctpk_genesis(self):
@@ -4762,12 +4843,26 @@ class SqtppFncs(Sqtpp):
         # -2=non-allowed char sequence found @varDt: ':|:>'
         # -3=non-allowed char(s) @varNm
         # -4=no last dir/file setting found for cast
+        # -5=unable to read emb vfs mounts/directories/files source
+        # -6=invalid parameters combination for next.splice
+        # -7=invalid chars @dirList
+        # -8=last used mount in vfs settings not found
+        # -9=last used mount/directory in vfs settings not found
+        # -10=last used mount/directory/file in vfs settings not found
         rtrn = None
         if mode == 'next':
             if errCd == -1: rtrn = -1
             elif errCd == -2: rtrn = -2
             elif errCd == -3: rtrn = -3
             elif errCd == -4: rtrn = -4
+        elif mode == 'splice':
+            if errCd == -1: rtrn = -5
+            elif errCd == -2: rtrn = -6
+            elif errCd == -3: rtrn = -7
+            elif errCd == -4: rtrn = -4
+            elif errCd == -5: rtrn = -8
+            elif errCd == -6: rtrn = -9
+            elif errCd == -7: rtrn = -10
         return rtrn
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
@@ -5360,6 +5455,120 @@ class SqtppFncs(Sqtpp):
         self._sf_rStrD = self._sf_rStrB
         self._sf_rStrB = self._sf_rStrB.replace(self._sf_rStrE, self._sf_rStrC)
         self._sf_sStrX = self._sf_sStrX.replace(self._sf_rStrD, self._sf_rStrB)
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+#
+#//////////           .          ._________|______________________________*
+#/////////                    .            .                             /       .
+#////////         .                   _____|                            /
+#///////              .          . \//_.|._\\/                  .______/         __.
+#//////   .         .             ///_/.|.\_\\\                 /      |        /    .  
+#/////                          _\|| /.:|:.\ ||/_      ._______/       |       /
+#//////                   .    / //||__/|\__||\\ \                 .___|      /   .    
+#///////    .      .          / //|| \\   // ||\\ \       .            |_____•   .      
+#////////       .           _/ _/_|_| \*  /  ||_ \_ \_  .              |              .   
+#/////////                             |                               .              
+#//////////      .                     |____________.                                •
+#
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_ntr_tree_context(self, isRead: bool):
+        # <<<
+        # returns:
+        if not isRead:
+            if not os.path.isfile(f'{SQTPP_MDL_DIR}/sqtpp1_2_NTR.py'):
+                self._rg_rLstA = []
+                self._rg_rLstA.append("# This py-module is auto-generated by the Staqtapp1.2 vfs env-var library for ntr-tree functions use. Edit at your own risk.\u000A")
+                self._rg_rLstA.append("\u000Afrom collections import deque\u000A\u000Aimport math\u000Aimport re\u000A\u000Aclass SqtppNtrLLL():\u000A")
+                self._rg_rLstA.append("    \u000A    __slots__ = ()\u000A    \u000A    def __init__(self):\u000A        pass\u000A        \u000A")
+                self._rg_rLstA.append("class SqtppNtrLLL_Fncs(SqtppNtrLLL):\u000A    \u000A    __slots__ = (\u0027_lll_sNtr\u0027, \u0027_lll_sRtrn\u0027, \u0027_lll_sFncRtrn\u0027, \u0027_lll_sSrchRtrn\u0027, \u0027_lll_sSrchPosRtrn\u0027, \u0027_lll_sLstA\u0027, \u0027_lll_sLstB\u0027, \u0027_lll_sLstC\u0027, \u0027_lll_sLstD\u0027, \u0027_lll_sLstE\u0027, \u0027_lll_sStrA\u0027, \u0027_lll_sIntA\u0027, \u0027_lll_sIntB\u0027, \u0027_lll_sIntC\u0027, \u0027_lll_sIntD\u0027, \u0027_lll_sIntE\u0027, \u0027_lll_sIntF\u0027, \u0027_lll_sIntG\u0027, \u0027_lll_sIntH\u0027, \u0027_lll_sIntI\u0027, \u0027_lll_sIntJ\u0027, \u0027_lll_sIntK\u0027, \u0027_lll_sIntL\u0027, \u0027_lll_sIntM\u0027, \u0027_lll_sBoolA\u0027, \u0027_lll_rLstA\u0027, \u0027_lll_rLstB\u0027, \u0027_lll_rStrA\u0027, \u0027_lll_rStrB\u0027, \u0027_lll_rIntA\u0027, \u0027_lll_rIntB\u0027, \u0027_lll_rIntC\u0027, \u0027_lll_rIntD\u0027, \u0027_lll_rIntE\u0027, \u0027_lll_rIntF\u0027, \u0027_lll_rBoolA\u0027)\u000A")
+                self._rg_rLstA.append("    \u000A    def __init__(self):\u000A        \u000A        self._lll_sNtr = deque([\u000A            \u0027<!//.]|>__SQTPP__DEFAULT__NTR__<|[/^%/]<^./>__B1(1441441:1221221:2345)/:/=1,2,4/|:/__R1(1884881:2727272:1568)//:/=1,2,4,7,8/:|//|:/__R2(5159515:3884883:3456)//:/=1,3,4,5,8,9/:|/<./^>[/%^/].//!>\u0027\u000A")
+                self._rg_rLstA.append("        ])\u000A    def sqtpp_lll_ntr(self, mode: str, brnchPth, mrgPth: list):\u000A        try:\u000A            if mode == \u0027r\u0027:\u000A")
+                self._rg_rLstA.append("                return self.sqtpp_lll_ntr_read(brnchPth)\u000A            elif mode == \u0027r+\u0027:\u000A                return self.sqtpp_lll_ntr_read_whole_branch(brnchPth)\u000A")
+                self._rg_rLstA.append("            elif mode == \u0027w\u0027:\u000A                self._lll_sBoolA = True\u000A                return self.sqtpp_lll_ntr_write_new(brnchPth)\u000A")
+                self._rg_rLstA.append("            elif mode == \u0027w+\u0027:\u000A                self._lll_sBoolA = False\u000A                return self.sqtpp_lll_ntr_write_merged(brnchPth, mrgPth)\u000A")
+                self._rg_rLstA.append("        except Exception as err_sqtpp_lll_ntr:\u000A            raise Exception(f\u0027[SQTPP NTR-TREE] - a direct ntr-tree module error has occured: {err_sqtpp_lll_ntr}\u0027)\u000A")
+                self._rg_rLstA.append("#|___________________________________________________________________________________\u000A    def sqtpp_lll_ntr_write_merged(self, brnchPth, mrgPth: list):\u000A")
+                self._rg_rLstA.append("        if isinstance(brnchPth, str) and isinstance(mrgPth, list):\u000A            self._lll_sFncRtrn = self.sqtpp_lll_ntr_write_new(brnchPth)\u000A")
+                self._rg_rLstA.append("            if self._lll_sFncRtrn != None and len(mrgPth) > 0:\u000A                self._lll_sIntC = 1\u000A                self._lll_sLstB = []\u000A")
+                self._rg_rLstA.append("                self._lll_sIntB = len(mrgPth)\u000A                for self._lll_sIntA in range(self._lll_sIntB):\u000A                    self._lll_sLstA = mrgPth[self._lll_sIntA].split(\u0027:\u0027)\u000A")
+                self._rg_rLstA.append("                    if len(self._lll_sLstA) == 4:\u000A                        self._lll_sLstE = self.sqtpp_lll_ntr_read(f\u0027{self._lll_sLstA[1]},{self._lll_sLstA[2]}:{self._lll_sLstA[3]}\u0027)\u000A")
+                self._rg_rLstA.append("                        if len(self._lll_sLstE) > 0:\u000A                            self._lll_sLstC = self._lll_sLstE[1].split(\u0027:\u0027)\u000A")
+                self._rg_rLstA.append("                            self._lll_sLstC.pop(0)\u000A                            self._lll_sStrA = f\u0027<^./>{self._lll_sLstA[0]}({self._lll_sLstC[0]}:{self._lll_sLstC[1]}:{self._lll_sLstC[2]})/:/={self._lll_sLstC[3]}/|:/\u0027\u000A")
+                self._rg_rLstA.append("                            self._lll_sStrA = f\u0027{self._lll_sStrA}{self._lll_sLstA[0]}_mrg_{self._lll_sIntC}(\u0027\u000A                            self._lll_sLstD = self._lll_sLstC[3].split(\u0027,\u0027)\u000A")
+                self._rg_rLstA.append("                            self._lll_sLstD = [int(mtr) for mtr in self._lll_sLstD]\u000A                            self.sqtpp_lll_ntr_pgdf([self._lll_sLstC[0], self._lll_sLstC[1]], int(self._lll_sLstC[2]), self._lll_sLstD)\u000A")
+                self._rg_rLstA.append("                            self._lll_sFncRtrn = f\u0027{self._lll_sFncRtrn}{self._lll_sStrA}{self._lll_sIntD[0]}:{self._lll_sIntD[1]}:{self._lll_sIntD[2]})//:/={self._lll_sIntD[3]}/:|/<./^>\u0027\u000A")
+                self._rg_rLstA.append("                        else:\u000A                            return None\u000A                    else:\u000A                        return None\u000A")
+                self._rg_rLstA.append("                self._lll_sFncRtrn = f\u0027{self._lll_sFncRtrn}[/%^/].//!>\u0027\u000A                return self._lll_sFncRtrn\u000A        else:\u000A")
+                self._rg_rLstA.append("            return None\u000A#|___________________________________________________________________________________\u000A    def sqtpp_lll_ntr_write_new(self, brnchPth) -> str:\u000A")
+                self._rg_rLstA.append("        self._lll_rLstB = None\u000A        if isinstance(brnchPth, str):\u000A            self._lll_rStrA = re.search(r\u0027:\^:.*?:\^:\u0027, brnchPth)\u000A")
+                self._rg_rLstA.append("            if self._lll_rStrA:\u000A                self._lll_rStrA = self._lll_rStrA.group().replace(\u0027:^:\u0027,\u0027\u0027)\u000A                self._lll_rLstA = re.findall(r\u0027</\{.*?\}/>\u0027, brnchPth)\u000A")
+                self._rg_rLstA.append("                if len(self._lll_rLstA) > 0:\u000A                    self._lll_rLstB = [f\u0027<!//.]|>{self._lll_rStrA}<|[/^%/]\u0027]\u000A")
+                self._rg_rLstA.append("                    self._lll_rIntB = len(self._lll_rLstA)\u000A                    for self._lll_rIntA in range(self._lll_rIntB):\u000A")
+                self._rg_rLstA.append("                        self._lll_rLstA[self._lll_rIntA] = self._lll_rLstA[self._lll_rIntA].replace(\u0027</{\u0027,\u0027<^./>\u0027).replace(\u0027}/>\u0027,\u0027<./^>\u0027)\u000A")
+                self._rg_rLstA.append("                        self._lll_rLstA[self._lll_rIntA] = self._lll_rLstA[self._lll_rIntA].replace(\u0027:\u0027,\u0027/|:/\u0027).replace(\u0027!\u0027,\u0027/:|/\u0027)\u000A                        self._lll_rLstA[self._lll_rIntA] = self._lll_rLstA[self._lll_rIntA].replace(\u0027==\u0027,\u0027//:/\u0027).replace(\u0027=\u0027,\u0027/:/\u0027)\u000A")
+                self._rg_rLstA.append("                        self._lll_rLstB.append(self._lll_rLstA[self._lll_rIntA].replace(\u0027/:/\u0027,\u0027/:/=\u0027).replace(\u0027%\u0027,\u0027:\u0027))\u000A                    if len(self._lll_rLstB) < 2: self._lll_rLstB = None\u000A")
+                self._rg_rLstA.append("                    else:\u000A                        if self._lll_sBoolA: self._lll_rLstB.append(\u0027[/%^/].//!>\u0027)\u000A                        self._lll_rLstB = \u0027\u0027.join(self._lll_rLstB)\u000A")
+                self._rg_rLstA.append("        return self._lll_rLstB\u000A#|___________________________________________________________________________________\u000A    def sqtpp_lll_ntr_read(self, brnchPth) -> list:\u000A")
+                self._rg_rLstA.append("        self._lll_sRtrn = []\u000A        if isinstance(brnchPth, str): brnchPth = [brnchPth]\u000A        self._lll_rIntB = len(brnchPth)\u000A")
+                self._rg_rLstA.append("        for self._lll_rIntA in range(self._lll_rIntB):\u000A            self._lll_rLstA = brnchPth[self._lll_rIntA].split(\u0027,\u0027)\u000A")
+                self._rg_rLstA.append("            if self.sqtpp_lll_ntr_lctt(self._lll_rLstA[0]):\u000A                self._lll_rLstB = self._lll_rLstA[1].split(\u0027:\u0027)\u000A")
+                self._rg_rLstA.append("                self.sqtpp_lll_ntr_srch(2, r\u0027<\^\./>\u0027 + re.escape(self._lll_rLstB[0]) + r\u0027.*?<\./\^>\u0027, self._lll_rIntC, None)\u000A                if self._lll_sSrchRtrn != None:\u000A")
+                self._rg_rLstA.append("                    self._lll_sRtrn.append(f\u0027:^:{self._lll_rLstA[0]}\u0027)\u000A                    self._lll_rStrA = self._lll_rLstB[0]\u000A")
+                self._rg_rLstA.append("                    self._lll_rLstB.pop(0)\u000A                    self._lll_rIntE = len(self._lll_rLstB)\u000A                    for self._lll_rIntD in range(self._lll_rIntE):\u000A")
+                self._rg_rLstA.append("                        if self._lll_rLstB[self._lll_rIntD] == self._lll_rStrA:\u000A                            self.sqtpp_lll_ntr_srch(2, r\u0027<\^\./>\u0027 + re.escape(self._lll_rStrA) + r\u0027.*?/\|:/\u0027, self._lll_rIntC, None)\u000A")
+                self._rg_rLstA.append("                            if self._lll_sSrchRtrn != None: self.sqtpp_lll_ntr_rd_ext_apd()\u000A                        else:\u000A")
+                self._rg_rLstA.append("                            self.sqtpp_lll_ntr_srch(5, f\u0027<^./>{self._lll_rStrA}\u0027, self._lll_rIntC, None)\u000A                            self._lll_sSrchPosRtrn+=10\u000A")
+                self._rg_rLstA.append("                            self._lll_rIntF = self._lll_sNtr[self._lll_rIntC].find(\u0027<./^>\u0027, self._lll_sSrchPosRtrn)\u000A                            self.sqtpp_lll_ntr_srch(3, r\u0027/\|:/\u0027 + re.escape(self._lll_rLstB[self._lll_rIntD]) + r\u0027.*?/:\|/\u0027, self._lll_rIntC, [self._lll_sSrchPosRtrn, self._lll_rIntF])\u000A")
+                self._rg_rLstA.append("                            if self._lll_sSrchRtrn != None:\u000A                                self._lll_sSrchRtrn = self._lll_sSrchRtrn.replace(\u0027/|:/\u0027,\u0027\u0027).replace(\u0027/:|/\u0027,\u0027\u0027)\u000A")
+                self._rg_rLstA.append("                                self._lll_sRtrn.append(self._lll_sSrchRtrn.replace(\u0027(\u0027,\u0027:\u0027).replace(\u0027)\u0027,\u0027:\u0027).replace(\u0027//:/=\u0027,\u0027\u0027))\u000A        return self._lll_sRtrn\u000A")
+                self._rg_rLstA.append("#|___________________________________________________________________________________\u000A    def sqtpp_lll_ntr_read_whole_branch(self, brnchPth) -> list:\u000A")
+                self._rg_rLstA.append("        self._lll_sRtrn = []\u000A        if isinstance(brnchPth, str):\u000A            self._lll_rLstA = brnchPth.split(\u0027,\u0027)\u000A")
+                self._rg_rLstA.append("            if len(self._lll_rLstA) == 2:\u000A                if self.sqtpp_lll_ntr_lctt(self._lll_rLstA[0]):\u000A                    self.sqtpp_lll_ntr_srch(2, r\u0027<\^\./>\u0027 + re.escape(self._lll_rLstA[1]) + r\u0027.*?<\./\^>\u0027, self._lll_rIntC, None)\u000A")
+                self._rg_rLstA.append("                    if self._lll_sSrchRtrn != None:\u000A                        self._lll_sRtrn.append(f\u0027:^:{self._lll_rLstA[0]}\u0027)\u000A")
+                self._rg_rLstA.append("                        self.sqtpp_lll_ntr_srch(2, r\u0027<\^\./>\u0027 + re.escape(self._lll_rLstA[1]) + r\u0027.*?/\|:/\u0027, self._lll_rIntC, None)\u000A                        if self._lll_sSrchRtrn != None:\u000A")
+                self._rg_rLstA.append("                            self.sqtpp_lll_ntr_rd_ext_apd()\u000A                            self.sqtpp_lll_ntr_srch(5, f\u0027<^./>{self._lll_rLstA[1]}\u0027, self._lll_rIntC, None)\u000A")
+                self._rg_rLstA.append("                            self._lll_sSrchPosRtrn+=10\u000A                            self._lll_rIntF = self._lll_sNtr[self._lll_rIntC].find(\u0027<./^>\u0027, self._lll_sSrchPosRtrn)\u000A")
+                self._rg_rLstA.append("                            self.sqtpp_lll_ntr_srch(4, r\u0027/\|:/.*?/:\|/\u0027, self._lll_rIntC, [self._lll_sSrchPosRtrn, self._lll_rIntF])\u000A                            if self._lll_sSrchRtrn != None:\u000A")
+                self._rg_rLstA.append("                                self._lll_rIntB = len(self._lll_sSrchRtrn)\u000A                                for self._lll_rIntA in range(self._lll_rIntB):\u000A")
+                self._rg_rLstA.append("                                    self._lll_sSrchRtrn[self._lll_rIntA] = self._lll_sSrchRtrn[self._lll_rIntA].replace(\u0027/|:/\u0027,\u0027\u0027).replace(\u0027/:|/\u0027,\u0027\u0027)\u000A")
+                self._rg_rLstA.append("                                    self._lll_sRtrn.append(self._lll_sSrchRtrn[self._lll_rIntA].replace(\u0027(\u0027,\u0027:\u0027).replace(\u0027)\u0027,\u0027:\u0027).replace(\u0027//:/=\u0027,\u0027\u0027))\u000A")
+                self._rg_rLstA.append("        return self._lll_sRtrn\u000A#|___________________________________________________________________________________\u000A    def sqtpp_lll_ntr_rd_ext_apd(self):\u000A")
+                self._rg_rLstA.append("        self._lll_sSrchRtrn = self._lll_sSrchRtrn.replace(\u0027<^./>\u0027,\u0027\u0027).replace(\u0027/|:/\u0027,\u0027\u0027)\u000A        self._lll_sSrchRtrn = self._lll_sSrchRtrn.replace(\u0027(\u0027,\u0027:\u0027).replace(\u0027)\u0027,\u0027:\u0027).replace(\u0027/:/=\u0027,\u0027\u0027)\u000A")
+                self._rg_rLstA.append("        self._lll_sRtrn.append(f\u0027::^{self._lll_sSrchRtrn}\u0027)\u000A#|___________________________________________________________________________________\u000A")
+                self._rg_rLstA.append("    def sqtpp_lll_ntr_lctt(self, ntrNm: str) -> bool:\u000A        self._lll_rIntC = 0\u000A        self._lll_rBoolA = False\u000A")
+                self._rg_rLstA.append("        self._lll_rIntD = len(self._lll_sNtr)\u000A        while self._lll_rIntC < self._lll_rIntD:\u000A            self.sqtpp_lll_ntr_srch(5, f\u0027<!//.]|>{ntrNm}<|[/^%/]\u0027, self._lll_rIntC, None)\u000A")
+                self._rg_rLstA.append("            if self._lll_sSrchPosRtrn > -1:\u000A                self._lll_rBoolA = True\u000A                break\u000A")
+                self._rg_rLstA.append("            self._lll_rIntC+=1\u000A        return self._lll_rBoolA\u000A#|___________________________________________________________________________________\u000A")
+                self._rg_rLstA.append("    def sqtpp_lll_ntr_srch(self, dsg: int, ntrPtrn: str, ntrIdx: int, posIdx: list):\u000A        if dsg == 1:\u000A            self._lll_sSrchRtrn = re.findall(ntrPtrn, self._lll_sNtr[ntrIdx])\u000A")
+                self._rg_rLstA.append("            if len(self._lll_sSrchRtrn) < 1: self._lll_sSrchRtrn = None\u000A        elif dsg == 2 or dsg == 3:\u000A            if dsg == 2: self._lll_sSrchRtrn = re.search(ntrPtrn, self._lll_sNtr[ntrIdx])\u000A")
+                self._rg_rLstA.append("            else: self._lll_sSrchRtrn = re.search(ntrPtrn, self._lll_sNtr[ntrIdx][posIdx[0]:posIdx[1]])\u000A            if not self._lll_sSrchRtrn: self._lll_sSrchRtrn = None\u000A")
+                self._rg_rLstA.append("            else: self._lll_sSrchRtrn = self._lll_sSrchRtrn.group()\u000A        elif dsg == 4:\u000A            self._lll_sSrchRtrn = re.findall(ntrPtrn, self._lll_sNtr[ntrIdx][posIdx[0]:posIdx[1]])\u000A")
+                self._rg_rLstA.append("            if len(self._lll_sSrchRtrn) < 1: self._lll_sSrchRtrn = None\u000A        else: self._lll_sSrchPosRtrn = self._lll_sNtr[ntrIdx].find(ntrPtrn)\u000A")
+                self._rg_rLstA.append("#|___________________________________________________________________________________\u000A    def sqtpp_lll_ntr_pgdf(self, plndrmLst: list, pvtCnd: int, mtrLst: list):\u000A")
+                self._rg_rLstA.append("        self._lll_sIntD = [int(plndrmLst[0][:4]),int(plndrmLst[0][3:]),int(plndrmLst[1][:4]),int(plndrmLst[1][3:])]\u000A        self._lll_sIntF = len(mtrLst)\u000A")
+                self._rg_rLstA.append("        self._lll_sIntI = set()\u000A        self._lll_sIntL = []\u000A        for self._lll_sIntE in range(self._lll_sIntF):\u000A")
+                self._rg_rLstA.append("            self._lll_sBoolA = False\u000A            self._lll_sIntG = math.sqrt(mtrLst[self._lll_sIntE]) + (math.pi * (math.cos(pvtCnd * min(mtrLst)/3)))\u000A")
+                self._rg_rLstA.append("            self._lll_sIntH = math.sqrt(mtrLst[self._lll_sIntE]) + (math.pi * (math.tan(pvtCnd * max(mtrLst)/2)))\u000A            if self._lll_sIntG == self._lll_sIntH:\u000A")
+                self._rg_rLstA.append("                self._lll_sBoolA = True\u000A                self._lll_sIntI.add(self._lll_sIntG)\u000A            for self._lll_sIntJ in range(4):\u000A")
+                self._rg_rLstA.append("                if not self._lll_sBoolA:\u000A                    self._lll_sIntD[self._lll_sIntJ] = math.ceil(mtrLst[self._lll_sIntE] * self._lll_sIntH * (self._lll_sIntD[self._lll_sIntJ] // self._lll_sIntG))\u000A")
+                self._rg_rLstA.append("                else:\u000A                    self._lll_sIntK = list(self._lll_sIntI)\u000A                    self._lll_sIntM = min(self._lll_sIntK)\u000A")
+                self._rg_rLstA.append("                    self._lll_sIntD[self._lll_sIntJ] = math.ceil(self._lll_sIntM + (mtrLst[self._lll_sIntE] * self._lll_sIntH * (self._lll_sIntD[self._lll_sIntJ] // self._lll_sIntG)))\u000A")
+                self._rg_rLstA.append("                if len(str(self._lll_sIntD[self._lll_sIntJ])) == 7: self._lll_sIntL.append(self._lll_sIntD[self._lll_sIntJ])\u000A        if len(self._lll_sIntL) > 1:\u000A")
+                self._rg_rLstA.append("            self._lll_sIntD = [max(self._lll_sIntL), min(self._lll_sIntL)]\u000A            self._lll_sIntD.append(math.ceil(((self._lll_sIntD[0] * self._lll_sIntD[1]) / (self._lll_sIntD[0] - self._lll_sIntD[1])) / 144))\u000A")
+                self._rg_rLstA.append("            self._lll_sIntE = f\u0027{self._lll_sIntD[0]}{self._lll_sIntD[1]}\u0027\u000A            self._lll_sIntM = set()\u000A            for self._lll_sIntI in self._lll_sIntE: self._lll_sIntM.add(int(self._lll_sIntI))\u000A")
+                self._rg_rLstA.append("            self._lll_sIntE = list(self._lll_sIntM)\u000A            self._lll_sIntE = [str(_) for _ in self._lll_sIntE]\u000A            self._lll_sIntD.append(\u0027,\u0027.join(self._lll_sIntE))\u000A")
+                self._rg_rLstA.append("        else:\u000A            return None           \u000A#|___________________________________________________________________________________\u000A")
+                self._rg_rLstA.append("#| Zechariah 14:9\u000A\u000Adef sqtpp_lll_ntr_run(mode: str, branchPath, mergePath: list):\u000A    lllCls = SqtppNtrLLL_Fncs()\u000A")
+                self._rg_rLstA.append("    return lllCls.sqtpp_lll_ntr(mode, branchPath, mergePath)\u000A")
+                self._rg_rLstA = ''.join(self._rg_rLstA)
+                with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_NTR.py', 'w') as flObjNtrWrt: flObjNtrWrt.write(self._rg_rLstA)
+                self._rg_rLstA = None
+                if os.path.isfile(f'{SQTPP_MDL_DIR}/sqtpp1_2_NTR.py'):
+                    #with open(f'{SQTPP_MDL_DIR}/sqtpp1_2_NTR.py', 'r') as flObjNtr: self._rg_rStrA = flObjNtr.read()
+                    pass
+                else:
+                    raise Exception(f"[sqtpp-reg >> NTR-TREE] - could not write the ntr-tree module sqtpp1_2_NTR.py to Staqtapp's current working directory '{SQTPP_MDL_DIR}'")
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
 #                                                                      •
