@@ -6,7 +6,7 @@ ________________________________________________________________________________
       
       
 
-      UPDATED: SUN, OCT6 2024, added pojishon 'next.splice.*' details and examples
+      UPDATED: FRI, OCT11 2024, updated pojishon 'next.splice.*' details & uses
       
       
       
@@ -562,13 +562,24 @@ ________________________________________________________________________________
             how many spliced files are added. Durability of splicing with this is
             constraint to int type | float type as list elements only.
             
+            
+            *With use of * pattern splicing, the first list element activates this
+             & if using general pattern splicing, use of numbers @varData is okay
+             
+            *When a splice is performed with just a single pattern match that will
+             result in two files added to dir then supports duality of that single
+             pattern, will appear in both files ~end of 1rst and start of 2nd, all
+             other splices support the same condition of pattern found in each but
+             no duality copy to a next file as when only two files being added; is
+             common of a duality copy when use of the less frequent operator *<
+            
             *Use of ['*>pttrn'] or ['*<pttrn'] splicing options requires a pattern
-             that does not have double use quote chars or any regex patterns.
+             that does not have double use quote chars or any regex patterns
              
             "next.splice" will return True if spliced and added files, else False.
             When use of specific pattern splicing, resulting filenames added to a
             dir are in format of @varName_lastuseddir_# whereof # is incremented
-            from 1 as then +1 further of all other added/total files from splice.
+            from 1 as then +1 further of all other added/total files from splice
             
             (NOT YET IMPLEMENTED)
                  
