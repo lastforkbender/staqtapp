@@ -5745,18 +5745,18 @@ class SqtppFncs(Sqtpp):
         # FNC_ID=ST12-80901481881981
         # SqtppFncs slots in use: (non-local)
         # returns: (list)
-        self._rg_IntA = lambda self._rg_rIntE,self._rg_rIntF:(self._rg_rIntE[0]*self._rg_rIntF[1]-self._rg_rIntE[1]*self._rg_rIntF[0],self._rg_rIntE[0]*self._rg_rIntF[0]+self._rg_rIntE[1]*self._rg_rIntF[1],self._rg_rIntE[0]+self._rg_rIntF[1]-self._rg_rIntE[1]*self._rg_rIntF[0],self._rg_rIntE[0]*self._rg_rIntF[0]+self._rg_rIntE[1]*self._rg_rIntF[1])
-        self._rg_IntB = lambda self._rg_rIntE,self._rg_rIntF:(self._rg_rIntE[0]*self._rg_rIntF[0],self._rg_rIntE[0]*self._rg_rIntF[1]+self._rg_rIntE[1]*self._rg_rIntF[0],self._rg_rIntE[1]*self._rg_rIntF[1],self._rg_rIntE[0]*self._rg_rIntF[0],self._rg_rIntE[0]*self._rg_rIntF[1]+self._rg_rIntE[1]*self._rg_rIntF[0],self._rg_rIntE[1]*self._rg_rIntF[1])
-        self._rg_IntC = lambda self._rg_rIntE,self._rg_rIntF:(math.floor((math.pi*(self._rg_rIntE[0]*self._rg_rIntF[1]-self._rg_rIntE[1]*self._rg_rIntF[0])-1)/self._rg_rIntF[0]),math.floor((math.atan(self._rg_rIntE[0]*self._rg_rIntF[0]+self._rg_rIntE[1]*self._rg_rIntF[1])*self._rg_rIntF[1])/self._rg_rIntE[1]))
-        self._rg_IntD = lambda self._rg_rIntE,self._rg_rIntF:(math.ceil((self._rg_rIntE[0]/self._rg_rIntF[0])),math.floor((1+self._rg_rIntF[1]+(math.pi*(math.sqrt(self._rg_rIntE[0])/(self._rg_rIntE[1]/self._rg_rIntF[1]))))))
-        self._rg_LstA = self._rg_IntA((nrTlmA,nrTlmB), (nrKlmA,nrKlmB))
-        self._rg_LstB = self._rg_IntB(self._rg_LstA, self._rg_LstA)
-        self._rg_LstC = self._rg_IntC(self._rg_LstA, self._rg_LstB)
-        self._rg_LstD = self._rg_IntD(self._rg_LstB, self._rg_LstC)
-        if self._rg_LstC[1] > self._rg_LstD[1]: self._rg_rStrA = 'G' # ~~
-        elif self._rg_LstC[1] == self._rg_LstD[1]: self._rg_rStrA = 'E' # :)
+        self._rg_rIntA = lambda x, y: (x[0] * y[1] - x[1] * y[0], x[0] * y[0] + x[1] * y[1], x[0] + y[1] - x[1] * y[0], x[0] * y[0] + x[1] * y[1])
+        self._rg_rIntB = lambda x, y: (x[0] * y[0], x[0] * y[1] + x[1] * y[0], x[1] * y[1], x[0] * y[0], x[0] * y[1] + x[1] * y[0], x[1] * y[1])
+        self._rg_rIntC = lambda x, y: (math.floor((math.pi * (x[0] * y[1] - x[1] * y[0]) - 1) / y[0]), math.floor((math.atan(x[0] * y[0] + x[1] * y[1]) * y[1]) / x[1]))
+        self._rg_rIntD = lambda x, y: (math.ceil((x[0] / y[0])), math.floor((1 + y[1] + (math.pi * (math.sqrt(x[0]) / (x[1] / y[1]))))))
+        self._rg_rLstA = self._rg_rIntA((nrTlmA,nrTlmB), (nrKlmA,nrKlmB))
+        self._rg_rLstB = self._rg_rIntB(self._rg_rLstA, self._rg_rLstA)
+        self._rg_rLstC = self._rg_rIntC(self._rg_rLstA, self._rg_rLstB)
+        self._rg_rLstD = self._rg_rIntD(self._rg_rLstB, self._rg_rLstC)
+        if self._rg_rLstC[1] > self._rg_rLstD[1]: self._rg_rStrA = 'G' # ~~
+        elif self._rg_rLstC[1] == self._rg_rLstD[1]: self._rg_rStrA = 'E' # :)
         else: self._rg_rStrA = 'L' # !!
-        return [self._rg_rStrA, self._rg_LstD[0], self._rg_LstD[1]]
+        return [self._rg_rStrA, self._rg_rLstD[0], self._rg_rLstD[1]]
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_ntr_tree_bmh(self, ptrn: str, src: str) -> list:
