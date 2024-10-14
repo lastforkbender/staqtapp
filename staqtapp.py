@@ -1,4 +1,4 @@
-#QPython 3SE / Row4 / staqtapp.py (6,512 lines) / 6:55 Sun, Oct 13
+#QPython 3SE / Row4 / staqtapp.py (6,581 lines) / 8:15 Mon, Oct 14
 
 
 
@@ -8,7 +8,7 @@
 
 
 
-#Staqtapp-v1.2.568 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
+#Staqtapp-v1.2.579 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
 # <<<
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -25,16 +25,12 @@
 
 
 
-# UPDATE SUN, OCT13: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
+# UPDATE MON, OCT14: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
 #
-#                    "next.splice.*" pojishon command can now perform all pattern
-#                     *> | *< splicing & passed all required test necessary for it
-#
-#                     Also added cycle-prime-mcr function for ntr-tree module use
-#                     with probability limits and other custom node equation uses
+#                    "next.splice.*" pojishon call is now fully implemented feature
 #
 #
-#                     See IMPORT_CALLS.TXT, pojishon section >> "next.splice.*"
+#                     See IMPORT_CALLS.TXT, pojishon section >>>> "next.splice.*"
 
 
 #_______________________________________________________________________________________
@@ -669,7 +665,7 @@ class Sqtpp():
 
 #_______________________________________________________________________________________
 class SqtppFncs(Sqtpp):
-    __slots__ = ('_sf_sVfs', '_sf_sVfsDir', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sRplc', '_sf_sQp', '_sf_sQpRplcX', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_sBoolCxv', '_sf_sLstA', '_rg_sSchm', '_rg_sMdlTrg', '_rg_sMdlEdt', '_rg_rStrA', '_rg_rStrB', '_rg_rStrC', '_rg_rStrD', '_rg_rLstA', '_rg_rLstB', '_rg_rLstC', '_rg_rIntA', '_rg_rIntB', '_rg_rIntC', '_rg_rIntD', '_rg_rIntE', '_rg_rIntF', '_rg_rBoolA', '_rg_rBoolB', '_rg_rBoolC', '_rg_rBoolD', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rLstE', '_sf_rLstF', '_sf_rLstG', '_sf_rLstH', '_sf_rLstI', '_sf_rLstJ', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rIntJ', '_sf_rIntK', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD', '_sf_rBoolE', '_sf_rBoolF')
+    __slots__ = ('_sf_sVfs', '_sf_sVfsDir', '_sf_sVfsFldr', '_sf_sSrc', '_sf_sRplc', '_sf_sQp', '_sf_sQpRplcX', '_sf_EfvStrX', '_sf_sPq', '_sf_sDv', '_sf_sVd', '_sf_sVn', '_sf_sRtrn', '_sf_sKntId', '_sf_sLstX', '_sf_sStrX', '_sf_sIntX', '_sf_sBoolX', '_sf_sBoolCxv', '_sf_sLstA', '_rg_sSchm', '_rg_sMdlTrg', '_rg_sMdlEdt', '_rg_rStrA', '_rg_rStrB', '_rg_rStrC', '_rg_rStrD', '_rg_rLstA', '_rg_rLstB', '_rg_rLstC', '_rg_rIntA', '_rg_rIntB', '_rg_rIntC', '_rg_rIntD', '_rg_rIntE', '_rg_rIntF', '_rg_rBoolA', '_rg_rBoolB', '_rg_rBoolC', '_rg_rBoolD', '_sf_rStrA', '_sf_rStrB', '_sf_rStrC', '_sf_rStrD', '_sf_rStrE', '_sf_rStrF', '_sf_rLstA', '_sf_rLstB', '_sf_rLstC', '_sf_rLstD', '_sf_rLstE', '_sf_rLstF', '_sf_rLstG', '_sf_rLstH', '_sf_rLstI', '_sf_rLstJ', '_sf_rIntA', '_sf_rIntB', '_sf_rIntC', '_sf_rIntD', '_sf_rIntE', '_sf_rIntF', '_sf_rIntG', '_sf_rIntH', '_sf_rIntI', '_sf_rIntJ', '_sf_rIntK', '_sf_rBoolA', '_sf_rBoolB', '_sf_rBoolC', '_sf_rBoolD', '_sf_rBoolE', '_sf_rBoolF')
     
     def __init__(self):
         self._sf_rBoolE = False
@@ -683,7 +679,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.568\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.579\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -1585,7 +1581,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.568\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.579\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3373,6 +3369,7 @@ class SqtppFncs(Sqtpp):
             self._sf_sSrc = None
             self._sf_sRplc = None
             self._sf_sQpRplcX = None
+            self._sf_EfvStrX = None
             self._sf_sQp = None
             self._sf_sPq = None
             self._sf_sVd = None
@@ -3496,66 +3493,67 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#  /.__/  _././_  _//.//  /_._  _/./  _/./__  __//._  _/./  /.__/  _//.//
-#  __/.//  /_._  _/./  _/./  /.__/  _//.//  _/./  .//_/  /.__/  __//._  __/.//
-#  __/.//  _/./  __/.//  _/./  _/./  __//._  _//.//  __/._/_  _/./  _/./  __/._/_
-#  .//_/  /_._  /.__/  /_._  .//_/  .//_/  __//._  __/.//  /.__/  __/.//  /_._
-#  .//_/  __//._  __/.//  .//_/  /_._  /_._  /.__/  _//.//  __/.//  _/./  __//._
-#  _/./  _././_  __/._/_  __/._/_  _././_  __//._  /_._  _././_  /_._  /.__/
-#  _/./__  _/./__  /.__/  __/.//  _/./__  __/.//  __/.//  /.__/  _/./  /_._
-#  _/./__  __/.//  _/./  /.__/  /.__/  __/._/_  _././_  _//.//  /_._  _//.//
-#  /.__/  __/._/_  __//._  .//_/  /_._  .//_/  /_._  _//.//  __/._/_  _/./
-#  __/.//  __/._/_  __//._  .//_/  _/./__  _/./  __/.//  _././_  __/.//  /_._
-#  __/._/_  __/._/_  _//.//  _././_  /.__/  _/./  _//.//  __/._/_  _././_  _/./
-#  __/.//  __//._  _//.//  __//._  _/./  __/._/_  __/.//  __//._  __/.//  _/./
-#  /.__/  __/.//  .//_/  __/.//  _//.//  /_._  _/./__  _//.//  _/./  _/./  _//.//
-#  /_._  .//_/  _././_  /_._  __/._/_  /_._  __/._/_  __/._/_  .//_/  /_._  .//_/
-#  _././_  _/./  .//_/  __//._  _//.//  _//.//  /_._  _//.//  /.__/  _././_
-#  _/./__  __//._  __/._/_  _././_  _/./__  _/./__  _././_  __/.//  /_._  _//.//
-#  /.__/  _//.//  /.__/  /_._  __//._  .//_/  .//_/  __/._/_  __//._  /.__/
-#  __//._  _/./  _//.//  _././_  _/./  _/./__  /_._  _././_  __/._/_  _//.//
-#  _/./  _/./  /_._  _/./  __//._  __/.//  __/._/_  __//._  _/./__  /_._  _/./
-#  _/./__  .//_/  _/./__  __/.//  .//_/  __/._/_  __/._/_  _//.//  /.__/  __/.//
-#  .//_/  _/./  __/.//  _//.//  __/.//  /_._  __//._  /.__/  /_._  _/./__  _//.//
-#  _/./  _//.//  _/./__  _/./  .//_/  _//.//  __/.//  _//.//  .//_/  /.__/  _/./
-#  __/._/_  /.__/  /_._  __/.//  _././_  _././_  _//.//  .//_/  _/./  /.__/
-#  /.__/  /.__/  _././_  /_._  _././_  /_._  /.__/  _/./__  __/._/_  _/./__
-#  _//.//  __/._/_  __/.//  _//.//  .//_/  .//_/  .//_/  __//._  /_._  _/./
-#  _//.//  _//.//  .//_/  _/./  _/./__  __/.//  .//_/  _././_  _././_  _/./__
-#  /_._  __/._/_  _//.//  _/./  /.__/  _//.//  _/./__  _//.//  _//.//  _/./__
-#  _//.//  __//._  __//._  _/./__  /_._  /.__/  __/.//  /.__/  __/.//  _././_
-#  __//._  /.__/  _/./__  _/./  /_._  .//_/  __//._  _././_  .//_/  __//._
-#  _//.//  __//._  _/./__  __/._/_  _././_  __/._/_  _././_  _/./__  _/./__
-#  __//._  _././_  _/./  /_._  _/./  _././_  _/./  _/./  __/.//  _/./__  .//_/
-#  _/./__  _/./  __//._  _//.//  _././_  .//_/  _././_  _/./__  __/._/_  /.__/
-#  _/./  _//.//  __//._  __//._  __/._/_  _/./__  /.__/  _././_  __/.//  /.__/
-#  /_._  __//._  __/.//  /.__/  __//._  _//.//  .//_/  /.__/  _//.//  /_._
-#  _/./__  _//.//  _././_  __/._/_  /.__/  __//._  _/./  _//.//  /.__/  __/._/_
-#  _/./__  __/._/_  _//.//  .//_/  /.__/  .//_/  .//_/  /.__/  /_._  /.__/
-#  __/._/_  /.__/  _/./__  .//_/  __/.//  __//._  /_._  _//.//  _/./  __//._
-#  _/./__  /_._  __/.//  .//_/  _//.//  /_._  .//_/  __/.//  _/./  _//.//
-#  __/._/_  _/./__  _/./__  __/._/_  __/._/_  .//_/  _/./  _/./  _/./__  __/._/_
-#  _/./  __/._/_  /.__/  _//.//  _//.//  __/._/_  /_._  _/./__  _/./  _/./
-#  _././_  __/._/_  _/./  __/.//  __/._/_  .//_/  _././_  __/.//  __/._/_  _/./
-#  __//._  _//.//  _//.//  .//_/  __/._/_  _/./  _/./  .//_/  .//_/  _././_
-#  __//._  _././_  _/./  _//.//  /.__/  __//._  /_._  /_._  _//.//  __//._
-#  __/._/_  .//_/  .//_/  __//._  _//.//  /.__/  __//._  _/./  __//._  .//_/
-#  /_._  _//.//  _/./__  __//._  .//_/  .//_/  _//.//  __//._  /_._  __/._/_
-#  /.__/  __/.//  __//._  .//_/  _//.//  .//_/  __/._/_  /.__/  __/._/_  /_._
-#  __//._  .//_/  _/./__  /_._  _/./__  /.__/  /_._  __//._  /_._  __//._  __/.//
-#  /.__/  _//.//  __/.//  /.__/  __/.//  .//_/  __//._  /_._  __//._  .//_/  _/./
-#  .//_/  _//.//  _/./__  __/._/_  /_._  __/._/_  /_._  __//._  /_._  __/.//
-#  _/./  .//_/  __//._  _././_  __/.//  .//_/  _//.//  /.__/  _/./  /_._  _././_
-#  /_._  _//.//  _././_  __/.//  /_._  __//._  _/./__  .//_/  __/._/_  /_._  _/./
-#  __/._/_  __//._  _/./  _//.//  _//.//  __/._/_  _/./  /.__/  __/.//  /.__/
-#  .//_/  __/.//  _/./  /_._  _/./__  __//._  _/./__  /_._  /.__/  __/.//  .//_/
-#  __/.//  _././_  _//.//  _/./  _/./__  .//_/  __/._/_  __//._  _././_  __//._
-#  _/./__  __//._  _/./__  /.__/  __/.//  /_._  __/._/_  __/.//  _/./  __/._/_
-#  _//.//  _/./  __//._  __/.//  _//.//  __//._  .//_/  /_._  /_._  /.__/  /_._
-#  _././_  __/.//  __/._/_  /_._  /_._  _/./__  .//_/  _/./__  _/./  _././_  _/./
-#  /_._  __//._  __/._/_  _//.//  /_._  /_._  _/./  _/./  _/./__  _/./  _/./
-#  __/.//  _//.//  _//.//  _././_  _/./  _//.//  /_._  _././_  _//.//  _/./
-#  _/./__  __/._/_  /.__/  __/.//
+#  _/./  /.__/  /.__/  _/./__  _/./__  _//.//  __/.//  /_._  __/.//  __/.//
+#  _/./__  .//_/  /_._  __/.//  __/._/_  __/._/_  __//._  _/./__  /_._  _//.//
+#  _/./__  /.__/  __//._  /.__/  __//._  __//._  /_._  __//._  __//._  _//.//
+#  .//_/  __/.//  _/./  _//.//  _/./__  __//._  __/._/_  .//_/  _/./  __/._/_
+#  __/.//  /_._  _././_  __/.//  __/.//  /_._  __//._  _././_  _/./  __//._
+#  _//.//  _/./  .//_/  _/./  _././_  __//._  _//.//  _//.//  __/.//  /.__/  /_._
+#  _/./__  __/.//  __/.//  .//_/  /.__/  __/._/_  __/.//  /.__/  /.__/  __/.//
+#  /.__/  _/./  /_._  .//_/  .//_/  /.__/  _//.//  __//._  _/./__  _/./  _/./__
+#  _/./  __/._/_  _././_  __/._/_  _//.//  _/./__  /.__/  /.__/  /_._  .//_/
+#  _././_  _././_  __/.//  __//._  __//._  _//.//  __//._  .//_/  __//._  __/._/_
+#  __//._  _/./__  _//.//  /.__/  .//_/  _././_  /.__/  __//._  /_._  _././_
+#  __//._  __/._/_  __/.//  _/./  .//_/  __//._  __/.//  __/._/_  _/./  _/./__
+#  _././_  _//.//  /_._  /.__/  _//.//  __/.//  /_._  _/./__  /.__/  __/.//  /_._
+#  _/./__  __/.//  _/./__  __/._/_  _././_  _././_  _././_  __/._/_  .//_/  _/./
+#  _././_  __/.//  _//.//  /_._  _/./  __//._  _/./  /.__/  __/._/_  /_._  .//_/
+#  _/./__  __/._/_  _././_  .//_/  _//.//  __/._/_  _/./__  _//.//  __//._
+#  _/./__  __//._  /.__/  __//._  _/./  __/._/_  /_._  __//._  __/.//  __/.//
+#  __/.//  __//._  _/./__  __//._  .//_/  /_._  __/.//  _/./  _././_  _//.//
+#  __/.//  __/._/_  /.__/  __/.//  .//_/  __/._/_  .//_/  _././_  _/./  __/.//
+#  _././_  .//_/  /.__/  _//.//  _/./__  _././_  __//._  _//.//  _/./__  __/.//
+#  _//.//  /_._  /_._  /_._  .//_/  _/./__  /.__/  _/./__  _././_  __/._/_
+#  __/.//  __/._/_  _/./  _/./  _././_  __/._/_  _//.//  /_._  .//_/  __//._
+#  _/./__  _/./__  _././_  __//._  __/.//  /.__/  /.__/  __/._/_  _/./  _././_
+#  _//.//  .//_/  _././_  .//_/  _//.//  _././_  _/./__  __/._/_  .//_/  __/._/_
+#  .//_/  .//_/  /.__/  _//.//  __/.//  _/./  _././_  __//._  _././_  _././_
+#  _/./  __/.//  _/./  __/._/_  .//_/  __/.//  __//._  __/.//  /_._  /.__/
+#  __//._  /_._  /.__/  __/._/_  _././_  __/.//  __//._  __/.//  .//_/  __/.//
+#  .//_/  _//.//  _/./__  __/.//  __/._/_  /.__/  _//.//  _././_  _/./__  __/.//
+#  .//_/  _//.//  __/.//  _/./  .//_/  _././_  __/.//  _//.//  /_._  _/./__
+#  .//_/  /_._  _//.//  _/./__  /_._  __/._/_  __/._/_  __/.//  __/._/_  /.__/
+#  /_._  /_._  _/./  _/./  _././_  _././_  .//_/  _././_  _././_  _././_  _/./__
+#  __/.//  _././_  _/./  __/._/_  _/./__  __/._/_  /.__/  _//.//  .//_/  _././_
+#  .//_/  /_._  /_._  _././_  __/._/_  _//.//  .//_/  _/./  __/._/_  _//.//
+#  __/._/_  __/._/_  _/./__  .//_/  _/./  _/./  _././_  __//._  _/./__  /.__/
+#  _/./  __/._/_  .//_/  /_._  __//._  /.__/  /.__/  __//._  __/.//  __/._/_
+#  _/./__  _/./__  __/._/_  .//_/  __/._/_  __/._/_  /_._  __/._/_  __/._/_
+#  __//._  _/./  /_._  __//._  _//.//  _././_  __/.//  /_._  _/./__  /.__/  .//_/
+#  __/._/_  __//._  _/./__  _././_  __//._  _//.//  _/./  __/.//  _/./__  __/._/_
+#  .//_/  _//.//  __/._/_  __/._/_  /.__/  __/.//  _/./__  _/./  _//.//  _//.//
+#  _//.//  __/.//  __/._/_  /.__/  .//_/  /_._  __/._/_  .//_/  __/.//  _././_
+#  _/./__  /_._  /.__/  _/./  /_._  .//_/  _//.//  __//._  .//_/  __/._/_  /_._
+#  __//._  /.__/  _/./__  _/./  /_._  _././_  __/._/_  __/._/_  /.__/  /.__/
+#  __/._/_  __//._  /.__/  __/.//  /_._  __/.//  __/._/_  .//_/  _/./  _././_
+#  _/./__  _//.//  _/./  _/./__  __/._/_  _/./__  /.__/  __/._/_  _././_  __/._/_
+#  /_._  /_._  /_._  __/._/_  __//._  _//.//  _/./  _././_  _././_  .//_/  _/./__
+#  _/./__  _././_  _/./  _././_  /_._  __/._/_  .//_/  /.__/  /_._  _/./__
+#  _//.//  /_._  __/._/_  _//.//  _/./  _/./  __/._/_  __/.//  /.__/  __/.//
+#  /.__/  _/./__  __//._  __/._/_  _././_  /_._  _//.//  _/./__  __/._/_  _//.//
+#  __//._  .//_/  _/./__  _//.//  __//._  __/._/_  _/./__  /.__/  _//.//  /_._
+#  _/./  /_._  _././_  _/./__  /.__/  _././_  __//._  _/./__  __/._/_  __/.//
+#  _/./  _//.//  /.__/  _//.//  __/._/_  /.__/  _/./__  __/._/_  __/.//  /.__/
+#  _././_  __//._  .//_/  _/./  __/._/_  /_._  /.__/  /_._  .//_/  __//._  /_._
+#  _/./  __/._/_  _/./__  _././_  __/._/_  __/._/_  __//._  .//_/  /_._  /.__/
+#  __//._  /.__/  __/.//  _/./  /_._  .//_/  __//._  _/./  __/._/_  .//_/  /_._
+#  _/./  /_._  __//._  _././_  __/._/_  _/./__  /.__/  _/./  __//._  /.__/  .//_/
+#  _/./  __//._  _/./  __/._/_  /.__/  _/./__  __/._/_  _//.//  /.__/  /_._
+#  __/._/_  _/./  _//.//  _/./  .//_/  __/.//  _././_  __/.//  _/./  __/.//  /_._
+#  /.__/  __/._/_  __//._  _././_  __//._  _/./  _././_  .//_/  /_._  /.__/  /_._
+#  __//._  _/./  __/.//  .//_/  __/._/_  _/./__  __/.//  _././_  _/./__  _/./__
+#  _././_  _/./__  _//.//  _././_  _//.//  _/./  _/./  _//.//  __/._/_  _/./
+#  /_._  _././_  /_._  .//_/  .//_/  /.__/  __/._/_  _/./  _/./__  __//._  /.__/
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon(self, mode: str, varDt, varNm, dirLst: list):
@@ -3566,7 +3564,7 @@ class SqtppFncs(Sqtpp):
         #    ("next.cast.<optional>", non-required, non-required, required) -> FULLY IMPLEMENTED
         #    ("next.ghost.<optional>", required, non-required, required) -> FULLY IMPLEMENTED
         #    ("next.omega.<optional>", required, required, non-required) -> FULLY IMPLEMENTED
-        #    ("next.splice.<optional>", required, required, required)
+        #    ("next.splice.<optional>", required, required, required) -> FULLY IMPLEMENTED
         #    ("next.refill.<optional>", required, non-required, required)
         #    ("next.remove.<optional>", required, required, non-required)
         #   JUMP:
@@ -3779,8 +3777,9 @@ class SqtppFncs(Sqtpp):
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_splice(self, varNm, varDt, dirLst: list):
-        # <<<
-        # returns: (1=True, 2=False)
+        # FNC_ID=ST12-99106486643732
+        # SqtppFncs slots in use: (_sf_rBoolE, _sf_rBoolF, _sf_rIntB, _sf_rIntC, _sf_rLstC, _sf_rStrD, _sf_rStrE, _sf_rStrF, _sf_sBoolX, _sf_sLstX)
+        # returns: (1=True or 0=False)
         # -2=invalid parameter settings for next.splice
         # -3=invalid chars @dirLst[]
         # -4=no last mnt/dir/file used vfs setting
@@ -3788,20 +3787,22 @@ class SqtppFncs(Sqtpp):
         # -6=last used mount/directory in vfs settings not found
         # -7=last used mount/directory/file in vfs settings not found
         # -8=@varData is empty
-        #try:
+        try:
+            rtrn = 1
+            ptrnSplc = None
             self._sf_sBoolX = True
             self.sqtpp_ntr_tree_context(False)
-            rtrn = 1
-            if isinstance(varNm, list) and isinstance(dirLst, list): self._sf_rBoolA = False
-            if isinstance(varDt, list) and isinstance(varNm, str) and isinstance(dirLst, list): self._sf_rBoolA = True
+            if isinstance(varNm, list) and isinstance(dirLst, list): ptrnSplc = False
+            elif isinstance(varDt, list) and isinstance(varNm, str) and isinstance(dirLst, list): ptrnSplc = True
             else:
                 return -2
             if len(dirLst) > 1:
                 if set(dirLst[0]).issubset(SQTPP_SET_VARS) and set(dirLst[1]).issubset(SQTPP_SET_VARS):
-                    if self.sqtpp_emb_ext_vfs_fnd_mnt_in_stb(dirLst[0]): self._sf_rBoolB = True
-                    else: self._sf_rBoolB = False
-                    if self.sqtpp_emb_ext_vfs_fnd_dir_in_mnt(dirLst): self._sf_rBoolC = True
-                    else: self._sf_rBoolC = False
+                    if self.sqtpp_emb_ext_vfs_fnd_mnt_in_stb(dirLst[0]) == 1:
+                        self._sf_rBoolE = True
+                        if self.sqtpp_emb_ext_vfs_fnd_dir_in_mnt(dirLst): self._sf_rBoolF = True
+                        else: self._sf_rBoolF = False
+                    else: self._sf_rBoolE = False
                     self._sf_sLstX = self.sqtpp_emb_vfs_pojishon_read(1)
                     if isinstance(self._sf_sLstX, int): rtrn = -4
                     else:
@@ -3812,47 +3813,110 @@ class SqtppFncs(Sqtpp):
                                 self._sf_rStrD = self.sqtpp_emb_ext_vfs_get_file(self._sf_sLstX[2], self._sf_rStrE)
                                 if self._sf_rStrD != None:
                                     self._sf_rStrD = self._sf_rStrD[len(self._sf_sLstX[2])+5:]
-                                    self._sf_rStrD = self._sf_rStrD.replace('\n', ' ')
-                                    if not self._sf_rBoolA:
-                                        # no pattern matching, is general splice via @varName as list
-                                        pass
+                                    if not ptrnSplc:
+                                        self._sf_rIntC = len(varNm)
+                                        self._sf_rIntB = (len(self._sf_rStrD)+self._sf_rIntC-1)//self._sf_rIntC
+                                        self._sf_rLstC = [self._sf_rStrD[i*self._sf_rIntB:(i+1)*self._sf_rIntB] for i in range(self._sf_rIntC)]
                                     else:
-                                        #________________________________________________
                                         if len(varDt) > 0:
-                                            if all(isinstance(x, (int, float)) for x in varDt):
-                                                #print('is pattern matching via numbers')
-                                                return 1
-                                            elif varDt[0].find("*>") > -1 or varDt[0].find("*<") > -1:
-                                                rtrn = self.sqtpp_emb_vfs_pojishon_splice_ext_gl_ptrn(varDt)
-                                                if rtrn == 1:
-                                                    pass
-                                            else:
-                                                #print('is pattern matching general txt')
-                                                return 1
+                                            self._sf_rStrD = self._sf_rStrD.replace('\n', '●•')
+                                            if not isinstance(varDt[0], str): varDt[0] = str(varDt[0])
+                                            if all(isinstance(x, (int, float)) for x in varDt): rtrn = self.sqtpp_emb_vfs_pojishon_splice_ext_gnmbrs(varDt)
+                                            elif varDt[0].find("*>") > -1 or varDt[0].find("*<") > -1: rtrn = self.sqtpp_emb_vfs_pojishon_splice_ext_gl_ptrn(varDt)
+                                            else: rtrn = self.sqtpp_emb_vfs_pojishon_splice_ext_gptrn(varDt)
                                         else: rtrn = -8
-                                        if rtrn > 0:
-                                            # write the spliced files to dir, _sf_rLstC
-                                            self._sf_rLstC[len(self._sf_rLstC)-1] = self._sf_rLstC[len(self._sf_rLstC)-1][:len(self._sf_rLstC[len(self._sf_rLstC)-1])-4]
-                                            print(self._sf_rLstC)
-                                        #________________________________________________
+                                    if rtrn > 0:
+                                        self._sf_rLstC[len(self._sf_rLstC)-1] = self._sf_rLstC[len(self._sf_rLstC)-1][:len(self._sf_rLstC[len(self._sf_rLstC)-1])-4]
+                                        self._sf_rIntC = len(self._sf_rLstC)
+                                        for self._sf_rIntB in range(self._sf_rIntC): self._sf_rLstC[self._sf_rIntB] = self._sf_rLstC[self._sf_rIntB].replace('●•','\n')
+                                        self.sqtpp_emb_vfs_pojishon_splice_ext_wrt_dir(ptrnSplc, True, dirLst, varNm)
                                 else: rtrn = -7
                             else: rtrn = -6
                         else: rtrn = -5
                 else: rtrn = -3
             else: rtrn = -2
             return rtrn
-        #except Exception as err_sqtpp_emb_vfs_pojishon_slice:
-            #raise Exception(f'[sqtpp-vfs >> pojishon] - next.splice, unexpected exception/direct function err: {err_sqtpp_emb_vfs_pojishon_slice}')
+        except Exception as err_sqtpp_emb_vfs_pojishon_slice:
+            raise Exception(f'[sqtpp-vfs >> pojishon] - next.splice, unexpected exception/direct function err: {err_sqtpp_emb_vfs_pojishon_slice}')
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_splice_ext_wrt_dir(self, isPtrnSplice: bool, isRstSlts: bool, dirLst: list, varNm):
+        # FNC_ID=ST12-34867692065199
+        # SqtppFncs slots in use: (_sf_EfvStrX, _sf_rBoolE, _sf_rLstC, _sf_sLstX, _sf_sSrc, _sf_sStrX, _sf_sVfs)
+        # returns: (none)
+        if isPtrnSplice: self._rg_rStrA = f'{varNm}_{self._sf_sLstX[1]}_'
+        if not self._sf_rBoolE: self._rg_rBoolA = True
+        else: self._rg_rBoolA = False
+        self._rg_rIntB = len(self._sf_rLstC)
+        self._rg_rLstA = self._sf_rLstC
+        self._sf_rLstC = None
+        for self._rg_rIntA in range(self._rg_rIntB):
+            if not isPtrnSplice: self.sqtpp_emb_vfs_router(False, False, self._rg_rBoolA, 5, dirLst, None, [varNm[self._rg_rIntA], self._rg_rLstA[self._rg_rIntA]])
+            else: self.sqtpp_emb_vfs_router(False, False, self._rg_rBoolA, 5, dirLst, None, [f'{self._rg_rStrA}{self._rg_rIntA+1}', self._rg_rLstA[self._rg_rIntA]])
+            if self._rg_rBoolA: self._rg_rBoolA = False
+        self._sf_sSrc = self._sf_sSrc.replace(self._sf_EfvStrX, self._sf_sStrX)
+        self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
+        if isRstSlts: self.sqtpp_reset_slots(True)
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_splice_ext_gptrn(self, varDt: list) -> int:
+        # FNC_ID=ST12-93305047072458
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rIntB, _sf_rIntC, _sf_rLstB, _sf_rStrB, _sf_rStrD)
+        # returns:
+        rtrn = 1
+        self._sf_rBoolA = False
+        varDt = [str(self._sf_rIntB) for self._sf_rIntB in varDt]
+        self._sf_rIntC = 0
+        self._sf_rStrB = None
+        self._sf_rIntB = len(varDt)
+        while self._sf_rIntC < self._sf_rIntB:
+            if self._sf_rStrD.find(varDt[self._sf_rIntC]) > -1:
+                self._sf_rStrB = varDt[self._sf_rIntC]
+                break
+            self._sf_rIntC+=1
+        if self._sf_rStrB != None:
+            self.sqtpp_emb_vfs_pojishon_splice_ext_pos_nmbr(self._sf_rStrB)
+            rtrn = self.sqtpp_emb_vfs_pojishon_splice_ext_cnt_apd(self._sf_rLstB, len(self._sf_rStrB))
+        else: rtrn = 0
+        return rtrn
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_splice_ext_gnmbrs(self, varDt: list) -> int:
+        # FNC_ID=ST12-97036264152285
+        # SqtppFncs slots in use: (_sf_rBoolA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntH, _sf_rLstB, _sf_rStrD)
+        # returns:
+        rtrn = 1
+        self._sf_rBoolA = False
+        self._sf_rLstB = re.findall(r'\b\d+(?:\.\d+)?\b', self._sf_rStrD)
+        if len(self._sf_rLstB) > 0:
+            self._sf_rIntC = len(self._sf_rLstB)
+            self._sf_rIntE = len(varDt)
+            for self._sf_rIntB in range(self._sf_rIntC):
+                if not self._sf_rBoolA: self._sf_rIntD = 0
+                else:
+                    break
+                while self._sf_rIntD < self._sf_rIntE:
+                    if self._sf_rLstB[self._sf_rIntB] == str(varDt[self._sf_rIntD]):
+                        self._sf_rIntH = self._sf_rLstB[self._sf_rIntB]
+                        self._sf_rBoolA = True
+                        break
+                    self._sf_rIntD+=1
+            if self._sf_rBoolA:
+                self.sqtpp_emb_vfs_pojishon_splice_ext_pos_nmbr(self._sf_rIntH)
+                rtrn = self.sqtpp_emb_vfs_pojishon_splice_ext_cnt_apd(self._sf_rLstB, self._sf_rIntF)
+            else: rtrn = 0
+        else: rtrn = 0
+        return rtrn
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_splice_ext_gl_ptrn(self, varDt: list) -> int:
-        # <<<
+        # FNC_ID=ST12-91706299587792
+        # SqtppFncs slots in use: (_sf_rBoolD, _sf_rIntB, _sf_rIntF, _sf_rLstB, _sf_rLstC, _sf_rLstE, _sf_rStrC, _sf_rStrD)
         # returns: (1=True or 0=False)
         # -9=pattern matching for splicing is not defined
         rtrn = 1
         self._sf_rBoolD = False
         self._sf_rStrC = set('>*<')
-        self._sf_rLstD = set('.1234567890')
         if set(varDt[0]).issubset(self._sf_rStrC):
             self._sf_rBoolD = False
             if varDt[0].find("*>") > -1: self._sf_rBoolD = True
@@ -3866,38 +3930,43 @@ class SqtppFncs(Sqtpp):
                     self._sf_rLstC = [self._sf_rIntB for self._sf_rIntB in self._sf_rLstB if self._sf_rStrD.count(self._sf_rIntB) == self._sf_rLstC]
             else: rtrn = 0
             if rtrn > 0 and len(self._sf_rLstC) > 0:
-                self._sf_rIntD = 0
-                self._sf_rLstB = []
-                self._sf_rIntB = self._sf_rLstC[0]
-                self._sf_rIntF = len(self._sf_rIntB)
-                self._sf_rIntE = len(self._sf_rStrD)
-                while 1:
-                    if self._sf_rIntD < self._sf_rIntE: self._sf_rIntC = self._sf_rStrD.find(self._sf_rIntB, self._sf_rIntD)
-                    else:
-                        break
-                    if self._sf_rIntC > -1:
-                        if self._sf_rIntC+self._sf_rIntF < self._sf_rIntE and self._sf_rIntC > 0:
-                            if not set(self._sf_rStrD[self._sf_rIntC+self._sf_rIntF]).issubset(self._sf_rLstD) and not set(self._sf_rStrD[self._sf_rIntC-1]).issubset(self._sf_rLstD): self._sf_rLstB.append(self._sf_rIntC)
-                        else:
-                            if self._sf_rIntC < 1:
-                                if not set(self._sf_rStrD[self._sf_rIntC+self._sf_rIntF]).issubset(self._sf_rLstD): self._sf_rLstB.append(self._sf_rIntC)
-                            else: self._sf_rLstB.append(self._sf_rIntC)
-                        self._sf_rIntD = self._sf_rIntC+1
-                    else:
-                        break
+                self.sqtpp_emb_vfs_pojishon_splice_ext_pos_nmbr(self._sf_rLstC[0])
                 rtrn = self.sqtpp_emb_vfs_pojishon_splice_ext_cnt_apd(self._sf_rLstB, self._sf_rIntF)
             else: rtrn = 0
         else:
             if varDt[0].find("*>") > -1: self._sf_rBoolD = True
             varDt = varDt[0].replace('*>','').replace('*<','')
-            if varDt.find(',') > -1:
-                self._sf_rLstB = varDt.split(',')
-                if self.sqtpp_emb_vfs_pojishon_splice_ext_gl_ptrn_max_or_min() > 0: rtrn = self.sqtpp_emb_vfs_pojishon_splice_ext_cnt_apd(self._sf_rLstE[self._sf_rIntF], len(self._sf_rLstB[self._sf_rIntF]))
-                else: rtrn = 0
-            else:
-                #TODO
-                pass
+            if varDt.find(',') > -1: self._sf_rLstB = varDt.split(',')
+            else: self._sf_rLstB = [varDt]
+            if self.sqtpp_emb_vfs_pojishon_splice_ext_gl_ptrn_max_or_min() > 0:
+                rtrn = self.sqtpp_emb_vfs_pojishon_splice_ext_cnt_apd(self._sf_rLstE[self._sf_rIntF], len(self._sf_rLstB[self._sf_rIntF]))
+            else: rtrn = 0
         return rtrn
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_emb_vfs_pojishon_splice_ext_pos_nmbr(self, nmbrPtrn: str):
+        # FNC_ID=ST12-91166422274631
+        # SqtppFncs slots in use: (_sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rLstB, _sf_rLstD, _sf_rStrD)
+        # returns: (_sf_rLstB is resulting nmbrPtrn list)
+        self._sf_rIntD = 0
+        self._sf_rLstB = []
+        self._sf_rIntF = len(nmbrPtrn)
+        self._sf_rLstD = set('.1234567890')
+        self._sf_rIntE = len(self._sf_rStrD)
+        while 1:
+            if self._sf_rIntD < self._sf_rIntE: self._sf_rIntC = self._sf_rStrD.find(nmbrPtrn, self._sf_rIntD)
+            else:
+                break
+            if self._sf_rIntC > -1:
+                if self._sf_rIntC+self._sf_rIntF < self._sf_rIntE and self._sf_rIntC > 0:
+                    if not set(self._sf_rStrD[self._sf_rIntC+self._sf_rIntF]).issubset(self._sf_rLstD) and not set(self._sf_rStrD[self._sf_rIntC-1]).issubset(self._sf_rLstD): self._sf_rLstB.append(self._sf_rIntC)
+                else:
+                    if self._sf_rIntC < 1:
+                        if not set(self._sf_rStrD[self._sf_rIntC+self._sf_rIntF]).issubset(self._sf_rLstD): self._sf_rLstB.append(self._sf_rIntC)
+                    else: self._sf_rLstB.append(self._sf_rIntC)
+                self._sf_rIntD = self._sf_rIntC+1
+            else:
+                break
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon_splice_ext_cnt_apd(self, idxLst: list, ptrnLen: int):
@@ -3924,7 +3993,7 @@ class SqtppFncs(Sqtpp):
     def sqtpp_emb_vfs_pojishon_splice_ext_gl_ptrn_max_or_min(self):
         # FNC_ID=ST12-37162293979311
         # SqtppFncs slots in use: (_sf_rBoolD, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rLstB, _sf_rLstD, _sf_rLstE, _sf_rStrD)
-        # returns: (0=False 1=True & _sf_rIntF index of max or min ptrn occurence)
+        # returns: (0=False or 1=True/_sf_rIntF index of max or min ptrn occurence)
         self._sf_rLstE = []
         self._sf_rIntF = len(self._sf_rStrD)
         self._sf_rIntC = len(self._sf_rLstB)
@@ -5069,7 +5138,7 @@ class SqtppFncs(Sqtpp):
                     if self._sf_rIntA > -1:
                         self._sf_rIntB = self._sf_sSrc.find(f'_|:{self._sf_rLstA[2]}<{self._sf_rLstA[3]}>')
                         self._sf_sStrX = self._sf_sSrc[self._sf_rIntA:self._sf_rIntB+len(self._sf_rLstA[2])+len(self._sf_rLstA[3])+5]
-                        self._sf_rStrA = self._sf_sStrX
+                        self._sf_EfvStrX = self._sf_sStrX
                         if self._sf_sStrX.find(self._sf_rLstA[2] + '>\n_|:') > -1:
                             nVfsLst = self._sf_sStrX.split('\n')
                             self._sf_sStrX = nVfsLst[0] + '\n|::|ST1EMB<SQTPP_MNT_STGS>\n_|::|SQTPP_MNT_STGS<STGS:\n__|::|STGS<:\n<STGS:S:\nnone:|:>\n_|:|:|SQTPP_MNT_STGS>\n' + nVfsLst[1]
@@ -5098,7 +5167,7 @@ class SqtppFncs(Sqtpp):
                 elif mode == 7: self.sqtpp_emb_vfs_mfile(False, dir, dirRsv)
                 elif mode == 8: self.sqtpp_emb_vfs_dfile(dir)
                 elif mode == 9:
-                    self._sf_sSrc = self._sf_sSrc.replace(self._sf_rStrA, self._sf_sStrX)
+                    self._sf_sSrc = self._sf_sSrc.replace(self._sf_EfvStrX, self._sf_sStrX)
                     self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
                     self.sqtpp_reset_slots(False)
                     self._sf_sStrX = None
@@ -5753,9 +5822,9 @@ class SqtppFncs(Sqtpp):
         self._rg_rLstB = self._rg_rIntB(self._rg_rLstA, self._rg_rLstA)
         self._rg_rLstC = self._rg_rIntC(self._rg_rLstA, self._rg_rLstB)
         self._rg_rLstD = self._rg_rIntD(self._rg_rLstB, self._rg_rLstC)
-        if self._rg_rLstC[1] > self._rg_rLstD[1]: self._rg_rStrA = 'G' # ~~
-        elif self._rg_rLstC[1] == self._rg_rLstD[1]: self._rg_rStrA = 'E' # :)
-        else: self._rg_rStrA = 'L' # !!
+        if self._rg_rLstC[1] > self._rg_rLstD[1]: self._rg_rStrA = 'G'
+        elif self._rg_rLstC[1] == self._rg_rLstD[1]: self._rg_rStrA = 'E'
+        else: self._rg_rStrA = 'L'
         return [self._rg_rStrA, self._rg_rLstD[0], self._rg_rLstD[1]]
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
