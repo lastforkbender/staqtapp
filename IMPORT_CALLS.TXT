@@ -6,7 +6,7 @@ ________________________________________________________________________________
       
       
 
-      UPDATED: FRI, OCT11 2024, updated pojishon 'next.splice.*' details & uses
+      UPDATED: MON, OCT14 2024, updated pojishon 'next.splice.*' details & uses
       
       
       
@@ -549,6 +549,8 @@ ________________________________________________________________________________
             sqtpp.pojishon("next.splice", ['<set1','<set2'], 'f_name' ['mnt','dir'])
             
             
+            ****This next call does not change the last used m/d/f vfs setting****
+            
             With selected pattern splicing then is required @varName be a str type
             only. Pattern splicing has a few tricks: One, you can use '*>' or '*<'
             list element @varData and Staqtapp will determine how to splice from a
@@ -564,7 +566,10 @@ ________________________________________________________________________________
             
             
             *With use of * pattern splicing, the first list element activates this
-             & if using general pattern splicing, use of numbers @varData is okay
+             & if using general pattern splicing, mix of numbers @varData is okay;
+             general pattern splicing is same as if @varData is all numbers but is
+             str types conditional only, once 1rst pattern found then it determines
+             the splicing from that 1rst found pattern from @varData list
              
             *When a splice is performed with just a single pattern match that will
              result in two files added to dir then supports duality of that single
@@ -574,15 +579,22 @@ ________________________________________________________________________________
              common of a duality copy when use of the less frequent operator *<
             
             *Use of ['*>pttrn'] or ['*<pttrn'] splicing options requires a pattern
-             that does not have double use quote chars or any regex patterns
+             that does not have double use quote chars or any regex patterns - and
+             will determine which pttrn is of occurence *>... or *<... lesser; at
+             this type search for splicing use of commas will be separate searched
+             patterns for example ['*>3.141,DN=592,.2727'] multiple searches by ,
+             
              
             "next.splice" will return True if spliced and added files, else False.
             When use of specific pattern splicing, resulting filenames added to a
             dir are in format of @varName_lastuseddir_# whereof # is incremented
             from 1 as then +1 further of all other added/total files from splice
             
-            (NOT YET IMPLEMENTED)
-                 
+            
+            (This splicing next command for single numbers or single chars can &
+            will result in unexpected results, is not intended for such splicing
+            due to performance & vfs/env-var related issues of .sqtpp file sys)
+               
         
       ||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||||
       |||||||| OPTIONALS |||||||||||||||||||||||||||||||||||||||||||||||||||||||||
