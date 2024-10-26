@@ -6,7 +6,7 @@ ________________________________________________________________________________
       
       
 
-      UPDATED: MON, OCT14 2024, updated pojishon 'next.splice.*' details & uses
+      UPDATED: SAT, OCT26 2024, added genicvar() use description & call modes(w|r|d)
       
       
       
@@ -200,7 +200,35 @@ ________________________________________________________________________________
       as @isComplete=False returns a special formatted string of the lambda functions
       name(s) and param(s) so is much easier to work alongside a lambdavar() call -->
       Example: '@.:my_lambda1,i=,p=,l=,@.:my_lambda2,x=,n=' whereof separated ",@.:"
- 
+
+
+----> genicvar(mode, varName, varData, varId), will store or run list comprehensions
+      on call. The generator statements are stacked in a unique lock block of a tpqt
+      section in a selected .sqtpp vfs file. To store a generator function there, an
+      mode is 'w' or 'mode=w'; @varName the naming of the list comprehension for when
+      is later called to run for a return, mode 'r'. For @varData on write will be --
+      the generator function. You can write a serial or sequential set of generators
+      to store under a same @varName, meaning when ran from that naming staqtapp will
+      run those as a set order for a return, with this @varName as a string type and
+      @varData a list of the list comprehensions as strings. @varId is circumstances
+      of outside variable(s) used in a generator function. If the generator function
+      has that? Staqtapp needs to know the name of the variable and what is it's type
+      as example @varId = [listA=str, integerA=int, strA=str, floatA=float, setA=set]
+      of which the 5 supported types possible. If using the above mentioned to store
+      a sequential set order run of list comprehensions @varId needs to be a matching
+      length list to @varData. If a list comprehension doesn't need variable id's then
+      simply the keyword None is placed. Staqtapp expects @varId as a list within list
+      argument when using a sequential set storing of generators attached to one name.
+      As example .genicvar('w', 'myGens', ['...','...'], [[None],['...','...']]) of a
+      2nd generator @varData has two param idenity @varIds' for input with any mode=r.
+      When is @mode='mode=r' then is passed those variable(s) values. As above if is
+      a sequential set order execute attached to @varName, then on read @varData has
+      to be a list within list argument of then value(s). (@varId is not used on reads
+      however must always be a list argument when used with @mode='w') And to remove
+      a stored list comprehension(s) use @mode='d' with @varName as the search param.
+      
+      ** @mode='w' does not add duplicate namings, will overwrite without warning **
+      
  
 ----> removevar(varName), removes env-var from tqpt stack and any tpqt lockvar block.
       Will not delete a stalked env-var or a dark env-var, raises a exception that
