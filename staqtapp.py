@@ -1,4 +1,4 @@
-#QPython 3SE / Row4 / staqtapp.py (6,800 lines) / 3:45 Sun, Oct 20
+#QPython 3SE / Row4 / staqtapp.py (6,901 lines) / 11:11 Tue, Dec 24
 
 
 
@@ -8,7 +8,7 @@
 
 
 
-#Staqtapp-v1.2.612 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
+#Staqtapp-v1.2.615 | Hybrid VFS ENV-VAR Library for Python OS builds or Other | Row4
 # <<<
 #//////////••        .                           .
 #/////////••                 .                                   •
@@ -25,15 +25,8 @@
 
 
 
-# UPDATE SUN, OCT20: More coding done for sqtpp_emb_vfs_pojishon() env-var features:
-#
-#                    Ntr-tree group method sqtpp_ntr_mvi8_intrpt() edited for proper
-#                    palindrome bracket control and an menorah base translation func
-#                    added, sqtpp_ntr_mvi8_intrpt_core_ext_pdh() for determining the
-#                    proper center odd digit(1 or 5) or half-digit center rotation-h
-#                    whereof needed for mvi8-interpreter lock shift instruction sets
-
-#                    ..and is anti-religion if you wish to pharosee f-around & f-out
+# UPDATE TUE, DEC24: Began works for a vitalvar() integration with Staqtapp's registry
+#                    after review of this proposed feature & an consent need/crucial.
 
 
 
@@ -76,12 +69,25 @@
 # . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 
 
-# ***See IMPORT_CALLS.TXT for a full description usage of all importable functions***
+# ***THIS IS A PUBLIC VERSION OF STAQTAPP, DOES NOT INCLUDE ALL POJISHON FEATURES***
 
 
-# WARNING: trust man = trust money, trust money = trust world, trust world = trust lost
+# >>>> See IMPORT_CALLS.TXT for a full description usage of all importable functions
+
+#_______________________________________________________________________________________
+#_______________________________________________________________________________________
+# For all pojishon features, a non-negotiated price of 1,750,000 US DOLLARS.
+# Set price reflects very advanced capability for remote embedded ai systems
+# using a similiar python module; or converted C/C++ version of this library.
+# Includes custom antenna symmetry interfacing, open modular expansions and
+# the other special designed methods for security thru out this library using
+# tor like vfs-dir multi-layer encryption(koch) & vfs-file encryption(kyber)
+# Is setup straight from the start for advanced imaging classing and other
+# dynamic learn & adapt configurations as the goto hybrid env-var/vfs sys,
+# that is exclusive tested mathematics in design of it's m/d/f operations.
 #_______________________________________________________________________________________
 # github.com/lastforkbender/staqtapp
+# rcttcr5@gmail.com
 
 from datetime import datetime
 from decimal import Decimal as dcml
@@ -133,6 +139,12 @@ class Sqtpp():
         sfCls.sqtpp_ntr_mvi8_intrpt(src)
 #_______________________________________________________________________________________
 #_______________________________________________________________________________________
+#_______________________________________________________________________________________
+    def mcf_vitalvar(self):
+        # A timed interfaced/config/sub-config env-var updated @ vfs dir/file associated
+        # All vital vars of env-var dsg '@q!p<...>' in the tqpt and/or tpqt stacks both
+        sfCls = SqtppFncs()
+        pass
 #_______________________________________________________________________________________
     def mcf_lll_registry(self, isRd: bool, kyNm: str, kyDt, schm: str):
         # Is access to sqtpp-registry system sqtpp1_2_REG.py
@@ -350,6 +362,13 @@ class Sqtpp():
             else:
                 return self._sRtrn
         else: self.mcf_err_handler(8, 'changevar')
+#_______________________________________________________________________________________
+    def mcf_genicvar(self, mode: str, vrNm, vrDt, vrId):
+        # List comprehension storing and the optional running of them.
+        sfCls = SqtppFncs()
+        if sfCls.sqtpp_chars_check(2, vrNm):
+            self._sRtrn = sfCls.sqtpp_lst_gen_lcks(mode, vrNm, vrDt, vrId)
+        else: self.mcf_err_handler(8, 'genicvar')
 #_______________________________________________________________________________________
     def mcf_addtree_stx(self, trNm: str, initPthLst: list):
         # Adds a spahk-mv type initial path keys built dict tree to vfs tqpt source.
@@ -697,7 +716,7 @@ class SqtppFncs(Sqtpp):
         # returns: 8
         try:
             if not os.path.isdir(f'{SQTPP_MDL_DIR}/staqtapp1_2'): os.makedirs(f'{SQTPP_MDL_DIR}/staqtapp1_2')
-            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.612\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
+            self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{vfsNm}.sqtpp', f':☆Staqtapp-v1.2.615\n|:{dirNm}<{fldrNm}>\n_|:{fldrNm}<sub-{fldrNm}>\n__|:sub-{fldrNm}<tqpt-{fldrNm},tpqt-{fldrNm},null>\n___|:tqpt-{fldrNm}<tqpt,null,n>:\nnull:\n___|:(tqpt-{fldrNm})\n___|:tpqt-{fldrNm}<tpqt,null,n>:\nnull:\n___|:(tpqt-{fldrNm})\n__|:(sub-{fldrNm})\n_|:({fldrNm})\n|:({dirNm})')
             self.sqtpp_tqpt_path(True, f'{vfsNm}:{dirNm}:{fldrNm}:sub-{fldrNm}:tqpt-{fldrNm}')
             return 8
         except Exception as err_vfs_make:
@@ -855,6 +874,24 @@ class SqtppFncs(Sqtpp):
         # SqtppFncs slots in use: (non-local)
         # returns:
         pass
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_vital_vars(self, mode: str, cnfg: str, cnts: list):
+        # <<<
+        # Normal Modes:
+        #  "r:vitalvar name", returns the vitalvar values(auto-updates the vv from a time check if then set time has set or passed set)
+        #  "w:vitalvar name", @cnts list expected: Elmnt1="year,month,day,#|##:##,am|pm" Elmnt2="file contents" Elmnt3=config (OPTIONAL, Elmnt4=sub-config)
+        # Edit Modes:
+        #  "c:vitalvar name", @cnfg expected having comma separated types associated for vitalvar updates via vfs file contents("str,list,set,int,float")
+        #  "s:vitalvar name", @cnfg expected as sub-config filtering, Example: "str:xO9K,list:84-2-1024,set:1024-42-1,int:2&4,float:4&2"
+        #  "t:vitalvar name", @cnts list expected: Elmnt1="year,month,day,#|##:##,am|pm" (OPTIONAL, Elmnt2=file content[*appended*] Elmnt3=config Elmnt4=sub-config)
+        #  "m:vitalvar name A:vitalvar name B", @cnfg & @cnts both ignored on merge, vitalvar B's set time is the then established set update time
+        #  "v:vitalvar name A:vitalvar name B", moves the merged vitalvar to staqtapp's registry, vitalvar A's set time is the then established set update time
+        #  "d:vitalvar name", removes the vitalvar from current set path .sqtpp vfs file or staqtapp's outer registry module if found
+        try:
+            pass
+        except Exception as err_vital_vars:
+            pass
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_byte_vars(self, mode: int, varNm: str, blLst: list):
@@ -1606,7 +1643,7 @@ class SqtppFncs(Sqtpp):
                                             self._sf_sPq = self._sf_sPq.replace('\n\n','\n')
                                 if len(self._sf_rLstC) > 0:
                                     self._sf_rLstC = '\n'.join(self._sf_rLstC)
-                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.612\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
+                                    self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{newVfsFlNm}.sqtpp', f':☆Staqtapp-v1.2.615\n|:{newVfsDirNm}<{newVfsFldrNm}>\n_|:{newVfsFldrNm}<sub-{newVfsFldrNm}>\n__|:sub-{newVfsFldrNm}<tqpt-{newVfsFldrNm},tpqt-{newVfsFldrNm},null>\n___|:tqpt-{newVfsFldrNm}<tqpt,null,n>:\nnull\n{self._sf_rLstC}:\n___|:(tqpt-{newVfsFldrNm})\n{self._sf_sPq}:\n___|:(tpqt-{newVfsFldrNm})\n__|:(sub-{newVfsFldrNm})\n_|:({newVfsFldrNm})\n|:({newVfsDirNm})')
                                     if isCurrVfsPth:
                                         self.sqtpp_file(False, f'{SQTPP_MDL_DIR}/staqtapp1_2/sqtpp1_2.stg', None)
                                         self._sf_rLstB = self._sf_sSrc.split(':')
@@ -3123,6 +3160,44 @@ class SqtppFncs(Sqtpp):
                 self.sqtpp_file(True, f'{SQTPP_MDL_DIR}/staqtapp1_2/{self._sf_sVfs}.sqtpp', self._sf_sSrc)
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_lst_gen_lcks(self, mode: str, vrNm, vrDt, vrId):
+        # <<<
+        # returns:
+        self.sqtpp_set_vfs_file()
+        if self.sqtpp_vfs_tpqt_file(True) != -1:
+            self._sf_rLstB = re.findall(r'<:' + re.escape('__SQTPP__GENIC__CMPRH__') + r'=(?s:.*?).*:>', self._sf_sPq)
+            if len(self._sf_rLstB) > 0:
+                self._sf_rLstB = self._sf_rLstB[0]
+                #self._sf_rLstB = self._sf_rLstB[0:len(self._sf_rLstB)-2]
+                #self._sf_rLstB = self._sf_rLstB.split('\n')
+                if mode == 'w' or mode == 'mode=w':
+                    self._sf_rStrB = self._sf_sPq
+                    if isinstance(vrNm, str) and isinstance(vrDt, list): self._sf_rBoolB = True
+                    else: self._sf_rBoolB = False
+                    if not self._sf_rBoolB:
+                        pass
+                        #self._sf_sPq = self._sf_sPq.replace(self._sf_rLstB[0], '<:' + vrNm + '=\n' + '\n'.join(vrDt) + ':>')
+                    else:
+                        if self._sf_rLstB.find(f'SNG=]lC[://{vrNm}') > -1:
+                            pass
+                        elif self._sf_rLstB.find(f'SEQ=]lC[://{vrNm}__') > -1:
+                            self._sf_rLstC = re.findall(r'SEQ=\]lC\[:\/\/' + re.escape(vrNm) + r'__.*?@.*?:\/\/\^', self._sf_rLstB)
+                            
+                        else:
+                            pass
+            else:
+                if mode == 'w' or mode == 'mode=w':
+                    pass
+                    #self._sf_sPq = self._sf_sPq.replace(':>:',':>')
+                    #self._sf_sPq = self._sf_sPq + '\n<:' + vrNm + '=\n' + '\n'.join(vrDt) + ':>'
+                    #self._sf_sSrc = self._sf_sSrc.replace(f'{self._sf_rStrB}:', f'{self._sf_sPq}:')
+                    #self._sf_rStrB = None
+                else:
+                    pass
+        else:
+            pass
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_rqnv_menorah_reorder(self, lNms: list, pPrbLen: int, qnvRtm: int) -> str:
         # FNC_ID=ST12-17710590476882D
         # SqtppFncs slots in use: (_sf_rIntA, _sf_rIntB, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rIntG, _sf_rIntH, _sf_rIntI, _sf_rLstA, _sf_rLstB, _sf_rStrA, _sf_sIntX, _sf_sLstX)
@@ -3518,74 +3593,86 @@ class SqtppFncs(Sqtpp):
 #        .            ""
 #
 # |~.~|
-#  .//_/  _/./__  __//._  _/./  __/._/_  _//.//  __/._/_  _//.//  .//_/  _//.//
-#  _//.//  __//._  __/.//  _././_  _/./  __/.//  _//.//  _././_  _/./__  _/./__
-#  .//_/  __//._  _//.//  /.__/  .//_/  _././_  _//.//  __/._/_  .//_/  /.__/
-#  __/.//  _././_  __//._  __/.//  _//.//  __/.//  __/._/_  .//_/  /.__/  _//.//
-#  _././_  __/._/_  _/./  __//._  _//.//  /.__/  __//._  /.__/  /_._  _/./__
-#  _/./__  _//.//  /_._  _/./__  _//.//  _././_  _/./__  _././_  _/./__  __/.//
-#  _//.//  _././_  _//.//  /_._  _/./__  _././_  _/./__  __//._  __/.//  _././_
-#  __/._/_  __//._  __/._/_  /.__/  _/./__  _././_  /.__/  __//._  _//.//  __//._
-#  _/./  _/./  __//._  .//_/  __/._/_  /.__/  .//_/  _././_  __/._/_  _/./__
-#  __/._/_  _/./  __//._  __/._/_  .//_/  __/.//  _/./__  _/./  __/.//  __//._
-#  .//_/  __//._  .//_/  /_._  __//._  __/.//  /.__/  _//.//  __//._  .//_/  /_._
-#  __/.//  _././_  /.__/  _/./  _././_  .//_/  _//.//  __//._  __/.//  _//.//
-#  __/.//  _././_  _//.//  /.__/  /.__/  /_._  /_._  .//_/  _/./  _././_  _/./__
-#  /_._  _././_  __/._/_  __/._/_  __//._  __/._/_  .//_/  _//.//  _//.//  __//._
-#  /_._  __/._/_  _//.//  _././_  _//.//  _/./  __//._  .//_/  _//.//  __/.//
-#  /_._  _/./  __//._  _/./  _/./__  /_._  __/._/_  _././_  _/./  _/./  /.__/
-#  __/.//  /.__/  __/.//  __//._  _/./__  .//_/  __//._  /_._  _/./  /_._  /_._
-#  /_._  __/._/_  __/._/_  __/._/_  _/./  _/./__  _/./__  _//.//  _././_  _/./
-#  _/./  _//.//  /_._  /.__/  _/./  __/.//  _/./__  _//.//  _/./  _/./__  __//._
-#  __/._/_  /.__/  /.__/  __/.//  __//._  /_._  .//_/  _//.//  _/./__  __/._/_
-#  __//._  _/./  /_._  _/./__  /.__/  .//_/  _/./  __/.//  .//_/  __/._/_  __//._
-#  __/._/_  __/.//  _/./  __//._  /.__/  __/.//  .//_/  /_._  __/._/_  .//_/
-#  __/._/_  .//_/  _././_  __//._  __/.//  __/._/_  __/._/_  /_._  /.__/  /.__/
-#  __//._  _//.//  __/._/_  /.__/  /.__/  _././_  .//_/  /.__/  .//_/  __/._/_
-#  _././_  __//._  __/.//  /.__/  /_._  _././_  __//._  __/._/_  __/._/_  __/._/_
-#  _/./__  __/.//  __/._/_  __/.//  _/./  __//._  /_._  _/./  __/._/_  /.__/
-#  __/._/_  _//.//  __/.//  _//.//  _//.//  /_._  _/./  __//._  _/./__  _/./__
-#  _//.//  __//._  __/._/_  _//.//  /_._  __/.//  __/._/_  __/.//  .//_/  _././_
-#  __/._/_  _././_  _//.//  _././_  _/./__  _/./  .//_/  /_._  /.__/  /.__/
-#  __/._/_  /_._  _/./  __/._/_  .//_/  _//.//  _././_  /.__/  /_._  /.__/
-#  _//.//  __/._/_  _/./  __/.//  __//._  /_._  .//_/  _././_  /.__/  __/.//
-#  __/.//  _//.//  /.__/  .//_/  /_._  __/.//  .//_/  _/./  _././_  __/._/_  _/./
-#  .//_/  __/.//  __//._  /.__/  _//.//  _//.//  _//.//  /.__/  __/.//  /.__/
-#  _/./  .//_/  __//._  __/._/_  .//_/  /.__/  .//_/  /.__/  _/./__  _/./__
-#  _//.//  .//_/  /.__/  /.__/  __/.//  .//_/  _././_  /_._  _././_  /_._  /.__/
-#  __/._/_  _//.//  /.__/  _././_  /_._  .//_/  /.__/  _/./__  .//_/  _/./__
-#  _/./  _/./__  __/._/_  __//._  _/./__  __/.//  _/./  __/.//  __/._/_  /.__/
-#  __/.//  _//.//  __/.//  _//.//  __//._  __/._/_  /.__/  .//_/  .//_/  _/./
-#  /.__/  /_._  /.__/  _//.//  _/./__  /_._  __//._  _//.//  _/./  .//_/  _//.//
-#  .//_/  /.__/  _././_  __/.//  /_._  __/._/_  _/./__  __/.//  __/._/_  __/.//
-#  _//.//  /_._  __/.//  _././_  __/.//  _//.//  __//._  .//_/  __/.//  _//.//
-#  __/._/_  __/._/_  .//_/  .//_/  _/./  __/._/_  __/._/_  __//._  _/./  _/./__
-#  _//.//  /_._  /.__/  .//_/  /.__/  __/.//  _/./__  _/./__  _/./__  _/./
-#  _//.//  .//_/  /_._  __/._/_  __/.//  __//._  /.__/  /.__/  _/./  _//.//
-#  /.__/  _././_  /.__/  .//_/  _././_  _//.//  _//.//  .//_/  _//.//  _/./
-#  /.__/  _././_  __/.//  /.__/  __//._  __//._  __/.//  _/./__  _//.//  _//.//
-#  /.__/  .//_/  _/./__  _/./__  __//._  _././_  .//_/  __/.//  _/./  /.__/
-#  __/.//  __//._  /_._  _././_  .//_/  __//._  _//.//  /.__/  _//.//  __/._/_
-#  _/./__  _//.//  _//.//  /_._  _/./  __/._/_  /_._  _/./__  __/.//  _//.//
-#  _././_  __/._/_  _/./  _//.//  _/./  __//._  _././_  .//_/  _//.//  .//_/
-#  _/./__  /.__/  _//.//  /.__/  _././_  _/./  __/.//  _././_  __//._  _/./__
-#  __//._  .//_/  /_._  .//_/  __/.//  __//._  __/._/_  .//_/  __//._  _//.//
-#  /_._  /_._  __/._/_  /_._  _/./__  _././_  _//.//  _//.//  __//._  __/.//
-#  _/./__  __/._/_  _././_  _/./__  .//_/  __/.//  .//_/  _//.//  /.__/  /.__/
-#  __//._  .//_/  _././_  .//_/  /.__/  _/./  /_._  __/._/_  __/._/_  __//._
-#  /.__/  /.__/  /_._  /.__/  __/.//  __/._/_  _././_  .//_/  /_._  /_._  _/./__
-#  _//.//  _/./__  _/./  _././_  _/./__  _/./  /.__/  _//.//  _//.//  .//_/
-#  _/./__  __/._/_  __//._  /_._  .//_/  _//.//  /.__/  _/./__  _//.//  __/._/_
-#  __//._  _/./__  _/./__  __/.//  /_._  _././_  /.__/  _//.//  _//.//  __/._/_
-#  _//.//  __//._  __/._/_  /_._  _/./__  .//_/  _//.//  /.__/  _././_  __//._
-#  __/._/_  /.__/  __/._/_  __//._  /_._  /_._  /.__/  /_._  _/./__  .//_/
-#  _././_  .//_/  /.__/  __/._/_  _/./__  _//.//  _././_  __/.//  __/._/_  __//._
-#  _/./__  __/.//  /_._  __/.//  __/.//  _/./__  .//_/  /.__/  /.__/  __/.//
-#  _/./__
+#  __//._  _/./  .//_/  _././_  _//.//  .//_/  _././_  /.__/  _././_  __/.//
+#  __/.//  __/._/_  __/._/_  _/./  __//._  _././_  _././_  _././_  /.__/  .//_/
+#  __/.//  _/./__  __//._  _//.//  __/._/_  _././_  __/.//  _/./  /.__/  __/._/_
+#  /.__/  /.__/  _/./__  __/.//  _//.//  .//_/  _/./__  /.__/  /_._  _/./  _/./
+#  __//._  /.__/  _/./__  __//._  /_._  _/./  /_._  _././_  __//._  .//_/  _/./__
+#  __/.//  _//.//  __/.//  /_._  _././_  __/.//  _././_  /.__/  _//.//  /.__/
+#  /.__/  /_._  _/./  __/._/_  /.__/  __/._/_  _//.//  _//.//  .//_/  .//_/
+#  /.__/  _/./  _//.//  _//.//  _/./__  _/./__  /.__/  __/._/_  .//_/  _/./
+#  /.__/  /_._  __/.//  __/._/_  _././_  _//.//  _/./__  _//.//  /.__/  .//_/
+#  __/.//  _/./  /_._  /.__/  /.__/  .//_/  _/./  __/._/_  _././_  _//.//  _/./__
+#  .//_/  /_._  __//._  _/./  _/./  /.__/  _/./__  _././_  __//._  _././_  .//_/
+#  /.__/  .//_/  _././_  _/./  __/._/_  .//_/  __//._  _/./  .//_/  /.__/  .//_/
+#  /_._  .//_/  _//.//  /_._  _//.//  _//.//  /.__/  __/._/_  _././_  _././_
+#  .//_/  /_._  __/.//  _//.//  _//.//  __//._  /.__/  __//._  __/._/_  _././_
+#  __//._  _/./  __/._/_  __//._  __/.//  _//.//  /.__/  .//_/  __/._/_  _/./
+#  __//._  _././_  /.__/  __/._/_  /_._  _././_  __//._  /_._  _/./__  /_._
+#  __/.//  .//_/  /.__/  _/./__  /_._  __//._  _/./  _/./  __//._  _//.//  __//._
+#  /_._  _././_  __/._/_  __/._/_  __//._  /.__/  _././_  _/./__  __/.//  .//_/
+#  .//_/  /.__/  _/./  /.__/  _/./__  /.__/  __/._/_  __/._/_  _//.//  __/._/_
+#  __//._  __/._/_  __/._/_  _//.//  __/._/_  __//._  /.__/  _/./__  /.__/  .//_/
+#  /_._  _/./__  .//_/  __/.//  _/./  /_._  /.__/  __/.//  /.__/  __/.//  /.__/
+#  /_._  _/./__  _././_  __/.//  __/.//  _/./__  _././_  _/./__  _././_  __//._
+#  _././_  /.__/  _././_  __/._/_  __/.//  _//.//  .//_/  __//._  .//_/  /_._
+#  /_._  _/./  _//.//  /.__/  /.__/  /_._  /_._  _././_  /.__/  _/./  /_._  .//_/
+#  _/./  _/./  _//.//  _/./  _/./__  /_._  __/._/_  /_._  __//._  _/./  /_._
+#  .//_/  __/.//  _//.//  _/./__  __//._  /_._  _././_  /.__/  _././_  .//_/
+#  _/./  _/./  _/./  __/.//  /.__/  __//._  /.__/  _/./  __//._  _././_  _././_
+#  _/./__  .//_/  _/./  /_._  __/._/_  .//_/  _././_  __//._  __/.//  __//._
+#  _././_  _/./__  _/./__  __/._/_  _././_  /.__/  __//._  __/.//  _././_  /_._
+#  __/._/_  __/.//  _/./__  __/._/_  __//._  _/./  _/./  /.__/  _././_  /_._
+#  __/.//  _././_  __/._/_  __//._  /.__/  .//_/  __/._/_  /.__/  _//.//  _././_
+#  __//._  /_._  .//_/  .//_/  /.__/  .//_/  .//_/  __//._  _//.//  __/._/_
+#  /.__/  .//_/  _//.//  /.__/  __/.//  /_._  .//_/  /.__/  __/._/_  _//.//
+#  __//._  /.__/  _/./  __/._/_  /.__/  /.__/  _//.//  _/./  __//._  __/.//
+#  __/.//  __/.//  _././_  _/./__  /_._  __/.//  __//._  __/._/_  _//.//  _././_
+#  _//.//  __/.//  /.__/  /.__/  _//.//  __/.//  _/./  _/./  __/.//  _/./  .//_/
+#  __/.//  /.__/  _//.//  .//_/  _//.//  _/./__  _//.//  _/./__  __/._/_  _/./__
+#  /.__/  .//_/  __//._  __//._  _././_  /_._  __/.//  .//_/  /_._  _././_  .//_/
+#  /_._  __/.//  .//_/  _//.//  _//.//  /.__/  .//_/  __//._  _/./__  __/._/_
+#  __/._/_  _//.//  .//_/  _/./  __/._/_  _/./__  .//_/  _././_  .//_/  .//_/
+#  /.__/  /.__/  _/./  __/._/_  __//._  __/.//  /.__/  /.__/  __/.//  _/./  .//_/
+#  .//_/  _././_  __/.//  __//._  _/./  _/./__  .//_/  __/._/_  __//._  /.__/
+#  _/./  /_._  __/.//  _/./__  .//_/  _/./__  /.__/  __/._/_  __/._/_  _/./__
+#  _/./  _//.//  _//.//  _/./  _././_  _//.//  _//.//  _/./__  .//_/  /_._
+#  __/.//  __//._  __/.//  /.__/  __/._/_  __/.//  __/.//  _/./  _/./__  _//.//
+#  _/./  /_._  _././_  _/./  _/./  __//._  _//.//  _././_  __/.//  __/.//
+#  __/._/_  .//_/  _././_  .//_/  .//_/  _//.//  __/._/_  .//_/  __/.//  __/.//
+#  _/./  _//.//  __//._  __//._  __//._  /_._  _/./  __//._  __//._  _//.//  _/./
+#  __/._/_  __/._/_  .//_/  /_._  _/./__  _/./  /_._  _//.//  /.__/  __/._/_
+#  __//._  __/._/_  __/._/_  _//.//  __/._/_  .//_/  __/._/_  __/.//  __//._
+#  __//._  /.__/  /.__/  __//._  _//.//  _/./  .//_/  .//_/  _/./__  /_._  /_._
+#  /.__/  /_._  /_._  .//_/  .//_/  .//_/  __//._  /.__/  _/./__  _//.//  _//.//
+#  __/.//  _/./__  __/.//  /.__/  /.__/  _//.//  /.__/  _././_  _/./__  /_._
+#  /_._  _././_  .//_/  __/._/_  __/._/_  _././_  __/.//  /.__/  _././_  _././_
+#  _/./  _//.//  __/.//  .//_/  _././_  .//_/  _//.//  _/./__  _//.//  /_._
+#  __//._  __//._  _././_  _/./__  __//._  __/._/_  __/.//  /.__/  _//.//
+#  __/._/_  _//.//  .//_/  __/.//  .//_/  _/./__  /_._  _././_  __//._  _/./__
+#  _/./  _/./  _//.//  _././_  /.__/  _//.//  _/./__  __/._/_  __//._  __//._
+#  _//.//  _/./  _//.//  __/._/_  _././_  /.__/  __/.//  _/./  __/.//  __/.//
+#  __/._/_  __/.//  __//._  _././_  __//._  .//_/  _/./__  _//.//  _././_  _/./__
+#  /.__/  __/.//  __/.//  /_._  _//.//  __/.//  _//.//  __/._/_  __/._/_  .//_/
+#  __//._  _//.//  _//.//  /.__/  .//_/  __/.//  __//._  /.__/  _././_  /.__/
+#  __//._  __//._  _/./__  _././_  /.__/  _/./__  _//.//  /.__/  _//.//  __//._
+#  __/._/_  /_._  __/._/_  .//_/  __//._
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
     def sqtpp_emb_vfs_pojishon(self, mode: str, varDt, varNm, dirLst: list):
         # <<<
+        #_____________________________________________________________________________
+        #_____________________________________________________________________________
+        # For all pojishon features, a non-negotiated price of 2,750,000 US DOLLARS.
+        # Set price reflects very advanced capability for remote embedded ai systems
+        # using a similiar python module; or completed C/C++ version of this library.
+        # Includes custom antenna symmetry interfacing, open modular expansions and
+        # the other special designed methods for security thru out this library using
+        # tor like vfs-dir multi-layer encryption(koch) & vfs-file encryption(kyber)
+        # Is setup straight from the start for advanced imaging classing and other
+        # dynamic learn & adapt configurations as the goto hybrid env-var/vfs sys,
+        # that is of exclusive tested mathematics in design of it's m/d/f operations.
+        #_____________________________________________________________________________
         # modes:
         #   NEXT:
         #    ("next", required, required, required) -> FULLY IMPLEMENTED
@@ -3593,46 +3680,46 @@ class SqtppFncs(Sqtpp):
         #    ("next.ghost.<optional>", required, non-required, required) -> FULLY IMPLEMENTED
         #    ("next.omega.<optional>", required, required, non-required) -> FULLY IMPLEMENTED
         #    ("next.splice.<optional>", required, required, required) -> FULLY IMPLEMENTED
-        #    ("next.refill.<optional>", required, non-required, required)
-        #    ("next.remove.<optional>", required, required, non-required)
+        #    ("next.refill.<optional>", required, non-required, required) -> NOT PUBLIC IMPLEMENTED
+        #    ("next.remove.<optional>", required, required, non-required) -> NOT PUBLIC IMPLEMENTED
         #   JUMP:
-        #    ("jump.add.<optional>", non-required, required, non-required)
-        #    ("jump.cast.<optional>", required, non-required, required)
-        #    ("jump.ghost.<optional>", required, non-required, required)
-        #    ("jump.refill.<optional>", non-required, required, non-required)
+        #    ("jump.add.<optional>", non-required, required, non-required) -> NOT PUBLIC IMPLEMENTED
+        #    ("jump.cast.<optional>", required, non-required, required) -> NOT PUBLIC IMPLEMENTED
+        #    ("jump.ghost.<optional>", required, non-required, required) -> NOT PUBLIC IMPLEMENTED
+        #    ("jump.refill.<optional>", non-required, required, non-required) -> NOT PUBLIC IMPLEMENTED
         #   TQPT:
-        #    ("tqpt.add.<optional>", non-required, required, required)
-        #    ("tqpt.remove.<optional>", non-required, required, non-required)
-        #    ("tqpt.select.<optional>", non-required, required, required)
-        #    ("tqpt.selectall.<optional>", required, non-required, required)
+        #    ("tqpt.add.<optional>", non-required, required, required) -> NOT PUBLIC IMPLEMENTED
+        #    ("tqpt.remove.<optional>", non-required, required, non-required) -> NOT PUBLIC IMPLEMENTED
+        #    ("tqpt.select.<optional>", non-required, required, required) -> NOT PUBLIC IMPLEMENTED
+        #    ("tqpt.selectall.<optional>", required, non-required, required) -> NOT PUBLIC IMPLEMENTED
         #   TPQT:
-        #    ("tpqt.add.<optional>", non-required, required, required)
-        #    ("tpqt.remove.<optional>", non-required, required, non-required)
-        #    ("tpqt.joinall.<optional>", required, non-required, required)
-        #    ("tpqt.joinrecorded.<optional>", non-required, required, non-required)
+        #    ("tpqt.add.<optional>", non-required, required, required) -> NOT PUBLIC IMPLEMENTED
+        #    ("tpqt.remove.<optional>", non-required, required, non-required) -> NOT PUBLIC IMPLEMENTED
+        #    ("tpqt.joinall.<optional>", required, non-required, required) -> NOT PUBLIC IMPLEMENTED
+        #    ("tpqt.joinrecorded.<optional>", non-required, required, non-required) -> NOT PUBLIC IMPLEMENTED
         #   WATCH:
-        #    ("watch.move.<optional>", non-required, required, required)
-        #    ("watch.join.<optional>", required, required, required)
-        #    ("watch.pivot.<optional>", non-required, required, non-required)
-        #    ("watch.clearall.<optional>", required, non-required, non-required)
+        #    ("watch.move.<optional>", non-required, required, required) -> NOT PUBLIC IMPLEMENTED
+        #    ("watch.join.<optional>", required, required, required) -> NOT PUBLIC IMPLEMENTED
+        #    ("watch.pivot.<optional>", non-required, required, non-required) -> NOT PUBLIC IMPLEMENTED
+        #    ("watch.clearall.<optional>", required, non-required, non-required) -> NOT PUBLIC IMPLEMENTED
         #   RECORD:
-        #    ("record.join.<optional>", non-required, required, required)
-        #    ("record.restart.<optional>", required, non-required, required)
-        #    ("record.readall.<optional>", non-required, required, required)
-        #    ("record.forcemap.<optional>", non-required, required, required)
+        #    ("record.join.<optional>", non-required, required, required) -> NOT PUBLIC IMPLEMENTED
+        #    ("record.restart.<optional>", required, non-required, required) -> NOT PUBLIC IMPLEMENTED
+        #    ("record.readall.<optional>", non-required, required, required) -> NOT PUBLIC IMPLEMENTED
+        #    ("record.forcemap.<optional>", non-required, required, required) -> NOT PUBLIC IMPLEMENTED
         # optionals:
         #    ****setfreq, removefreq, retag and quantumf cannot be combined optionals
         #    ****quantumf is a read only optional from an auto-generated slots module
         #
         #    open(varDt=list, occurence=#[index]) | open(varNm=list, occurence=#[index]) -> FULLY IMPLEMENTED
         #    closed(varNm=str, start=#, end=#) | closed(varNm=list, start=#, end=#) -> FULLY IMPLEMENTED
-        #    compare(varDt=str, dirLst=list, freq=str) | compare(varDt=list, dirLst=list, freq=str)
-        #    cache(varNm=str, occurence=#) | cache(varNm=list, occurence=#[index])
-        #    seal(dirLst=list, match=str, freq=str, type=unlocked=0|locked=1)
-        #    setfreq(varNm=str, dirLst=list, occurence=#) | setfreq(varNm=list, dirLst=list, occurence=#[index])
-        #    removefreq(varNm=str, dirLst=list, freq=str) | removefreq(varNm=list, dirLst=list, freq=str)
-        #    retag(varDt=str, freq=str, span=#, removeat=#) | retag(varDt=list, freq=str, span=#[index], removeat=#[index])
-        #    quantumf(varNm=str, dirLst=list, span=#) | quantumf(varNm=list, dirLst=list, span=#[index])
+        #    compare(varDt=str, dirLst=list, freq=str) | compare(varDt=list, dirLst=list, freq=str) -> NOT PUBLIC IMPLEMENTED
+        #    cache(varNm=str, occurence=#) | cache(varNm=list, occurence=#[index]) -> NOT PUBLIC IMPLEMENTED
+        #    seal(dirLst=list, match=str, freq=str, type=unlocked=0|locked=1) -> NOT PUBLIC IMPLEMENTED
+        #    setfreq(varNm=str, dirLst=list, occurence=#) | setfreq(varNm=list, dirLst=list, occurence=#[index]) -> NOT PUBLIC IMPLEMENTED
+        #    removefreq(varNm=str, dirLst=list, freq=str) | removefreq(varNm=list, dirLst=list, freq=str) -> NOT PUBLIC IMPLEMENTED
+        #    retag(varDt=str, freq=str, span=#, removeat=#) | retag(varDt=list, freq=str, span=#[index], removeat=#[index]) -> NOT PUBLIC IMPLEMENTED
+        #    quantumf(varNm=str, dirLst=list, span=#) | quantumf(varNm=list, dirLst=list, span=#[index]) -> NOT PUBLIC IMPLEMENTED
         #try:
             vfsEmbEfo = None
             vfsRtrn = None
@@ -5969,8 +6056,9 @@ class SqtppFncs(Sqtpp):
                     self._sf_rLstE = self._sf_sLstX.split(',')
                     if ins == 'PDH': self.sqtpp_ntr_mvi8_intrpt_core_ext_pdh()
                     else: self._sf_rLstI = [str(plndrm) for plndrm in self._sf_rLstE]
-                    print(self._sf_rLstI)
-                elif ins == 'MNH' or ins == 'MAP' or ins == 'LCK': self._sf_sLstX = self._sf_sLstX.replace('<','').replace('>','')
+                elif ins == 'MNH' or ins == 'MAP' or ins == 'LCK':
+                    self._sf_sLstX = self._sf_sLstX.replace('<','').replace('>','')
+                    if ins == 'LCK': self.sqtpp_ntr_mvi8_intrpt_core_ext_lck()
                 self._sf_rLstC.append(f'{ins}%{self._sf_sLstX}')
             if not grp:
                 self._sf_sIntX = ix
@@ -5979,10 +6067,19 @@ class SqtppFncs(Sqtpp):
             raise Exception(f'[NTR / MVI8] - a direct MVI8 run error has occured: {err_sqtpp_ntr_mvi8_intrpt_core}')
 #___________________________________________AHS/////////////////////////////////////////
 #///////////////////////////////////////////______________________________________||~.~
+    def sqtpp_ntr_mvi8_intrpt_core_ext_lck(self):
+        # <<<
+        # returns:
+        self._sf_rLstE = self._sf_sLstX.split('<')
+        self._rg_rLstA = self._sf_rLstE[0].split(',')
+        #--------------------------------------------
+        print(self._rg_rLstA)
+#___________________________________________AHS/////////////////////////////////////////
+#///////////////////////////////////////////______________________________________||~.~
     def sqtpp_ntr_mvi8_intrpt_core_ext_pdh(self):
         # FNC_ID=ST12-15885479069535
         # SqtppFncs slots in use: (_sf_rBoolF, _sf_rIntC, _sf_rIntD, _sf_rIntE, _sf_rIntF, _sf_rLstE, _sf_rLstF, _sf_rLstG, _sf_rLstI, _sf_rStrD)
-        # returns: (THERE IS A PRICE FOR EVERYTHING AND TRUE BLINDNESS TRUST IS ALWAYS MONEY)
+        # returns: (none)
         self._sf_rIntD = len(self._sf_rLstE)
         for self._sf_rIntC in range(self._sf_rIntD):
             self._sf_rIntE = 1
@@ -6715,6 +6812,10 @@ def listfiles():
 def lambdalist(asComplete: bool):
     sqtppCls = Sqtpp()
     return sqtppCls.mcf_lambdalist(asComplete)
+#_______________________________________________________________________________________
+def genicvar(mode: str, varName, varData, varId: list):
+    sqtppCls = Sqtpp()
+    return sqtppCls.mcf_genicvar(mode, varName, varData, varId)
 #_______________________________________________________________________________________
 def joinvars(newVarName: str, varNames: list):
     sqtppCls = Sqtpp()
