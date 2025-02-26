@@ -6637,7 +6637,7 @@ class SqtppFncs(Sqtpp):
         rtrn = '@1'
         for self._rg_rIntA in range(self._rg_rIntB):
             self._rg_rBoolB = False
-            if self._rg_rLstA[self._rg_rIntA].find(']') > -1:
+            if self._rg_rLstA[self._rg_rIntA].find('}') > -1:
                 if vldLm:
                     vldLm = False
                     self._rg_sSchm.append(']')
@@ -6719,7 +6719,7 @@ class SqtppFncs(Sqtpp):
                                     return f'!÷{self._rg_rIntA}÷8'
                         else:
                             typAd = False
-                            if self._rg_rLstA[self._rg_rIntA] == 'validator[': self._rg_sSchm.append('validator[')
+                            if self._rg_rLstA[self._rg_rIntA] == 'validator{': self._rg_sSchm.append('validator[')
                     else:
                         if self._rg_rBoolB:
                             self._rg_rLstB = re.findall(r'lambda(?:\s*[a-zA-Z_][a-zA-Z_0-9]*(?:\s*,\s*[a-zA-Z_][a-zA-Z_0-9]*)*)?\s*:\s*.+', self._rg_rLstA[self._rg_rIntA])
