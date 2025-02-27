@@ -6350,8 +6350,8 @@ class SqtppFncs(Sqtpp):
         self._rg_rLstA.append(f"                    else:{self._rg_rStrA}                        if self._lll_rStrA.find('%inherit=') > -1:{self._rg_rStrA}                            self._lll_sLstA = self._lll_rStrA.split('='){self._rg_rStrA}")
         self._rg_rLstA.append(f"                            self._lll_rLstE.append('>>' + self._lll_rLstC[len(self._lll_rLstC)-1] + ':' + self._lll_sLstA[1]){self._rg_rStrA}                        if self._lll_rStrA.find('%type:(') > -1:{self._rg_rStrA}")
         self._rg_rLstA.append(f"                            self._lll_rStrA = self._lll_rStrA.replace('%type:(', ''){self._rg_rStrA}                            self._lll_rLstE[len(self._lll_rLstE)-1] = self._lll_rLstE[len(self._lll_rLstE)-1] + ':' + self._lll_rStrA{self._rg_rStrA}")
-        self._rg_rLstA.append(f"                        if self._lll_rLstB[self._lll_rIntA+1][0] != '%': self._lll_rBoolC = False{self._rg_rStrA}                elif self._lll_rBoolD or self._lll_rStrA.find('validator[') > -1:{self._rg_rStrA}")
-        self._rg_rLstA.append(f"                    if not self._lll_rBoolD: self._lll_rBoolD = True{self._rg_rStrA}                    else:{self._rg_rStrA}                        if self._lll_rStrA == ']': self._lll_rBoolD = False{self._rg_rStrA}")
+        self._rg_rLstA.append(f"                        if self._lll_rLstB[self._lll_rIntA+1][0] != '%': self._lll_rBoolC = False{self._rg_rStrA}                elif self._lll_rBoolD or self._lll_rStrA.find('validator{') > -1:{self._rg_rStrA}")
+        self._rg_rLstA.append(f"                    if not self._lll_rBoolD: self._lll_rBoolD = True{self._rg_rStrA}                    else:{self._rg_rStrA}                        if self._lll_rStrA == '}': self._lll_rBoolD = False{self._rg_rStrA}")
         self._rg_rLstA.append(f"                        else:{self._rg_rStrA}                            self._lll_rStrA = self._lll_rStrA.replace('~||/', '\u0027'){self._rg_rStrA}                            self._lll_rLstF.append(self._lll_rLstC[len(self._lll_rLstC)-1] + ':' + self._lll_rLstD[len(self._lll_rLstD)-1] + '<' + self._lll_rStrA + ':|/>'){self._rg_rStrA}")
         self._rg_rLstA.append(f"        return 1{self._rg_rStrA}#|______________________________________________________________________________________{self._rg_rStrA}    def sqtpp_reg_harp_prc(self):{self._rg_rStrA}")
         self._rg_rLstA.append(f"        try:{self._rg_rStrA}            self._lll_rBoolA = True{self._rg_rStrA}            self._lll_sBlnSw = False{self._rg_rStrA}            self._lll_rIntB = len(self._lll_rLstF){self._rg_rStrA}")
@@ -6640,7 +6640,7 @@ class SqtppFncs(Sqtpp):
             if self._rg_rLstA[self._rg_rIntA].find('}') > -1:
                 if vldLm:
                     vldLm = False
-                    self._rg_sSchm.append(']')
+                    self._rg_sSchm.append('}')
                 else:
                     return f'!÷{self._rg_rIntA+1}÷10'
             self._rg_rLstB = re.findall(r'lambd.*?\:', self._rg_rLstA[self._rg_rIntA])
@@ -6719,7 +6719,7 @@ class SqtppFncs(Sqtpp):
                                     return f'!÷{self._rg_rIntA}÷8'
                         else:
                             typAd = False
-                            if self._rg_rLstA[self._rg_rIntA] == 'validator{': self._rg_sSchm.append('validator[')
+                            if self._rg_rLstA[self._rg_rIntA] == 'validator{': self._rg_sSchm.append('validator{')
                     else:
                         if self._rg_rBoolB:
                             self._rg_rLstB = re.findall(r'lambda(?:\s*[a-zA-Z_][a-zA-Z_0-9]*(?:\s*,\s*[a-zA-Z_][a-zA-Z_0-9]*)*)?\s*:\s*.+', self._rg_rLstA[self._rg_rIntA])
